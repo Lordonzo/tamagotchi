@@ -14,7 +14,7 @@ public abstract class Animal {
      */
     public Animal(int _weight) {
         this.currentHealth = MAX_HEALTH_POINTS;
-        this.currentHunger = 60;
+        this.currentHunger = 20;
         this.currentThirsty = 0;
         this.currentWeight = _weight;
         this.currentEnergy = MAX_ENERGY;
