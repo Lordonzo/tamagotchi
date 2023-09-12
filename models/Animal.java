@@ -6,7 +6,9 @@ import models.Status.PhysicalStatus;
 public abstract class Animal {
     private final int MAX_HEALTH_POINTS = 100;
     private final int MAX_ENERGY = 100;
+
     private int currentHealth;
+    
     private int currentHunger;
     private int currentThirsty;
     private int currentWeight;
