@@ -1,28 +1,45 @@
 package models.database;
 
 import java.sql.Statement;
-import java.io.File;
+
+import models.tamagotchi.Tamagotchi;
+
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 
-public class DAOContext {
-    protected static String dbURL;
-    protected static String dbLogin;
-    protected static String dbPassword;
+public abstract class DAOContext {
+    protected static String dbURL = "jdbc:mysql://localhost:3306/tamagotchi";
 
+    /**
+     * 
+     * @return the connection asked
+     */
     public Connection LoadConnection() {
-        dbURL = "jdbc:sqlite:sqlite"+File.separator+"db"+File.separator+"tamagotchi.db";
         try {
-            Class.forName("org.sqlite.JDBC");
-            return DriverManager.getConnection(dbURL, "root", "");
-        } catch (ClassNotFoundException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
+            return DriverManager.getConnection(DAOContext.dbURL, "TamagotchiDB", "Tamagotchi29$");
         } catch (SQLException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
+            this.CreateDatabase();
+            return LoadConnection();
         }
-        return null;
     }
+
+    /**
+     * 
+     * @return true if the Database didn't exist, it also create it
+     */
+    public boolean CreateDatabase() {
+        try {
+            Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306", "TamagotchiDB", "Tamagotchi29$");
+            Statement statement = connection.createStatement();
+            statement.executeUpdate("CREATE DATABASE tamagotchi");
+            connection.close();
+            return true;
+        } catch (SQLException e) {
+            System.out.println("Database already exists");
+            return false;
+        }
+    }
+
+    public abstract boolean CreateTable();
 }

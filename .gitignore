@@ -9,3 +9,4 @@ bin
 *.db
 *.sql
 .vscode
+.xml
