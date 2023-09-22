@@ -2,8 +2,6 @@ package models.database;
 
 import java.sql.Statement;
 
-import models.tamagotchi.Tamagotchi;
-
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
@@ -17,6 +15,7 @@ public abstract class DAOContext {
      */
     public Connection LoadConnection() {
         try {
+            System.out.println("Connected");
             return DriverManager.getConnection(DAOContext.dbURL, "TamagotchiDB", "Tamagotchi29$");
         } catch (SQLException e) {
             this.CreateDatabase();
@@ -28,7 +27,7 @@ public abstract class DAOContext {
      * 
      * @return true if the Database didn't exist, it also create it
      */
-    public boolean CreateDatabase() {
+    private boolean CreateDatabase() {
         try {
             Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306", "TamagotchiDB", "Tamagotchi29$");
             Statement statement = connection.createStatement();

@@ -1,12 +1,9 @@
 package models.database;
 
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.sql.Statement;
-
-import javax.management.Query;
 
 import models.Player;
 
@@ -30,7 +27,7 @@ public class PlayerDAO extends DAOContext {
         Connection connection = this.LoadConnection();
         try {
             PreparedStatement preparedStatement = connection.prepareStatement("INSERT INTO tamagotchi.player VALUES (?);");
-            preparedStatement.setObject(0, _player);
+            
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -38,6 +35,6 @@ public class PlayerDAO extends DAOContext {
 
     public Player selectInTable() {
         Connection connection = this.LoadConnection();
-        return new Player();
+        return new Player(null);
     }
 }
