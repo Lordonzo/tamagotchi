@@ -4,8 +4,8 @@ import static org.junit.Assert.assertEquals;
 
 import org.junit.*;
 
-import models.Cat;
 import models.Status.*;
+import models.tamagotchi.Cat;
 
 public class AnimalsTest {
     @Test

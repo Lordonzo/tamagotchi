@@ -1,9 +1,9 @@
-package models;
+package models.tamagotchi;
 
 import models.Status.MentalStatus;
 import models.Status.PhysicalStatus;
 
-public abstract class Animal {
+public abstract class Animal extends Tamagotchi{
     private final int MAX_HEALTH_POINTS = 100;
     private final int MAX_ENERGY = 100;
 
@@ -20,11 +20,10 @@ public abstract class Animal {
      * @param _weight
      */
     public Animal(int _weight) {
-        this.currentHealth = MAX_HEALTH_POINTS;
+        super();
         this.currentHunger = 20;
         this.currentThirsty = 0;
         this.currentWeight = _weight;
-        this.currentEnergy = MAX_ENERGY;
         this.physicalStatus = PhysicalStatus.ALIVE;
         this.mentalStatus = MentalStatus.HAPPY;
     }
