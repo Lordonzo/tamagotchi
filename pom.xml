@@ -1,0 +1,15 @@
+<!-- https://mvnrepository.com/artifact/org.xerial/sqlite-jdbc -->
+<project>
+  <modelVersion>4.0.0</modelVersion>
+ 
+  <groupId>virgile</groupId>
+  <artifactId>tamagotchi</artifactId>
+  <version>0.1</version>
+  <dependencies>
+    <dependency>
+        <groupId>org.xerial</groupId>
+        <artifactId>sqlite-jdbc</artifactId>
+        <version>3.43.0.0</version>
+    </dependency>
+  </dependencies>
+</project>

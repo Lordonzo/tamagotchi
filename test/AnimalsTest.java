@@ -4,12 +4,12 @@ import static org.junit.Assert.assertEquals;
 
 import org.junit.*;
 
-import models.Status.*;
-import models.tamagotchi.Cat;
+import models.*;
+import models.tamagotchi.*;
 
 public class AnimalsTest {
     @Test
     public void Creation() {
-        assertEquals(PhysicalStatus.ALIVE, new Cat(40).getPhysicalStatus());
+        assertEquals(100.0, new Cat(40).GetMaxHealth(), 0.1);
     }
 }

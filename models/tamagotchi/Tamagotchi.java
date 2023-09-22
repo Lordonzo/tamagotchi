@@ -11,4 +11,8 @@ public abstract class Tamagotchi {
         this.currentHealth = MAX_HEALTH_POINTS;
         this.currentEnergy = MAX_ENERGY;
     }
+
+    public float GetMaxHealth() {
+        return this.MAX_HEALTH_POINTS;
+    }
 }

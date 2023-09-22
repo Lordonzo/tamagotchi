@@ -2,3 +2,10 @@
 *.odt
 Main.java
 *.class
+/target/
+.project
+.classpath
+bin
+*.db
+*.sql
+.vscode
