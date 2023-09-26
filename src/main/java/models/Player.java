@@ -1,12 +1,15 @@
 package models;
 
-import java.io.Serializable;
-
 import jakarta.persistence.*;
 
 @Entity
 @Table(name = "player")
-public class Player implements Serializable{
+public class Player {
+    @Id
+    @Column(name = "id")
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private int id;
+    @Column
     private String nickname;
 
     public Player(String _nickname) {
