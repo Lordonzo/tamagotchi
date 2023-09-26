@@ -2,6 +2,8 @@ package models;
 
 import java.io.Serializable;
 
+@Entity
+@Table(name = "player")
 public class Player implements Serializable{
     private String nickname;
 
