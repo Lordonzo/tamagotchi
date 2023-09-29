@@ -10,13 +10,15 @@ public abstract class MySQLDB {
     protected static String dbURL = "jdbc:mysql://localhost:3306/tamagotchi";
 
     /**
-     * load the connection
-     * @return the connection asked and create the database if does not exist
+     * loads the connection and checks if the database exists <p>
+     * <b>Note:</b> creates also the database if it does not exist
+     * @return the connection asked 
      */
     public Connection LoadConnection() {
         try {
+            Connection connection = DriverManager.getConnection(MySQLDB.dbURL, "TamagotchiDB", "Tamagotchi29$");
             System.out.println("Connected");
-            return DriverManager.getConnection(MySQLDB.dbURL, "TamagotchiDB", "Tamagotchi29$");
+            return connection;
         } catch (SQLException e) {
             this.CreateDatabase();
             return LoadConnection();
