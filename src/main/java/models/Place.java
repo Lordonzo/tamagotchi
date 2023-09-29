@@ -1,11 +1,15 @@
 package models;
 
+import models.Status.EPlace;
 import models.Status.Weather;
 
-public abstract class Place {
+public class Place {
+    private EPlace currentPlace;
+    private Place previousPlace;
+    private Place nextPlace;
     private static Weather weather;
 
     public Place() {
-
+        
     }
 }

@@ -3,26 +3,10 @@ package models.database;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
-import java.sql.Statement;
 
 import models.Player;
 
-public class PlayerDAO extends DAOContext {
-    
-    @Override
-    public boolean CreateTable() {
-        Connection connection = this.LoadConnection();
-        try {
-            Statement statement = connection.createStatement();
-            statement.executeUpdate("CREATE TABLE tamagotchi.player;");
-            connection.close();
-            return true;
-        } catch (SQLException e) {
-            e.printStackTrace();
-            return false;
-        }
-    }
-
+public class PlayerDAO extends MySQLDB {
     public void insertInTable(Player _player) {
         Connection connection = this.LoadConnection();
         try {

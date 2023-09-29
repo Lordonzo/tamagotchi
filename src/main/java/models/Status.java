@@ -1,15 +1,19 @@
 package models;
 
 public class Status {
-    public enum PhysicalStatus {
-        DEAD, ALIVE, INJURED
+    public enum PhysicalState {
+        DEAD, ALIVE, INJURED, ILL
     }
 
-    public enum MentalStatus {
+    public enum MentalState {
         HAPPY, SAD, ANGRY
     }
 
     public enum Weather {
         RAINY, SUNNY, CLOUDY, SNOWY, THUNDER
+    }
+
+    public enum EPlace {
+        TOILET, GARDEN, KITCHEN, BEDROOM, LIVINGROOM
     }
 }

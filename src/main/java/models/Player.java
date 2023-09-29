@@ -15,8 +15,4 @@ public class Player {
     public Player(String _nickname) {
         this.nickname = _nickname;
     }
-
-    public String getNickname() {
-        return this.nickname;
-    }
 }

@@ -1,14 +1,12 @@
 package models.tamagotchi;
 
-import models.Status.MentalStatus;
-import models.Status.PhysicalStatus;
+import models.Status.MentalState;
 
 public abstract class Animal extends Tamagotchi{
     private float currentHunger;
     private float currentThirsty;
     private float currentWeight;
-    private PhysicalStatus physicalStatus;
-    private MentalStatus mentalStatus;
+    private MentalState mentalState;
 
     /**
      * @param _weight
@@ -18,23 +16,16 @@ public abstract class Animal extends Tamagotchi{
         this.currentHunger = 20;
         this.currentThirsty = 0;
         this.currentWeight = _weight;
-        this.physicalStatus = PhysicalStatus.ALIVE;
-        this.mentalStatus = MentalStatus.HAPPY;
+        this.mentalState = MentalState.HAPPY;
     }
 
     /**
      * 
      */
-    public void Eat() {
-        if (this.currentHunger - 40 < 0) this.currentHunger = 0;
-        else this.currentHunger -= 40;
-    }
+    public void Eat() {}
 
     /**
      * 
      */
-    public void Drink() {
-        if (this.currentThirsty - 40 < 0) this.currentThirsty = 0;
-        else this.currentThirsty -= 40;
-    }
+    public void Drink() {}
 }
