@@ -16,4 +16,8 @@ public class Status {
     public enum EPlace {
         TOILET, GARDEN, KITCHEN, BEDROOM, LIVINGROOM
     }
+
+    public enum Animal_T {
+        CAT, DOG, RABBIT
+    }
 }
