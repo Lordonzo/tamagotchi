@@ -1,5 +1,7 @@
 package models.tamagotchi;
 
+import java.sql.Date;
+
 import models.Status.PhysicalState;;
 
 public abstract class Tamagotchi {
@@ -11,10 +13,24 @@ public abstract class Tamagotchi {
 
     protected PhysicalState state;
 
+    protected Date birthDate;
+
+    /**
+     * 
+     */
     public Tamagotchi() {
         this.currentHealth = MAX_HEALTH_POINTS;
         this.currentEnergy = MAX_ENERGY;
 
         this.state = PhysicalState.ALIVE;
+        this.birthDate = new Date(System.currentTimeMillis());
+    }
+
+    /**
+     * 
+     * @return
+     */
+    public Date GetBirthDate() {
+        return this.birthDate;
     }
 }
