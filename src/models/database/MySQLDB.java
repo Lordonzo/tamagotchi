@@ -10,11 +10,11 @@ public abstract class MySQLDB {
     protected static String dbURL = "jdbc:mysql://localhost:3306/tamagotchi";
 
     /**
-     * loads the connection and checks if the database exists <p>
+     * Loads the connection and checks if the database exists <p>
      * <b>Note:</b> creates also the database if it does not exist
      * @return the connection asked 
      */
-    public Connection LoadConnection() {
+    protected Connection LoadConnection() {
         try {
             Connection connection = DriverManager.getConnection(MySQLDB.dbURL, "TamagotchiDB", "Tamagotchi29$");
             System.out.println("Connected");
@@ -26,7 +26,7 @@ public abstract class MySQLDB {
     }
 
     /**
-     * creates the database if it does not exist
+     * Creates the database if it does not exist
      */
     private void CreateDatabase() {
         try {
@@ -35,37 +35,43 @@ public abstract class MySQLDB {
             statement.executeUpdate("CREATE DATABASE tamagotchi");
             connection.close();
         } catch (SQLException e) {
-            e.getSQLState();
+            System.out.println(e.getMessage());
         }
     }
 
     /**
-     * creates a table if it does not exist
+     * Creates a table if it does not exist
      * @param _tableString name of table to create
      */
-    public void CreateTable(String _tableString) {
+    public boolean CreateTable(String _tableString) {
         Connection connection = this.LoadConnection();
         try {
             Statement statement = connection.createStatement();
-            statement.executeUpdate("CREATE TABLE tamagotchi."+_tableString+";");
+            statement.executeUpdate("CREATE TABLE tamagotchi."+_tableString+" (id INTEGER NOT NULL, PRIMARY KEY (id));");
+            System.out.println("Table Created");
             connection.close();
+            return true;
         } catch (SQLException e) {
-            e.getSQLState();
+            System.out.println(e.getMessage());
+            return false;
         }
     }
 
     /**
-     * drops a table if it exists
+     * Drops a table if it exists
      * @param _tableString
      */
-    public void DropTable(String _tableString) {
+    public boolean DropTable(String _tableString) {
         Connection connection = this.LoadConnection();
         try {
             Statement statement = connection.createStatement();
             statement.executeUpdate("DROP TABLE tamagotchi."+_tableString+";");
+            System.out.println("Table Dropped");
             connection.close();
+            return true;
         } catch (SQLException e) {
-            e.getSQLState();
+            System.out.println(e.getMessage());
+            return false;
         }
     }
 }
