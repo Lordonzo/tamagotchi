@@ -1,10 +1,6 @@
 package models.database;
 
-import java.sql.Statement;
-
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.SQLException;
+import java.sql.*;
 
 public abstract class MySQLDB {
     protected static String dbURL = "jdbc:mysql://localhost:3306/tamagotchi";
@@ -17,7 +13,6 @@ public abstract class MySQLDB {
     protected Connection LoadConnection() {
         try {
             Connection connection = DriverManager.getConnection(MySQLDB.dbURL, "TamagotchiDB", "Tamagotchi29$");
-            System.out.println("Connected");
             return connection;
         } catch (SQLException e) {
             this.CreateDatabase();
@@ -42,13 +37,11 @@ public abstract class MySQLDB {
     /**
      * Creates a table if it does not exist
      * @param _tableString name of table to create
+     * @return a boolean if everything went well
      */
     public boolean CreateTable(String _tableString) {
-        Connection connection = this.LoadConnection();
-        try {
-            Statement statement = connection.createStatement();
+        try (Connection connection = this.LoadConnection(); Statement statement = connection.createStatement();) {
             statement.executeUpdate("CREATE TABLE tamagotchi."+_tableString+" (id INTEGER NOT NULL, PRIMARY KEY (id));");
-            System.out.println("Table Created");
             connection.close();
             return true;
         } catch (SQLException e) {
@@ -60,13 +53,11 @@ public abstract class MySQLDB {
     /**
      * Drops a table if it exists
      * @param _tableString
+     * @return a boolean if everything went well
      */
     public boolean DropTable(String _tableString) {
-        Connection connection = this.LoadConnection();
-        try {
-            Statement statement = connection.createStatement();
+        try (Connection connection = this.LoadConnection(); Statement statement = connection.createStatement();) {
             statement.executeUpdate("DROP TABLE tamagotchi."+_tableString+";");
-            System.out.println("Table Dropped");
             connection.close();
             return true;
         } catch (SQLException e) {
