@@ -6,7 +6,7 @@ import models.tamagotchi.Tamagotchi;
 
 public class TamagotchiDB extends MySQLDB {
     /**
-     * 
+     * // TODO
      * @param _name
      * @param _birthDate
      * @return
@@ -23,7 +23,7 @@ public class TamagotchiDB extends MySQLDB {
     }
 
     /**
-     * 
+     * // TODO
      * @param _tamagotchi
      * @return
      */
@@ -37,4 +37,7 @@ public class TamagotchiDB extends MySQLDB {
             return false;
         }
     }
+
+    // TODO
+    public void GetAllGames() {}
 }

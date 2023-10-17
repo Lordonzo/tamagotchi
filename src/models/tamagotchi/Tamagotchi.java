@@ -23,7 +23,7 @@ public abstract class Tamagotchi {
         this.currentHealth = MAX_HEALTH_POINTS;
         this.currentEnergy = MAX_ENERGY;
 
-        this.state = PhysicalState.ALIVE;
+        this.state = PhysicalState.IN_SHAPE;
         this.birthDate = new Date(System.currentTimeMillis());
     }
 

@@ -2,7 +2,7 @@ package models;
 
 public class Status {
     public enum PhysicalState {
-        DEAD, ALIVE, INJURED, ILL
+        DEAD, IN_SHAPE, INJURED, ILL
     }
 
     public enum MentalState {

@@ -4,8 +4,9 @@ import models.Status.Animal_T;
 import models.Status.MentalState;
 
 public class Animal extends Tamagotchi {
-    private float currentHunger;
-    private float currentThirsty;
+    private final float MAX_SATIETY = 100;
+
+    private float currentSatiety;
     private float currentWeight;
     private MentalState mentalState;
     private Animal_T animalType;
@@ -15,8 +16,7 @@ public class Animal extends Tamagotchi {
      */
     public Animal(float _weight, Animal_T _animalType) {
         super();
-        this.currentHunger = 20;
-        this.currentThirsty = 0;
+        this.currentSatiety = MAX_SATIETY;
         this.currentWeight = _weight;
         this.mentalState = MentalState.HAPPY;
         this.animalType = _animalType;
@@ -25,10 +25,5 @@ public class Animal extends Tamagotchi {
     /**
      * 
      */
-    public void Eat() {}
-
-    /**
-     * 
-     */
-    public void Drink() {}
+    public void TakeMeal() {}
 }
