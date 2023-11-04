@@ -21,7 +21,7 @@ public class App extends Application {
         primaryStage.setScene(scene);
 
         primaryStage.setMaximized(true);
-        primaryStage.setFullScreen(true);
+        //primaryStage.setFullScreen(true);
         primaryStage.setFullScreenExitKeyCombination(KeyCombination.NO_MATCH);
         primaryStage.show();
     }
