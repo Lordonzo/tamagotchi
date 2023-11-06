@@ -19,7 +19,7 @@ public class App extends Application {
         Parent root = FXMLLoader.load(getClass().getResource("view/Menu.fxml"));
         //Pane root = new Pane();
         Scene scene = new Scene(root);
-        //scene.getStylesheets().add("resources/style.css");
+        scene.getStylesheets().add("resources/css/style.css");
         primaryStage.setScene(scene);
         primaryStage.setResizable(false);
         primaryStage.show();

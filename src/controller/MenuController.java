@@ -20,10 +20,10 @@ public class MenuController implements Initializable {
         // TODO Auto-generated method stub
         //throw new UnsupportedOperationException("Unimplemented method 'initialize'");
     }
-
-    @FXML 
-    public void ToMenu(ActionEvent actionEvent) throws IOException {
-        Parent root = FXMLLoader.load(getClass().getResource("../view/Menu.fxml"));
+    
+    @FXML
+    private void ToNewOrLoad(ActionEvent actionEvent) throws IOException {
+        Parent root = FXMLLoader.load(getClass().getResource("../view/NewOrLoad.fxml"));
         Scene scene = new Scene(root);
         Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
         stage.setScene(scene);
@@ -33,6 +33,15 @@ public class MenuController implements Initializable {
     @FXML
     private void ToOptions(ActionEvent actionEvent) throws IOException {
         Parent root = FXMLLoader.load(getClass().getResource("../view/Option.fxml"));
+        Scene scene = new Scene(root);
+        Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
+        stage.setScene(scene);
+        stage.show();
+    }
+
+    @FXML 
+    private void ToMenu(ActionEvent actionEvent) throws IOException {
+        Parent root = FXMLLoader.load(getClass().getResource("../view/Menu.fxml"));
         Scene scene = new Scene(root);
         Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
         stage.setScene(scene);

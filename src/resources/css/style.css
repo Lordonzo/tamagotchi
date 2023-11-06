@@ -1,3 +1,8 @@
+.anchorpane {
+    -fx-pref-width: 1080;
+    -fx-pref-height: 720;
+}
+
 .icon-button {
     -fx-pref-height: 10;
     -fx-pref-width: 10;
