@@ -10,19 +10,19 @@
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" stylesheets="@../resources/css/style.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.MenuController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" stylesheets="@../resources/css/style.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.OptionController">
    <children>
-      <Label layoutX="163.0" layoutY="292.0" text="Label" />
-      <Slider layoutX="666.0" layoutY="269.0" />
+      <Label layoutX="163.0" layoutY="185.0" text="Volume" />
+      <Slider layoutX="220.0" layoutY="187.0" prefHeight="14.0" prefWidth="181.0" value="80.0" />
       <Label layoutX="272.0" layoutY="336.0" text="Label" />
       <ChoiceBox layoutX="476.0" layoutY="353.0" prefWidth="150.0" />
-      <Button layoutX="15.0" layoutY="15.0" mnemonicParsing="false" onAction="#ToMenu" prefHeight="256.0" prefWidth="366.0">
+      <Button layoutX="15.0" layoutY="15.0" mnemonicParsing="false" onAction="#ToMenu" onMouseEntered="#ChangeImageEntered" onMouseExited="#ChangeImageExited" prefHeight="256.0" prefWidth="366.0">
          <styleClass>
             <String fx:value="nav-btn" />
             <String fx:value="back-btn" />
          </styleClass>
          <graphic>
-            <ImageView fitHeight="60.0" fitWidth="60.0" styleClass="back-img">
+            <ImageView fitHeight="50.0" fitWidth="50.0" styleClass="back-img">
                <image>
                   <Image url="@../resources/menu/go_back.png" />
                </image>
@@ -32,5 +32,6 @@
             </ImageView>
          </graphic>
       </Button>
+      <Button layoutX="75.0" layoutY="607.0" mnemonicParsing="false" text="Apply" />
    </children>
 </AnchorPane>

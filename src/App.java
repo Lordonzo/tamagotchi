@@ -1,7 +1,13 @@
+import java.io.IOException;
+
+import controller.MenuController;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.layout.Pane;
+import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;
+import javafx.scene.media.MediaView;
 import javafx.stage.*;
 
 public class App extends Application {
@@ -16,8 +22,10 @@ public class App extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception {
-        Parent root = FXMLLoader.load(getClass().getResource("view/Menu.fxml"));
-        //Pane root = new Pane();
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("view/Menu.fxml"));
+        Pane root = (Pane) loader.load();
+        MenuController menuController = loader.getController();
+        menuController.SetMusic(SetMusic());
         Scene scene = new Scene(root);
         scene.getStylesheets().add("resources/css/style.css");
         primaryStage.setScene(scene);
@@ -25,5 +33,11 @@ public class App extends Application {
         primaryStage.setHeight(720);
         primaryStage.setResizable(false);
         primaryStage.show();
+    }
+
+    private MediaView SetMusic() throws IOException {
+        MediaView music = new MediaView(new MediaPlayer(new Media(getClass().getResource("resources/music/soul-worker-login-music.mp3").toString())));
+        music.getMediaPlayer().setAutoPlay(true);
+        return music;
     }
 }
