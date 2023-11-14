@@ -4,8 +4,6 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
-import java.net.URL;
-import java.util.ResourceBundle;
 
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
@@ -15,7 +13,6 @@ import javafx.application.Platform;
 import javafx.event.*;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.effect.ColorAdjust;
@@ -33,6 +30,7 @@ public class MenuController {
 
     public void SetMusic(MediaView musicView) {
         this.music = musicView;
+        this.music.getMediaPlayer().setVolume(this.options.getVolume());
         System.out.println(this.music);
     }
     
