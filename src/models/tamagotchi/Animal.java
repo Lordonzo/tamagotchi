@@ -14,16 +14,17 @@ public class Animal extends Tamagotchi {
     /**
      * @param _weight
      */
-    public Animal(float _weight, Animal_T _animalType) {
-        super();
+    public Animal(String nameString, float weight, Animal_T animalType) {
+        super(nameString);
         this.currentSatiety = MAX_SATIETY;
-        this.currentWeight = _weight;
+        this.currentWeight = weight;
         this.mentalState = MentalState.HAPPY;
-        this.animalType = _animalType;
+        this.animalType = animalType;
     }
 
     /**
      * 
      */
-    public void TakeMeal() {}
+    public void Eat() {}
+    
 }

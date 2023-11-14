@@ -1,9 +1,37 @@
-.anchorpane {
+.root {
+    min-width: 800;
+    min-height: 600;
+    -fx-min-width: 800;
+    -fx-min-height: 600;
     -fx-pref-width: 1080;
     -fx-pref-height: 720;
 }
 
-.icon-button {
-    -fx-pref-height: 10;
-    -fx-pref-width: 10;
+.button {
+    background-color: transparent;
+    -fx-background-color: transparent;
+    min-width: 70;
+    min-height: 70;
+    -fx-pref-height: 70;
+    -fx-pref-width: 70;
+}
+
+.button:hover {
+    background-color: transparent;
+    -fx-background-color: black;
+    -fx-text-fill: white;
+}
+
+.back-img {
+    -fx-image: url("../menu/go_back.png");
+}
+
+.nav-btn {
+    -fx-pref-height: 70;
+    -fx-pref-width: 70;
+}
+
+.back-img {
+    rotate: auto;
+    -fx-rotate: 180;
 }

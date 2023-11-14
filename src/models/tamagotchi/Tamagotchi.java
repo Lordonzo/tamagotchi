@@ -1,7 +1,9 @@
 package models.tamagotchi;
 
 import java.sql.Date;
-import models.Status.PhysicalState;;
+
+import models.Place;
+import models.Status.*;
 
 public abstract class Tamagotchi {
     private final float MAX_HEALTH_POINTS = 100;
@@ -13,18 +15,29 @@ public abstract class Tamagotchi {
     protected float currentEnergy;
 
     protected PhysicalState state;
+    protected Place currentPlace;
 
     protected Date birthDate;
 
     /**
      * 
      */
-    public Tamagotchi() {
+    public Tamagotchi(String nameString) {
         this.currentHealth = MAX_HEALTH_POINTS;
         this.currentEnergy = MAX_ENERGY;
 
         this.state = PhysicalState.IN_SHAPE;
         this.birthDate = new Date(System.currentTimeMillis());
+        
+        this.name = nameString;
+    }
+
+    protected void AddEnergy() {
+
+    }
+
+    protected void Play() {
+
     }
 
     /**

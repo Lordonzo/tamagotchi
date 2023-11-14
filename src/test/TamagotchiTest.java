@@ -17,6 +17,6 @@ public class TamagotchiTest {
 
     @Test
     public void CurrentTime() {
-        assertEquals(new Date(System.currentTimeMillis()).toString(), new Animal(40, Animal_T.CAT).GetBirthDate().toString());
+        assertEquals(new Date(System.currentTimeMillis()).toString(), new Animal("Filousse", 40, Animal_T.CAT).GetBirthDate().toString());
     }
 }

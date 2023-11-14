@@ -21,6 +21,8 @@ public class App extends Application {
         Scene scene = new Scene(root);
         scene.getStylesheets().add("resources/css/style.css");
         primaryStage.setScene(scene);
+        primaryStage.setWidth(1080);
+        primaryStage.setHeight(720);
         primaryStage.setResizable(false);
         primaryStage.show();
     }

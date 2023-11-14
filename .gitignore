@@ -1,6 +1,5 @@
 *.pdf
 *.odt
-Main.java
 *.class
 .project
 .classpath
