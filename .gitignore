@@ -7,5 +7,4 @@ Main.java
 bin
 *.db
 *.sql
-.vscode
 *.txt
