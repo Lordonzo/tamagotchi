@@ -17,7 +17,24 @@
             "type": "java",
             "name": "App",
             "request": "launch",
+            "mainClass": "App",
+            "projectName": "tamagotchi_39213d16",
             "vmArgs": "--module-path lib/javafx-sdk-21/lib --add-modules=javafx.controls,javafx.fxml,javafx.media",
+        },
+
+        {
+            "type": "java",
+            "name": "App",
+            "request": "launch",
+            "vmArgs": "--module-path \"/home/mg/openjfx/javafx/lib\" --add-modules=javafx.controls,javafx.fxml,javafx.media",
+            "mainClass": "App",
+            "projectName": "tamagotchi_f99d44a8"
+        },
+        {
+            "type": "java",
+            "name": "App",
+            "request": "launch",
+            "vmArgs": "--module-path --module-path lib/javafx-sdk-21/lib --add-modules=javafx.controls,javafx.fxml,javafx.media",
             "mainClass": "App",
             "projectName": "tamagotchi_317dc8ec"
         }
