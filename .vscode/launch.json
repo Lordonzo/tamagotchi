@@ -25,7 +25,7 @@
             "type": "java",
             "name": "App",
             "request": "launch",
-            "vmArgs": "--module-path --module-path lib/javafx-sdk-21/lib --add-modules=javafx.controls,javafx.fxml,javafx.media",
+            "vmArgs": "--module-path lib/javafx-sdk-21/lib --add-modules=javafx.controls,javafx.fxml,javafx.media",
             "mainClass": "App",
             "projectName": "tamagotchi_317dc8ec"
         }
