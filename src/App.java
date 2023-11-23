@@ -25,7 +25,7 @@ public class App extends Application {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("view/Menu.fxml"));
         Pane root = (Pane) loader.load();
         MenuController menuController = loader.getController();
-        menuController.SetMusic(SetMusic());
+        menuController.setMusic(SetMusic());
         Scene scene = new Scene(root);
         scene.getStylesheets().add("resources/css/style.css");
         primaryStage.setScene(scene);

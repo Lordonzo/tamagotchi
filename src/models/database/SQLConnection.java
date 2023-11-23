@@ -14,12 +14,12 @@ public class SQLConnection {
         }
     }
 
-    public static SQLConnection GetInstance() {
+    public static SQLConnection getInstance() {
         if (SQLConnection.instance == null) SQLConnection.instance = new SQLConnection();
         return SQLConnection.instance;
     }
 
-    public Connection GetConnection() {
-        return SQLConnection.instance.GetConnection();
+    public Connection getConnection() {
+        return SQLConnection.instance.getConnection();
     }
 }

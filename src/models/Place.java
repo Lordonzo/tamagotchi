@@ -41,5 +41,5 @@ public class Place {
         this.nextPlace = nextPlace;
     }
     
-    public static Weather GetWeather() { return Place.weather; }
+    public static Weather getWeather() { return Place.weather; }
 }

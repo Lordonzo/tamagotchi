@@ -25,6 +25,6 @@ public class Animal extends Tamagotchi {
     /**
      * 
      */
-    public void Eat() {}
+    public void eat() {}
     
 }

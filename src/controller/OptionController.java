@@ -29,10 +29,10 @@ public class OptionController {
     private Slider volumeSlider;
 
     public OptionController() throws FileNotFoundException, IOException, ParseException {
-        this.LoadOptions();
+        this.loadOptions();
     }
 
-    public void SetMusic(MediaView musicView) {
+    public void setMusic(MediaView musicView) {
         this.music = musicView;
         this.music.getMediaPlayer().setVolume(this.options.getVolume());
         System.out.println(this.music);
@@ -44,11 +44,11 @@ public class OptionController {
      * @throws IOException
      */
     @FXML 
-    private void ToMenu(ActionEvent actionEvent) throws IOException {
+    private void toMenu(ActionEvent actionEvent) throws IOException {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("../view/Menu.fxml"));
         Pane root = (Pane) loader.load();
         MenuController menuController = loader.getController();
-        menuController.SetMusic(music);
+        menuController.setMusic(music);
         Scene scene = (Scene) ((Node) actionEvent.getSource()).getScene();
         scene.setRoot(root);
     }
@@ -57,13 +57,13 @@ public class OptionController {
      * CSS THINGS
      */
     @FXML
-    private void ChangeImageEntered(Event event) {
+    private void changeImageEntered(Event event) {
         ColorAdjust cAdjust = new ColorAdjust();
         cAdjust.setBrightness(1);
         ((ImageView)((Node) event.getSource()).lookup(".image-view")).setEffect(cAdjust);
     }
     @FXML
-    private void ChangeImageExited(Event event) {
+    private void changeImageExited(Event event) {
         ColorAdjust cAdjust = new ColorAdjust();
         cAdjust.setBrightness(0);
         ((ImageView)((Node) event.getSource()).lookup(".image-view")).setEffect(cAdjust);
@@ -74,7 +74,7 @@ public class OptionController {
      */
     private Options options;
 
-    private void LoadOptions() throws FileNotFoundException, IOException, ParseException {
+    private void loadOptions() throws FileNotFoundException, IOException, ParseException {
         if (options == null) this.options = new Options();
         JSONParser parser = new JSONParser();
         File jsonFile = new File(getClass().getResource("../resources/data/options.json").getFile());
@@ -85,7 +85,7 @@ public class OptionController {
     }
 
     @FXML
-    private void ApplyOptions() {
+    private void applyOptions() {
         File jsonFile = new File(getClass().getResource("../resources/data/options.json").getFile());
 
         JSONObject obj = new JSONObject();
@@ -103,10 +103,10 @@ public class OptionController {
 
         // Apply all changes
         try {
-            LoadOptions();
+            loadOptions();
         } catch (IOException | ParseException e) {
             e.printStackTrace();
         }
-        SetMusic(this.music);
+        setMusic(this.music);
     }
 }

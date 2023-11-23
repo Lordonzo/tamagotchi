@@ -11,8 +11,8 @@ public class TamagotchiDB extends MySQLDB {
      * @param _birthDate
      * @return
      */
-    public boolean InsertInTable(Tamagotchi _tamagotchi) {
-        try (Connection connection = this.LoadConnection(); Statement statement = connection.createStatement();) {
+    public boolean insertInTable(Tamagotchi _tamagotchi) {
+        try (Connection connection = this.loadConnection(); Statement statement = connection.createStatement();) {
             statement.executeUpdate("INSERT INTO tamagotchi.tamagotchi VALUES ()");
             connection.close();
             return true;
@@ -27,8 +27,8 @@ public class TamagotchiDB extends MySQLDB {
      * @param _tamagotchi
      * @return
      */
-    public boolean UpdateInTable(Tamagotchi _tamagotchi) {
-        try (Connection connection = this.LoadConnection(); Statement statement = connection.createStatement();) {
+    public boolean updateInTable(Tamagotchi _tamagotchi) {
+        try (Connection connection = this.loadConnection(); Statement statement = connection.createStatement();) {
             statement.executeUpdate("INSERT INTO tamagotchi.tamagotchi VALUES ()");
             connection.close();
             return true;
@@ -39,5 +39,5 @@ public class TamagotchiDB extends MySQLDB {
     }
 
     // TODO
-    public void GetAllGames() {}
+    public void getAllGames() {}
 }

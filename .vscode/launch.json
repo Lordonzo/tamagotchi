@@ -8,7 +8,14 @@
             "type": "java",
             "name": "App",
             "request": "launch",
-            "vmArgs": "--module-path lib/javafx-sdk-21/lib --add-modules=javafx.controls,javafx.fxml,javafx.media",
+            "mainClass": "App",
+            "vmArgs": "--module-path \"lib/javafx-sdk-21/lib\" --add-modules=javafx.controls,javafx.fxml,javafx.media",
+            "projectName": "tamagotchi_13a27d77"
+        },
+        {
+            "type": "java",
+            "name": "App",
+            "request": "launch",
             "mainClass": "App",
             "projectName": "tamagotchi_317dc8ec"
         }

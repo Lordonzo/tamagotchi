@@ -8,7 +8,7 @@ import models.Player;
 
 public class PlayerDAO extends MySQLDB {
     public void insertInTable(Player _player) {
-        Connection connection = this.LoadConnection();
+        Connection connection = this.loadConnection();
         try {
             PreparedStatement preparedStatement = connection.prepareStatement("INSERT INTO tamagotchi.player VALUES (?);");
             
@@ -18,7 +18,7 @@ public class PlayerDAO extends MySQLDB {
     }
 
     public Player selectInTable() {
-        Connection connection = this.LoadConnection();
+        Connection connection = this.loadConnection();
         return new Player(null);
     }
 }

@@ -10,22 +10,22 @@ public class DatabaseTest {
     private MySQLDB mySQLDB;
 
     @Before
-    public void Init() {
+    public void init() {
         this.mySQLDB = new PlayerDAO();
     }
 
     @Test
-    public void Connection() {
+    public void connection() {
         //assertNotEquals(null, this.mySQLDB.LoadConnection());
     }
 
     @Test
-    public void CreateTable() {
-        assertTrue(this.mySQLDB.CreateTable("player"));
+    public void createTable() {
+        assertTrue(this.mySQLDB.createTable("player"));
     }
 
     @Test
-    public void DropTable() {
-        assertTrue(this.mySQLDB.DropTable("player"));
+    public void dropTable() {
+        assertTrue(this.mySQLDB.dropTable("player"));
     }
 }

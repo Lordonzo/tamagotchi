@@ -10,20 +10,20 @@ public abstract class MySQLDB {
      * <b>Note:</b> creates also the database if it does not exist
      * @return the connection asked 
      */
-    protected Connection LoadConnection() {
+    protected Connection loadConnection() {
         try {
             Connection connection = DriverManager.getConnection(MySQLDB.dbURL, "TamagotchiDB", "Tamagotchi29$");
             return connection;
         } catch (SQLException e) {
-            this.CreateDatabase();
-            return LoadConnection();
+            this.createDatabase();
+            return loadConnection();
         }
     }
 
     /**
      * Creates the database if it does not exist
      */
-    private void CreateDatabase() {
+    private void createDatabase() {
         try {
             Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306", "TamagotchiDB", "Tamagotchi29$");
             Statement statement = connection.createStatement();
@@ -39,8 +39,8 @@ public abstract class MySQLDB {
      * @param _tableString name of table to create
      * @return a boolean if everything went well
      */
-    public boolean CreateTable(String _tableString) {
-        try (Connection connection = this.LoadConnection(); Statement statement = connection.createStatement();) {
+    public boolean createTable(String _tableString) {
+        try (Connection connection = this.loadConnection(); Statement statement = connection.createStatement();) {
             statement.executeUpdate("CREATE TABLE tamagotchi."+_tableString+" (id INTEGER NOT NULL, PRIMARY KEY (id));");
             connection.close();
             return true;
@@ -55,8 +55,8 @@ public abstract class MySQLDB {
      * @param _tableString
      * @return a boolean if everything went well
      */
-    public boolean DropTable(String _tableString) {
-        try (Connection connection = this.LoadConnection(); Statement statement = connection.createStatement();) {
+    public boolean dropTable(String _tableString) {
+        try (Connection connection = this.loadConnection(); Statement statement = connection.createStatement();) {
             statement.executeUpdate("DROP TABLE tamagotchi."+_tableString+";");
             connection.close();
             return true;

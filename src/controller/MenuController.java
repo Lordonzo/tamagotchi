@@ -25,10 +25,10 @@ public class MenuController {
     private MediaView music;
 
     public MenuController() throws FileNotFoundException, IOException, ParseException {
-        this.LoadOptions();
+        this.loadOptions();
     }
 
-    public void SetMusic(MediaView musicView) {
+    public void setMusic(MediaView musicView) {
         this.music = musicView;
         this.music.getMediaPlayer().setVolume(this.options.getVolume());
         System.out.println(this.music);
@@ -40,7 +40,7 @@ public class MenuController {
      * @throws IOException
      */
     @FXML
-    private void ToNewOrLoad(ActionEvent actionEvent) throws IOException {
+    private void toNewOrLoad(ActionEvent actionEvent) throws IOException {
         Pane root = (Pane) FXMLLoader.load(getClass().getResource("../view/NewOrLoad.fxml"));
         Scene scene = (Scene) ((Node) actionEvent.getSource()).getScene();
         scene.setRoot(root);
@@ -52,11 +52,11 @@ public class MenuController {
      * @throws IOException
      */
     @FXML
-    private void ToOptions(ActionEvent actionEvent) throws IOException {
+    private void toOptions(ActionEvent actionEvent) throws IOException {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("../view/Option.fxml"));
         Pane root = (Pane) loader.load();
         OptionController optionController = loader.getController();
-        optionController.SetMusic(music);
+        optionController.setMusic(music);
         Scene scene = (Scene) ((Node) actionEvent.getSource()).getScene();
         scene.setRoot(root);
     }
@@ -75,13 +75,13 @@ public class MenuController {
      * CSS THINGS
      */
     @FXML
-    private void ChangeImageEntered(Event event) {
+    private void changeImageEntered(Event event) {
         ColorAdjust cAdjust = new ColorAdjust();
         cAdjust.setBrightness(1);
         ((ImageView)((Node) event.getSource()).lookup(".image-view")).setEffect(cAdjust);
     }
     @FXML
-    private void ChangeImageExited(Event event) {
+    private void changeImageExited(Event event) {
         ColorAdjust cAdjust = new ColorAdjust();
         cAdjust.setBrightness(0);
         ((ImageView)((Node) event.getSource()).lookup(".image-view")).setEffect(cAdjust);
@@ -92,7 +92,7 @@ public class MenuController {
      */
     private Options options;
 
-    private void LoadOptions() throws FileNotFoundException, IOException, ParseException {
+    private void loadOptions() throws FileNotFoundException, IOException, ParseException {
         this.options = new Options();
         JSONParser parser = new JSONParser();
         File jsonFile = new File(getClass().getResource("../resources/data/options.json").getFile());

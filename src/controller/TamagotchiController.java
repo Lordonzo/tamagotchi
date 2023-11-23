@@ -8,11 +8,11 @@ public class TamagotchiController {
     private ArrayList<Place> allPlaces = new ArrayList<Place>();
 
     public TamagotchiController() {
-        this.SetPlaces();
-        DisplayPlaces();
+        this.setPlaces();
+        displayPlaces();
     }
 
-    private void SetPlaces() {
+    private void setPlaces() {
         Place bedroom = new Place(EPlace.BEDROOM);
         Place garden = new Place(EPlace.GARDEN);
         Place kitchen = new Place(EPlace.KITCHEN);
@@ -40,7 +40,7 @@ public class TamagotchiController {
         allPlaces.add(toilet);
     }
 
-    public void DisplayPlaces() {
+    public void displayPlaces() {
         for (Place place : allPlaces) {
             System.out.println(place.getCurrentPlace().name());
         }

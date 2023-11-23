@@ -32,11 +32,11 @@ public abstract class Tamagotchi {
         this.name = nameString;
     }
 
-    protected void AddEnergy() {
+    protected void addEnergy() {
 
     }
 
-    protected void Play() {
+    protected void play() {
 
     }
 
@@ -44,7 +44,7 @@ public abstract class Tamagotchi {
      * 
      * @return
      */
-    public Date GetBirthDate() {
+    public Date getBirthDate() {
         return this.birthDate;
     }
 }
