@@ -66,7 +66,7 @@ public class MenuController {
      * @param actionEvent
      */
     @FXML
-    private void QuitGame(ActionEvent actionEvent) {
+    private void quitGame(ActionEvent actionEvent) {
         Platform.exit();
     }
 
