@@ -4,10 +4,14 @@ import java.sql.Date;
 
 import models.Place;
 import models.Status.*;
+import java.util.Random;
 
 public abstract class Tamagotchi {
     private final float MAX_HEALTH_POINTS = 100;
     private final float MAX_ENERGY = 100;
+    
+    private final int MAX_DAY = 30; // TODO valeurs a adapter
+    private final int MIN_DAY = 7;
     
     protected String name;
 
@@ -18,7 +22,10 @@ public abstract class Tamagotchi {
     protected Place currentPlace;
 
     protected Date birthDate;
+    protected Date deathDate;
 
+
+    //TODO commenter les getters setters
     /**
      * 
      */
@@ -30,8 +37,11 @@ public abstract class Tamagotchi {
         this.birthDate = new Date(System.currentTimeMillis());
         
         this.name = nameString;
-    }
 
+        //Calcule dernier jour de l'animal(86400 = nombre de secondes dans un jour);
+        this.deathDate = new Date(System.currentTimeMillis() + (86400*(new Random().nextInt(MIN_DAY,MAX_DAY))));
+    }
+    
     protected void addEnergy() {
 
     }
@@ -40,11 +50,32 @@ public abstract class Tamagotchi {
 
     }
 
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public float getCurrentEnergy() {
+        return currentEnergy;
+    }
+    public long getDeathDate() {
+        return deathDate.getTime();
+    }
+    public PhysicalState getState() {
+        return state;
+    }
+    public float getCurrentHealth() {
+        return currentHealth;
+    }
     /**
      * 
      * @return
      */
-    public Date getBirthDate() {
-        return this.birthDate;
+    public long getBirthDate() {
+        return this.birthDate.getTime();
     }
 }
