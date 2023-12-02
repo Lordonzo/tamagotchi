@@ -1,6 +1,6 @@
 package models.tamagotchi;
 
-import models.Status.Animal_T;
+import models.Status.Tamagotchi_T;
 import models.Status.MentalState;
 
 public class Animal extends Tamagotchi {
@@ -8,18 +8,15 @@ public class Animal extends Tamagotchi {
 
     private float currentSatiety;
     private float currentWeight;
-    private MentalState mentalState;
-    private Animal_T animalType;
+    private Tamagotchi_T animalType;
 
     /**
      * @param _weight
      */
-    public Animal(String nameString, float weight, Animal_T animalType) {
-        super(nameString);
+    public Animal(String nameString, float weight, Tamagotchi_T animalType) {
+        super(nameString,weight,animalType);
         this.currentSatiety = MAX_SATIETY;
-        this.currentWeight = weight;
         this.mentalState = MentalState.HAPPY;
-        this.animalType = animalType;
     }
 
     /**

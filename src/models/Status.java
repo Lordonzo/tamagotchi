@@ -5,8 +5,9 @@ public class Status {
         DEAD, IN_SHAPE, INJURED, ILL
     }
 
+    //TODO j'ai modif les status juste pour voir si ca marche mais azi jsp pas trop comment on gere le robot
     public enum MentalState {
-        HAPPY, SAD, ANGRY
+        HAPPY, SAD, ANGRY,ROBOT
     }
 
     public enum Weather {
@@ -17,7 +18,7 @@ public class Status {
         TOILET, GARDEN, KITCHEN, BEDROOM, LIVINGROOM
     }
 
-    public enum Animal_T {
-        CAT, DOG, RABBIT
+    public enum Tamagotchi_T {
+        CAT, DOG, RABBIT,ROBOT
     }
 }

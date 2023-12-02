@@ -24,22 +24,30 @@ public abstract class Tamagotchi {
     protected Date birthDate;
     protected Date deathDate;
 
+    protected Tamagotchi_T type;
+    protected float currentWeight;
+
+    protected MentalState mentalState;
+
+
 
     //TODO commenter les getters setters
+    //TODO faire une condition pour que le robot ne puisse pas mourir vieillesse
     /**
      * 
      */
-    public Tamagotchi(String nameString) {
+    public Tamagotchi(String _nameString,float _currentWeight,Tamagotchi_T _type) {
         this.currentHealth = MAX_HEALTH_POINTS;
         this.currentEnergy = MAX_ENERGY;
 
         this.state = PhysicalState.IN_SHAPE;
         this.birthDate = new Date(System.currentTimeMillis());
         
-        this.name = nameString;
-
+        this.name = _nameString;
+        this.currentWeight = _currentWeight;
         //Calcule dernier jour de l'animal(86400 = nombre de secondes dans un jour);
         this.deathDate = new Date(System.currentTimeMillis() + (86400*(new Random().nextInt(MIN_DAY,MAX_DAY))));
+        this.type = _type;
     }
     
     protected void addEnergy() {
@@ -62,8 +70,8 @@ public abstract class Tamagotchi {
     public float getCurrentEnergy() {
         return currentEnergy;
     }
-    public long getDeathDate() {
-        return deathDate.getTime();
+    public Date getDeathDate() {
+        return deathDate;
     }
     public PhysicalState getState() {
         return state;
@@ -71,11 +79,17 @@ public abstract class Tamagotchi {
     public float getCurrentHealth() {
         return currentHealth;
     }
+    public Tamagotchi_T getType() {
+        return type;
+    }
+    public MentalState getMentalState() {
+        return mentalState;
+    }
     /**
      * 
      * @return
      */
-    public long getBirthDate() {
-        return this.birthDate.getTime();
+    public Date getBirthDate() {
+        return this.birthDate;
     }
 }
