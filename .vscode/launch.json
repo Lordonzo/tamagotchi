@@ -8,23 +8,10 @@
             "type": "java",
             "name": "TamagotchiDB",
             "request": "launch",
-            "mainClass": "models.database.TamagotchiDB",
-            "projectName": "tamagotchi_13a27d77"
-        },
-        {
-            "type": "java",
-            "name": "App",
-            "request": "launch",
+            "mainClass": "App",
             "vmArgs": "--module-path \"/lib/openjfx/javafx-sdk/lib/\" --add-modules=javafx.controls,javafx.fxml,javafx.media",
-            "mainClass": "App",
-            "projectName": "tamagotchi_13a27d77"
+            "projectName": "tamagotchi-1_b4f9015b"
         },
-        {
-            "type": "java",
-            "name": "App",
-            "request": "launch",
-            "mainClass": "App",
-            "projectName": "tamagotchi_13a27d77"
-        }
+
     ]
 }
