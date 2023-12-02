@@ -25,7 +25,7 @@ public class App extends Application {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("view/Menu.fxml"));
         Pane root = (Pane) loader.load();
         MenuController menuController = loader.getController();
-        menuController.setMusic(SetMusic());
+        menuController.setMusic(setMusic());
         Scene scene = new Scene(root);
         scene.getStylesheets().add("resources/css/style.css");
         primaryStage.setScene(scene);
@@ -35,7 +35,7 @@ public class App extends Application {
         primaryStage.show();
     }
 
-    private MediaView SetMusic() throws IOException {
+    private MediaView setMusic() throws IOException {
         MediaView music = new MediaView(new MediaPlayer(new Media(getClass().getResource("resources/music/soul-worker-login-music.mp3").toString())));
         music.getMediaPlayer().setAutoPlay(true);
         music.getMediaPlayer().setCycleCount(MediaPlayer.INDEFINITE);

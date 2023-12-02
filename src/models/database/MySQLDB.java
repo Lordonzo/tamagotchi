@@ -3,7 +3,7 @@ package models.database;
 import java.sql.*;
 
 public abstract class MySQLDB {
-    protected static String dbURL = "jdbc:mysql://localhost:3306/tamagotchi";
+    protected static String dbURL = "jdbc:sqlite:SQL/tamagotchi.sql";
 
     /**
      * Loads the connection and checks if the database exists <p>
@@ -12,7 +12,7 @@ public abstract class MySQLDB {
      */
     protected Connection loadConnection() {
         try {
-            Connection connection = DriverManager.getConnection(MySQLDB.dbURL, "TamagotchiDB", "Tamagotchi29$");
+            Connection connection = DriverManager.getConnection(MySQLDB.dbURL);
             return connection;
         } catch (SQLException e) {
             this.createDatabase();
@@ -25,7 +25,7 @@ public abstract class MySQLDB {
      */
     private void createDatabase() {
         try {
-            Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306", "TamagotchiDB", "Tamagotchi29$");
+            Connection connection = DriverManager.getConnection(MySQLDB.dbURL);
             Statement statement = connection.createStatement();
             statement.executeUpdate("CREATE DATABASE tamagotchi");
             connection.close();
