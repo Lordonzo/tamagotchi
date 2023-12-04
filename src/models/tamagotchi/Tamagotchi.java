@@ -13,6 +13,7 @@ public abstract class Tamagotchi {
     private final int MAX_DAY = 30; // TODO valeurs a adapter
     private final int MIN_DAY = 7;
     
+    protected int id;
     protected String name;
 
     protected float currentHealth;
@@ -36,18 +37,18 @@ public abstract class Tamagotchi {
     /**
      * 
      */
-    public Tamagotchi(String _nameString,float _currentWeight,Tamagotchi_T _type) {
+    public Tamagotchi(String nameString,float currentWeight,Tamagotchi_T type) {
         this.currentHealth = MAX_HEALTH_POINTS;
         this.currentEnergy = MAX_ENERGY;
 
         this.state = PhysicalState.IN_SHAPE;
         this.birthDate = new Date(System.currentTimeMillis());
         
-        this.name = _nameString;
-        this.currentWeight = _currentWeight;
+        this.name = nameString;
+        this.currentWeight = currentWeight;
         //Calcule dernier jour de l'animal(86400 = nombre de secondes dans un jour);
         this.deathDate = new Date(System.currentTimeMillis() + (86400*(new Random().nextInt(MIN_DAY,MAX_DAY))));
-        this.type = _type;
+        this.type = type;
     }
     
     protected void addEnergy() {
@@ -85,11 +86,11 @@ public abstract class Tamagotchi {
     public MentalState getMentalState() {
         return mentalState;
     }
-    /**
-     * 
-     * @return
-     */
+
     public Date getBirthDate() {
         return this.birthDate;
+    }
+    public Place getCurrentPlace() {
+        return this.currentPlace;
     }
 }

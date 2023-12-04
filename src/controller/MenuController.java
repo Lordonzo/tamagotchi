@@ -31,7 +31,7 @@ public class MenuController {
     public void setMusic(MediaView musicView) {
         this.music = musicView;
         this.music.getMediaPlayer().setVolume(this.options.getVolume());
-        System.out.println(this.music);
+        //System.out.println(this.music);
     }
     
     /**
@@ -41,7 +41,8 @@ public class MenuController {
      */
     @FXML
     private void toNewOrLoad(ActionEvent actionEvent) throws IOException {
-        Pane root = (Pane) FXMLLoader.load(getClass().getResource("../view/NewOrLoad.fxml"));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("../view/NewOrLoad.fxml"));
+        Pane root = (Pane) loader.load();
         Scene scene = (Scene) ((Node) actionEvent.getSource()).getScene();
         scene.setRoot(root);
     }
@@ -99,6 +100,6 @@ public class MenuController {
         Object json = parser.parse(new FileReader(jsonFile));
         JSONObject optionsJson = (JSONObject) ((JSONObject) json).get("options");
         this.options.setVolume((double) optionsJson.get("volume"));
-        System.out.println(options.getVolume());
+        //System.out.println(options.getVolume());
     }
 }

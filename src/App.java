@@ -15,7 +15,6 @@ public class App extends Application {
      *  - CHANGE SCENES FROM ROOT (NOT SCENE)
      * 
      */
-
     public static void main(String[] args) {
         launch(args);
     }

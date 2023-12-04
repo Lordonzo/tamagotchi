@@ -8,7 +8,6 @@ public class Animal extends Tamagotchi {
 
     private float currentSatiety;
     private float currentWeight;
-    private Tamagotchi_T animalType;
 
     /**
      * @param _weight
@@ -24,4 +23,25 @@ public class Animal extends Tamagotchi {
      */
     public void eat() {}
     
+
+    public float getMAX_SATIETY() {
+        return this.MAX_SATIETY;
+    }
+
+
+    public float getCurrentSatiety() {
+        return this.currentSatiety;
+    }
+
+    public void setCurrentSatiety(float currentSatiety) {
+        this.currentSatiety = currentSatiety;
+    }
+
+    public float getCurrentWeight() {
+        return this.currentWeight;
+    }
+
+    public void setCurrentWeight(float currentWeight) {
+        this.currentWeight = currentWeight;
+    }
 }

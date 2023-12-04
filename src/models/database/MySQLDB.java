@@ -2,8 +2,10 @@ package models.database;
 
 import java.sql.*;
 
+import models.tamagotchi.Tamagotchi;
+
 public abstract class MySQLDB {
-    protected static String dbURL = "jdbc:sqlite:SQL/tamagotchi.sql";
+    protected static String dbURL = "jdbc:sqlite:resources/data/tamagotchi.db";
 
     /**
      * Loads the connection and checks if the database exists <p>
@@ -36,12 +38,12 @@ public abstract class MySQLDB {
 
     /**
      * Creates a table if it does not exist
-     * @param _tableString name of table to create
+     * @param tableString name of table to create
      * @return a boolean if everything went well
      */
-    public boolean createTable(String _tableString) {
+    public boolean createTable(String tableString) {
         try (Connection connection = this.loadConnection(); Statement statement = connection.createStatement();) {
-            statement.executeUpdate("CREATE TABLE tamagotchi."+_tableString+" (id INTEGER NOT NULL, PRIMARY KEY (id));");
+            statement.executeUpdate("CREATE TABLE tamagotchi."+tableString+" (id INTEGER NOT NULL, PRIMARY KEY (id));");
             connection.close();
             return true;
         } catch (SQLException e) {
@@ -52,17 +54,7 @@ public abstract class MySQLDB {
 
     /**
      * Drops a table if it exists
-     * @param _tableString
      * @return a boolean if everything went well
      */
-    public boolean dropTable(String _tableString) {
-        try (Connection connection = this.loadConnection(); Statement statement = connection.createStatement();) {
-            statement.executeUpdate("DROP TABLE tamagotchi."+_tableString+";");
-            connection.close();
-            return true;
-        } catch (SQLException e) {
-            System.out.println(e.getMessage());
-            return false;
-        }
-    }
+    public abstract boolean createTable();
 }
