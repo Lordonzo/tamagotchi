@@ -5,6 +5,8 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.net.URL;
+import java.util.ResourceBundle;
 
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
@@ -14,6 +16,7 @@ import javafx.event.ActionEvent;
 import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Slider;
@@ -23,13 +26,18 @@ import javafx.scene.layout.Pane;
 import javafx.scene.media.MediaView;
 import models.Options;
 
-public class OptionController {
+public class OptionController implements Initializable {
     private MediaView music;
     @FXML 
     private Slider volumeSlider;
 
-    public OptionController() throws FileNotFoundException, IOException, ParseException {
-        this.loadOptions();
+    @Override
+    public void initialize(URL location, ResourceBundle resources) { 
+        try {
+            this.loadOptions();
+        } catch (IOException | ParseException e) {
+            e.printStackTrace();
+        } 
     }
 
     public void setMusic(MediaView musicView) {
@@ -81,7 +89,10 @@ public class OptionController {
         Object json = parser.parse(new FileReader(jsonFile));
         JSONObject optionsJson = (JSONObject) ((JSONObject) json).get("options");
         this.options.setVolume((double) optionsJson.get("volume"));
-        System.out.println(options.getVolume());
+        this.volumeSlider.adjustValue((double) optionsJson.get("volume") * 100);
+        //System.out.println((double) optionsJson.get("volume"));
+        //System.out.println(volumeSlider.valueProperty());
+        //System.out.println(options.getVolume());
     }
 
     @FXML
@@ -90,6 +101,7 @@ public class OptionController {
 
         JSONObject obj = new JSONObject();
         obj.put("volume", volumeSlider.getValue()/100);
+        //System.out.println(volumeSlider);
 
         JSONObject options = new JSONObject();
         options.put("options", obj);
