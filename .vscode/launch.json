@@ -6,6 +6,14 @@
     "configurations": [
         {
             "type": "java",
+            "name": "App",
+            "request": "launch",
+            "mainClass": "App",
+            "vmArgs": "--module-path lib/javafx-sdk-21/lib --add-modules=javafx.controls,javafx.fxml,javafx.media",
+            "projectName": "tamagotchi_317dc8ec"
+        },
+        {
+            "type": "java",
             "name": "TamagotchiDB",
             "request": "launch",
             "mainClass": "models.database.TamagotchiDB",
