@@ -29,6 +29,10 @@ public class NewOrLoadController {
         Scene scene = (Scene) ((Node) actionEvent.getSource()).getScene();
         scene.setRoot(root);
     }
+    @FXML
+    private void toNewTama(ActionEvent actionEvent) throws IOException {
+        
+    }
      @FXML
     private void changeImageEntered(Event event) {
         ColorAdjust cAdjust = new ColorAdjust();
