@@ -10,7 +10,7 @@
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="600.0" minWidth="800.0" prefHeight="720.0" prefWidth="1080.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.NewTamaController">
    <children>
-      <Button layoutX="14.0" layoutY="14.0" mnemonicParsing="false" onAction="#toNewOrLoad" text="Button" />
+      <Button layoutX="14.0" layoutY="14.0" mnemonicParsing="false" onAction="#toNewOrLoad" text="Retour" />
       <TextField layoutX="369.0" layoutY="104.0" />
       <Text layoutX="298.0" layoutY="121.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Name :" />
       <Text layoutX="76.0" layoutY="174.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Type :" />
@@ -47,5 +47,6 @@
             <Image url="@../resources/tama_sprites/chat%20(2).png" />
          </image>
       </ImageView>
+      <Button layoutX="982.0" layoutY="682.0" mnemonicParsing="false" text="Validation" />
    </children>
 </AnchorPane>
