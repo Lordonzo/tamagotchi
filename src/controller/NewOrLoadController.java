@@ -29,10 +29,19 @@ public class NewOrLoadController {
         Scene scene = (Scene) ((Node) actionEvent.getSource()).getScene();
         scene.setRoot(root);
     }
-    @FXML
+
+    @FXML 
     private void toNewTama(ActionEvent actionEvent) throws IOException {
-        
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("../view/NewTama.fxml"));
+        Pane root = (Pane) loader.load();
+        NewTamaController newTamaController = loader.getController();
+        newTamaController.setMusic(music);
+        Scene scene = (Scene) ((Node) actionEvent.getSource()).getScene();
+        scene.setRoot(root);
     }
+    
+    
+        
      @FXML
     private void changeImageEntered(Event event) {
         ColorAdjust cAdjust = new ColorAdjust();
