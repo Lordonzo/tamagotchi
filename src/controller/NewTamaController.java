@@ -8,13 +8,16 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Scene;
-import javafx.scene.control.CheckBox;
+import javafx.scene.control.Button;
 import javafx.scene.control.RadioButton;
+import javafx.scene.control.TextField;
 import javafx.scene.control.ToggleGroup;
 import javafx.scene.effect.ColorAdjust;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 import javafx.scene.media.MediaView;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 
 public class NewTamaController {
      private MediaView music;
@@ -47,6 +50,9 @@ public class NewTamaController {
     }
     
     @FXML
+    private TextField tfName;
+
+    @FXML
     private RadioButton rbChat;
 
     @FXML
@@ -60,4 +66,28 @@ public class NewTamaController {
 
     @FXML
     private ToggleGroup tgType;
+
+    @FXML
+    private Button bVerif;
+
+    @FXML
+    private void onVerifClick() {
+        boolean isTfNameEmpty = tfName.getText().trim().isEmpty();
+        RadioButton selectedRadioButton = (RadioButton) tgType.getSelectedToggle();
+        if (isTfNameEmpty) {
+            //affiche message "rentrer le nom du tama"
+            showAlert("Erreur", "Veuillez entrer le nom du tama.", AlertType.ERROR);
+        } else if (selectedRadioButton == null) {
+            //affiche message "rentrer type tama"
+            showAlert("Erreur", "Veuillez sélectionner le type du tama.", AlertType.ERROR);
+        }
+    }
+
+    private void showAlert(String titre, String message, AlertType type) {
+        Alert alert = new Alert(type);
+        alert.setTitle(titre);
+        alert.setHeaderText(null);
+        alert.setContentText(message);
+        alert.showAndWait();
+    }
 }
