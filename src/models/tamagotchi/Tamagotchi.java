@@ -7,17 +7,19 @@ import models.Status.*;
 import java.util.Random;
 
 public abstract class Tamagotchi {
-    private final float MAX_HEALTH_POINTS = 100;
-    private final float MAX_ENERGY = 100;
+    private final int MAX_HEALTH_POINTS = 100;
+    private final int MAX_ENERGY = 100;
     
     private final int MAX_DAY = 30; // TODO valeurs a adapter
     private final int MIN_DAY = 7;
+
+    protected final int NB_SEC = 3;
     
     protected int id;
     protected String name;
 
-    protected float currentHealth;
-    protected float currentEnergy;
+    protected int currentHealth;
+    protected int currentEnergy;
 
     protected PhysicalState state;
     protected Place currentPlace;
@@ -27,8 +29,14 @@ public abstract class Tamagotchi {
 
     protected Tamagotchi_T type;
     protected float currentWeight;
+    
+    protected int currentCleaning;
 
     protected MentalState mentalState;
+    protected int currentMental;
+
+    protected Thread routine;
+    protected boolean exit;
 
 
 
@@ -57,6 +65,10 @@ public abstract class Tamagotchi {
 
     protected void play() {
 
+    }
+
+    protected float mean(){
+        return 0;
     }
 
 
@@ -92,5 +104,11 @@ public abstract class Tamagotchi {
     }
     public Place getCurrentPlace() {
         return this.currentPlace;
+    }
+    public void start(){
+        routine.start();
+    }
+    public void stop(){
+        exit = true;
     }
 }
