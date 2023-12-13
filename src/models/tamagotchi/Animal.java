@@ -7,12 +7,12 @@ public class Animal extends Tamagotchi {
     private final int MAX_SATIETY = 100;
 
     private int currentSatiety;
-
+    private int satietyDifficulty;
     /**
      * @param _weight
      */
-    public Animal(String _nameString, float _weight, Tamagotchi_T _animalType) {
-        super(_nameString,_weight,_animalType);
+    public Animal(String _nameString, float _weight, Tamagotchi_T _animalType, int _difficulty) {
+        super(_nameString,_weight,_animalType,_difficulty);
         this.currentSatiety = MAX_SATIETY;
         this.mentalState = MentalState.HAPPY;
         exit = false;
@@ -41,20 +41,19 @@ public class Animal extends Tamagotchi {
                     if(currentCleaning <0){
                         currentCleaning =0;
                     }
-                    if(currentSatiety <= 0){
-                        currentHealth-=20;
-                    }
+                    
 
-                    if(currentHealth <= 0){
-                        die("Mal traitance.");
-                    }
+
                     else if(currentMental <= 0){
                         die("Suicide");
                     }
-                    /*DEBUG
+
+
+                    if(DEBUG){
                     System.out.println("currentHealth :"+currentHealth);
                     System.out.println("currentMental:"+currentMental);
-                    */
+                    }
+
                 }while(!exit);
                 
     }
@@ -66,17 +65,34 @@ public class Animal extends Tamagotchi {
     };
     }
     /**
-     * 
+     * increase currentSatiety
      */
     public void eat() {
-        if(currentSatiety+10 <=100){
-            setCurrentSatiety(getCurrentSatiety()+10);
+        if(currentSatiety+satietyDifficulty <=100){
+            currentSatiety+=satietyDifficulty;
+        }
+        else{ currentSatiety =100;
         }
     }
-    
 
-    public int getMAX_SATIETY() {
-        return this.MAX_SATIETY;
+    /**
+     * decrease the animal health if the conditions are met
+     * kill the animal if health <= 0
+     * @param _satietyLost
+     * @param _cleaningLost
+     */
+    public void decreaseHealth(int _satietyLost, int _cleaningLost){
+        if(currentSatiety <= 0){
+            if(currentHealth-_satietyLost < 0) currentHealth = 0;
+            else currentHealth-=_satietyLost;
+        }
+        if(currentCleaning <= 0){
+            if(currentHealth-_cleaningLost < 0) currentHealth = 0;
+            else currentHealth-=_cleaningLost;
+        }
+        if(currentHealth <= 0){
+            die("Mal traitance.");
+        }
     }
 
 
@@ -98,6 +114,19 @@ public class Animal extends Tamagotchi {
 
     public void die(String _cause){
         System.out.println("L'animal est mort de : " +_cause);
+    }
+
+    public static void main(String[] args) {
+        Animal a1 = new Animal("test", 10, Tamagotchi_T.CAT,1);
+        a1.start();
+    }
+
+    /**
+     * 
+     * @return mean
+     */
+    public float mean(){
+        return (currentCleaning+currentHealth+currentSatiety)/3;
     }
 }
 

@@ -6,6 +6,13 @@
     "configurations": [
         {
             "type": "java",
+            "name": "Animal",
+            "request": "launch",
+            "mainClass": "models.tamagotchi.Animal",
+            "projectName": "tamagotchi_13a27d77"
+        },
+        {
+            "type": "java",
             "name": "App",
             "request": "launch",
             "vmArgs": "--module-path \"/home/mg/openjfx/javafx/lib\" --add-modules=javafx.controls,javafx.fxml,javafx.media",
@@ -34,6 +41,5 @@
             "vmArgs": "--module-path \"/lib/openjfx/javafx-sdk/lib/\" --add-modules=javafx.controls,javafx.fxml,javafx.media",
             "projectName": "tamagotchi-1_b4f9015b"
         }
-        
     ]
 }
