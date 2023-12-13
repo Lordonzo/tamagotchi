@@ -8,6 +8,9 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Scene;
+import javafx.scene.control.CheckBox;
+import javafx.scene.control.RadioButton;
+import javafx.scene.control.ToggleGroup;
 import javafx.scene.effect.ColorAdjust;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
@@ -43,4 +46,18 @@ public class NewTamaController {
         ((ImageView)((Node) event.getSource()).lookup(".image-view")).setEffect(cAdjust);
     }
     
+    @FXML
+    private RadioButton rbChat;
+
+    @FXML
+    private RadioButton rbChien;
+
+    @FXML
+    private RadioButton rbLapin;
+
+    @FXML
+    private RadioButton rbRobot;
+
+    @FXML
+    private ToggleGroup tgType;
 }
