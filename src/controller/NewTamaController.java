@@ -16,6 +16,8 @@ import javafx.scene.effect.ColorAdjust;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 import javafx.scene.media.MediaView;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 
@@ -29,6 +31,16 @@ public class NewTamaController {
     @FXML 
     private void toNewOrLoad(ActionEvent actionEvent) throws IOException {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("../view/NewOrLoad.fxml"));
+        Pane root = (Pane) loader.load();
+        NewOrLoadController newOrLoadController = loader.getController();
+        newOrLoadController.setMusic(music);
+        Scene scene = (Scene) ((Node) actionEvent.getSource()).getScene();
+        scene.setRoot(root);
+    }
+
+    @FXML 
+    private void toInGame(ActionEvent actionEvent) throws IOException {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("../view/InGame.fxml"));
         Pane root = (Pane) loader.load();
         NewOrLoadController newOrLoadController = loader.getController();
         newOrLoadController.setMusic(music);
@@ -80,6 +92,10 @@ public class NewTamaController {
         } else if (selectedRadioButton == null) {
             //affiche message "rentrer type tama"
             showAlert("Erreur", "Veuillez sélectionner le type du tama.", AlertType.ERROR);
+        } else {
+            // Obtenez une référence à la fenêtre principale à partir d'un nœud du graphe de scène actuel
+            Stage primaryStage = (Stage) bVerif.getScene().getWindow();
+            showConfirmationDialog(primaryStage);
         }
     }
 
@@ -89,5 +105,23 @@ public class NewTamaController {
         alert.setHeaderText(null);
         alert.setContentText(message);
         alert.showAndWait();
+    }
+
+    private void showConfirmationDialog(Stage primaryStage) {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("../view/ConfirmationNewTama.fxml"));
+            Stage dialogStage = new Stage();
+            dialogStage.initOwner(primaryStage);
+            dialogStage.initModality(Modality.WINDOW_MODAL);
+            dialogStage.setScene(new Scene(loader.load()));
+            dialogStage.setResizable(false);
+
+            ConfirmationNewTamaController confirmationNewTamaController = loader.getController();
+            confirmationNewTamaController.setStage(dialogStage);
+
+            dialogStage.showAndWait();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }
