@@ -116,13 +116,13 @@ public abstract class Tamagotchi {
         this.name = name;
     }
 
-    public float getCurrentEnergy() {
+    public int getCurrentEnergy() {
         return currentEnergy;
     }
     public PhysicalState getState() {
         return state;
     }
-    public float getCurrentHealth() {
+    public int getCurrentHealth() {
         return currentHealth;
     }
     public Tamagotchi_T getType() {
