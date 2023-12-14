@@ -31,8 +31,8 @@ public class InGameController {
    private void toMenu(ActionEvent actionEvent) throws IOException {
        FXMLLoader loader = new FXMLLoader(getClass().getResource("../view/Menu.fxml"));
        Pane root = (Pane) loader.load();
-       InGameController inGameController = loader.getController();
-       inGameController.setMusic(music);
+       MenuController menuController = loader.getController();
+       menuController.setMusic(music);
        Scene scene = (Scene) ((Node) actionEvent.getSource()).getScene();
        scene.setRoot(root);
    }

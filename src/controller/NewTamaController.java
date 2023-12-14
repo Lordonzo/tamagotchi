@@ -38,15 +38,15 @@ public class NewTamaController {
         scene.setRoot(root);
     }
 
-    @FXML 
-    private void toInGame(ActionEvent actionEvent) throws IOException {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("../view/InGame.fxml"));
-        Pane root = (Pane) loader.load();
-        NewOrLoadController newOrLoadController = loader.getController();
-        newOrLoadController.setMusic(music);
-        Scene scene = (Scene) ((Node) actionEvent.getSource()).getScene();
-        scene.setRoot(root);
-    }
+    // @FXML 
+    // private void toInGame(ActionEvent actionEvent) throws IOException {
+    //     FXMLLoader loader = new FXMLLoader(getClass().getResource("../view/InGame.fxml"));
+    //     Pane root = (Pane) loader.load();
+    //     InGameController inGameController = loader.getController();
+    //     inGameController.setMusic(music);
+    //     Scene scene = (Scene) ((Node) actionEvent.getSource()).getScene();
+    //     scene.setRoot(root);
+    // }
         
      @FXML
     private void changeImageEntered(Event event) {
@@ -83,15 +83,20 @@ public class NewTamaController {
     private Button bVerif;
 
     @FXML
+    private Pane pConfirmation;
+
+    @FXML
     private void onVerifClick() {
         boolean isTfNameEmpty = tfName.getText().trim().isEmpty();
         RadioButton selectedRadioButton = (RadioButton) tgType.getSelectedToggle();
         if (isTfNameEmpty) {
             //affiche message "rentrer le nom du tama"
-            showAlert("Erreur", "Veuillez entrer le nom du tama.", AlertType.ERROR);
+            showAlert("Erreur", "Veuillez entrer le nom du tamagotchi.", AlertType.ERROR);
         } else if (selectedRadioButton == null) {
             //affiche message "rentrer type tama"
-            showAlert("Erreur", "Veuillez sélectionner le type du tama.", AlertType.ERROR);
+            showAlert("Erreur", "Veuillez sélectionner le type du tamagotchi.", AlertType.ERROR);
+        // } else {
+        //     showConfirmationPane();
         } else {
             // Obtenez une référence à la fenêtre principale à partir d'un nœud du graphe de scène actuel
             Stage primaryStage = (Stage) bVerif.getScene().getWindow();
@@ -106,6 +111,26 @@ public class NewTamaController {
         alert.setContentText(message);
         alert.showAndWait();
     }
+
+    // private void showConfirmationPane() {
+    //     pConfirmation.setVisible(true);
+    // }
+
+    // @FXML
+    // private void onOuiClick(ActionEvent actionEvent) throws IOException {
+    //     FXMLLoader loader = new FXMLLoader(getClass().getResource("../view/InGame.fxml"));
+    //     Pane root = (Pane) loader.load();
+    //     InGameController inGameController = loader.getController();
+    //     inGameController.setMusic(music);
+    //     Scene scene = (Scene) ((Node) actionEvent.getSource()).getScene();
+    //     scene.setRoot(root);
+    // }
+    
+
+    // @FXML
+    // private void onNonClick() {
+    //     pConfirmation.setVisible(false);
+    // }
 
     private void showConfirmationDialog(Stage primaryStage) {
         try {

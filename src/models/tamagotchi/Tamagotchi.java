@@ -1,20 +1,15 @@
 package models.tamagotchi;
 
-import java.sql.Date;
 import java.time.LocalDateTime;
 
 import models.Place;
 import models.Status.*;
-import java.util.Random;
 
 public abstract class Tamagotchi {
     private final int MAX_HEALTH_POINTS = 100;
     private final int MAX_ENERGY = 100;
     private final int MAX_CLEAN = 100;
     private final int MAX_SATIETY = 100;
-    
-    private final int MAX_DAY = 30; // TODO valeurs a adapter
-    private final int MIN_DAY = 7;
 
     protected final int NB_SEC = 1000;
 
@@ -123,13 +118,13 @@ public abstract class Tamagotchi {
         this.name = name;
     }
 
-    public float getCurrentEnergy() {
+    public int getCurrentEnergy() {
         return currentEnergy;
     }
     public PhysicalState getState() {
         return state;
     }
-    public float getCurrentHealth() {
+    public int getCurrentHealth() {
         return currentHealth;
     }
     public Tamagotchi_T getType() {
@@ -140,6 +135,9 @@ public abstract class Tamagotchi {
     }
     public Place getCurrentPlace() {
         return this.currentPlace;
+    }
+    public int getCurrentCleaning() {
+        return this.currentCleaning;
     }
     public void start(){
         exit = false;

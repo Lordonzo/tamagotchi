@@ -23,7 +23,19 @@ public class Animal extends Tamagotchi {
                 try{
                     do{
                         sleep(NB_SEC);
+                    do{
+                        sleep(NB_SEC);
 
+                        decreaseStats(10, 10, 10); //TODO changer les valeurs 
+                        decreaseHealth(10, 10);
+                        if(DEBUG){
+                        System.out.println("mean : " + mean());
+                        System.out.println("currentCleaning :"+currentCleaning);
+                        System.out.println("currentSatiety :"+currentSatiety);
+                        System.out.println("currentEnergy"+currentEnergy);
+                        System.out.println("currentHealth :"+currentHealth);
+                        System.out.println("currentMental:"+currentMental);
+                        }
                         decreaseStats(10, 10, 10); //TODO changer les valeurs 
                         decreaseHealth(10, 10);
                         if(DEBUG){
@@ -117,14 +129,6 @@ public class Animal extends Tamagotchi {
         if(currentSatiety-_satiety < 0) currentSatiety = 0;
         else currentSatiety-=_satiety;
     }
-
-    public static void main(String[] args) {
-        Animal a1 = new Animal("test", 10, Tamagotchi_T.CAT);
-        a1.stop();
-        a1.start();
-    }
-
-
 }
 
 

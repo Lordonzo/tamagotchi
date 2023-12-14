@@ -12,7 +12,7 @@ public abstract class MySQLDB {
      */
     protected Connection loadConnection() {
         try {
-            dropDatabase();
+            //dropDatabase();
             Connection connection = DriverManager.getConnection(dbURL);
             return connection;
         } catch (SQLException e) {
@@ -25,7 +25,7 @@ public abstract class MySQLDB {
         try {
             Connection connection = DriverManager.getConnection(dbURL);
             Statement statement = connection.createStatement();
-            statement.executeQuery("DROP DATABASE tamagotchi");
+            statement.executeQuery("DROP DATABASE IF EXISTS tamagotchi");
             connection.close();
         } catch (SQLException e) {
             System.out.println(e.getMessage());
@@ -39,7 +39,7 @@ public abstract class MySQLDB {
         try {
             Connection connection = DriverManager.getConnection(dbURL);
             Statement statement = connection.createStatement();
-            statement.executeQuery("CREATE DATABASE tamagotchi");
+            statement.executeQuery("CREATE DATABASE IF NOT EXISTS tamagotchi");
             connection.close();
         } catch (SQLException e) {
             System.out.println(e.getMessage());

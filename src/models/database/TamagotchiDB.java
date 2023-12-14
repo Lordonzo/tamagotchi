@@ -19,7 +19,7 @@ public class TamagotchiDB extends MySQLDB {
     @Override
     public boolean createTable() {
         try (Connection connection = this.loadConnection(); Statement statement = connection.createStatement();) {
-            statement.executeUpdate("CREATE TABLE tamagotchi"
+            statement.executeUpdate("CREATE TABLE IF NOT EXISTS tamagotchi"
             + "("
                 + "id INTEGER NOT NULL PRIMARY KEY,"
                 + "name VARCHAR(255) NOT NULL,"
@@ -33,7 +33,7 @@ public class TamagotchiDB extends MySQLDB {
                 + "physicalState VARCHAR(255) NOT NULL,"
                 + "animalType VARCHAR(255) NOT NULL,"
                 + "mentalState VARCHAR(255) NOT NULL,"
-                + "currentPlace INTEGER NOT NULL"
+                + "currentPlace VARCHAR(255) NOT NULL"
             + ")");
             connection.close();
             return true;
@@ -42,11 +42,11 @@ public class TamagotchiDB extends MySQLDB {
             return false;
         }
     }
-    
+
     public void select() {
         try (Connection connection = this.loadConnection(); Statement statement = connection.createStatement();) {
             ResultSet result = statement.executeQuery("SELECT * FROM tamagotchi");
-            while (result.next()) System.out.println(result.getString(1) + " name");
+            while (result.next()) for (int i=1; i<=result.getMetaData().getColumnCount(); i++) System.out.println(result.getMetaData().getColumnName(i) + ": " + result.getString(i));
             System.out.println(result.toString());
             connection.close();
         } catch (SQLException e) {
@@ -75,9 +75,18 @@ public class TamagotchiDB extends MySQLDB {
             statement.setString(1, animal.getName());
             statement.setDate(2, Date.valueOf(LocalDate.now()));
             statement.setDate(3, Date.valueOf(LocalDate.now()));
+            statement.setInt(4, animal.getCurrentHealth());
+            statement.setInt(5, animal.getCurrentEnergy());
+            statement.setInt(6, animal.getCurrentSatiety());
+            statement.setFloat(7, animal.getCurrentWeight());
+            statement.setInt(8, animal.getCurrentCleaning());
+            statement.setString(9, animal.getState().name());
+            statement.setString(10, animal.getMentalState().name());
+            statement.setString(11, animal.getType().name());
+            statement.setString(12, animal.getCurrentPlace().getCurrentPlace().name());
+            statement.executeUpdate();
 
-
-
+            /**
             statement.executeQuery("INSERT INTO tamagotchi (name, dateBirth, lastTimeChanged, health, energy, satiety, weightT, toilet, physicalState, mentalState, animalType, currentPlace) VALUES ("
             + animal.getName()
             + ", NOW()"
@@ -86,12 +95,13 @@ public class TamagotchiDB extends MySQLDB {
             + ", " + animal.getCurrentEnergy()
             + ", " + animal.getCurrentSatiety() 
             + ", " + animal.getCurrentWeight()
-            + ", " + null
-            + ", " + animal.getState().toString()
-            + ", " + animal.getMentalState().toString()
-            + ", " + animal.getType().toString()
-            + ", " + animal.getCurrentPlace().getCurrentPlace()
+            + ", " + animal.getCurrentCleaning()
+            + ", " + animal.getState().name()
+            + ", " + animal.getMentalState().name()
+            + ", " + animal.getType().name()
+            + ", " + animal.getCurrentPlace().getCurrentPlace().name()
             + ")");
+            */
             connection.close();
         } catch (SQLException e) {
             System.out.println(e.getMessage());
