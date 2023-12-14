@@ -26,6 +26,5 @@
       <Button layoutX="982.0" layoutY="360.0" mnemonicParsing="false" text="PièceB" />
       <Button layoutX="1004.0" layoutY="12.0" mnemonicParsing="false" onAction="#toMenu" text="Quitter" />
       <Button layoutX="989.0" layoutY="682.0" mnemonicParsing="false" text="Glossaire" />
-      <BottomNavigationButton layoutX="516.0" layoutY="670.0" />
    </children>
 </AnchorPane>

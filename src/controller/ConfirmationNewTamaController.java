@@ -21,8 +21,15 @@ public class ConfirmationNewTamaController {
     }
 
     @FXML
-    private void onOuiClick() {
+    private void onOuiClick(ActionEvent actionEvent) throws IOException {
         stage.close();
+       FXMLLoader loader = new FXMLLoader(getClass().getResource("../view/InGame.fxml"));
+       Pane root = (Pane) loader.load();
+       InGameController inGameController = loader.getController();
+       inGameController.setMusic(music);
+       Scene scene = (Scene) ((Node) actionEvent.getSource()).getScene();
+       scene.setRoot(root);
+    
     }
 
     @FXML
@@ -39,8 +46,8 @@ public class ConfirmationNewTamaController {
     // private void toInGame(ActionEvent actionEvent) throws IOException {
     //    FXMLLoader loader = new FXMLLoader(getClass().getResource("../view/InGame.fxml"));
     //    Pane root = (Pane) loader.load();
-    //    ConfirmationNewTamaController confirmationNewTamaController = loader.getController();
-    //    confirmationNewTamaController.setMusic(music);
+    //    InGameController inGameController = loader.getController();
+    //    inGameController.setMusic(music);
     //    Scene scene = (Scene) ((Node) actionEvent.getSource()).getScene();
     //    scene.setRoot(root);
     // }
