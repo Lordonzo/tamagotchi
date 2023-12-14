@@ -11,10 +11,6 @@ import javafx.scene.media.MediaView;
 import javafx.stage.*;
 
 public class App extends Application {
-    /*  TODO
-     *  - CHANGE SCENES FROM ROOT (NOT SCENE)
-     * 
-     */
     public static void main(String[] args) {
         launch(args);
     }

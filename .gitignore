@@ -8,4 +8,4 @@ bin
 *.sql
 *.txt
 lib/javafx-sdk-21.0.1/*
-.vscode/launch.json
+.vscode/*
