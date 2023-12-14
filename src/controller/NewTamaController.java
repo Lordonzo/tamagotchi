@@ -9,6 +9,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextField;
 import javafx.scene.control.ToggleGroup;
@@ -84,6 +85,12 @@ public class NewTamaController {
     private Pane pConfirmation;
 
     @FXML
+    private Label lNom;
+
+    @FXML
+    private Label lType;
+
+    @FXML
     private void onVerifClick() {
         boolean isTfNameEmpty = tfName.getText().trim().isEmpty();
         RadioButton selectedRadioButton = (RadioButton) tgType.getSelectedToggle();
@@ -94,6 +101,12 @@ public class NewTamaController {
             //affiche message "rentrer type tama"
             showAlert("Erreur", "Veuillez sélectionner le type du tamagotchi.", AlertType.ERROR);
         } else {
+            // Récupérer la valeur du TextField
+            String valeurTextField = tfName.getText();
+            lNom.setText("Nom : " + valeurTextField);
+            // Récupérer le Radio Button coché
+            String typeSelectionne = mapType(selectedRadioButton);
+            lType.setText("Type : " + typeSelectionne);
             showConfirmationPane();
         }
     }
@@ -135,6 +148,29 @@ public class NewTamaController {
         rbChien.setDisable(false);
         rbLapin.setDisable(false);
         rbRobot.setDisable(false);
+    }
+
+    private String mapType(RadioButton radioButton) {
+        String typeSelectionne = "";
+    
+        switch (radioButton.getId()) {
+            case "rbChat":
+                typeSelectionne = "Chat";
+                break;
+            case "rbChien":
+                typeSelectionne = "Chien";
+                break;
+            case "rbLapin":
+                typeSelectionne = "Lapin";
+                break;
+            case "rbRobot":
+                typeSelectionne = "Robot";
+                break;
+            default:
+                // Gestion d'un cas par défaut si nécessaire
+        }
+    
+        return typeSelectionne;
     }
 
 }
