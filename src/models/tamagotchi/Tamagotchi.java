@@ -1,19 +1,15 @@
 package models.tamagotchi;
 
-import java.sql.Date;
+import java.time.LocalDateTime;
 
 import models.Place;
 import models.Status.*;
-import java.util.Random;
 
 public abstract class Tamagotchi {
     private final int MAX_HEALTH_POINTS = 100;
     private final int MAX_ENERGY = 100;
-    
-    private final int MAX_DAY = 30; // TODO valeurs a adapter
-    private final int MIN_DAY = 7;
 
-    protected final int NB_SEC = 3;
+    protected final int NB_SEC = 1000;
 
     //Difficulty
     protected int cleaningDifficulty;
@@ -29,8 +25,7 @@ public abstract class Tamagotchi {
     protected PhysicalState state;
     protected Place currentPlace;
 
-    protected Date birthDate;
-    protected Date deathDate;
+    protected LocalDateTime birthDate;
 
     protected Tamagotchi_T type;
     protected float currentWeight;
@@ -53,18 +48,17 @@ public abstract class Tamagotchi {
     /**
      * 
      */
-    public Tamagotchi(String _nameString,float _currentWeight,Tamagotchi_T _type,int _difficulty) {
+    public Tamagotchi(String _nameString,float _currentWeight,Tamagotchi_T _type) {
         this.currentHealth = MAX_HEALTH_POINTS;
         this.currentEnergy = MAX_ENERGY;
-
+        this.exit = false;
         this.state = PhysicalState.IN_SHAPE;
-        this.birthDate = new Date(System.currentTimeMillis());
         
         this.name = _nameString;
         this.currentWeight = _currentWeight;
-        //Calcule dernier jour de l'animal(86400 = nombre de secondes dans un jour);
-        this.deathDate = new Date(System.currentTimeMillis() + (86400*(new Random().nextInt(MIN_DAY,MAX_DAY))));
         this.type = _type;
+        // TODO : Changer ensuite
+        this.currentPlace = new Place(EPlace.LIVINGROOM);
     }
     
     protected void addEnergy() {
@@ -122,16 +116,13 @@ public abstract class Tamagotchi {
         this.name = name;
     }
 
-    public float getCurrentEnergy() {
+    public int getCurrentEnergy() {
         return currentEnergy;
-    }
-    public Date getDeathDate() {
-        return deathDate;
     }
     public PhysicalState getState() {
         return state;
     }
-    public float getCurrentHealth() {
+    public int getCurrentHealth() {
         return currentHealth;
     }
     public Tamagotchi_T getType() {
@@ -140,14 +131,14 @@ public abstract class Tamagotchi {
     public MentalState getMentalState() {
         return mentalState;
     }
-
-    public Date getBirthDate() {
-        return this.birthDate;
-    }
     public Place getCurrentPlace() {
         return this.currentPlace;
     }
+    public int getCurrentCleaning() {
+        return this.currentCleaning;
+    }
     public void start(){
+        exit = false;
         routine.start();
     }
     public void stop(){
@@ -155,7 +146,17 @@ public abstract class Tamagotchi {
     }
 
     /**
-     * decrease the mental,cleanig and energy stat
+     * kill the tamagotchi and print the cause of the death
+     * @param _cause
+     */
+    public void die(String _cause){
+        System.out.println("L'animal est mort de : " +_cause);
+        stop();
+    }
+
+    /**
+     * decrease the mental,cleaning and energy stats
+     * call die routine if mental = 0
      * @param _mental
      * @param _cleaning
      * @param _energy
@@ -167,7 +168,22 @@ public abstract class Tamagotchi {
         if(currentCleaning-_cleaning < 0) currentCleaning = 0;
         else currentCleaning-=_cleaning;
 
-        if(currentMental-_mental < 0) currentMental = 0;
-        else currentMental-=_mental;
+        if(mean()<50){
+            if(currentMental-_mental < 0) {
+                currentMental = 0;
+                currentHealth = 0;
+                die("Suicide");
+            }
+            else currentMental-=_mental;
+        }
+
+    }
+
+    /**
+     * mean of stats
+     * @return mean
+     */
+    public float mean(){
+        return (currentCleaning+currentHealth)/2;
     }
 }

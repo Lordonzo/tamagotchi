@@ -4,65 +4,48 @@ import models.Status.Tamagotchi_T;
 import models.Status.MentalState;
 
 public class Animal extends Tamagotchi {
-    private final int MAX_SATIETY = 100;
+    private final int MAX_STAT = 100;
 
     private int currentSatiety;
     private int satietyDifficulty;
     /**
      * @param _weight
      */
-    public Animal(String _nameString, float _weight, Tamagotchi_T _animalType, int _difficulty) {
-        super(_nameString,_weight,_animalType,_difficulty);
-        this.currentSatiety = MAX_SATIETY;
+    public Animal(String _nameString, float _weight, Tamagotchi_T _animalType) {
+        super(_nameString,_weight,_animalType);
+        this.currentSatiety = MAX_STAT;
+        this.currentMental = MAX_STAT;
+        this.currentCleaning = MAX_STAT;
         this.mentalState = MentalState.HAPPY;
         exit = false;
         routine = new Thread(){
             public void run() {
                 try{
-                do{
-                    sleep(NB_SEC);
-                    currentEnergy-=2;
-                    currentSatiety-=10;
-                    currentCleaning-=10;
-                    if(mean() > 50){
-                        currentMental+=10;
-                        if(currentMental >100){
-                            currentMental = 100;
+                    do{
+                        sleep(NB_SEC);
+
+                        decreaseStats(10, 10, 10); //TODO changer les valeurs 
+                        decreaseHealth(10, 10);
+                        if(DEBUG){
+                        System.out.println("mean : " + mean());
+                        System.out.println("currentCleaning :"+currentCleaning);
+                        System.out.println("currentSatiety :"+currentSatiety);
+                        System.out.println("currentEnergy"+currentEnergy);
+                        System.out.println("currentHealth :"+currentHealth);
+                        System.out.println("currentMental:"+currentMental);
                         }
-                    }
-                    else{
-                        currentMental-=15;
-                    }
 
 
-                    if(currentEnergy <0){
-                        currentEnergy =0;
-                    }
-                    if(currentCleaning <0){
-                        currentCleaning =0;
-                    }
+                    }while(!exit);
                     
-
-
-                    else if(currentMental <= 0){
-                        die("Suicide");
-                    }
-
-
-                    if(DEBUG){
-                    System.out.println("currentHealth :"+currentHealth);
-                    System.out.println("currentMental:"+currentMental);
-                    }
-
-                }while(!exit);
-                
-    }
-    catch(Exception e){
-        //TODO routine d'erreur
-        System.err.println("Erreur du Thread");
-    }
         }
-    };
+        catch(Exception e){
+            //TODO routine d'erreur
+            System.err.println("Thread error : "+e.getMessage());
+        }
+            }
+        };
+    //routine.start();
     }
     /**
      * increase currentSatiety
@@ -112,21 +95,26 @@ public class Animal extends Tamagotchi {
         this.currentWeight = _currentWeight;
     }
 
-    public void die(String _cause){
-        System.out.println("L'animal est mort de : " +_cause);
-    }
-
-    public static void main(String[] args) {
-        Animal a1 = new Animal("test", 10, Tamagotchi_T.CAT,1);
-        a1.start();
-    }
-
     /**
-     * 
+     * rewrite
      * @return mean
      */
     public float mean(){
         return (currentCleaning+currentHealth+currentSatiety)/3;
+    }
+    /**
+     * rewrite
+     * decrease the mental,cleaningn,energy and satiety stats
+     * call die routine if mental = 0
+     * @param _mental
+     * @param _cleaning
+     * @param _energy
+     * @param _satiety
+     */
+    public void decreaseStats(int _mental,int _cleaning, int _energy,int _satiety){
+        super.decreaseStats(_mental, _cleaning, _energy);
+        if(currentSatiety-_satiety < 0) currentSatiety = 0;
+        else currentSatiety-=_satiety;
     }
 }
 
