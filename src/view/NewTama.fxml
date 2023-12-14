@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.Button?>
-<?import javafx.scene.control.CheckBox?>
+<?import javafx.scene.control.RadioButton?>
 <?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.ToggleGroup?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
@@ -11,42 +12,39 @@
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="600.0" minWidth="800.0" prefHeight="720.0" prefWidth="1080.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.NewTamaController">
    <children>
       <Button layoutX="14.0" layoutY="14.0" mnemonicParsing="false" onAction="#toNewOrLoad" text="Retour" />
-      <TextField layoutX="369.0" layoutY="104.0" />
+      <TextField fx:id="tfName" layoutX="369.0" layoutY="104.0" />
       <Text layoutX="298.0" layoutY="121.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Name :" />
       <Text layoutX="76.0" layoutY="174.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Type :" />
-      <CheckBox layoutX="228.0" layoutY="315.0" mnemonicParsing="false" />
-      <CheckBox layoutX="632.0" layoutY="285.0" mnemonicParsing="false">
-         <graphic>
-            <ImageView fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@../resources/tama_sprites/chien%20(1).png" />
-               </image>
-            </ImageView>
-         </graphic>
-      </CheckBox>
-      <CheckBox layoutX="237.0" layoutY="516.0" mnemonicParsing="false">
-         <graphic>
-            <ImageView fitHeight="150.0" fitWidth="189.0" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@../resources/tama_sprites/lapin%20(1).png" />
-               </image>
-            </ImageView>
-         </graphic>
-      </CheckBox>
-      <CheckBox layoutX="647.0" layoutY="516.0" mnemonicParsing="false">
-         <graphic>
-            <ImageView fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@../resources/tama_sprites/robot.png" />
-               </image>
-            </ImageView>
-         </graphic>
-      </CheckBox>
-      <ImageView fitHeight="150.0" fitWidth="200.0" layoutX="38.0" layoutY="249.0" pickOnBounds="true" preserveRatio="true">
+      <Button fx:id="bVerif" layoutX="825.0" layoutY="177.0" minHeight="60.0" minWidth="100.0" mnemonicParsing="false" onAction="#onVerifClick" text="Validation" />
+      <fx:define>
+         <ToggleGroup fx:id="group" />
+      </fx:define>
+      <ImageView fitHeight="150.0" fitWidth="200.0" layoutX="259.0" layoutY="285.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../resources/tama_sprites/chat%20(2).png" />
          </image>
       </ImageView>
-      <Button layoutX="982.0" layoutY="682.0" mnemonicParsing="false" text="Validation" />
+      <ImageView fitHeight="150.0" fitWidth="189.0" layoutX="270.0" layoutY="488.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../resources/tama_sprites/lapin%20(1).png" />
+         </image>
+      </ImageView>
+      <ImageView fitHeight="150.0" fitWidth="200.0" layoutX="661.0" layoutY="497.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../resources/tama_sprites/robot.png" />
+         </image>
+      </ImageView>
+      <ImageView fitHeight="150.0" fitWidth="200.0" layoutX="646.0" layoutY="285.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../resources/tama_sprites/chien%20(1).png" />
+         </image>
+      </ImageView>
+      <RadioButton fx:id="rbChat" layoutX="250.0" layoutY="351.0" mnemonicParsing="false">
+         <toggleGroup>
+            <ToggleGroup fx:id="tgType" />
+         </toggleGroup></RadioButton>
+      <RadioButton fx:id="rbChien" layoutX="619.0" layoutY="351.0" mnemonicParsing="false" toggleGroup="$tgType" />
+      <RadioButton fx:id="rbLapin" layoutX="250.0" layoutY="563.0" mnemonicParsing="false" toggleGroup="$tgType" />
+      <RadioButton fx:id="rbRobot" layoutX="628.0" layoutY="563.0" mnemonicParsing="false" toggleGroup="$tgType" />
    </children>
 </AnchorPane>
