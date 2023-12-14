@@ -43,7 +43,7 @@ public class OptionController implements Initializable {
     public void setMusic(MediaView musicView) {
         this.music = musicView;
         this.music.getMediaPlayer().setVolume(this.options.getVolume());
-        System.out.println(this.music);
+        //System.out.println(this.music);
     }
     
     /**
