@@ -60,6 +60,21 @@ public class Robot extends Tamagotchi {
         }
     }
 
+    /**
+     * rewrite
+     * decrease the mental,cleaning,energy
+     * increase memory stat
+     * call die routine if mental = 0
+     * @param _mental
+     * @param _cleaning
+     * @param _energy
+     * @param _memory
+     */
+    public void decreaseStats(int _mental,int _cleaning, int _energy,int _memory){
+        super.decreaseStats(_mental, _cleaning, _energy);
+        if(currentMemory+_memory > MIN_MEMORY) currentMemory = 100;
+        else currentMemory+=_memory;
+    }
     public void takingDamage(int _damage){
         //TODO when it's ranning, the bot takes damages
     }

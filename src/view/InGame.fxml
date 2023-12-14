@@ -15,7 +15,7 @@
             <Image url="@../resources/tama_sprites/chat%20(2).png" />
          </image>
       </ImageView>
-      <ProgressBar layoutX="14.0" layoutY="14.0" prefWidth="200.0" progress="0.0" />
+      <ProgressBar id="stat1" layoutX="14.0" layoutY="14.0" prefWidth="200.0" progress="0.0" />
       <ProgressBar layoutX="14.0" layoutY="40.0" prefWidth="200.0" progress="0.0" />
       <ProgressBar layoutX="14.0" layoutY="70.0" prefWidth="200.0" progress="0.0" />
       <Text layoutX="233.0" layoutY="29.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Stat1" />

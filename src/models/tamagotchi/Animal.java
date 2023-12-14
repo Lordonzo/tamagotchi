@@ -22,8 +22,6 @@ public abstract class Animal extends Tamagotchi {
                 try{
                     do{
                         sleep(NB_SEC);
-                    do{
-                        sleep(NB_SEC);
 
                         decreaseStats(10, 10, 10); //TODO changer les valeurs 
                         decreaseHealth(10, 10);
@@ -115,7 +113,7 @@ public abstract class Animal extends Tamagotchi {
         return (currentCleaning+currentHealth+currentSatiety)/3;
     }
     /**
-     * rewrite
+     *
      * decrease the mental,cleaningn,energy and satiety stats
      * call die routine if mental = 0
      * @param _mental

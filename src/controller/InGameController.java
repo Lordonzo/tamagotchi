@@ -37,5 +37,9 @@ public class InGameController {
        scene.setRoot(root);
    }
 
+   @FXML
+   //TODO
+   private void statsDisplay(){}
+
     
 }
