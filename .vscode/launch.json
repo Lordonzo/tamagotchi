@@ -6,6 +6,13 @@
     "configurations": [
         {
             "type": "java",
+            "name": "TamagotchiDB",
+            "request": "launch",
+            "mainClass": "models.database.TamagotchiDB",
+            "projectName": "tamagotchi_f99d44a8"
+        },
+        {
+            "type": "java",
             "name": "Animal",
             "request": "launch",
             "mainClass": "models.tamagotchi.Animal",

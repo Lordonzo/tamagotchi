@@ -9,6 +9,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextField;
 import javafx.scene.control.ToggleGroup;
@@ -16,8 +17,6 @@ import javafx.scene.effect.ColorAdjust;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 import javafx.scene.media.MediaView;
-import javafx.stage.Modality;
-import javafx.stage.Stage;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 
@@ -38,15 +37,15 @@ public class NewTamaController {
         scene.setRoot(root);
     }
 
-    // @FXML 
-    // private void toInGame(ActionEvent actionEvent) throws IOException {
-    //     FXMLLoader loader = new FXMLLoader(getClass().getResource("../view/InGame.fxml"));
-    //     Pane root = (Pane) loader.load();
-    //     InGameController inGameController = loader.getController();
-    //     inGameController.setMusic(music);
-    //     Scene scene = (Scene) ((Node) actionEvent.getSource()).getScene();
-    //     scene.setRoot(root);
-    // }
+    @FXML 
+    private void toInGame(ActionEvent actionEvent) throws IOException {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("../view/InGame.fxml"));
+        Pane root = (Pane) loader.load();
+        InGameController inGameController = loader.getController();
+        inGameController.setMusic(music);
+        Scene scene = (Scene) ((Node) actionEvent.getSource()).getScene();
+        scene.setRoot(root);
+    }
         
      @FXML
     private void changeImageEntered(Event event) {
@@ -86,6 +85,12 @@ public class NewTamaController {
     private Pane pConfirmation;
 
     @FXML
+    private Label lNom;
+
+    @FXML
+    private Label lType;
+
+    @FXML
     private void onVerifClick() {
         boolean isTfNameEmpty = tfName.getText().trim().isEmpty();
         RadioButton selectedRadioButton = (RadioButton) tgType.getSelectedToggle();
@@ -95,12 +100,14 @@ public class NewTamaController {
         } else if (selectedRadioButton == null) {
             //affiche message "rentrer type tama"
             showAlert("Erreur", "Veuillez sélectionner le type du tamagotchi.", AlertType.ERROR);
-        // } else {
-        //     showConfirmationPane();
         } else {
-            // Obtenez une référence à la fenêtre principale à partir d'un nœud du graphe de scène actuel
-            Stage primaryStage = (Stage) bVerif.getScene().getWindow();
-            showConfirmationDialog(primaryStage);
+            // Récupérer la valeur du TextField
+            String valeurTextField = tfName.getText();
+            lNom.setText("Nom : " + valeurTextField);
+            // Récupérer le Radio Button coché
+            String typeSelectionne = mapType(selectedRadioButton);
+            lType.setText("Type : " + typeSelectionne);
+            showConfirmationPane();
         }
     }
 
@@ -112,41 +119,58 @@ public class NewTamaController {
         alert.showAndWait();
     }
 
-    // private void showConfirmationPane() {
-    //     pConfirmation.setVisible(true);
-    // }
+    private void showConfirmationPane() {
+        pConfirmation.setVisible(true);
+        pConfirmation.toFront();
+        tfName.setDisable(true);
+        rbChat.setDisable(true);
+        rbChien.setDisable(true);
+        rbLapin.setDisable(true);
+        rbRobot.setDisable(true);
+    }
 
-    // @FXML
-    // private void onOuiClick(ActionEvent actionEvent) throws IOException {
-    //     FXMLLoader loader = new FXMLLoader(getClass().getResource("../view/InGame.fxml"));
-    //     Pane root = (Pane) loader.load();
-    //     InGameController inGameController = loader.getController();
-    //     inGameController.setMusic(music);
-    //     Scene scene = (Scene) ((Node) actionEvent.getSource()).getScene();
-    //     scene.setRoot(root);
-    // }
+    @FXML
+    private void onOuiClick(ActionEvent actionEvent) throws IOException {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("../view/InGame.fxml"));
+        Pane root = (Pane) loader.load();
+        InGameController inGameController = loader.getController();
+        inGameController.setMusic(music);
+        Scene scene = (Scene) ((Node) actionEvent.getSource()).getScene();
+        scene.setRoot(root);
+    }
     
 
-    // @FXML
-    // private void onNonClick() {
-    //     pConfirmation.setVisible(false);
-    // }
-
-    private void showConfirmationDialog(Stage primaryStage) {
-        try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("../view/ConfirmationNewTama.fxml"));
-            Stage dialogStage = new Stage();
-            dialogStage.initOwner(primaryStage);
-            dialogStage.initModality(Modality.WINDOW_MODAL);
-            dialogStage.setScene(new Scene(loader.load()));
-            dialogStage.setResizable(false);
-
-            ConfirmationNewTamaController confirmationNewTamaController = loader.getController();
-            confirmationNewTamaController.setStage(dialogStage);
-
-            dialogStage.showAndWait();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+    @FXML
+    private void onNonClick() {
+        pConfirmation.setVisible(false);
+        tfName.setDisable(false);
+        rbChat.setDisable(false);
+        rbChien.setDisable(false);
+        rbLapin.setDisable(false);
+        rbRobot.setDisable(false);
     }
+
+    private String mapType(RadioButton radioButton) {
+        String typeSelectionne = "";
+    
+        switch (radioButton.getId()) {
+            case "rbChat":
+                typeSelectionne = "Chat";
+                break;
+            case "rbChien":
+                typeSelectionne = "Chien";
+                break;
+            case "rbLapin":
+                typeSelectionne = "Lapin";
+                break;
+            case "rbRobot":
+                typeSelectionne = "Robot";
+                break;
+            default:
+                // Gestion d'un cas par défaut si nécessaire
+        }
+    
+        return typeSelectionne;
+    }
+
 }
