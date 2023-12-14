@@ -8,3 +8,4 @@ bin
 *.sql
 *.txt
 launch.json
+lib/javafx-sdk-21.0.1/*
