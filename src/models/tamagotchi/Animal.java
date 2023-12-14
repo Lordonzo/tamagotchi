@@ -21,31 +21,31 @@ public class Animal extends Tamagotchi {
         routine = new Thread(){
             public void run() {
                 try{
-                do{
-                    sleep(NB_SEC);
+                    do{
+                        sleep(NB_SEC);
 
-                    decreaseStats(10, 10, 10); //TODO changer les valeurs 
-                    decreaseHealth(10, 10);
-                    if(DEBUG){
-                    System.out.println("mean : " + mean());
-                    System.out.println("currentCleaning :"+currentCleaning);
-                    System.out.println("currentSatiety :"+currentSatiety);
-                    System.out.println("currentEnergy"+currentEnergy);
-                    System.out.println("currentHealth :"+currentHealth);
-                    System.out.println("currentMental:"+currentMental);
-                    }
+                        decreaseStats(10, 10, 10); //TODO changer les valeurs 
+                        decreaseHealth(10, 10);
+                        if(DEBUG){
+                        System.out.println("mean : " + mean());
+                        System.out.println("currentCleaning :"+currentCleaning);
+                        System.out.println("currentSatiety :"+currentSatiety);
+                        System.out.println("currentEnergy"+currentEnergy);
+                        System.out.println("currentHealth :"+currentHealth);
+                        System.out.println("currentMental:"+currentMental);
+                        }
 
 
-                }while(!exit);
+                    }while(!exit);
                 
-    }
-    catch(Exception e){
-        //TODO routine d'erreur
-        System.err.println("Thread error : "+e.getMessage());
-    }
-        }
-    };
-    routine.start();
+                }
+                catch(Exception e){
+                    //TODO routine d'erreur
+                    System.err.println("Thread error : "+e.getMessage());
+                }
+            }
+        };
+        routine.start();
     }
     /**
      * increase currentSatiety
@@ -55,6 +55,7 @@ public class Animal extends Tamagotchi {
             currentSatiety+=satietyDifficulty;
         }
         else{ currentSatiety =100;
+            setCurrentWeight(currentWeight+(currentWeight/10));
         }
     }
 
