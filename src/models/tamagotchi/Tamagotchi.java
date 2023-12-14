@@ -8,6 +8,8 @@ import models.Status.*;
 public abstract class Tamagotchi {
     private final int MAX_HEALTH_POINTS = 100;
     private final int MAX_ENERGY = 100;
+    private final int MAX_CLEAN = 100;
+    private final int MAX_SATIETY = 100;
 
     protected final int NB_SEC = 1000;
 
@@ -51,13 +53,13 @@ public abstract class Tamagotchi {
     public Tamagotchi(String _nameString,float _currentWeight,Tamagotchi_T _type) {
         this.currentHealth = MAX_HEALTH_POINTS;
         this.currentEnergy = MAX_ENERGY;
+        this.currentCleaning = MAX_CLEAN;
         this.exit = false;
         this.state = PhysicalState.IN_SHAPE;
         
         this.name = _nameString;
         this.currentWeight = _currentWeight;
         this.type = _type;
-        // TODO : Changer ensuite
         this.currentPlace = new Place(EPlace.LIVINGROOM);
     }
     
@@ -178,6 +180,8 @@ public abstract class Tamagotchi {
         }
 
     }
+
+    public void decreaseHealth(){}
 
     /**
      * mean of stats
