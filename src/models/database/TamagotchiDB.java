@@ -86,7 +86,7 @@ public class TamagotchiDB extends MySQLDB {
             + ", " + animal.getCurrentEnergy()
             + ", " + animal.getCurrentSatiety() 
             + ", " + animal.getCurrentWeight()
-            + ", " + null
+            + ", " + animal.getCurrentCleaning()
             + ", " + animal.getState().toString()
             + ", " + animal.getMentalState().toString()
             + ", " + animal.getType().toString()
