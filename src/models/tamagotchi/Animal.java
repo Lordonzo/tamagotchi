@@ -1,9 +1,8 @@
 package models.tamagotchi;
 
-import models.Status.Tamagotchi_T;
 import models.Status.MentalState;
 
-public class Animal extends Tamagotchi {
+public abstract class Animal extends Tamagotchi {
     private final int MAX_STAT = 100;
 
     private int currentSatiety;
@@ -11,8 +10,8 @@ public class Animal extends Tamagotchi {
     /**
      * @param _weight
      */
-    public Animal(String _nameString, float _weight, Tamagotchi_T _animalType) {
-        super(_nameString,_weight,_animalType);
+    public Animal(String _nameString, float _weight) {
+        super(_nameString,_weight);
         this.currentSatiety = MAX_STAT;
         this.currentMental = MAX_STAT;
         this.currentCleaning = MAX_STAT;

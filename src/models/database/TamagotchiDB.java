@@ -7,9 +7,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.time.LocalDate;
-
-import models.Status.Tamagotchi_T;
-import models.tamagotchi.Animal;
+import models.tamagotchi.*;
 
 public class TamagotchiDB extends MySQLDB {
     
@@ -82,7 +80,7 @@ public class TamagotchiDB extends MySQLDB {
             statement.setInt(8, animal.getCurrentCleaning());
             statement.setString(9, animal.getState().name());
             statement.setString(10, animal.getMentalState().name());
-            statement.setString(11, animal.getType().name());
+            statement.setString(11, animal.getClass().getSimpleName());
             statement.setString(12, animal.getCurrentPlace().getCurrentPlace().name());
             statement.executeUpdate();
 
@@ -135,8 +133,8 @@ public class TamagotchiDB extends MySQLDB {
     public static void main(String[] args) {
         TamagotchiDB database = new TamagotchiDB();
         database.createTable();
-        Animal dog = new Animal("doberman", 20, Tamagotchi_T.DOG);
-        database.add(dog);
+        Animal dog = new Dog("doberman", 20);
+        //database.add(dog);
         database.select();
     }
 }

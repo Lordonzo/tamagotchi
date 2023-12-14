@@ -16,8 +16,4 @@ public class Status {
     public enum EPlace {
         TOILET, GARDEN, KITCHEN, BEDROOM, LIVINGROOM
     }
-
-    public enum Tamagotchi_T {
-        CAT, DOG, RABBIT, ROBOT
-    }
 }

@@ -27,7 +27,6 @@ public abstract class Tamagotchi {
 
     protected LocalDateTime birthDate;
 
-    protected Tamagotchi_T type;
     protected float currentWeight;
     
     protected int currentCleaning;
@@ -48,7 +47,7 @@ public abstract class Tamagotchi {
     /**
      * 
      */
-    public Tamagotchi(String _nameString,float _currentWeight,Tamagotchi_T _type) {
+    public Tamagotchi(String _nameString,float _currentWeight) {
         this.currentHealth = MAX_HEALTH_POINTS;
         this.currentEnergy = MAX_ENERGY;
         this.exit = false;
@@ -56,7 +55,6 @@ public abstract class Tamagotchi {
         
         this.name = _nameString;
         this.currentWeight = _currentWeight;
-        this.type = _type;
         // TODO : Changer ensuite
         this.currentPlace = new Place(EPlace.LIVINGROOM);
     }
@@ -124,9 +122,6 @@ public abstract class Tamagotchi {
     }
     public int getCurrentHealth() {
         return currentHealth;
-    }
-    public Tamagotchi_T getType() {
-        return type;
     }
     public MentalState getMentalState() {
         return mentalState;
