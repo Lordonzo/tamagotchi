@@ -2,10 +2,8 @@ package models.database;
 
 import java.sql.*;
 
-import models.tamagotchi.Tamagotchi;
-
 public abstract class MySQLDB {
-    protected static String dbURL = "jdbc:sqlite:resources/data/tamagotchi.db";
+    protected static String dbURL = "jdbc:sqlite:src/resources/data/tamagotchi.db";
 
     /**
      * Loads the connection and checks if the database exists <p>
@@ -14,11 +12,23 @@ public abstract class MySQLDB {
      */
     protected Connection loadConnection() {
         try {
-            Connection connection = DriverManager.getConnection(MySQLDB.dbURL);
+            dropDatabase();
+            Connection connection = DriverManager.getConnection(dbURL);
             return connection;
         } catch (SQLException e) {
             this.createDatabase();
             return loadConnection();
+        }
+    }
+
+    private void dropDatabase() {
+        try {
+            Connection connection = DriverManager.getConnection(dbURL);
+            Statement statement = connection.createStatement();
+            statement.executeQuery("DROP DATABASE tamagotchi");
+            connection.close();
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
         }
     }
 
@@ -27,9 +37,9 @@ public abstract class MySQLDB {
      */
     private void createDatabase() {
         try {
-            Connection connection = DriverManager.getConnection(MySQLDB.dbURL);
+            Connection connection = DriverManager.getConnection(dbURL);
             Statement statement = connection.createStatement();
-            statement.executeUpdate("CREATE DATABASE tamagotchi");
+            statement.executeQuery("CREATE DATABASE tamagotchi");
             connection.close();
         } catch (SQLException e) {
             System.out.println(e.getMessage());
@@ -41,7 +51,7 @@ public abstract class MySQLDB {
      * @param tableString name of table to create
      * @return a boolean if everything went well
      */
-    public boolean createTable(String tableString) {
+    private boolean createTable(String tableString) {
         try (Connection connection = this.loadConnection(); Statement statement = connection.createStatement();) {
             statement.executeUpdate("CREATE TABLE tamagotchi."+tableString+" (id INTEGER NOT NULL, PRIMARY KEY (id));");
             connection.close();
@@ -53,7 +63,7 @@ public abstract class MySQLDB {
     }
 
     /**
-     * Drops a table if it exists
+     * Creates a table if it exists
      * @return a boolean if everything went well
      */
     public abstract boolean createTable();

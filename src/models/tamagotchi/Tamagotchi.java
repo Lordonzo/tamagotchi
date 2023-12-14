@@ -1,6 +1,7 @@
 package models.tamagotchi;
 
 import java.sql.Date;
+import java.time.LocalDateTime;
 
 import models.Place;
 import models.Status.*;
@@ -29,8 +30,7 @@ public abstract class Tamagotchi {
     protected PhysicalState state;
     protected Place currentPlace;
 
-    protected Date birthDate;
-    protected Date deathDate;
+    protected LocalDateTime birthDate;
 
     protected Tamagotchi_T type;
     protected float currentWeight;
@@ -58,13 +58,12 @@ public abstract class Tamagotchi {
         this.currentEnergy = MAX_ENERGY;
         this.exit = false;
         this.state = PhysicalState.IN_SHAPE;
-        this.birthDate = new Date(System.currentTimeMillis());
         
         this.name = _nameString;
         this.currentWeight = _currentWeight;
-        //Calcule dernier jour de l'animal(86400 = nombre de secondes dans un jour);
-        this.deathDate = new Date(System.currentTimeMillis() + (86400*(new Random().nextInt(MIN_DAY,MAX_DAY))));
         this.type = _type;
+        // TODO : Changer ensuite
+        this.currentPlace = new Place(EPlace.LIVINGROOM);
     }
     
     protected void addEnergy() {
@@ -125,9 +124,6 @@ public abstract class Tamagotchi {
     public float getCurrentEnergy() {
         return currentEnergy;
     }
-    public Date getDeathDate() {
-        return deathDate;
-    }
     public PhysicalState getState() {
         return state;
     }
@@ -139,10 +135,6 @@ public abstract class Tamagotchi {
     }
     public MentalState getMentalState() {
         return mentalState;
-    }
-
-    public Date getBirthDate() {
-        return this.birthDate;
     }
     public Place getCurrentPlace() {
         return this.currentPlace;
