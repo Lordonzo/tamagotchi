@@ -9,7 +9,7 @@ public abstract class Tamagotchi {
     private final int MAX_HEALTH_POINTS = 100;
     private final int MAX_ENERGY = 100;
 
-    protected final int NB_SEC = 3;
+    protected final int NB_SEC = 1000;
 
     //Difficulty
     protected int cleaningDifficulty;
@@ -48,10 +48,10 @@ public abstract class Tamagotchi {
     /**
      * 
      */
-    public Tamagotchi(String _nameString,float _currentWeight,Tamagotchi_T _type,int _difficulty) {
+    public Tamagotchi(String _nameString,float _currentWeight,Tamagotchi_T _type) {
         this.currentHealth = MAX_HEALTH_POINTS;
         this.currentEnergy = MAX_ENERGY;
-
+        this.exit = false;
         this.state = PhysicalState.IN_SHAPE;
         
         this.name = _nameString;
@@ -138,6 +138,7 @@ public abstract class Tamagotchi {
         return this.currentCleaning;
     }
     public void start(){
+        exit = false;
         routine.start();
     }
     public void stop(){
@@ -145,7 +146,17 @@ public abstract class Tamagotchi {
     }
 
     /**
-     * decrease the mental,cleanig and energy stat
+     * kill the tamagotchi and print the cause of the death
+     * @param _cause
+     */
+    public void die(String _cause){
+        System.out.println("L'animal est mort de : " +_cause);
+        stop();
+    }
+
+    /**
+     * decrease the mental,cleaning and energy stats
+     * call die routine if mental = 0
      * @param _mental
      * @param _cleaning
      * @param _energy
@@ -157,7 +168,22 @@ public abstract class Tamagotchi {
         if(currentCleaning-_cleaning < 0) currentCleaning = 0;
         else currentCleaning-=_cleaning;
 
-        if(currentMental-_mental < 0) currentMental = 0;
-        else currentMental-=_mental;
+        if(mean()<50){
+            if(currentMental-_mental < 0) {
+                currentMental = 0;
+                currentHealth = 0;
+                die("Suicide");
+            }
+            else currentMental-=_mental;
+        }
+
+    }
+
+    /**
+     * mean of stats
+     * @return mean
+     */
+    public float mean(){
+        return (currentCleaning+currentHealth)/2;
     }
 }
