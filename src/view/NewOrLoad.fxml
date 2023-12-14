@@ -9,9 +9,30 @@
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" stylesheets="@../resources/css/style.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.NewOrLoadController">
    <children>
-      <Button layoutX="813.0" layoutY="360.0" mnemonicParsing="false" text="Button" />
-      <Button layoutX="185.0" layoutY="360.0" mnemonicParsing="false" onAction="#toNewTama" text="Button" />
-      <Button layoutX="505.0" layoutY="360.0" mnemonicParsing="false" text="Button" />
+      <Button layoutX="725.0" layoutY="281.0" mnemonicParsing="false">
+         <graphic>
+            <ImageView fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../resources/tama_sprites/questionmark.jpg" />
+               </image>
+            </ImageView>
+         </graphic></Button>
+      <Button layoutX="186.0" layoutY="281.0" mnemonicParsing="false" onAction="#toNewTama">
+         <graphic>
+            <ImageView fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../resources/tama_sprites/questionmark.jpg" />
+               </image>
+            </ImageView>
+         </graphic></Button>
+      <Button layoutX="456.0" layoutY="281.0" mnemonicParsing="false">
+         <graphic>
+            <ImageView fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../resources/tama_sprites/questionmark.jpg" />
+               </image>
+            </ImageView>
+         </graphic></Button>
       <Button layoutX="14.0" layoutY="14.0" mnemonicParsing="false" onAction="#toMenu" onMouseEntered="#changeImageEntered" onMouseExited="#changeImageExited">
          <graphic>
             <ImageView fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true" rotate="-180.0">
