@@ -32,7 +32,7 @@
             </ImageView>
          </graphic>
       </Button>
-      <Text layoutX="392.0" layoutY="137.0" strokeType="OUTSIDE" strokeWidth="0.0" text="たまごっち" textAlignment="CENTER">
+      <Text layoutX="340.0" layoutY="159.0" strokeType="OUTSIDE" strokeWidth="0.0" text="たまごっち" textAlignment="CENTER">
          <font>
             <Font name="System Bold" size="80.0" />
          </font>

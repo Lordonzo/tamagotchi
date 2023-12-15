@@ -1,15 +1,17 @@
 package models.tamagotchi;
 
+import java.beans.PropertyChangeListener;
 import java.time.LocalDateTime;
+import java.util.EventListener;
 
 import models.Place;
 import models.Status.*;
 
-public abstract class Tamagotchi {
-    private final int MAX_HEALTH_POINTS = 100;
-    private final int MAX_ENERGY = 100;
-    private final int MAX_CLEAN = 100;
-    private final int MAX_SATIETY = 100;
+public abstract class Tamagotchi{
+    protected final int MAX_HEALTH_POINTS = 100;
+    protected final int MAX_ENERGY = 100;
+    protected final int MAX_CLEAN = 100;
+    protected final int MAX_SATIETY = 100;
 
     protected final int NB_SEC = 1000;
 
@@ -39,6 +41,7 @@ public abstract class Tamagotchi {
     protected Thread routine;
     protected boolean exit;
 
+    protected PropertyChangeListener observer;
 
     protected final boolean DEBUG = true;
 
@@ -68,6 +71,10 @@ public abstract class Tamagotchi {
 
     protected void play() {
 
+    }
+
+    public int getNB_SEC(){
+        return NB_SEC;
     }
 
 
@@ -185,5 +192,9 @@ public abstract class Tamagotchi {
      */
     public float mean(){
         return (currentCleaning+currentHealth)/2;
+    }
+
+    public void setObserver(PropertyChangeListener _ob){
+        this.observer = _ob;
     }
 }

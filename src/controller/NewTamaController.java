@@ -17,6 +17,8 @@ import javafx.scene.effect.ColorAdjust;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 import javafx.scene.media.MediaView;
+import models.tamagotchi.Cat;
+import models.tamagotchi.Tamagotchi;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 
@@ -39,10 +41,12 @@ public class NewTamaController {
 
     @FXML 
     private void toInGame(ActionEvent actionEvent) throws IOException {
+
         FXMLLoader loader = new FXMLLoader(getClass().getResource("../view/InGame.fxml"));
         Pane root = (Pane) loader.load();
         InGameController inGameController = loader.getController();
         inGameController.setMusic(music);
+
         Scene scene = (Scene) ((Node) actionEvent.getSource()).getScene();
         scene.setRoot(root);
     }
@@ -137,6 +141,13 @@ public class NewTamaController {
         inGameController.setMusic(music);
         Scene scene = (Scene) ((Node) actionEvent.getSource()).getScene();
         scene.setRoot(root);
+        /*
+         * TODO CHANGE, ONLY FOR TESTING
+         */
+        Tamagotchi testing = new Cat("toutou", 32);
+        System.out.println("zozouz");
+        testing.setObserver(inGameController);
+        inGameController.setTamagotchi(testing);
     }
     
 
