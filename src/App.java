@@ -27,6 +27,7 @@ public class App extends Application {
         primaryStage.setWidth(1080);
         primaryStage.setHeight(720);
         primaryStage.setResizable(false);
+        primaryStage.show();
     }
 
     private MediaView setMusic() throws IOException {

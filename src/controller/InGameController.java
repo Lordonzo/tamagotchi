@@ -66,8 +66,9 @@ public class InGameController implements PropertyChangeListener{
             try{
                 System.out.println((double)tamagotchi.getCurrentHealth()/100);
                 System.out.println(stat1.getId());
-                Platform.runLater(() -> stat1.setProgress((double)tamagotchi.getCurrentHealth()/100));
-                Platform.runLater(() -> stat2.setProgress(0.2));
+                /*Platform.runLater(() -> stat1.setProgress((double)tamagotchi.getCurrentHealth()/100));
+                Platform.runLater(() -> stat2.setProgress(0.2));*/
+                stat1.setProgress((double)tamagotchi.getCurrentHealth());
             }
             catch(Exception e){
                 e.printStackTrace();
@@ -94,8 +95,6 @@ ProgressBar stat1 = (ProgressBar) scene.lookup("#stat1");
 
 @Override
 public void propertyChange(PropertyChangeEvent evt) {
-    // TODO Auto-generated method stub
-    System.out.println("ouais");
     try {
         statsDisplay();}
 
