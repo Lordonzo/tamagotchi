@@ -74,7 +74,7 @@ public class OptionDB extends AbstractDB {
         try (Connection connection = this.loadConnection(); Statement statement = connection.createStatement();) {
             ResultSet result = statement.executeQuery("SELECT * FROM options");
             //LocalDateTime dateBirth = result.getTimestamp(3).toLocalDateTime();
-            for (int i=1; i<=result.getMetaData().getColumnCount(); i++) System.out.println(result.getMetaData().getColumnName(i) + ": " + result.getString(i));
+            //for (int i=1; i<=result.getMetaData().getColumnCount(); i++) System.out.println(result.getMetaData().getColumnName(i) + ": " + result.getString(i));
             //System.out.println(dateBirth.toString());
             Options options = new Options(result.getDouble("musicVolume"), result.getInt("resX"), result.getInt("resY"));
             connection.close();

@@ -105,6 +105,7 @@ public class TamagotchiDB extends AbstractDB {
             statement.setString(10, animal.getMentalState().name());
             statement.setString(11, animal.getClass().getSimpleName());
             statement.setString(12, animal.getCurrentPlace().getCurrentPlace().name());
+            // TODO Slot pris + libération du slot si y'a
             statement.executeUpdate();
 
             /**

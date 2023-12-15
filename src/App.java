@@ -11,6 +11,9 @@ import javafx.scene.media.MediaView;
 import javafx.stage.*;
 
 public class App extends Application {
+    // TODO Comment methods for doc
+
+
     public static void main(String[] args) {
         launch(args);
     }

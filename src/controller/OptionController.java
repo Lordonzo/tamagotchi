@@ -8,15 +8,12 @@ import java.util.ResourceBundle;
 import org.json.simple.parser.ParseException;
 
 import javafx.event.ActionEvent;
-import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Slider;
-import javafx.scene.effect.ColorAdjust;
-import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 import javafx.scene.media.MediaView;
 import models.Options;
@@ -24,6 +21,7 @@ import models.database.OptionDB;
 
 public class OptionController implements Initializable {
     private MediaView music;
+    private Options options;
     @FXML 
     private Slider volumeSlider;
 
@@ -55,28 +53,10 @@ public class OptionController implements Initializable {
         Scene scene = (Scene) ((Node) actionEvent.getSource()).getScene();
         scene.setRoot(root);
     }
-    
-    /*
-     * CSS THINGS
-     */
-    @FXML
-    private void changeImageEntered(Event event) {
-        ColorAdjust cAdjust = new ColorAdjust();
-        cAdjust.setBrightness(1);
-        ((ImageView)((Node) event.getSource()).lookup(".image-view")).setEffect(cAdjust);
-    }
-    @FXML
-    private void changeImageExited(Event event) {
-        ColorAdjust cAdjust = new ColorAdjust();
-        cAdjust.setBrightness(0);
-        ((ImageView)((Node) event.getSource()).lookup(".image-view")).setEffect(cAdjust);
-    }
 
     /**
      * OPTIONS
      */
-    private Options options;
-
     private void loadOptions() throws FileNotFoundException, IOException, ParseException {
         /* 
         if (options == null) this.options = new Options();
@@ -111,7 +91,7 @@ public class OptionController implements Initializable {
 
         OptionDB optionDB = new OptionDB();
         this.options.setVolume(volumeSlider.getValue()/100);
-        // TODO 
+        // TODO options supplémentaires
         optionDB.update(this.options);
 
 

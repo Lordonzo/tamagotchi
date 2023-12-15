@@ -1,6 +1,8 @@
 package controller;
 
 import java.io.IOException;
+import java.net.URL;
+import java.util.ResourceBundle;
 
 import javafx.application.Platform;
 import javafx.event.*;
@@ -15,12 +17,17 @@ import models.database.OptionDB;
 
 public class MenuController extends AbstractController {
     private MediaView music;
+    private Options options;
 
-    public MenuController() {
+    @Override
+    public void initialize(URL location, ResourceBundle resources) {
         if (!this.databaseHere()) this.setUpDatabase();
         this.loadOptions();
     }
 
+    /**
+     * 
+     */
     @Override
     public void setMusic(MediaView musicView) {
         this.music = musicView;
@@ -70,8 +77,6 @@ public class MenuController extends AbstractController {
     /**
      * OPTIONS
      */
-    private Options options;
-
     private void loadOptions() {
         // JSON
         this.options = new Options();
@@ -92,6 +97,6 @@ public class MenuController extends AbstractController {
         // SQL
         OptionDB optionDB = new OptionDB();
         this.options = optionDB.select();
-        System.out.println(this.options.getVolume() + " " + this.options.getResX() + " " + this.options.getResY());
+        //System.out.println(this.options.getVolume() + " " + this.options.getResX() + " " + this.options.getResY());
     }
 }
