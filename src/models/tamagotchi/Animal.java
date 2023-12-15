@@ -22,7 +22,6 @@ public abstract class Animal extends Tamagotchi {
                 try{
                     do{
                         sleep(NB_SEC);
-
                         decreaseStats(10, 10, 10); //TODO changer les valeurs 
                         decreaseHealth(10, 10);
                         if(DEBUG){
@@ -33,17 +32,7 @@ public abstract class Animal extends Tamagotchi {
                         System.out.println("currentHealth :"+currentHealth);
                         System.out.println("currentMental:"+currentMental);
                         }
-                        decreaseStats(10, 10, 10); //TODO changer les valeurs 
-                        decreaseHealth(10, 10);
-                        if(DEBUG){
-                        System.out.println("mean : " + mean());
-                        System.out.println("currentCleaning :"+currentCleaning);
-                        System.out.println("currentSatiety :"+currentSatiety);
-                        System.out.println("currentEnergy"+currentEnergy);
-                        System.out.println("currentHealth :"+currentHealth);
-                        System.out.println("currentMental:"+currentMental);
-                        }
-
+                        observer.propertyChange(null);
 
                     }while(!exit);
                 
@@ -112,6 +101,7 @@ public abstract class Animal extends Tamagotchi {
     public float mean(){
         return (currentCleaning+currentHealth+currentSatiety)/3;
     }
+    
     /**
      *
      * decrease the mental,cleaningn,energy and satiety stats
