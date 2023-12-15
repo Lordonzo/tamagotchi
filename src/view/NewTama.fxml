@@ -34,6 +34,41 @@
       <fx:define>
          <ToggleGroup fx:id="group" />
       </fx:define>
+      <RadioButton fx:id="rbChat" layoutX="258.0" layoutY="285.0" mnemonicParsing="false">
+         <toggleGroup>
+            <ToggleGroup fx:id="tgType" />
+         </toggleGroup>
+         <graphic>
+            <ImageView fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../resources/tama_sprites/chat%20(2).png" />
+               </image>
+            </ImageView>
+         </graphic></RadioButton>
+      <RadioButton fx:id="rbChien" layoutX="613.0" layoutY="285.0" mnemonicParsing="false" toggleGroup="$tgType">
+         <graphic>
+            <ImageView fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../resources/tama_sprites/chien%20(1).png" />
+               </image>
+            </ImageView>
+         </graphic></RadioButton>
+      <RadioButton fx:id="rbLapin" layoutX="261.0" layoutY="488.0" mnemonicParsing="false" toggleGroup="$tgType">
+         <graphic>
+            <ImageView fitHeight="150.0" fitWidth="189.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../resources/tama_sprites/lapin%20(1).png" />
+               </image>
+            </ImageView>
+         </graphic></RadioButton>
+      <RadioButton fx:id="rbRobot" layoutX="628.0" layoutY="488.0" mnemonicParsing="false" toggleGroup="$tgType">
+         <graphic>
+            <ImageView fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../resources/tama_sprites/robot.png" />
+               </image>
+            </ImageView>
+         </graphic></RadioButton>
       <RadioButton fx:id="rbChat" layoutX="250.0" layoutY="351.0" mnemonicParsing="false">
          <toggleGroup>
             <ToggleGroup fx:id="tgType" />
