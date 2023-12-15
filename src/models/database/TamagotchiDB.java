@@ -28,7 +28,7 @@ public class TamagotchiDB extends AbstractDB {
                 + "energy INT NOT NULL,"
                 + "satiety INT NOT NULL,"
                 + "weightT FLOAT NOT NULL,"
-                + "toilet INT NOT NULL,"
+                + "cleanliness INT NOT NULL,"
                 + "physicalState VARCHAR(255) NOT NULL,"
                 + "animalType VARCHAR(255) NOT NULL,"
                 + "mentalState VARCHAR(255) NOT NULL,"

@@ -14,7 +14,7 @@ public abstract class Animal extends Tamagotchi {
         super(_nameString,_weight);
         this.currentSatiety = MAX_STAT;
         this.currentMental = MAX_STAT;
-        this.currentCleaning = MAX_STAT;
+        this.currentCleanliness = MAX_STAT;
         this.mentalState = MentalState.HAPPY;
         exit = false;
         routine = new Thread(){
@@ -26,7 +26,7 @@ public abstract class Animal extends Tamagotchi {
                         decreaseHealth(10, 10);
                         if(DEBUG){
                         System.out.println("mean : " + mean());
-                        System.out.println("currentCleaning :"+currentCleaning);
+                        System.out.println("currentCleaning :"+currentCleanliness);
                         System.out.println("currentSatiety :"+currentSatiety);
                         System.out.println("currentEnergy"+currentEnergy);
                         System.out.println("currentHealth :"+currentHealth);
@@ -68,7 +68,7 @@ public abstract class Animal extends Tamagotchi {
             if(currentHealth-_satietyLost < 0) currentHealth = 0;
             else currentHealth-=_satietyLost;
         }
-        if(currentCleaning <= 0){
+        if(currentCleanliness <= 0){
             if(currentHealth-_cleaningLost < 0) currentHealth = 0;
             else currentHealth-=_cleaningLost;
         }
@@ -99,7 +99,7 @@ public abstract class Animal extends Tamagotchi {
      * @return mean
      */
     public float mean(){
-        return (currentCleaning+currentHealth+currentSatiety)/3;
+        return (currentCleanliness+currentHealth+currentSatiety)/3;
     }
     
     /**

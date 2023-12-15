@@ -2,8 +2,6 @@ package models.tamagotchi;
 
 import java.beans.PropertyChangeListener;
 import java.time.LocalDateTime;
-import java.util.EventListener;
-
 import models.Place;
 import models.Status.*;
 
@@ -32,8 +30,7 @@ public abstract class Tamagotchi{
     protected LocalDateTime birthDate;
 
     protected float currentWeight;
-    
-    protected int currentCleaning;
+    protected int currentCleanliness;
 
     protected MentalState mentalState;
     protected int currentMental;
@@ -55,7 +52,7 @@ public abstract class Tamagotchi{
     public Tamagotchi(String _nameString,float _currentWeight) {
         this.currentHealth = MAX_HEALTH_POINTS;
         this.currentEnergy = MAX_ENERGY;
-        this.currentCleaning = MAX_CLEAN;
+        this.currentCleanliness = MAX_CLEAN;
         this.exit = false;
         this.state = PhysicalState.IN_SHAPE;
         
@@ -140,7 +137,7 @@ public abstract class Tamagotchi{
         return this.currentPlace;
     }
     public int getCurrentCleaning() {
-        return this.currentCleaning;
+        return this.currentCleanliness;
     }
     public void start(){
         exit = false;
@@ -170,8 +167,8 @@ public abstract class Tamagotchi{
         if(currentEnergy-_energy < 0) currentEnergy = 0;
         else currentEnergy-=_energy;
         
-        if(currentCleaning-_cleaning < 0) currentCleaning = 0;
-        else currentCleaning-=_cleaning;
+        if(currentCleanliness-_cleaning < 0) currentCleanliness = 0;
+        else currentCleanliness-=_cleaning;
 
         if(mean()<50){
             if(currentMental-_mental < 0) {
@@ -191,7 +188,7 @@ public abstract class Tamagotchi{
      * @return mean
      */
     public float mean(){
-        return (currentCleaning+currentHealth)/2;
+        return (currentCleanliness+currentHealth)/2;
     }
 
     public void setObserver(PropertyChangeListener _ob){

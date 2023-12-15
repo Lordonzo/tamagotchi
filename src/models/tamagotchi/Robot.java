@@ -20,7 +20,7 @@ public class Robot extends Tamagotchi {
                         decreaseHealth(10, 10);
                         if(DEBUG){
                         System.out.println("mean : " + mean());
-                        System.out.println("currentCleaning :"+currentCleaning);
+                        System.out.println("currentCleaning :"+currentCleanliness);
                         System.out.println("currentMemory :"+currentMemory);
                         System.out.println("currentEnergy"+currentEnergy);
                         System.out.println("currentHealth :"+currentHealth);
@@ -51,7 +51,7 @@ public class Robot extends Tamagotchi {
             if(currentHealth-_memoryLost < 0) currentHealth = 0;
             else currentHealth-=_memoryLost;
         }
-        if(currentCleaning <= 0){
+        if(currentCleanliness <= 0){
             if(currentHealth-_cleaningLost < 0) currentHealth = 0;
             else currentHealth-=_cleaningLost;
         }
