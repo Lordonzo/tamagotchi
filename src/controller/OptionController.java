@@ -1,15 +1,10 @@
 package controller;
 
-import java.io.File;
 import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.FileWriter;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-import org.json.simple.JSONObject;
-import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 
 import javafx.event.ActionEvent;
@@ -25,6 +20,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 import javafx.scene.media.MediaView;
 import models.Options;
+import models.database.OptionDB;
 
 public class OptionController implements Initializable {
     private MediaView music;
@@ -32,18 +28,17 @@ public class OptionController implements Initializable {
     private Slider volumeSlider;
 
     @Override
-    public void initialize(URL location, ResourceBundle resources) { 
-        try {
-            this.loadOptions();
-        } catch (IOException | ParseException e) {
-            e.printStackTrace();
-        } 
-    }
+    public void initialize(URL location, ResourceBundle resources) {}
 
     public void setMusic(MediaView musicView) {
         this.music = musicView;
         this.music.getMediaPlayer().setVolume(this.options.getVolume());
         //System.out.println(this.music);
+    }
+
+    public void setOptions(Options options) {
+        this.options = options;
+        this.volumeSlider.adjustValue(options.getVolume() * 100);
     }
     
     /**
@@ -83,6 +78,7 @@ public class OptionController implements Initializable {
     private Options options;
 
     private void loadOptions() throws FileNotFoundException, IOException, ParseException {
+        /* 
         if (options == null) this.options = new Options();
         JSONParser parser = new JSONParser();
         File jsonFile = new File(getClass().getResource("../resources/data/options.json").getFile());
@@ -90,6 +86,7 @@ public class OptionController implements Initializable {
         JSONObject optionsJson = (JSONObject) ((JSONObject) json).get("options");
         this.options.setVolume((double) optionsJson.get("volume"));
         this.volumeSlider.adjustValue((double) optionsJson.get("volume") * 100);
+        */
         //System.out.println((double) optionsJson.get("volume"));
         //System.out.println(volumeSlider.valueProperty());
         //System.out.println(options.getVolume());
@@ -97,21 +94,26 @@ public class OptionController implements Initializable {
 
     @FXML
     private void applyOptions() {
+        // JSON
+        /* 
         File jsonFile = new File(getClass().getResource("../resources/data/options.json").getFile());
-
         JSONObject obj = new JSONObject();
         obj.put("volume", volumeSlider.getValue()/100);
         //System.out.println(volumeSlider);
-
         JSONObject options = new JSONObject();
         options.put("options", obj);
-
         System.out.println(options.toString());
         try (FileWriter data = new FileWriter(jsonFile)) {
             data.write(options.toString());
         } catch (IOException e) {
             e.printStackTrace();
-        }
+        }*/
+
+        OptionDB optionDB = new OptionDB();
+        this.options.setVolume(volumeSlider.getValue()/100);
+        // TODO 
+        optionDB.update(this.options);
+
 
         // Apply all changes
         try {

@@ -16,45 +16,6 @@ public abstract class Animal extends Tamagotchi {
         this.currentMental = MAX_STAT;
         this.currentCleaning = MAX_STAT;
         this.mentalState = MentalState.HAPPY;
-        exit = false;
-        routine = new Thread(){
-            public void run() {
-                try{
-                    do{
-                        sleep(NB_SEC);
-
-                        decreaseStats(10, 10, 10); //TODO changer les valeurs 
-                        decreaseHealth(10, 10);
-                        if(DEBUG){
-                        System.out.println("mean : " + mean());
-                        System.out.println("currentCleaning :"+currentCleaning);
-                        System.out.println("currentSatiety :"+currentSatiety);
-                        System.out.println("currentEnergy"+currentEnergy);
-                        System.out.println("currentHealth :"+currentHealth);
-                        System.out.println("currentMental:"+currentMental);
-                        }
-                        decreaseStats(10, 10, 10); //TODO changer les valeurs 
-                        decreaseHealth(10, 10);
-                        if(DEBUG){
-                        System.out.println("mean : " + mean());
-                        System.out.println("currentCleaning :"+currentCleaning);
-                        System.out.println("currentSatiety :"+currentSatiety);
-                        System.out.println("currentEnergy"+currentEnergy);
-                        System.out.println("currentHealth :"+currentHealth);
-                        System.out.println("currentMental:"+currentMental);
-                        }
-
-
-                    }while(!exit);
-                
-                }
-                catch(Exception e){
-                    //TODO routine d'erreur
-                    System.err.println("Thread error : "+e.getMessage());
-                }
-            }
-        };
-        routine.start();
     }
     /**
      * increase currentSatiety

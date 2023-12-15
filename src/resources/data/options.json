@@ -1,5 +1,7 @@
 {
     "options": {
-        "volume": 0.2
+        "volume": 0.2,
+        "resX": 1080,
+        "resY": 720
     }
 }

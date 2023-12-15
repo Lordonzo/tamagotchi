@@ -10,7 +10,7 @@ import java.time.LocalDateTime;
 
 import models.tamagotchi.*;
 
-public class TamagotchiDB extends MySQLDB {
+public class TamagotchiDB extends AbstractDB {
     
     /**
      * 
@@ -32,7 +32,8 @@ public class TamagotchiDB extends MySQLDB {
                 + "physicalState VARCHAR(255) NOT NULL,"
                 + "animalType VARCHAR(255) NOT NULL,"
                 + "mentalState VARCHAR(255) NOT NULL,"
-                + "currentPlace VARCHAR(255) NOT NULL"
+                + "currentPlace VARCHAR(255) NOT NULL,"
+                + "slotSaved INT"
             + ")");
             connection.close();
             return true;
@@ -45,15 +46,17 @@ public class TamagotchiDB extends MySQLDB {
     /**
      * 
      */
-    public void select() {
+    public ResultSet select() {
         try (Connection connection = this.loadConnection(); Statement statement = connection.createStatement();) {
             ResultSet result = statement.executeQuery("SELECT * FROM tamagotchi");
             //LocalDateTime dateBirth = result.getTimestamp(3).toLocalDateTime();
             while (result.next()) for (int i=1; i<=result.getMetaData().getColumnCount(); i++) System.out.println(result.getMetaData().getColumnName(i) + ": " + result.getString(i));
             //System.out.println(dateBirth.toString());
             connection.close();
+            return result;
         } catch (SQLException e) {
             System.out.println(e.getMessage());
+            return null;
         }
     }
 
@@ -61,16 +64,25 @@ public class TamagotchiDB extends MySQLDB {
      * 
      * @param name
      */
-    public void select(String name) {
+    public Tamagotchi select(String name) {
         try (Connection connection = this.loadConnection();) {
             PreparedStatement statement = connection.prepareStatement("SELECT * FROM tamagotchi WHERE name=?");
             statement.setString(1, name);
             ResultSet result = statement.executeQuery();
-            //for (int i=1; i<=result.getMetaData().getColumnCount(); i++) System.out.println(result.getMetaData().getColumnName(i) + ": " + result.getString(i));
+            for (int i=1; i<=result.getMetaData().getColumnCount(); i++) System.out.println(result.getMetaData().getColumnName(i) + ": " + result.getString(i));
+            System.out.println(result.getString(10));
+            // TODO switches
+            switch (result.getString(11)) {
+                case "Dog" :
+                    Tamagotchi dog = new Dog(result.getString("name"), result.getFloat("weightT"));
+                    return dog;
+                case "Cat" :
+            }
             connection.close();
         } catch (SQLException e) {
             System.out.println(e.getMessage());
         }
+        return null;
     }
 
     /**
@@ -128,10 +140,11 @@ public class TamagotchiDB extends MySQLDB {
             + " energy=" + animal.getCurrentEnergy()
             + " satiety=" + animal.getCurrentSatiety() 
             + " weightT=" + animal.getCurrentWeight()
-            + " toilet=" + null
+            + " toilet=" + animal.getCurrentCleaning()
             + " physicalState=" + animal.getState().toString()
             + " mentalState=" + animal.getMentalState().toString()
-            + " currentPlace=" + animal.getCurrentPlace().getCurrentPlace());
+            + " currentPlace=" + animal.getCurrentPlace().getCurrentPlace()
+            + " WHERE name=" + animal.getName());
             connection.close();
         } catch (SQLException e) {
             System.out.println(e.getSQLState());
@@ -144,8 +157,8 @@ public class TamagotchiDB extends MySQLDB {
     public static void main(String[] args) {
         TamagotchiDB database = new TamagotchiDB();
         database.createTable();
-        Animal dog = new Dog("doberman", 20);
+        //Animal dog = new Dog("doberman", 20);
         //database.add(dog);
-        database.select("pipi");
+        database.select("doberman");
     }
 }

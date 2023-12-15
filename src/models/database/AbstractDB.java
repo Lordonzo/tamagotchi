@@ -2,8 +2,9 @@ package models.database;
 
 import java.sql.*;
 
-public abstract class MySQLDB {
+public abstract class AbstractDB {
     protected static String dbURL = "jdbc:sqlite:src/resources/data/tamagotchi.db";
+
 
     /**
      * Loads the connection and checks if the database exists <p>
@@ -21,6 +22,9 @@ public abstract class MySQLDB {
         }
     }
 
+    /**
+     * 
+     */
     private void dropDatabase() {
         try {
             Connection connection = DriverManager.getConnection(dbURL);
@@ -39,7 +43,7 @@ public abstract class MySQLDB {
         try {
             Connection connection = DriverManager.getConnection(dbURL);
             Statement statement = connection.createStatement();
-            statement.executeQuery("CREATE DATABASE IF NOT EXISTS tamagotchi");
+            statement.executeQuery("CREATE DATABASE tamagotchi");
             connection.close();
         } catch (SQLException e) {
             System.out.println(e.getMessage());

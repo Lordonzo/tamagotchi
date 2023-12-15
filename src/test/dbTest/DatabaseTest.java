@@ -7,16 +7,16 @@ import org.junit.*;
 import models.database.*;
 
 public class DatabaseTest {
-    private MySQLDB mySQLDB;
+    private AbstractDB myDB;
 
     @Before
     public void init() {
-        //this.mySQLDB = new PlayerDAO();
+        this.myDB = new TamagotchiDB();
     }
 
     @Test
     public void connection() {
-        //assertNotEquals(null, this.mySQLDB.LoadConnection());
+        //assertNotEquals(null, this.myDB.());
     }
 
     @Test
