@@ -1,23 +1,38 @@
 package controller;
 
 import java.io.IOException;
+import java.net.URL;
+import java.util.ArrayList;
+import java.util.ResourceBundle;
 
 import javafx.event.ActionEvent;
-import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Scene;
-import javafx.scene.effect.ColorAdjust;
-import javafx.scene.image.ImageView;
+import javafx.scene.control.Button;
 import javafx.scene.layout.Pane;
-import javafx.scene.media.MediaView;
+import models.Place;
+import models.database.PlaceDB;
+import models.database.TamagotchiDB;
+import models.tamagotchi.Tamagotchi;
 
-public class NewOrLoadController {
-     private MediaView music;
-     public void setMusic(MediaView musicView) {
-        this.music = musicView;
-        
+public class NewOrLoadController extends AbstractController {
+    @FXML
+    private Button slot1Btn;
+    @FXML
+    private Button slot2Btn;
+    @FXML
+    private Button slot3Btn;
+
+    // TODO AFFICHER QUAND TU REVIENS
+    @Override
+    public void initialize(URL location, ResourceBundle resources) {
+        PlaceDB placeDB = new PlaceDB();
+        ArrayList<Place> places = placeDB.select();
+        TamagotchiDB tamagotchiDB = new TamagotchiDB();
+        ArrayList<Tamagotchi> selectSlotSaved = tamagotchiDB.selectSlotSaved(places);
+        if (selectSlotSaved != null) System.out.println(selectSlotSaved.get(0));
     }
 
     @FXML 
@@ -39,20 +54,4 @@ public class NewOrLoadController {
         Scene scene = (Scene) ((Node) actionEvent.getSource()).getScene();
         scene.setRoot(root);
     }
-    
-    
-        
-     @FXML
-    private void changeImageEntered(Event event) {
-        ColorAdjust cAdjust = new ColorAdjust();
-        cAdjust.setBrightness(1);
-        ((ImageView)((Node) event.getSource()).lookup(".image-view")).setEffect(cAdjust);
-    }
-    @FXML
-    private void changeImageExited(Event event) {
-        ColorAdjust cAdjust = new ColorAdjust();
-        cAdjust.setBrightness(0);
-        ((ImageView)((Node) event.getSource()).lookup(".image-view")).setEffect(cAdjust);
-    }
-    
 }

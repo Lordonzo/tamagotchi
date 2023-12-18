@@ -1,21 +1,23 @@
 package models.tamagotchi;
 
+import java.time.LocalDateTime;
+
+import models.Place;
 import models.Status.MentalState;
+import models.Status.PhysicalState;
 
 public abstract class Animal extends Tamagotchi {
-    private final int MAX_STAT = 100;
-
-    private int currentSatiety;
+    private int currentSatiety; // MEMORY ROBOT
     private int satietyDifficulty;
-    /**
-     * @param _weight
-     */
+
     public Animal(String _nameString, float _weight) {
         super(_nameString,_weight);
-        this.currentSatiety = MAX_STAT;
-        this.currentMental = MAX_STAT;
-        this.currentCleanliness = MAX_STAT;
         this.mentalState = MentalState.HAPPY;
+    }
+
+    public Animal(int id, String nameString, LocalDateTime birDateTime, int currentHealth, int currentEnergy, float currentWeight, int currentCleanliness, PhysicalState state, MentalState mentalState, Place place, int slotSaved, int currentSatiety) {
+        super(id, nameString, birDateTime, currentHealth, currentEnergy, currentWeight, currentCleanliness, state, mentalState, place, slotSaved);
+        this.currentSatiety = currentSatiety; // 7
     }
 
     /**
@@ -90,7 +92,7 @@ public abstract class Animal extends Tamagotchi {
         else currentSatiety-=_satiety;
     }
 
-    
+
     public void thread() {
         exit = false;
         routine = new Thread(){

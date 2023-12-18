@@ -14,6 +14,6 @@ public class Status {
     }
 
     public enum EPlace {
-        TOILET, GARDEN, KITCHEN, BEDROOM, LIVINGROOM
+        BEDROOM, LIVINGROOM, GARDEN, KITCHEN, TOILET
     }
 }

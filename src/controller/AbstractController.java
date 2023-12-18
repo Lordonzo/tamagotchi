@@ -10,22 +10,24 @@ import javafx.scene.effect.ColorAdjust;
 import javafx.scene.image.ImageView;
 import javafx.scene.media.MediaView;
 import models.database.OptionDB;
+import models.database.PlaceDB;
 import models.database.TamagotchiDB;
 
 public abstract class AbstractController implements Initializable {
     protected MediaView music;
+    private PlaceController tController;
 
     /**
-     * 
-     * @param musicView
+     * Set up the music
+     * @param musicView the music object
      */
     public void setMusic(MediaView musicView) {
         this.music = musicView;
     }
 
     /**
-     * 
-     * @return
+     * Look up if the file <code>tamagotchi.db</code> exists
+     * @return <code>true</code> if it exists. if not <code>false</code>
      */
     protected boolean databaseHere() {
         File file = new File("src/resources/data/tamagotchi.db");
@@ -37,8 +39,12 @@ public abstract class AbstractController implements Initializable {
      * 
      */
     protected void setUpDatabase() {
+        tController = new PlaceController();
         TamagotchiDB tamagotchiDB = new TamagotchiDB();
         tamagotchiDB.createTable();
+        PlaceDB placeDB = new PlaceDB();
+        placeDB.createTable(tController.getPlaces());
+        tController.displayPlaces();
         OptionDB optionDB = new OptionDB();
         optionDB.createTable();
         //optionDB.select();
@@ -48,13 +54,13 @@ public abstract class AbstractController implements Initializable {
      * CSS THINGS
      */
     @FXML
-    private void changeImageEntered(Event event) {
+    protected void changeImageEntered(Event event) {
         ColorAdjust cAdjust = new ColorAdjust();
         cAdjust.setBrightness(1);
         ((ImageView)((Node) event.getSource()).lookup(".image-view")).setEffect(cAdjust);
     }
     @FXML
-    private void changeImageExited(Event event) {
+    protected void changeImageExited(Event event) {
         ColorAdjust cAdjust = new ColorAdjust();
         cAdjust.setBrightness(0);
         ((ImageView)((Node) event.getSource()).lookup(".image-view")).setEffect(cAdjust);

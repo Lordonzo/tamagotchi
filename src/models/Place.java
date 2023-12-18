@@ -4,6 +4,7 @@ import models.Status.EPlace;
 import models.Status.Weather;
 
 public class Place {
+    private int id;
     private EPlace currentPlace;
     private Place previousPlace;
     private Place nextPlace;
@@ -16,6 +17,21 @@ public class Place {
         Place.weather = Weather.SUNNY;
     }
 
+    public Place(int id, EPlace ePlace) {
+        this.currentPlace = ePlace;
+        this.nextPlace = null;
+        this.previousPlace = null;
+        this.id = id;
+        Place.weather = Weather.SUNNY;
+    }
+    
+    public int getId() {
+        return this.id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
 
     public EPlace getCurrentPlace() {
         return this.currentPlace;
@@ -40,6 +56,7 @@ public class Place {
     public void setNextPlace(Place nextPlace) {
         this.nextPlace = nextPlace;
     }
+
     
     public static Weather getWeather() { return Place.weather; }
 }

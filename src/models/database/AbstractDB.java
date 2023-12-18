@@ -53,22 +53,13 @@ public abstract class AbstractDB {
     /**
      * Creates a table if it does not exist
      * @param tableString name of table to create
-     * @return a boolean if everything went well
      */
-    private boolean createTable(String tableString) {
+    private void createTable(String tableString) {
         try (Connection connection = this.loadConnection(); Statement statement = connection.createStatement();) {
             statement.executeUpdate("CREATE TABLE tamagotchi."+tableString+" (id INTEGER NOT NULL, PRIMARY KEY (id));");
             connection.close();
-            return true;
         } catch (SQLException e) {
             System.out.println(e.getMessage());
-            return false;
         }
     }
-
-    /**
-     * Creates a table if it exists
-     * @return a boolean if everything went well
-     */
-    public abstract boolean createTable();
 }

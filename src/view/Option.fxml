@@ -12,8 +12,9 @@
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" stylesheets="@../resources/css/style.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.OptionController">
    <children>
-      <Label layoutX="163.0" layoutY="185.0" text="Volume" />
-      <Slider fx:id="volumeSlider" layoutX="220.0" layoutY="187.0" prefHeight="14.0" prefWidth="181.0" value="80.0" />
+      <Label layoutX="136.0" layoutY="141.0" text="Volume :" />
+      <Slider fx:id="volumeSlider" layoutX="136.0" layoutY="167.0" prefHeight="24.0" prefWidth="200.0" value="80.0" />
+      <Label fx:id="volumeValue" layoutX="194.0" layoutY="141.0" prefHeight="18.0" prefWidth="58.0" />
       <Label layoutX="272.0" layoutY="336.0" text="Label" />
       <ChoiceBox layoutX="476.0" layoutY="353.0" prefWidth="150.0" />
       <Button layoutX="15.0" layoutY="15.0" mnemonicParsing="false" onAction="#toMenu" onMouseEntered="#changeImageEntered" onMouseExited="#changeImageExited" prefHeight="256.0" prefWidth="366.0">

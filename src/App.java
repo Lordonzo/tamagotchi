@@ -1,3 +1,8 @@
+/**
+ * @author Virgile, Emmanuelle, Adrien, Pierre-Louis
+ * @version 0.8
+ * 
+ */
 import java.io.IOException;
 
 import controller.MenuController;
@@ -33,6 +38,11 @@ public class App extends Application {
         primaryStage.show();
     }
 
+    /**
+     * 
+     * @return
+     * @throws IOException
+     */
     private MediaView setMusic() throws IOException {
         MediaView music = new MediaView(new MediaPlayer(new Media(getClass().getResource("resources/music/soul-worker-login-music.mp3").toString())));
         music.getMediaPlayer().setAutoPlay(true);

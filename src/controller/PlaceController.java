@@ -4,15 +4,21 @@ import java.util.ArrayList;
 import models.Place;
 import models.Status.EPlace;
 
-public class TamagotchiController {
+public class PlaceController {
     private ArrayList<Place> allPlaces = new ArrayList<Place>();
 
-    public TamagotchiController() {
-        this.setPlaces();
-        displayPlaces();
+    /**
+     * 
+     */
+    public PlaceController() {
+        this.setUpPlaces();
+        //displayPlaces();
     }
 
-    private void setPlaces() {
+    /**
+     * 
+     */
+    private void setUpPlaces() {
         Place bedroom = new Place(EPlace.BEDROOM);
         Place garden = new Place(EPlace.GARDEN);
         Place kitchen = new Place(EPlace.KITCHEN);
@@ -40,9 +46,18 @@ public class TamagotchiController {
         allPlaces.add(toilet);
     }
 
+    /**
+     * 
+     */
     public void displayPlaces() {
         for (Place place : allPlaces) {
-            System.out.println(place.getCurrentPlace().name());
+            System.out.println(place.getId() + ": " + place.getCurrentPlace().name() + " next: " + place.getNextPlace().getCurrentPlace().name() + " previous: " + place.getPreviousPlace().getCurrentPlace().name());
         }
     }
+
+    /**
+     * 
+     * @return
+     */
+    public ArrayList<Place> getPlaces() { return this.allPlaces; }
 }

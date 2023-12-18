@@ -16,7 +16,6 @@ import models.Options;
 import models.database.OptionDB;
 
 public class MenuController extends AbstractController {
-    private MediaView music;
     private Options options;
 
     @Override

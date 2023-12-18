@@ -1,32 +1,47 @@
 package controller;
 
+import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
+import org.json.simple.JSONObject;
 import org.json.simple.parser.ParseException;
 
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Scene;
+import javafx.scene.control.Label;
 import javafx.scene.control.Slider;
 import javafx.scene.layout.Pane;
 import javafx.scene.media.MediaView;
 import models.Options;
 import models.database.OptionDB;
 
-public class OptionController implements Initializable {
-    private MediaView music;
+public class OptionController extends AbstractController {
     private Options options;
     @FXML 
     private Slider volumeSlider;
+    @FXML
+    private Label volumeValue;
 
     @Override
-    public void initialize(URL location, ResourceBundle resources) {}
+    public void initialize(URL location, ResourceBundle resources) {
+        volumeSlider.valueProperty().addListener(new ChangeListener<Number>() {
+            @Override
+            public void changed(ObservableValue<? extends Number> observableValue,
+                Number oldValue,
+                Number newValue) {
+                volumeValue.textProperty().setValue(String.valueOf(newValue.intValue()));
+            }
+        });
+    }
 
     public void setMusic(MediaView musicView) {
         this.music = musicView;
@@ -75,11 +90,9 @@ public class OptionController implements Initializable {
     @FXML
     private void applyOptions() {
         // JSON
-        /* 
         File jsonFile = new File(getClass().getResource("../resources/data/options.json").getFile());
         JSONObject obj = new JSONObject();
         obj.put("volume", volumeSlider.getValue()/100);
-        //System.out.println(volumeSlider);
         JSONObject options = new JSONObject();
         options.put("options", obj);
         System.out.println(options.toString());
@@ -87,7 +100,7 @@ public class OptionController implements Initializable {
             data.write(options.toString());
         } catch (IOException e) {
             e.printStackTrace();
-        }*/
+        }
 
         OptionDB optionDB = new OptionDB();
         this.options.setVolume(volumeSlider.getValue()/100);

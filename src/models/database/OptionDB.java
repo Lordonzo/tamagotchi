@@ -9,12 +9,10 @@ import java.sql.Statement;
 import models.Options;
 
 public class OptionDB extends AbstractDB {
-
     /**
      * 
      */
-    @Override
-    public boolean createTable() {
+    public void createTable() {
         try (Connection connection = this.loadConnection(); Statement statement = connection.createStatement();) {
             statement.executeUpdate("CREATE TABLE IF NOT EXISTS options"
             + "("
@@ -25,10 +23,8 @@ public class OptionDB extends AbstractDB {
             + ")");
             connection.close();
             this.setUp();
-            return true;
         } catch (SQLException e) {
             System.out.println(e.getMessage());
-            return false;
         }
     }
 
@@ -52,8 +48,8 @@ public class OptionDB extends AbstractDB {
     }
 
     /**
-     * 
-     * @return if a row already exists
+     * Checks if a row in database's <code>options</code> table exists
+     * @return <code>true</code> if a row exists. <code>false</code> if not
      */
     private boolean exists() {
         try (Connection connection = this.loadConnection(); Statement statement = connection.createStatement();) {

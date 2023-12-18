@@ -5,7 +5,7 @@ import java.time.LocalDateTime;
 import models.Place;
 import models.Status.*;
 
-public abstract class Tamagotchi{
+public abstract class Tamagotchi {
     protected final int MAX_HEALTH_POINTS = 100;
     protected final int MAX_ENERGY = 100;
     protected final int MAX_CLEAN = 100;
@@ -22,7 +22,7 @@ public abstract class Tamagotchi{
     protected String name;
 
     protected int currentHealth;
-    protected int currentEnergy;
+    protected int currentEnergy; // BATTERY ROBOT
 
     protected PhysicalState state;
     protected Place currentPlace;
@@ -35,6 +35,9 @@ public abstract class Tamagotchi{
     protected MentalState mentalState;
     protected int currentMental;
 
+    protected int slotTaken;
+
+    //
     protected Thread routine;
     protected boolean exit;
 
@@ -49,7 +52,7 @@ public abstract class Tamagotchi{
     /**
      * 
      */
-    public Tamagotchi(String _nameString,float _currentWeight) {
+    public Tamagotchi(String _nameString, float _currentWeight) {
         this.currentHealth = MAX_HEALTH_POINTS;
         this.currentEnergy = MAX_ENERGY;
         this.currentCleanliness = MAX_CLEAN;
@@ -60,6 +63,30 @@ public abstract class Tamagotchi{
         this.currentWeight = _currentWeight;
         // TODO : Changer ensuite
         this.currentPlace = new Place(EPlace.LIVINGROOM);
+    }
+
+    /**
+     * 
+     * @param nameString
+     * @param currentWeight
+     * @param currentHealth
+     * @param currentEnergy
+     * @param currentCleanliness
+     * @param state
+     * @param place
+     */
+    public Tamagotchi(int id, String nameString, LocalDateTime birDateTime, int currentHealth, int currentEnergy, float currentWeight, int currentCleanliness, PhysicalState state, MentalState mentalState, Place place, int slotSaved) {
+        this.id = id; // 1
+        this.currentHealth = currentHealth; // 5
+        this.currentEnergy = currentEnergy; // 6
+        this.currentCleanliness = currentCleanliness; // 9
+        this.state = state; // 10
+        this.name = nameString; // 2
+        this.currentWeight = currentWeight; // 8
+        this.currentPlace = place; // 13
+        this.slotTaken = slotSaved; // 14
+        this.birthDate = birDateTime; // 3
+        this.mentalState = mentalState; // 12
     }
     
     protected void addEnergy() {
@@ -104,6 +131,14 @@ public abstract class Tamagotchi{
             mentalDifficulty = 10;
             energyDifficulty = 7;
         }   
+    }
+
+    public int getId() {
+        return this.id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
     /**
      * 
