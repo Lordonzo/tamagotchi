@@ -42,8 +42,12 @@ public class InGameController implements PropertyChangeListener{
     @FXML
     //Cleaning
     private ProgressBar stat3;
+
+    @FXML
+    private Button rightPlaceButton;
     public void setMusic(MediaView musicView) {
        this.music = musicView;
+
        
    }
    public void setTamagotchi(Tamagotchi _tamagotchi) {
@@ -83,10 +87,8 @@ public class InGameController implements PropertyChangeListener{
 
 
    //TODO
-   public void rightRoom(ActionEvent actionEvent) throws IOException{
-            Scene scene = (Scene) ((Node) actionEvent.getSource()).getScene();
-            Button rightRoomText = (Button) scene.lookup("#rightRoomButton");
-            rightRoomText.setText(tamagotchi.getName());
+   public void rightPlace(ActionEvent actionEvent) throws IOException{
+            //rightPlaceButton.setText("dfghj,k;");
    }
    //TODO
    public void leftRoom(ActionEvent actionEvent) throws IOException{
