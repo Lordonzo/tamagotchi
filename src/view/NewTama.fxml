@@ -40,7 +40,7 @@
          <graphic>
             <ImageView fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
                <image>
-                  <Image url="@../resources/tama_sprites/chat%20(2).png" />
+                  <Image url="@../resources/tama_sprites/cat.png" />
                </image>
             </ImageView>
          </graphic>
@@ -51,7 +51,7 @@
          <graphic>
             <ImageView fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
                <image>
-                  <Image url="@../resources/tama_sprites/chien%20(1).png" />
+                  <Image url="@../resources/tama_sprites/dog.png" />
                </image>
             </ImageView>
          </graphic></RadioButton>
@@ -59,7 +59,7 @@
          <graphic>
             <ImageView fitHeight="150.0" fitWidth="189.0" pickOnBounds="true" preserveRatio="true">
                <image>
-                  <Image url="@../resources/tama_sprites/lapin%20(1).png" />
+                  <Image url="@../resources/tama_sprites/rabbit.png" />
                </image>
             </ImageView>
          </graphic></RadioButton>
