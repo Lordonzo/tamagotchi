@@ -24,12 +24,15 @@ import javafx.scene.effect.ColorAdjust;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 import javafx.scene.media.MediaView;
+import models.database.TamagotchiDB;
+import models.tamagotchi.Animal;
 import models.tamagotchi.Cat;
 import models.tamagotchi.Tamagotchi;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 
 public class NewTamaController extends AbstractController {
+    private PlaceController pController = new PlaceController();
     @FXML 
     private void toNewOrLoad(ActionEvent actionEvent) throws IOException {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("../view/NewOrLoad.fxml"));
@@ -89,28 +92,6 @@ public class NewTamaController extends AbstractController {
     private ChoiceBox cbDifficulte;
     
 
-    @FXML 
-    private void toNewOrLoad(ActionEvent actionEvent) throws IOException {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("../view/NewOrLoad.fxml"));
-        Pane root = (Pane) loader.load();
-        NewOrLoadController newOrLoadController = loader.getController();
-        newOrLoadController.setMusic(music);
-        Scene scene = (Scene) ((Node) actionEvent.getSource()).getScene();
-        scene.setRoot(root);
-    }
-
-    @FXML 
-    private void toInGame(ActionEvent actionEvent) throws IOException {
-
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("../view/InGame.fxml"));
-        Pane root = (Pane) loader.load();
-        InGameController inGameController = loader.getController();
-        inGameController.setMusic(music);
-
-        Scene scene = (Scene) ((Node) actionEvent.getSource()).getScene();
-        scene.setRoot(root);
-    }
-
     @FXML
     private void onVerifClick() {
         boolean isTfNameEmpty = tfName.getText().trim().isEmpty();
@@ -168,10 +149,13 @@ public class NewTamaController extends AbstractController {
         /*
          * TODO CHANGE, ONLY FOR TESTING
          */
-        Tamagotchi testing = new Cat("toutou", 32);
+        Tamagotchi testing = new Cat("toutou", 32, pController.getPlaces().get(1));
         testing.setObserver(inGameController);
-        testing.start();
+        //testing.start();
         inGameController.setTamagotchi(testing);
+        TamagotchiDB tamagotchiDB = new TamagotchiDB();
+        System.out.println(testing.getCurrentPlace().getId());
+        tamagotchiDB.add((Animal) testing);
     }
     
 

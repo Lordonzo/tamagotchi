@@ -10,8 +10,8 @@ public abstract class Animal extends Tamagotchi {
     private int currentSatiety; // MEMORY ROBOT
     private int satietyDifficulty;
 
-    public Animal(String _nameString, float _weight) {
-        super(_nameString,_weight);
+    public Animal(String _nameString, float _weight, Place place) {
+        super(_nameString,_weight, place);
         this.mentalState = MentalState.HAPPY;
         this.currentSatiety = MAX_SATIETY;
         exit = false;

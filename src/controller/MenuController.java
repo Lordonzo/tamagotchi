@@ -20,6 +20,7 @@ public class MenuController extends AbstractController {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+        //System.out.println(this.databaseHere());
         if (!this.databaseHere()) this.setUpDatabase();
         this.loadOptions();
     }

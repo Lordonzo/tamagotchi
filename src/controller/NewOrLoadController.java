@@ -34,6 +34,7 @@ public class NewOrLoadController extends AbstractController {
         PlaceDB placeDB = new PlaceDB();
         ArrayList<Place> places = placeDB.select();
         TamagotchiDB tamagotchiDB = new TamagotchiDB();
+        tamagotchiDB.select();
         ArrayList<Tamagotchi> selectSlotSaved = tamagotchiDB.selectSlotSaved(places);
         System.out.println(selectSlotSaved);
         if (!selectSlotSaved.isEmpty()) {

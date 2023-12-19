@@ -3,16 +3,27 @@ package controller;
 import java.util.ArrayList;
 import models.Place;
 import models.Status.EPlace;
+import models.database.PlaceDB;
 
 public class PlaceController {
     private ArrayList<Place> allPlaces = new ArrayList<Place>();
+    private PlaceDB placeDB = new PlaceDB();
 
     /**
      * 
      */
     public PlaceController() {
         this.setUpPlaces();
+        allPlaces = placeDB.select();
         //displayPlaces();
+    }
+
+    /**
+     * 
+     * @param withIds
+     */
+    public void setIds(ArrayList<Place> withIds) {
+        allPlaces = withIds;
     }
 
     /**

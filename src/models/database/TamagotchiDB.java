@@ -10,8 +10,6 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 
 import models.Place;
-import models.Status.MentalState;
-import models.Status.PhysicalState;
 import models.tamagotchi.*;
 
 public class TamagotchiDB extends AbstractDB {
@@ -62,7 +60,7 @@ public class TamagotchiDB extends AbstractDB {
      * 
      * @param name
      */
-    public Tamagotchi select(String name) {
+    public Tamagotchi select(String name, ArrayList<Place> allPlaces) {
         try (Connection connection = this.loadConnection();) {
             PreparedStatement statement = connection.prepareStatement("SELECT * FROM tamagotchi WHERE name=?");
             statement.setString(1, name);
@@ -73,7 +71,7 @@ public class TamagotchiDB extends AbstractDB {
             if (result.getString(1) == null) return null;
             switch (result.getString(11)) {
                 case "Dog" :
-                    Tamagotchi dog = new Dog(result.getString("name"), result.getFloat("weightT"));
+                    Tamagotchi dog = new Dog(result.getString("name"), result.getFloat("weightT"), allPlaces.get(result.getInt("currentPlace")+1));
                     return dog;
                 case "Cat" :
             }
@@ -146,6 +144,8 @@ public class TamagotchiDB extends AbstractDB {
                             result.getInt(7)
                         );
                         tg.add(rabbit);
+                    default:
+                        break;
                 }
             }
             connection.close();
@@ -232,10 +232,10 @@ public class TamagotchiDB extends AbstractDB {
     public static void main(String[] args) {
         TamagotchiDB database = new TamagotchiDB();
         database.createTable();
-        Animal dog = new Cat("cat", 20);
-        database.add(dog);
-        dog = new Dog("doberman", 20);
-        database.add(dog);
+        //Animal dog = new Cat("cat", 20);
+        //database.add(dog);
+        //dog = new Dog("doberman", 20);
+        //database.add(dog);
         database.select();
     }
 }

@@ -1,15 +1,23 @@
 package models.tamagotchi;
 
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+
+import javafx.scene.image.Image;
+import models.Place;
 import models.Status.MentalState;
 
 public class Robot extends Tamagotchi {
     private float damageState = 0;
     private final int MIN_MEMORY = 100;
     private int currentMemory;
-    public Robot(String _nameString,float _weight){
-        super(_nameString,_weight);
+    public Robot(String _nameString,float _weight, Place place){
+        super(_nameString,_weight, place);
         this.currentMemory = 0;
         this.mentalState = MentalState.HAPPY;
+        try {
+            image = new Image(new FileInputStream("resources/tama_sprites/robot.png"));
+        } catch (FileNotFoundException e) {}
         routine = new Thread(){
             public void run() {
                 try{

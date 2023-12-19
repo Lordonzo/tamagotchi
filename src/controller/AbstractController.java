@@ -15,7 +15,6 @@ import models.database.TamagotchiDB;
 
 public abstract class AbstractController implements Initializable {
     protected MediaView music;
-    private PlaceController tController;
 
     /**
      * Set up the music
@@ -30,7 +29,7 @@ public abstract class AbstractController implements Initializable {
      * @return <code>true</code> if it exists. if not <code>false</code>
      */
     protected boolean databaseHere() {
-        File file = new File("../resources/data/tamagotchi.db");
+        File file = new File("src/resources/data/tamagotchi.db");
         //System.out.println(file.exists());
         return file.exists();
     }
@@ -39,17 +38,15 @@ public abstract class AbstractController implements Initializable {
      * 
      */
     protected void setUpDatabase() {
-        tController = new PlaceController();
+        PlaceController pController = new PlaceController();
         TamagotchiDB tamagotchiDB = new TamagotchiDB();
         tamagotchiDB.createTable();
         tamagotchiDB.select();
         PlaceDB placeDB = new PlaceDB();
-        placeDB.createTable(tController.getPlaces());
-        placeDB.select();
-        //tController.displayPlaces();
+        placeDB.createTable(pController.getPlaces());
         OptionDB optionDB = new OptionDB();
         optionDB.createTable();
-        //optionDB.select();
+        optionDB.select();
     }
 
     /*

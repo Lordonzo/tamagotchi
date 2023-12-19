@@ -21,8 +21,8 @@ public class PlaceDB extends AbstractDB {
             + "("
                 + "id INTEGER NOT NULL PRIMARY KEY,"
                 + "name VARCHAR(255) NOT NULL,"
-                + "nextPlace INTEGER NOT NULL REFERENCES tamagotchi(id),"
-                + "previousPlace INTEGER NOT NULL REFERENCES tamagotchi(id)"
+                + "nextPlace INTEGER NOT NULL REFERENCES place(id),"
+                + "previousPlace INTEGER NOT NULL REFERENCES place(id)"
             + ")");
             for (Place place : allPlaces) this.add(place);
             connection.close();
@@ -38,12 +38,10 @@ public class PlaceDB extends AbstractDB {
     public ArrayList<Place> select() {
         try (Connection connection = this.loadConnection(); Statement statement = connection.createStatement();) {
             ResultSet result = statement.executeQuery("SELECT * FROM place");
-            //System.out.println("Place SELECT: ");
+            System.out.println("Place SELECT: ");
             ArrayList<Place> tp = this.setAsObject();
-            while (result.next()) {
-                for (int i=0; i<tp.size(); i++) tp.get(i).setId(result.getInt(1));
-                //for (int i=1; i<=result.getMetaData().getColumnCount(); i++) System.out.println(result.getMetaData().getColumnName(i) + ": " + result.getString(i));
-            }
+            while (result.next()) tp.get(result.getInt(1)-1).setId(result.getInt(1));
+            //for (int i=1; i<=result.getMetaData().getColumnCount(); i++) System.out.println(result.getMetaData().getColumnName(i) + ": " + result.getString(i));
             connection.close();
             return tp;
         } catch (SQLException e) {

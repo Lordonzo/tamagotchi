@@ -2,6 +2,8 @@ package models.tamagotchi;
 
 import java.beans.PropertyChangeListener;
 import java.time.LocalDateTime;
+
+import javafx.scene.image.Image;
 import models.Place;
 import models.Status.*;
 
@@ -42,6 +44,7 @@ public abstract class Tamagotchi {
     protected boolean exit;
 
     protected PropertyChangeListener observer;
+    protected Image image;
 
     protected final boolean DEBUG = true;
 
@@ -52,7 +55,7 @@ public abstract class Tamagotchi {
     /**
      * 
      */
-    public Tamagotchi(String _nameString, float _currentWeight) {
+    public Tamagotchi(String _nameString, float _currentWeight, Place place) {
         this.currentHealth = MAX_HEALTH_POINTS;
         this.currentEnergy = MAX_ENERGY;
         this.currentCleanliness = MAX_CLEAN;
@@ -62,8 +65,7 @@ public abstract class Tamagotchi {
         
         this.name = _nameString;
         this.currentWeight = _currentWeight;
-        // TODO : Changer ensuite
-        this.currentPlace = new Place(EPlace.LIVINGROOM);
+        this.currentPlace = place;
     }
 
     /**

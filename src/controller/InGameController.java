@@ -6,7 +6,9 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
+import java.net.URL;
 import java.util.EventListener;
+import java.util.ResourceBundle;
 
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
@@ -30,8 +32,7 @@ import javafx.scene.media.MediaView;
 import javafx.stage.Stage;
 import models.tamagotchi.Tamagotchi;
 
-public class InGameController implements PropertyChangeListener {
-    private MediaView music;
+public class InGameController extends AbstractController implements PropertyChangeListener {
     private Tamagotchi tamagotchi;
     @FXML
     //Health
@@ -43,13 +44,6 @@ public class InGameController implements PropertyChangeListener {
     //Cleaning
     private ProgressBar stat3;
 
-    @FXML
-    private Button rightPlaceButton;
-    public void setMusic(MediaView musicView) {
-       this.music = musicView;
-
-       
-   }
    public void setTamagotchi(Tamagotchi _tamagotchi) {
         //TODO je sens ca va faire des problème ca, faire un constructeur par copie
        this.tamagotchi = _tamagotchi;
@@ -95,13 +89,18 @@ public class InGameController implements PropertyChangeListener {
     
    }
 
-@Override
-public void propertyChange(PropertyChangeEvent evt) {
-    try {
-        statsDisplay();}
+    @Override
+    public void propertyChange(PropertyChangeEvent evt) {
+        try {
+            statsDisplay();}
 
-    catch (Exception e) {
-        // TODO: handle exception
+        catch (Exception e) {
+            // TODO: handle exception
+        }
     }
-}
+
+    @Override
+    public void initialize(URL location, ResourceBundle resources) {
+        //pController = new PlaceController();
+    }
 }
