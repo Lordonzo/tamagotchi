@@ -38,8 +38,12 @@ public class PlaceDB extends AbstractDB {
     public ArrayList<Place> select() {
         try (Connection connection = this.loadConnection(); Statement statement = connection.createStatement();) {
             ResultSet result = statement.executeQuery("SELECT * FROM place");
+            //System.out.println("Place SELECT: ");
             ArrayList<Place> tp = this.setAsObject();
-            while (result.next()) for (int i=0; i<tp.size(); i++) tp.get(i).setId(result.getInt(1));
+            while (result.next()) {
+                for (int i=0; i<tp.size(); i++) tp.get(i).setId(result.getInt(1));
+                //for (int i=1; i<=result.getMetaData().getColumnCount(); i++) System.out.println(result.getMetaData().getColumnName(i) + ": " + result.getString(i));
+            }
             connection.close();
             return tp;
         } catch (SQLException e) {

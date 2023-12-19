@@ -1,6 +1,8 @@
 package controller;
 
 import java.io.IOException;
+import java.net.URL;
+import java.util.ResourceBundle;
 
 import javafx.event.ActionEvent;
 import javafx.event.Event;
@@ -22,13 +24,7 @@ import models.tamagotchi.Tamagotchi;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 
-public class NewTamaController {
-     private MediaView music;
-     public void setMusic(MediaView musicView) {
-        this.music = musicView;
-        
-    }
-
+public class NewTamaController extends AbstractController {
     @FXML 
     private void toNewOrLoad(ActionEvent actionEvent) throws IOException {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("../view/NewOrLoad.fxml"));
@@ -49,19 +45,6 @@ public class NewTamaController {
 
         Scene scene = (Scene) ((Node) actionEvent.getSource()).getScene();
         scene.setRoot(root);
-    }
-        
-     @FXML
-    private void changeImageEntered(Event event) {
-        ColorAdjust cAdjust = new ColorAdjust();
-        cAdjust.setBrightness(1);
-        ((ImageView)((Node) event.getSource()).lookup(".image-view")).setEffect(cAdjust);
-    }
-    @FXML
-    private void changeImageExited(Event event) {
-        ColorAdjust cAdjust = new ColorAdjust();
-        cAdjust.setBrightness(0);
-        ((ImageView)((Node) event.getSource()).lookup(".image-view")).setEffect(cAdjust);
     }
     
     @FXML
@@ -182,6 +165,12 @@ public class NewTamaController {
         }
     
         return typeSelectionne;
+    }
+
+    @Override
+    public void initialize(URL location, ResourceBundle resources) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'initialize'");
     }
 
 }

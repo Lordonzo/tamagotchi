@@ -13,8 +13,8 @@ public class Dog extends Animal {
         super(_nameString, _weight);
     }
 
-    //int, String, LocalDateTime, int, int, int, float, int, Status.PhysicalState, Status.MentalState, Place, int
-    public Dog(int id, String nameString, LocalDateTime birDateTime, int currentHealth, int currentEnergy, float currentWeight, int currentCleanliness, PhysicalState state, MentalState mentalState, Place place, int slotSaved, int currentSatiety) {
-        super(id, nameString, birDateTime, currentHealth, currentEnergy, currentWeight, currentCleanliness, state, mentalState, place, slotSaved, currentSatiety);
+    //int, String, LocalDateTime, int, int, int, float, int, int, Place, int
+    public Dog(int id, String nameString, LocalDateTime birDateTime, int currentHealth, int currentEnergy, float currentWeight, int currentCleanliness, int mentalState, Place place, int slotSaved, int currentSatiety) {
+        super(id, nameString, birDateTime, currentHealth, currentEnergy, currentWeight, currentCleanliness, mentalState, place, slotSaved, currentSatiety);
     }
 }

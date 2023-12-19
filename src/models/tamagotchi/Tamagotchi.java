@@ -75,18 +75,17 @@ public abstract class Tamagotchi {
      * @param state
      * @param place
      */
-    public Tamagotchi(int id, String nameString, LocalDateTime birDateTime, int currentHealth, int currentEnergy, float currentWeight, int currentCleanliness, PhysicalState state, MentalState mentalState, Place place, int slotSaved) {
+    public Tamagotchi(int id, String nameString, LocalDateTime birDateTime, int currentHealth, int currentEnergy, float currentWeight, int currentCleanliness, int mentalState, Place place, int slotSaved) {
         this.id = id; // 1
         this.currentHealth = currentHealth; // 5
         this.currentEnergy = currentEnergy; // 6
         this.currentCleanliness = currentCleanliness; // 9
-        this.state = state; // 10
         this.name = nameString; // 2
         this.currentWeight = currentWeight; // 8
-        this.currentPlace = place; // 13
-        this.slotTaken = slotSaved; // 14
+        this.currentPlace = place; // 12
+        this.slotTaken = slotSaved; // 13
         this.birthDate = birDateTime; // 3
-        this.mentalState = mentalState; // 12
+        this.currentMental = mentalState; // 11
     }
     
     protected void addEnergy() {
@@ -165,8 +164,8 @@ public abstract class Tamagotchi {
     public int getCurrentHealth() {
         return currentHealth;
     }
-    public MentalState getMentalState() {
-        return mentalState;
+    public int getMentalState() {
+        return this.currentMental;
     }
     public Place getCurrentPlace() {
         return this.currentPlace;
