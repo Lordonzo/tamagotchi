@@ -13,6 +13,34 @@ public abstract class Animal extends Tamagotchi {
     public Animal(String _nameString, float _weight) {
         super(_nameString,_weight);
         this.mentalState = MentalState.HAPPY;
+        this.currentSatiety = MAX_SATIETY;
+        exit = false;
+        routine = new Thread(){
+            public void run() {
+                try{
+                    do{
+                        sleep(NB_SEC);
+                        decreaseStats(10, 10, 10); //TODO changer les valeurs 
+                        decreaseHealth(10, 10);
+                        if(DEBUG){
+                        System.out.println("mean : " + mean());
+                        System.out.println("currentCleaning :"+currentCleanliness);
+                        System.out.println("currentSatiety :"+currentSatiety);
+                        System.out.println("currentEnergy"+currentEnergy);
+                        System.out.println("currentHealth :"+currentHealth);
+                        System.out.println("currentMental:"+currentMental);
+                        }
+                        observer.propertyChange(null);
+
+                    } while(!exit);
+                
+                }
+                catch(Exception e){
+                    //TODO routine d'erreur
+                    System.err.println("Thread error : "+e.getMessage());
+                }
+            }
+        };
     }
 
     public Animal(int id, String nameString, LocalDateTime birDateTime, int currentHealth, int currentEnergy, float currentWeight, int currentCleanliness, PhysicalState state, MentalState mentalState, Place place, int slotSaved, int currentSatiety) {
@@ -92,37 +120,6 @@ public abstract class Animal extends Tamagotchi {
         else currentSatiety-=_satiety;
     }
 
-
-    public void thread() {
-        exit = false;
-        routine = new Thread(){
-            public void run() {
-                try{
-                    do{
-                        sleep(NB_SEC);
-                        decreaseStats(10, 10, 10); //TODO changer les valeurs 
-                        decreaseHealth(10, 10);
-                        if(DEBUG){
-                        System.out.println("mean : " + mean());
-                        System.out.println("currentCleaning :"+currentCleanliness);
-                        System.out.println("currentSatiety :"+currentSatiety);
-                        System.out.println("currentEnergy"+currentEnergy);
-                        System.out.println("currentHealth :"+currentHealth);
-                        System.out.println("currentMental:"+currentMental);
-                        }
-                        observer.propertyChange(null);
-
-                    } while(!exit);
-                
-                }
-                catch(Exception e){
-                    //TODO routine d'erreur
-                    System.err.println("Thread error : "+e.getMessage());
-                }
-            }
-        };
-        routine.start();
-    }
 }
 
 

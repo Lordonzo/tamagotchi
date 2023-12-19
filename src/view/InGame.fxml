@@ -18,9 +18,9 @@
       <ProgressBar fx:id="stat1" layoutX="14.0" layoutY="14.0" prefWidth="200.0" progress="0.0" />
       <ProgressBar fx:id="stat2" layoutX="14.0" layoutY="40.0" prefWidth="200.0" progress="0.0" />
       <ProgressBar fx:id="stat3" layoutX="14.0" layoutY="70.0" prefWidth="200.0" progress="0.0" />
-      <Text layoutX="233.0" layoutY="29.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Stat1" />
-      <Text layoutX="233.0" layoutY="55.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Stat2" />
-      <Text layoutX="233.0" layoutY="85.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Stat3" />
+      <Text layoutX="233.0" layoutY="29.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Vie" />
+      <Text layoutX="233.0" layoutY="55.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Energie" />
+      <Text layoutX="233.0" layoutY="85.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Propreté" />
       <Button layoutX="83.0" layoutY="435.0" mnemonicParsing="false" text="Action" />
       <Button fx:id="rightRoomButton" layoutX="982.0" layoutY="296.0" mnemonicParsing="false" onAction="#rightRoom" text="PièceA" />
       <Button fx:id="leftRoomButton" layoutX="982.0" layoutY="391.0" mnemonicParsing="false" onAction="#leftRoom" text="PièceB" />
