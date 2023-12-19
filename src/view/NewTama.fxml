@@ -41,18 +41,18 @@
                   <Image url="@../resources/tama_sprites/chat%20(2).png" />
                </image>
             </ImageView>
-         </graphic></RadioButton>
-      <RadioButton fx:id="rbChien" layoutX="613.0" layoutY="285.0" mnemonicParsing="false">
+         </graphic>
+         <toggleGroup>
+            <ToggleGroup fx:id="tgType" />
+         </toggleGroup></RadioButton>
+      <RadioButton fx:id="rbChien" layoutX="613.0" layoutY="285.0" mnemonicParsing="false" toggleGroup="$tgType">
          <graphic>
             <ImageView fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@../resources/tama_sprites/chien%20(1).png" />
                </image>
             </ImageView>
-         </graphic>
-         <toggleGroup>
-            <ToggleGroup fx:id="tgType" />
-         </toggleGroup></RadioButton>
+         </graphic></RadioButton>
       <RadioButton fx:id="rbLapin" layoutX="261.0" layoutY="488.0" mnemonicParsing="false" toggleGroup="$tgType">
          <graphic>
             <ImageView fitHeight="150.0" fitWidth="189.0" pickOnBounds="true" preserveRatio="true">
