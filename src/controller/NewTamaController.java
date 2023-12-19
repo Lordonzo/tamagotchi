@@ -3,7 +3,11 @@ package controller;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
+import java.net.URL;
+import java.util.ResourceBundle;
 
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.Event;
 import javafx.fxml.FXML;
@@ -11,6 +15,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextField;
@@ -78,8 +83,38 @@ public class NewTamaController extends AbstractController {
     private Label lType;
 
     @FXML
+    private Label lDifficulte;
+
+    @FXML
+    private ChoiceBox cbDifficulte;
+    
+
+    @FXML 
+    private void toNewOrLoad(ActionEvent actionEvent) throws IOException {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("../view/NewOrLoad.fxml"));
+        Pane root = (Pane) loader.load();
+        NewOrLoadController newOrLoadController = loader.getController();
+        newOrLoadController.setMusic(music);
+        Scene scene = (Scene) ((Node) actionEvent.getSource()).getScene();
+        scene.setRoot(root);
+    }
+
+    @FXML 
+    private void toInGame(ActionEvent actionEvent) throws IOException {
+
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("../view/InGame.fxml"));
+        Pane root = (Pane) loader.load();
+        InGameController inGameController = loader.getController();
+        inGameController.setMusic(music);
+
+        Scene scene = (Scene) ((Node) actionEvent.getSource()).getScene();
+        scene.setRoot(root);
+    }
+
+    @FXML
     private void onVerifClick() {
         boolean isTfNameEmpty = tfName.getText().trim().isEmpty();
+        boolean isCbDifficulte = cbDifficulte.getSelectionModel().isEmpty();
         RadioButton selectedRadioButton = (RadioButton) tgType.getSelectedToggle();
         if (isTfNameEmpty) {
             //affiche message "rentrer le nom du tama"
@@ -87,6 +122,8 @@ public class NewTamaController extends AbstractController {
         } else if (selectedRadioButton == null) {
             //affiche message "rentrer type tama"
             showAlert("Erreur", "Veuillez sélectionner le type du tamagotchi.", AlertType.ERROR);
+        } else if (isCbDifficulte) {
+            showAlert("Erreur", "Veuillez sélectionner la difficulté de votre partie.", AlertType.ERROR);
         } else {
             // Récupérer la valeur du TextField
             String valeurTextField = tfName.getText();
@@ -94,6 +131,9 @@ public class NewTamaController extends AbstractController {
             // Récupérer le Radio Button coché
             String typeSelectionne = mapType(selectedRadioButton);
             lType.setText("Type : " + typeSelectionne);
+            // Récupérer la difficulté
+            String valeurDifficulte = (String) cbDifficulte.getSelectionModel().getSelectedItem();
+            lDifficulte.setText("Difficulté : " + valeurDifficulte);
             showConfirmationPane();
         }
     }
@@ -114,6 +154,7 @@ public class NewTamaController extends AbstractController {
         rbChien.setDisable(true);
         rbLapin.setDisable(true);
         rbRobot.setDisable(true);
+        cbDifficulte.setDisable(true);
     }
 
     @FXML
@@ -128,8 +169,8 @@ public class NewTamaController extends AbstractController {
          * TODO CHANGE, ONLY FOR TESTING
          */
         Tamagotchi testing = new Cat("toutou", 32);
-        System.out.println("zozouz");
         testing.setObserver(inGameController);
+        testing.start();
         inGameController.setTamagotchi(testing);
     }
     
@@ -142,6 +183,7 @@ public class NewTamaController extends AbstractController {
         rbChien.setDisable(false);
         rbLapin.setDisable(false);
         rbRobot.setDisable(false);
+        cbDifficulte.setDisable(false);
     }
 
     private String mapType(RadioButton radioButton) {
@@ -170,7 +212,7 @@ public class NewTamaController extends AbstractController {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'initialize'");
+        cbDifficulte.getItems().addAll("Facile", "Normal", "Difficile");
     }
 
 }

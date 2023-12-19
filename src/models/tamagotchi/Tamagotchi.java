@@ -10,7 +10,7 @@ public abstract class Tamagotchi {
     protected final int MAX_ENERGY = 100;
     protected final int MAX_CLEAN = 100;
     protected final int MAX_SATIETY = 100;
-
+    protected final int MAX_MENTAL = 100;
     protected final int NB_SEC = 1000;
 
     //Difficulty
@@ -56,6 +56,7 @@ public abstract class Tamagotchi {
         this.currentHealth = MAX_HEALTH_POINTS;
         this.currentEnergy = MAX_ENERGY;
         this.currentCleanliness = MAX_CLEAN;
+        this.currentMental = MAX_MENTAL;
         this.exit = false;
         this.state = PhysicalState.IN_SHAPE;
         
