@@ -145,8 +145,8 @@ public class NewTamaController {
          * TODO CHANGE, ONLY FOR TESTING
          */
         Tamagotchi testing = new Cat("toutou", 32);
-        System.out.println("zozouz");
         testing.setObserver(inGameController);
+        testing.start();
         inGameController.setTamagotchi(testing);
     }
     

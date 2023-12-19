@@ -34,10 +34,13 @@ public class InGameController implements PropertyChangeListener{
     private MediaView music;
     private Tamagotchi tamagotchi;
     @FXML
+    //Health
     private ProgressBar stat1;
     @FXML
+    //Energy
     private ProgressBar stat2;
     @FXML
+    //Cleaning
     private ProgressBar stat3;
     public void setMusic(MediaView musicView) {
        this.music = musicView;
@@ -62,13 +65,14 @@ public class InGameController implements PropertyChangeListener{
    @FXML
    //TODO
    public void statsDisplay() throws IOException{
-    stat1.setProgress(1);
             try{
                 System.out.println((double)tamagotchi.getCurrentHealth()/100);
                 System.out.println(stat1.getId());
                 /*Platform.runLater(() -> stat1.setProgress((double)tamagotchi.getCurrentHealth()/100));
                 Platform.runLater(() -> stat2.setProgress(0.2));*/
-                stat1.setProgress((double)tamagotchi.getCurrentHealth());
+                stat1.setProgress((double)tamagotchi.getCurrentHealth()/100);
+                stat2.setProgress((double)tamagotchi.getCurrentEnergy()/100);
+                stat3.setProgress((double)tamagotchi.getCurrentCleaning()/100);
             }
             catch(Exception e){
                 e.printStackTrace();
@@ -83,10 +87,6 @@ public class InGameController implements PropertyChangeListener{
             Scene scene = (Scene) ((Node) actionEvent.getSource()).getScene();
             Button rightRoomText = (Button) scene.lookup("#rightRoomButton");
             rightRoomText.setText(tamagotchi.getName());
-ProgressBar stat1 = (ProgressBar) scene.lookup("#stat1");
-    ProgressBar stat2 = (ProgressBar) scene.lookup("#stat2");
-    ProgressBar stat3 = (ProgressBar) scene.lookup("#stat3");
-    stat1.setProgress(1);
    }
    //TODO
    public void leftRoom(ActionEvent actionEvent) throws IOException{
