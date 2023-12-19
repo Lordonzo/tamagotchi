@@ -3,10 +3,12 @@ package controller;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.EventListener;
 import java.util.ResourceBundle;
 
@@ -25,11 +27,15 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ProgressBar;
 import javafx.scene.effect.ColorAdjust;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.media.MediaView;
 import javafx.stage.Stage;
+import models.Place;
+import models.database.PlaceDB;
+import models.database.TamagotchiDB;
 import models.tamagotchi.Tamagotchi;
 
 public class InGameController extends AbstractController implements PropertyChangeListener {
@@ -43,6 +49,12 @@ public class InGameController extends AbstractController implements PropertyChan
     @FXML
     //Cleaning
     private ProgressBar stat3;
+
+    @FXML  
+    private ImageView ivSprite;
+
+    @FXML
+    private Button rightPlaceButton;
 
    public void setTamagotchi(Tamagotchi _tamagotchi) {
         //TODO je sens ca va faire des problème ca, faire un constructeur par copie
@@ -94,13 +106,39 @@ public class InGameController extends AbstractController implements PropertyChan
         try {
             statsDisplay();}
 
-        catch (Exception e) {
-            // TODO: handle exception
-        }
+    catch (Exception e) {
+        // TODO: handle exception
     }
-
-    @Override
-    public void initialize(URL location, ResourceBundle resources) {
-        //pController = new PlaceController();
+}
+@Override
+public void initialize(URL location, ResourceBundle resources) {
+    PlaceDB placeDB = new PlaceDB();
+        ArrayList<Place> places = placeDB.select();
+        TamagotchiDB tamagotchiDB = new TamagotchiDB();
+        ArrayList<Tamagotchi> selectSlotSaved = tamagotchiDB.selectSlotSaved(places);
+        System.out.println(selectSlotSaved);
+        if (!selectSlotSaved.isEmpty()) {
+            System.out.println(selectSlotSaved.get(0).getName());
+            switch (selectSlotSaved.get(0).getClass().getSimpleName()) {
+            case "Dog":
+                //System.out.println(slot1Btn.getImage());
+                try {
+                    ivSprite.setImage(new Image(new FileInputStream("src/resources/tama_sprites/dog.png")));
+                } catch (FileNotFoundException e) { System.out.println(e.getMessage()); }
+                break;
+            case "Cat":
+                System.out.println(ivSprite.getImage());
+                try {
+                    ivSprite.setImage(new Image(new FileInputStream("src/resources/tama_sprites/cat.png")));
+                } catch (FileNotFoundException e) { System.out.println(e.getMessage()); }
+                break;
+            case "Rabbit":
+                System.out.println(ivSprite.getImage());
+                try {
+                    ivSprite.setImage(new Image(new FileInputStream("src/resources/tama_sprites/rabbit.png")));
+                } catch (FileNotFoundException e) { System.out.println(e.getMessage()); }
+                break;
+            }
+        }
     }
 }

@@ -149,7 +149,7 @@ public class NewTamaController extends AbstractController {
         /*
          * TODO CHANGE, ONLY FOR TESTING
          */
-        Tamagotchi testing = new Cat("toutou", 32, pController.getPlaces().get(1));
+        Tamagotchi testing = new Cat(tfName.getText(), 32, pController.getPlaces().get(1));
         testing.setObserver(inGameController);
         //testing.start();
         inGameController.setTamagotchi(testing);
@@ -192,11 +192,4 @@ public class NewTamaController extends AbstractController {
     
         return typeSelectionne;
     }
-
-    @Override
-    public void initialize(URL location, ResourceBundle resources) {
-        // TODO Auto-generated method stub
-        cbDifficulte.getItems().addAll("Facile", "Normal", "Difficile");
-    }
-
 }
