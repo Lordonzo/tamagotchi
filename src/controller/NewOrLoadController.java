@@ -1,5 +1,7 @@
 package controller;
 
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
@@ -10,7 +12,8 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 import models.Place;
 import models.database.PlaceDB;
@@ -19,11 +22,11 @@ import models.tamagotchi.Tamagotchi;
 
 public class NewOrLoadController extends AbstractController {
     @FXML
-    private Button slot1Btn;
+    private ImageView slot1Btn;
     @FXML
-    private Button slot2Btn;
+    private ImageView slot2Btn;
     @FXML
-    private Button slot3Btn;
+    private ImageView slot3Btn;
 
     // TODO AFFICHER QUAND TU REVIENS
     @Override
@@ -32,7 +35,30 @@ public class NewOrLoadController extends AbstractController {
         ArrayList<Place> places = placeDB.select();
         TamagotchiDB tamagotchiDB = new TamagotchiDB();
         ArrayList<Tamagotchi> selectSlotSaved = tamagotchiDB.selectSlotSaved(places);
-        if (selectSlotSaved != null) System.out.println(selectSlotSaved.get(0));
+        System.out.println(selectSlotSaved);
+        if (!selectSlotSaved.isEmpty()) {
+            System.out.println(selectSlotSaved.get(0).getName());
+            switch (selectSlotSaved.get(0).getClass().getSimpleName()) {
+            case "Dog":
+                //System.out.println(slot1Btn.getImage());
+                try {
+                    slot1Btn.setImage(new Image(new FileInputStream("src/resources/tama_sprites/dog.png")));
+                } catch (FileNotFoundException e) { System.out.println(e.getMessage()); }
+                break;
+            case "Cat":
+                System.out.println(slot1Btn.getImage());
+                try {
+                    slot1Btn.setImage(new Image(new FileInputStream("src/resources/tama_sprites/cat.png")));
+                } catch (FileNotFoundException e) { System.out.println(e.getMessage()); }
+                break;
+            case "Rabbit":
+                System.out.println(slot1Btn.getImage());
+                try {
+                    slot1Btn.setImage(new Image(new FileInputStream("src/resources/tama_sprites/rabbit.png")));
+                } catch (FileNotFoundException e) { System.out.println(e.getMessage()); }
+                break;
+            }
+        }
     }
 
     @FXML 

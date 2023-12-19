@@ -3,6 +3,8 @@ package controller;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
+import java.net.URL;
+import java.util.ResourceBundle;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -28,6 +30,28 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 
 public class NewTamaController extends AbstractController {
+    @FXML 
+    private void toNewOrLoad(ActionEvent actionEvent) throws IOException {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("../view/NewOrLoad.fxml"));
+        Pane root = (Pane) loader.load();
+        NewOrLoadController newOrLoadController = loader.getController();
+        newOrLoadController.setMusic(music);
+        Scene scene = (Scene) ((Node) actionEvent.getSource()).getScene();
+        scene.setRoot(root);
+    }
+
+    @FXML 
+    private void toInGame(ActionEvent actionEvent) throws IOException {
+
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("../view/InGame.fxml"));
+        Pane root = (Pane) loader.load();
+        InGameController inGameController = loader.getController();
+        inGameController.setMusic(music);
+
+        Scene scene = (Scene) ((Node) actionEvent.getSource()).getScene();
+        scene.setRoot(root);
+    }
+    
     @FXML
     private TextField tfName;
 

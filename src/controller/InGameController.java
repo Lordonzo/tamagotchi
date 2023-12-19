@@ -30,7 +30,7 @@ import javafx.scene.media.MediaView;
 import javafx.stage.Stage;
 import models.tamagotchi.Tamagotchi;
 
-public class InGameController implements PropertyChangeListener{
+public class InGameController implements PropertyChangeListener {
     private MediaView music;
     private Tamagotchi tamagotchi;
     @FXML
