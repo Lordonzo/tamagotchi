@@ -30,27 +30,6 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 
 public class NewTamaController extends AbstractController {
-    @FXML 
-    private void toNewOrLoad(ActionEvent actionEvent) throws IOException {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("../view/NewOrLoad.fxml"));
-        Pane root = (Pane) loader.load();
-        NewOrLoadController newOrLoadController = loader.getController();
-        newOrLoadController.setMusic(music);
-        Scene scene = (Scene) ((Node) actionEvent.getSource()).getScene();
-        scene.setRoot(root);
-    }
-
-    @FXML 
-    private void toInGame(ActionEvent actionEvent) throws IOException {
-
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("../view/InGame.fxml"));
-        Pane root = (Pane) loader.load();
-        InGameController inGameController = loader.getController();
-        inGameController.setMusic(music);
-
-        Scene scene = (Scene) ((Node) actionEvent.getSource()).getScene();
-        scene.setRoot(root);
-    }
     
     @FXML
     private TextField tfName;
@@ -87,6 +66,12 @@ public class NewTamaController extends AbstractController {
 
     @FXML
     private ChoiceBox cbDifficulte;
+
+       @Override
+    public void initialize(URL location, ResourceBundle resources) {
+        // TODO Auto-generated method stub
+        cbDifficulte.getItems().addAll("Facile", "Normal", "Difficile");
+    }
     
 
     @FXML 
@@ -168,7 +153,7 @@ public class NewTamaController extends AbstractController {
         /*
          * TODO CHANGE, ONLY FOR TESTING
          */
-        Tamagotchi testing = new Cat("toutou", 32);
+        Tamagotchi testing = new Cat(tfName.getText(),20);
         testing.setObserver(inGameController);
         testing.start();
         inGameController.setTamagotchi(testing);
@@ -208,11 +193,4 @@ public class NewTamaController extends AbstractController {
     
         return typeSelectionne;
     }
-
-    @Override
-    public void initialize(URL location, ResourceBundle resources) {
-        // TODO Auto-generated method stub
-        cbDifficulte.getItems().addAll("Facile", "Normal", "Difficile");
-    }
-
 }
