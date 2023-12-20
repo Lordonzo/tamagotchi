@@ -1,5 +1,9 @@
 package models;
 
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+
+import javafx.scene.image.Image;
 import models.Status.EPlace;
 import models.Status.Weather;
 
@@ -9,7 +13,9 @@ public class Place {
     private Place previousPlace;
     private Place nextPlace;
     private static Weather weather;
+    private Image image;
 
+    // TODO Ajouter image aux places
     public Place(EPlace ePlace) {
         this.currentPlace = ePlace;
         this.nextPlace = null;

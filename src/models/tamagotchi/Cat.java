@@ -6,8 +6,6 @@ import java.time.LocalDateTime;
 
 import javafx.scene.image.Image;
 import models.Place;
-import models.Status.MentalState;
-import models.Status.PhysicalState;
 
 public class Cat extends Animal {
 

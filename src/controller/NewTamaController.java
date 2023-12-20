@@ -32,7 +32,7 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 
 public class NewTamaController extends AbstractController {
-    private PlaceController pController = new PlaceController();
+    private PlaceController pController = new PlaceController(true);
     @FXML 
     private void toNewOrLoad(ActionEvent actionEvent) throws IOException {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("../view/NewOrLoad.fxml"));

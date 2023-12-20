@@ -12,10 +12,10 @@ public class PlaceController {
     /**
      * 
      */
-    public PlaceController() {
+    public PlaceController(boolean databaseHere) {
         this.setUpPlaces();
-        allPlaces = placeDB.select();
-        //displayPlaces();
+        if (databaseHere) allPlaces = placeDB.select();
+        displayPlaces();
     }
 
     /**

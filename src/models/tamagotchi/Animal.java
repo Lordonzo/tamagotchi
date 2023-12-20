@@ -4,7 +4,6 @@ import java.time.LocalDateTime;
 
 import models.Place;
 import models.Status.MentalState;
-import models.Status.PhysicalState;
 
 public abstract class Animal extends Tamagotchi {
     private int currentSatiety; // MEMORY ROBOT
