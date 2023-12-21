@@ -195,6 +195,6 @@ public class NewTamaController extends AbstractController {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        // TODO Auto-generated method stub
+        cbDifficulte.getItems().addAll("Facile", "Normal", "Difficile");
     }
 }
