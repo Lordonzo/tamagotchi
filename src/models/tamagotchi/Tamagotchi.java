@@ -231,4 +231,11 @@ public abstract class Tamagotchi {
     public void setObserver(PropertyChangeListener _ob){
         this.observer = _ob;
     }
+
+    public void goToRightPlace(){
+        this.currentPlace = currentPlace.getNextPlace();
+    }
+    public void goToLeftPlace(){
+        this.currentPlace = currentPlace.getPreviousPlace();
+    }
 }

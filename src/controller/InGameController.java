@@ -32,10 +32,14 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.media.MediaView;
+import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import models.Place;
+import models.Status.EPlace;
 import models.database.PlaceDB;
 import models.database.TamagotchiDB;
+import models.tamagotchi.Animal;
+import models.tamagotchi.Cat;
 import models.tamagotchi.Tamagotchi;
 
 public class InGameController extends AbstractController implements PropertyChangeListener {
@@ -55,6 +59,11 @@ public class InGameController extends AbstractController implements PropertyChan
 
     @FXML
     private Button rightPlaceButton;
+    @FXML
+    private Button leftPlaceButton;
+    @FXML
+    private Text currentPlaceText;
+
 
    public void setTamagotchi(Tamagotchi _tamagotchi) {
         //TODO je sens ca va faire des problème ca, faire un constructeur par copie
@@ -64,6 +73,7 @@ public class InGameController extends AbstractController implements PropertyChan
 
    @FXML 
    private void toMenu(ActionEvent actionEvent) throws IOException {
+       tamagotchi.stop();
        FXMLLoader loader = new FXMLLoader(getClass().getResource("../view/Menu.fxml"));
        Pane root = (Pane) loader.load();
        MenuController menuController = loader.getController();
@@ -94,12 +104,19 @@ public class InGameController extends AbstractController implements PropertyChan
 
    //TODO
    public void rightPlace(ActionEvent actionEvent) throws IOException{
-            //rightPlaceButton.setText("dfghj,k;");
-   }
+            tamagotchi.goToRightPlace();
+            rightPlaceButton.setText(tamagotchi.getCurrentPlace().getNextPlace().getCurrentPlace().name());
+            leftPlaceButton.setText(tamagotchi.getCurrentPlace().getPreviousPlace().getCurrentPlace().name());
+            currentPlaceText.setText(tamagotchi.getCurrentPlace().getCurrentPlace().name());
+            
+        }
    //TODO
    public void leftRoom(ActionEvent actionEvent) throws IOException{
-    
-   }
+            tamagotchi.goToLeftPlace();
+            rightPlaceButton.setText(tamagotchi.getCurrentPlace().getNextPlace().getCurrentPlace().name());
+            leftPlaceButton.setText(tamagotchi.getCurrentPlace().getPreviousPlace().getCurrentPlace().name());
+            currentPlaceText.setText(tamagotchi.getCurrentPlace().getCurrentPlace().name());
+        }
 
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
@@ -141,4 +158,6 @@ public void initialize(URL location, ResourceBundle resources) {
             }
         }
     }
+
+
 }

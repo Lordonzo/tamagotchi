@@ -39,6 +39,8 @@ public class Place {
         this.id = id;
     }
 
+
+
     public EPlace getCurrentPlace() {
         return this.currentPlace;
     }
@@ -65,4 +67,5 @@ public class Place {
 
     
     public static Weather getWeather() { return Place.weather; }
+
 }

@@ -30,6 +30,7 @@ public class PlaceController {
      * 
      */
     private void setUpPlaces() {
+        allPlaces.clear(); // TODO j'ai rajouté ac pour etre sur
         Place bedroom = new Place(EPlace.BEDROOM);
         Place garden = new Place(EPlace.GARDEN);
         Place kitchen = new Place(EPlace.KITCHEN);
