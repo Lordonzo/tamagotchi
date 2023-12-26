@@ -49,4 +49,5 @@ public class App extends Application {
         music.getMediaPlayer().setCycleCount(MediaPlayer.INDEFINITE);
         return music;
     }
+
 }

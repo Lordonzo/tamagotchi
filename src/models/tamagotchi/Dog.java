@@ -10,6 +10,12 @@ import models.Place;
 public class Dog extends Animal {
 
 
+    /**
+     * init the dog image and call Animal constructor
+     * @param _nameString
+     * @param _weight
+     * @param place
+     */
     public Dog(String _nameString, float _weight, Place place) {
         super(_nameString, _weight, place);
         try {

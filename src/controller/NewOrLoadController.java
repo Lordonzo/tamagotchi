@@ -29,6 +29,8 @@ public class NewOrLoadController extends AbstractController {
     private ImageView slot3Btn;
 
     // TODO AFFICHER QUAND TU REVIENS
+    //TODO ingamecontrooler.setNameLabel  POUR QUAND ON CHARGE UNE PARTIE
+
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         PlaceDB placeDB = new PlaceDB();

@@ -11,6 +11,14 @@ public class Robot extends Tamagotchi {
     private float damageState = 0;
     private final int MIN_MEMORY = 100;
     private int currentMemory;
+
+    /**
+     * init the robot and the adequate game routine
+     * init exit to false
+     * @param _nameString
+     * @param _weight
+     * @param place
+     */
     public Robot(String _nameString,float _weight, Place place){
         super(_nameString,_weight, place);
         this.currentMemory = 0;
@@ -18,6 +26,8 @@ public class Robot extends Tamagotchi {
         try {
             image = new Image(new FileInputStream("resources/tama_sprites/robot.png"));
         } catch (FileNotFoundException e) {}
+        
+        exit = false;
         routine = new Thread(){
             public void run() {
                 try{
@@ -45,7 +55,8 @@ public class Robot extends Tamagotchi {
                 }
             }
         };
-        routine.start();
+        //To stop the routine when the user kill the program with the X button
+        routine.setDaemon(true);
     } 
 
     /**

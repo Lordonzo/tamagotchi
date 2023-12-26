@@ -25,6 +25,7 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.ProgressBar;
 import javafx.scene.effect.ColorAdjust;
 import javafx.scene.image.Image;
@@ -56,6 +57,9 @@ public class InGameController extends AbstractController implements PropertyChan
 
     @FXML  
     private ImageView ivSprite;
+
+    @FXML
+    private Label idLabel;
 
     @FXML
     private Button rightPlaceButton;
@@ -97,39 +101,44 @@ public class InGameController extends AbstractController implements PropertyChan
             catch(Exception e){
                 e.printStackTrace();
             }
+    }
 
-
-        }
-
-
-   //TODO
    public void rightPlace(ActionEvent actionEvent) throws IOException{
-            tamagotchi.goToRightPlace();
-            rightPlaceButton.setText(tamagotchi.getCurrentPlace().getNextPlace().getCurrentPlace().name());
-            leftPlaceButton.setText(tamagotchi.getCurrentPlace().getPreviousPlace().getCurrentPlace().name());
-            currentPlaceText.setText(tamagotchi.getCurrentPlace().getCurrentPlace().name());
+        tamagotchi.goToRightPlace();
+        rightPlaceButton.setText(tamagotchi.getCurrentPlace().getNextPlace().getCurrentPlace().name());
+        leftPlaceButton.setText(tamagotchi.getCurrentPlace().getPreviousPlace().getCurrentPlace().name());
+        currentPlaceText.setText(tamagotchi.getCurrentPlace().getCurrentPlace().name());
             
-        }
-   //TODO
+    }
    public void leftRoom(ActionEvent actionEvent) throws IOException{
-            tamagotchi.goToLeftPlace();
-            rightPlaceButton.setText(tamagotchi.getCurrentPlace().getNextPlace().getCurrentPlace().name());
-            leftPlaceButton.setText(tamagotchi.getCurrentPlace().getPreviousPlace().getCurrentPlace().name());
-            currentPlaceText.setText(tamagotchi.getCurrentPlace().getCurrentPlace().name());
+        tamagotchi.goToLeftPlace();
+        rightPlaceButton.setText(tamagotchi.getCurrentPlace().getNextPlace().getCurrentPlace().name());
+        leftPlaceButton.setText(tamagotchi.getCurrentPlace().getPreviousPlace().getCurrentPlace().name());
+        currentPlaceText.setText(tamagotchi.getCurrentPlace().getCurrentPlace().name());
+    }
+
+    public void setNameLabel(){
+        if(tamagotchi != null){
+            idLabel.setText("Nom : "+ tamagotchi.getName());
         }
+        else{
+            //TODO FAIRE UN TRUC POUR LES ERREURS
+            System.out.println("Erreur du chargement du tamagotchi");
+        }
+    }
 
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
         try {
             statsDisplay();}
 
-    catch (Exception e) {
+        catch (Exception e) {
         // TODO: handle exception
+        }
     }
-}
-@Override
-public void initialize(URL location, ResourceBundle resources) {
-    PlaceDB placeDB = new PlaceDB();
+    @Override
+    public void initialize(URL location, ResourceBundle resources) {
+        PlaceDB placeDB = new PlaceDB();
         ArrayList<Place> places = placeDB.select();
         TamagotchiDB tamagotchiDB = new TamagotchiDB();
         ArrayList<Tamagotchi> selectSlotSaved = tamagotchiDB.selectSlotSaved(places);

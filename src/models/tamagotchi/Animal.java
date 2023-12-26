@@ -9,6 +9,13 @@ public abstract class Animal extends Tamagotchi {
     private int currentSatiety; // MEMORY ROBOT
     private int satietyDifficulty;
 
+    /**
+     * init the animal and the adequate game routine
+     * init exit to false
+     * @param _nameString
+     * @param _weight
+     * @param place
+     */
     public Animal(String _nameString, float _weight, Place place) {
         super(_nameString,_weight, place);
         this.mentalState = MentalState.HAPPY;
@@ -40,6 +47,9 @@ public abstract class Animal extends Tamagotchi {
                 }
             }
         };
+
+        //To stop the routine when the user kill the program with the X button
+        routine.setDaemon(true);
     }
 
     public Animal(int id, String nameString, LocalDateTime birDateTime, int currentHealth, int currentEnergy, float currentWeight, int currentCleanliness, int mentalState, Place place, int slotSaved, int currentSatiety) {

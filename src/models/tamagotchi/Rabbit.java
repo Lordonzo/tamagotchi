@@ -9,6 +9,12 @@ import models.Place;
 
 public class Rabbit extends Animal {
 
+    /**
+     * init the rabbit image and call Animal constructor
+     * @param _nameString
+     * @param _weight
+     * @param place
+     */
     public Rabbit(String _nameString, float _weight, Place place) {
         super(_nameString, _weight, place);
         try {
