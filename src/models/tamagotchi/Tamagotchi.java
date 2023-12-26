@@ -2,6 +2,7 @@ package models.tamagotchi;
 
 import java.beans.PropertyChangeListener;
 import java.time.LocalDateTime;
+import java.util.Random;
 
 import javafx.scene.image.Image;
 import models.Place;
@@ -39,14 +40,19 @@ public abstract class Tamagotchi {
 
     protected int slotTaken;
 
-    //
+
     protected Thread routine;
     protected boolean exit;
+    //To call some event x routine call
+    protected int cnt;
 
     protected PropertyChangeListener observer;
     protected Image image;
 
     protected final boolean DEBUG = true;
+
+    protected final int weatherCnt = 6;
+    protected final int maxCnt = 10;
 
 
 
@@ -66,6 +72,8 @@ public abstract class Tamagotchi {
         this.name = _nameString;
         this.currentWeight = _currentWeight;
         this.currentPlace = place;
+        //Weather random
+        weatherHandle();
     }
 
     /**
@@ -237,5 +245,12 @@ public abstract class Tamagotchi {
     }
     public void goToLeftPlace(){
         this.currentPlace = currentPlace.getPreviousPlace();
+    }
+
+    /**
+     * Setting weather with equal random chances
+     */
+    public void weatherHandle(){
+        currentPlace.setWeather(Weather.values()[new Random().nextInt(5)]);
     }
 }

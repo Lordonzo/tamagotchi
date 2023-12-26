@@ -68,4 +68,8 @@ public class Place {
     
     public static Weather getWeather() { return Place.weather; }
 
+    public void setWeather(Weather _weather){
+        Place.weather = _weather;
+    }
+
 }

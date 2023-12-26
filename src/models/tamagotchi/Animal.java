@@ -26,7 +26,7 @@ public abstract class Animal extends Tamagotchi {
                 try{
                     do{
                         sleep(NB_SEC);
-                        decreaseStats(10, 10, 10); //TODO changer les valeurs 
+                        decreaseStats(10, 3, 10); //TODO changer les valeurs 
                         decreaseHealth(10, 10);
                         if(DEBUG){
                         System.out.println("mean : " + mean());
@@ -35,9 +35,21 @@ public abstract class Animal extends Tamagotchi {
                         System.out.println("currentEnergy"+currentEnergy);
                         System.out.println("currentHealth :"+currentHealth);
                         System.out.println("currentMental:"+currentMental);
-                        }
-                        observer.propertyChange(null);
-
+                        System.out.println("Weather :" + currentPlace.getWeather().toString());
+                        System.out.println("Counter : "+cnt);
+                    }
+                    //Calling observer
+                    observer.propertyChange(null);
+                    
+                    //Weather_____________________
+                    if(cnt == weatherCnt){
+                        weatherHandle();
+                    }
+                    cnt++;
+                    if(cnt > maxCnt){
+                        cnt = 0;
+                    }
+                    //____________________________
                     } while(!exit);
                 
                 }

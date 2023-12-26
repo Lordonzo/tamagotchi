@@ -33,7 +33,6 @@ public class Robot extends Tamagotchi {
                 try{
                     do{
                         sleep(NB_SEC);
-
                         decreaseStats(10, 10, 10); //TODO changer les valeurs 
                         decreaseHealth(10, 10);
                         if(DEBUG){
@@ -43,9 +42,21 @@ public class Robot extends Tamagotchi {
                         System.out.println("currentEnergy"+currentEnergy);
                         System.out.println("currentHealth :"+currentHealth);
                         System.out.println("currentMental:"+currentMental);
+                        System.out.println("Weather :" + currentPlace.getWeather().toString());
+                        System.out.println("Counter : "+cnt);
                         }
-
-
+                    
+                    //Calling observer
+                    observer.propertyChange(null);
+                    //Weather_____________________
+                    if(cnt == weatherCnt){
+                        weatherHandle();
+                    }
+                    cnt++;
+                    if(cnt > maxCnt){
+                        cnt = 0;
+                    }
+                    //____________________________
                     }while(!exit);
                 
                 }
