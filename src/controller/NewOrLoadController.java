@@ -27,6 +27,7 @@ public class NewOrLoadController extends AbstractController {
     private ImageView slot2Btn;
     @FXML
     private ImageView slot3Btn;
+    private boolean Exists; // indique si un tama existe ou non
 
     // TODO AFFICHER QUAND TU REVIENS
     //TODO ingamecontrooler.setNameLabel  POUR QUAND ON CHARGE UNE PARTIE
@@ -40,6 +41,7 @@ public class NewOrLoadController extends AbstractController {
         ArrayList<Tamagotchi> selectSlotSaved = tamagotchiDB.selectSlotSaved(places);
         System.out.println(selectSlotSaved);
         if (!selectSlotSaved.isEmpty()) {
+            Exists = true;
             System.out.println(selectSlotSaved.get(0).getName());
             switch (selectSlotSaved.get(0).getClass().getSimpleName()) {
             case "Dog":
@@ -88,5 +90,24 @@ public class NewOrLoadController extends AbstractController {
         newTamaController.setMusic(music);
         Scene scene = (Scene) ((Node) actionEvent.getSource()).getScene();
         scene.setRoot(root);
+    }
+
+    @FXML 
+    private void toInGame(ActionEvent actionEvent) throws IOException {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("../view/InGame.fxml"));
+        Pane root = (Pane) loader.load();
+        InGameController inGameController = loader.getController();
+        inGameController.setMusic(music);
+        Scene scene = (Scene) ((Node) actionEvent.getSource()).getScene();
+        scene.setRoot(root);
+    }
+
+    @FXML
+    private void onBtnClick(ActionEvent actionEvent) throws IOException {
+        if (Exists==false) {
+            toNewTama(actionEvent);
+        } else {
+            toInGame(actionEvent);
+        }
     }
 }
