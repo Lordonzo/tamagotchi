@@ -28,5 +28,7 @@
       <Button layoutX="989.0" layoutY="682.0" mnemonicParsing="false" text="Glossaire" />
       <Label fx:id="idLabel" layoutX="508.0" layoutY="16.0" text="Nom" />
       <Text fx:id="currentPlaceText" layoutX="990.0" layoutY="365.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Pièce" />
+      <ProgressBar fx:id="stat4" layoutX="14.0" layoutY="97.0" prefWidth="200.0" progress="0.0" />
+      <Text layoutX="234.0" layoutY="112.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Satieté" />
    </children>
 </AnchorPane>

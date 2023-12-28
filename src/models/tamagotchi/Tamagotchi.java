@@ -46,6 +46,7 @@ public abstract class Tamagotchi {
 
     protected LocalDateTime birthDate;
 
+    
     protected float currentWeight;
     protected int currentCleanliness;
 
@@ -82,6 +83,8 @@ public abstract class Tamagotchi {
         this.currentEnergy = MAX_ENERGY;
         this.currentCleanliness = MAX_CLEAN;
         this.currentMental = MAX_MENTAL;
+        this.currentSatiety = MAX_SATIETY;
+
         this.state = PhysicalState.IN_SHAPE;
         
         this.name = _nameString;
@@ -138,25 +141,29 @@ public abstract class Tamagotchi {
     protected void setDifficulty(int _difficulty){
         if(_difficulty==1){
             cleaningDifficulty = 2;
-            mentalDifficulty = 5;
+            satietyDifficulty = 2;
             energyDifficulty = 2;
+            mentalDifficulty = 5;
             healthDifficulty = 5;
         }
         else if(_difficulty == 2){
             cleaningDifficulty = 3;
             mentalDifficulty = 7;
             energyDifficulty = 4;
+            satietyDifficulty = 6;
             
         }
         else if( _difficulty == 56){
             cleaningDifficulty = 0;
             mentalDifficulty = 0;
             energyDifficulty = 0;
+            satietyDifficulty = 0;
         }
         else{
             cleaningDifficulty = 5;
             mentalDifficulty = 10;
             energyDifficulty = 7;
+            satietyDifficulty = 9;
         }   
     }
 
@@ -232,7 +239,7 @@ public abstract class Tamagotchi {
                         }
                         try {
                             Thread.sleep(4000);
-                        } 
+                        }
                         catch (Exception e) {
                             // TODO: handle exception
                             }
@@ -277,7 +284,7 @@ public abstract class Tamagotchi {
      */
     public void die(String _cause){
         System.out.println("L'animal est mort de : " +_cause);
-        stopRoutine();
+        closeGame.set(true);
     }
 
     /**
@@ -287,12 +294,15 @@ public abstract class Tamagotchi {
      * @param _cleaning
      * @param _energy
      */
-    public void decreaseStats(int _mental,int _cleaning, int _energy){
+    public void decreaseStats(int _mental,int _cleaning, int _energy, int _satiety){
         if(currentEnergy-_energy < 0) currentEnergy = 0;
         else currentEnergy-=_energy;
         
         if(currentCleanliness-_cleaning < 0) currentCleanliness = 0;
         else currentCleanliness-=_cleaning;
+
+        if(currentSatiety-_satiety < 0) currentSatiety = 0;
+        else currentSatiety-=_satiety;
 
         if(mean()<50){
             if(currentMental-_mental < 0) {
@@ -344,6 +354,36 @@ public abstract class Tamagotchi {
             currentMental-=_mental;
         }
             
+    }
+
+    /**
+     * increase currentSatiety
+     */
+    public void eat() {
+        System.out.println("ozozo");
+        if(currentSatiety+satietyGain <=100){
+            currentSatiety+=satietyGain;
+        }
+        else{ currentSatiety =100;
+        }
+        observer.propertyChange(null);
+    }
+
+
+    public int getCurrentSatiety() {
+        return this.currentSatiety;
+    }
+
+    public void setCurrentSatiety(int _currentSatiety) {
+        this.currentSatiety = _currentSatiety;
+    }
+
+    public float getCurrentWeight() {
+        return this.currentWeight;
+    }
+
+    public void setCurrentWeight(float _currentWeight) {
+        this.currentWeight = _currentWeight;
     }
 
     

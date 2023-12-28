@@ -59,6 +59,9 @@ public class InGameController extends AbstractController implements PropertyChan
     @FXML
     //Cleaning
     private ProgressBar stat3;
+    @FXML
+    //Satiety
+    private ProgressBar stat4;
 
     @FXML  
     private ImageView ivSprite;
@@ -93,12 +96,13 @@ public class InGameController extends AbstractController implements PropertyChan
    //TODO
    public void statsDisplay() throws IOException{
             try{
-                System.out.println("statsDisplay : " + tamagotchi.getCurrentEnergy());
-                /*Platform.runLater(() -> stat1.setProgress((double)tamagotchi.getCurrentHealth()/100));
-                Platform.runLater(() -> stat2.setProgress(0.2));*/
+                System.out.println("statsDisplay : " + tamagotchi.getCurrentSatiety());
+
                 stat1.setProgress((double)tamagotchi.getCurrentHealth()/100);
                 stat2.setProgress((double)tamagotchi.getCurrentEnergy()/100);
                 stat3.setProgress((double)tamagotchi.getCurrentCleaning()/100);
+                stat4.setProgress((double)tamagotchi.getCurrentSatiety()/100);
+
             }
             catch(Exception e){
                 e.printStackTrace();
@@ -189,6 +193,10 @@ public class InGameController extends AbstractController implements PropertyChan
             case TOILET:
                 break;
             case KITCHEN:
+                sound = new Media(new File("src/resources/sound/goofy_ahh_eating.mp3").toURI().toString());
+                mediaPlayer = new MediaPlayer(sound);
+                mediaPlayer.play();
+                tamagotchi.eat();
                 break;
             default:
                 //TODO error handling

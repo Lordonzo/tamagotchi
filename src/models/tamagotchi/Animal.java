@@ -18,7 +18,6 @@ public abstract class Animal extends Tamagotchi {
     public Animal(String _nameString, float _weight, Place place) {
         super(_nameString,_weight, place);
         this.mentalState = MentalState.HAPPY;
-        this.currentSatiety = MAX_SATIETY;
 
         //TODO changer la difficulté
         setDifficulty(3);
@@ -29,17 +28,6 @@ public abstract class Animal extends Tamagotchi {
         this.currentSatiety = currentSatiety; // 7
     }
 
-    /**
-     * increase currentSatiety
-     */
-    public void eat() {
-        if(currentSatiety+satietyGain <=100){
-            currentSatiety+=satietyGain;
-        }
-        else{ currentSatiety =100;
-            setCurrentWeight(currentWeight+(currentWeight/10));
-        }
-    }
 
 
     /**
@@ -63,21 +51,7 @@ public abstract class Animal extends Tamagotchi {
     }
 
 
-    public int getCurrentSatiety() {
-        return this.currentSatiety;
-    }
-
-    public void setCurrentSatiety(int _currentSatiety) {
-        this.currentSatiety = _currentSatiety;
-    }
-
-    public float getCurrentWeight() {
-        return this.currentWeight;
-    }
-
-    public void setCurrentWeight(float _currentWeight) {
-        this.currentWeight = _currentWeight;
-    }
+    
 
     /**
      * rewrite
@@ -85,21 +59,6 @@ public abstract class Animal extends Tamagotchi {
      */
     public float mean(){
         return (currentCleanliness+currentHealth+currentSatiety)/3;
-    }
-    
-    /**
-     *
-     * decrease the mental,cleaningn,energy and satiety stats
-     * call die routine if mental = 0
-     * @param _mental
-     * @param _cleaning
-     * @param _energy
-     * @param _satiety
-     */
-    public void decreaseStats(int _mental,int _cleaning, int _energy,int _satiety){
-        super.decreaseStats(_mental, _cleaning, _energy);
-        if(currentSatiety-_satiety < 0) currentSatiety = 0;
-        else currentSatiety-=_satiety;
     }
 
     @Override
@@ -109,7 +68,7 @@ public abstract class Animal extends Tamagotchi {
                 try{
                     do{
                         sleep(NB_SEC);
-                        decreaseStats(mentalDifficulty, cleaningDifficulty, energyDifficulty); //TODO changer les valeurs 
+                        decreaseStats(mentalDifficulty, cleaningDifficulty, energyDifficulty,satietyDifficulty);
                         decreaseHealth(satietyDifficulty, cleaningDifficulty);
                         if(DEBUG){
                             System.out.println("mean : " + mean());
@@ -151,6 +110,19 @@ public abstract class Animal extends Tamagotchi {
         routine.setDaemon(true);
     }
 
+    @Override
+    public void eat(){
+        if(currentSatiety+satietyGain <=100){
+            currentSatiety+=satietyGain;
+        }
+        else{
+            System.out.println("www"); 
+            currentSatiety =100;
+            setCurrentWeight(currentWeight+(currentWeight/10));
+        }
+        System.out.println("Satiety : " + currentSatiety);
+        observer.propertyChange(null);
+    }
 
 }
 
