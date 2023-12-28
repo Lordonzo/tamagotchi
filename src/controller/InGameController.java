@@ -95,6 +95,7 @@ public class InGameController extends AbstractController implements PropertyChan
    public void initTamagotchi(Tamagotchi _tamagotchi) {
         this.tamagotchi = _tamagotchi;
         updateAllText();
+        statsDisplay();
     }
 
    @FXML 
@@ -109,7 +110,7 @@ public class InGameController extends AbstractController implements PropertyChan
    }
 
    @FXML
-   public void statsDisplay() throws IOException{
+   public void statsDisplay(){
             try{
                 System.out.println("statsDisplay : " + tamagotchi.getCurrentSatiety());
 
@@ -215,7 +216,9 @@ public class InGameController extends AbstractController implements PropertyChan
                 afficherPaneDeMort();
             }
             if(evt.getPropertyName().equals("enableButtons")){
-                enableAll();
+                if(tamagotchi.getCurrentHealth() > 0){
+                    enableAll();
+                }
             }
         }
         catch (Exception e) {
@@ -283,16 +286,17 @@ public class InGameController extends AbstractController implements PropertyChan
                 tamagotchi.setSleepRunning(false);
             }
                 //TODO au meme niveau que la musique
-                //TODO soundEating en parametre de ingamecontroller et mettre des differents sound pour chaque tama
                 break;
             case LIVINGROOM:
             //DO A BACKFLIP
+                actionButton.setDisable(true);
                 double random = new Random().nextInt(100,2000);
                 backflipTransition.setDuration(javafx.util.Duration.millis(random));
                 backflipTransition.play();
                 sound = new Media(new File("src/resources/sound/goofy_ahh_backflipping.mp3").toURI().toString());
                 mediaPlayer = new MediaPlayer(sound);
                 mediaPlayer.setRate((2000-random)/600);
+                backflipTransition.setOnFinished(e -> propertyChange(new PropertyChangeEvent(tamagotchi,"enableButtons",null,null)));
                 mediaPlayer.play();
                 break;
             case GARDEN:
