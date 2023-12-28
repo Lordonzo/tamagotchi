@@ -24,11 +24,11 @@
       <Text layoutX="233.0" layoutY="29.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Vie" />
       <Text layoutX="233.0" layoutY="55.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Energie" />
       <Text layoutX="233.0" layoutY="85.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Propreté" />
-      <Button fx:id="bAction" layoutX="83.0" layoutY="435.0" mnemonicParsing="false" onAction="#action" text="Action" />
+      <Button fx:id="actionButton" layoutX="83.0" layoutY="435.0" mnemonicParsing="false" onAction="#action" text="Action" />
       <Button fx:id="rightPlaceButton" layoutX="982.0" layoutY="261.0" mnemonicParsing="false" onAction="#rightPlace" text="PièceA" />
       <Button fx:id="leftPlaceButton" layoutX="982.0" layoutY="447.0" mnemonicParsing="false" onAction="#leftRoom" text="PièceB" />
-      <Button fx:id="bQuitter" layoutX="1004.0" layoutY="12.0" mnemonicParsing="false" onAction="#toMenu" text="Quitter" />
-      <Button fx:id="bGlossaire" layoutX="989.0" layoutY="682.0" minWidth="100.0" mnemonicParsing="false" text="Glossaire" AnchorPane.bottomAnchor="13.0" AnchorPane.rightAnchor="13.0" />
+      <Button fx:id="quitButton" layoutX="1004.0" layoutY="12.0" mnemonicParsing="false" onAction="#toMenu" text="Quitter" />
+      <Button fx:id="glossaireButton" layoutX="989.0" layoutY="682.0" minWidth="100.0" mnemonicParsing="false" text="Glossaire" AnchorPane.bottomAnchor="13.0" AnchorPane.rightAnchor="13.0" />
       <Label fx:id="idLabel" layoutX="508.0" layoutY="16.0" text="Nom" />
       <Text fx:id="currentPlaceText" layoutX="990.0" layoutY="365.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Pièce" />
       <ProgressBar fx:id="stat4" layoutX="14.0" layoutY="97.0" prefWidth="200.0" progress="0.0" />

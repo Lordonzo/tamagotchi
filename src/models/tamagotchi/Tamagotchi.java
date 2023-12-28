@@ -61,6 +61,8 @@ public abstract class Tamagotchi {
     protected Thread sleepRoutine;
     protected final AtomicBoolean closeGame = new AtomicBoolean(false);
     protected final AtomicBoolean running = new AtomicBoolean(false);
+    protected final AtomicBoolean sleepRunning = new AtomicBoolean(false);
+
     //To call some event after x loop
     protected int cnt;
 
@@ -71,6 +73,7 @@ public abstract class Tamagotchi {
 
     protected final int weatherCnt = 6;
     protected final int maxCnt = 10;
+    protected final int sleepCnt = 2;
 
     
 
@@ -119,7 +122,7 @@ public abstract class Tamagotchi {
     }
     
     protected void play() {
-        //TODO increase mental
+        //TODO increase mental garden
     }
 
     public int getNB_SEC(){
@@ -222,20 +225,26 @@ public abstract class Tamagotchi {
     //TODO arreter quand on quitte le jeu
     public void startSleep(){
         try {
+            sleepRunning.set(true);
             stopRoutine();
             routine.join();
             sleepRoutine = new Thread(){
                 public void run() {
-                    while(currentEnergy < 100 && !closeGame.get()){
+                    while(currentEnergy < 100 && !closeGame.get() && sleepRunning.get()){
                         currentEnergy+=energyGain;
                         observer.propertyChange(new PropertyChangeEvent(this, "statsDisplay", null, null));
-
                         if(currentEnergy > 100){
                             currentEnergy = 100;
                             break;
                         }
                         try {
-                            Thread.sleep(5000);
+                            int i = 0;
+                            while(i < 5000){
+                                Thread.sleep(100);
+                                i+=100;
+                                //if actionButton is pressed
+                                if(!sleepRunning.get()) break;
+                            }
                         }
                         catch (Exception e) {
                             // TODO: handle exception
@@ -249,6 +258,7 @@ public abstract class Tamagotchi {
             new Thread(){public void run(){
                 try {
                     sleepRoutine.join();
+                    observer.propertyChange(new PropertyChangeEvent(this, "enableButtons", null, null));
                     startRoutine();
 
                 } catch (InterruptedException e) {
@@ -262,7 +272,17 @@ public abstract class Tamagotchi {
             // TODO Auto-generated catch block
             e.printStackTrace();
         }
-        
+    }
+
+    public AtomicBoolean getSleepRunning() {
+        return sleepRunning;
+    }
+    /**
+     * set sleepRunning
+     * @param _boolean
+     */
+    public void setSleepRunning(boolean _boolean){
+        sleepRunning.set(_boolean);
     }
     //_________________________________________
 
@@ -282,7 +302,7 @@ public abstract class Tamagotchi {
     public void die(String _cause){
         System.out.println("L'animal est mort de : " +_cause);
         closeGame.set(true);
-        //TODO property event
+        observer.propertyChange(new PropertyChangeEvent(this, "die", null, null));
     }
 
     /**
@@ -365,7 +385,7 @@ public abstract class Tamagotchi {
         }
         else{ currentSatiety =100;
         }
-        observer.propertyChange(null);
+        observer.propertyChange(new PropertyChangeEvent(this, "statsDisplay", null, null));
     }
 
 

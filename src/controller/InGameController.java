@@ -77,11 +77,11 @@ public class InGameController extends AbstractController implements PropertyChan
     @FXML
     private Text currentPlaceText;
     @FXML
-    private Button bQuitter;
+    private Button quitButton;
     @FXML
-    private Button bGlossaire;
+    private Button glossaireButton;
     @FXML
-    private Button bAction;
+    private Button actionButton;
 
     @FXML
     private StackPane spDeathPane;
@@ -110,9 +110,6 @@ public class InGameController extends AbstractController implements PropertyChan
                 System.out.println("statsDisplay : " + tamagotchi.getCurrentSatiety());
 
                 stat1.setProgress((double)tamagotchi.getCurrentHealth()/100);
-                if (tamagotchi.getCurrentHealth()==0) {
-                    afficherPaneDeMort();
-                }
                 stat2.setProgress((double)tamagotchi.getCurrentEnergy()/100);
                 stat3.setProgress((double)tamagotchi.getCurrentCleaning()/100);
                 stat4.setProgress((double)tamagotchi.getCurrentSatiety()/100);
@@ -190,7 +187,7 @@ public class InGameController extends AbstractController implements PropertyChan
                 //TODO error
                 break;
         }
-        bAction.setText(txt);
+        actionButton.setText(txt);
    }
 
     public void setNameLabel(){
@@ -210,7 +207,12 @@ public class InGameController extends AbstractController implements PropertyChan
             if(evt.getPropertyName().equals("statsDisplay")){
                 statsDisplay();
             }
-            //TODO if die event
+            if(evt.getPropertyName().equals("die")){
+                afficherPaneDeMort();
+            }
+            if(evt.getPropertyName().equals("enableButtons")){
+                enableAll();
+            }
         }
         catch (Exception e) {
         // TODO: handle exception
@@ -227,7 +229,6 @@ public class InGameController extends AbstractController implements PropertyChan
             System.out.println(selectSlotSaved.get(0).getName());
             switch (selectSlotSaved.get(0).getClass().getSimpleName()) {
             case "Dog":
-                //System.out.println(slot1Btn.getImage());
                 try {
                     ivSprite.setImage(new Image(new FileInputStream("src/resources/tama_sprites/dog.png")));
                 } catch (FileNotFoundException e) { System.out.println(e.getMessage()); }
@@ -259,10 +260,17 @@ public class InGameController extends AbstractController implements PropertyChan
     public void action(ActionEvent event) throws IOException{
         switch (tamagotchi.getCurrentPlace().getCurrentPlace()) {
             case BEDROOM:
+            if(!tamagotchi.getSleepRunning().get()){
+                disableAll();
+                actionButton.setDisable(false);
                 sound = new Media(new File("src/resources/sound/goofy_ahh_sleeping.mp3").toURI().toString());
                 mediaPlayer = new MediaPlayer(sound);
                 mediaPlayer.play();
                 tamagotchi.startSleep();
+            }
+            else{
+                tamagotchi.setSleepRunning(false);
+            }
                 //TODO au meme niveau que la musique
                 //TODO soundEating en parametre de ingamecontroller et mettre des differents sound pour chaque tama
                 break;
@@ -294,11 +302,24 @@ public class InGameController extends AbstractController implements PropertyChan
         stat2.setDisable(true);
         stat3.setDisable(true);
         stat4.setDisable(true);
-        bQuitter.setDisable(true);
-        bGlossaire.setDisable(true);
-        bAction.setDisable(true);
+        quitButton.setDisable(true);
+        glossaireButton.setDisable(true);
+        actionButton.setDisable(true);
         rightPlaceButton.setDisable(true);
         leftPlaceButton.setDisable(true);
+    }
+
+    @FXML
+    private void enableAll(){
+        stat1.setDisable(false);
+        stat2.setDisable(false);
+        stat3.setDisable(false);
+        stat4.setDisable(false);
+        quitButton.setDisable(false);
+        glossaireButton.setDisable(false);
+        actionButton.setDisable(false);
+        rightPlaceButton.setDisable(false);
+        leftPlaceButton.setDisable(false);
     }
 
     public void afficherPaneDeMort() {
