@@ -60,6 +60,12 @@ public class NewOrLoadController extends AbstractController {
                     slot1Btn.setImage(new Image(new FileInputStream("src/resources/tama_sprites/rabbit.png")));
                 } catch (FileNotFoundException e) { System.out.println(e.getMessage()); }
                 break;
+            case "Robot":
+            System.out.println(slot1Btn.getImage());
+                try {
+                    slot1Btn.setImage(new Image(new FileInputStream("src/resources/tama_sprites/robot.png")));
+                } catch (FileNotFoundException e) { System.out.println(e.getMessage()); }
+                break;
             }
         }
     }

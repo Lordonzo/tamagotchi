@@ -170,6 +170,12 @@ public class InGameController extends AbstractController implements PropertyChan
                     ivSprite.setImage(new Image(new FileInputStream("src/resources/tama_sprites/rabbit.png")));
                 } catch (FileNotFoundException e) { System.out.println(e.getMessage()); }
                 break;
+            case "Robot":
+                System.out.println(ivSprite.getImage());
+                try {
+                    ivSprite.setImage(new Image(new FileInputStream("src/resources/tama_sprites/robot.png")));
+                } catch (FileNotFoundException e) { System.out.println(e.getMessage()); }
+                break;
             }
         }
     }
