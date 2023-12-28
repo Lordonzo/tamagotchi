@@ -8,14 +8,17 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.net.URL;
+import java.time.Duration;
 import java.util.ArrayList;
 import java.util.EventListener;
+import java.util.Random;
 import java.util.ResourceBundle;
 
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 
+import javafx.animation.RotateTransition;
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.event.*;
@@ -45,6 +48,7 @@ import models.database.TamagotchiDB;
 import models.tamagotchi.Animal;
 import models.tamagotchi.Cat;
 import models.tamagotchi.Tamagotchi;
+import javafx.animation.RotateTransition;
 
 public class InGameController extends AbstractController implements PropertyChangeListener {
     private Tamagotchi tamagotchi;
@@ -82,9 +86,10 @@ public class InGameController extends AbstractController implements PropertyChan
     private Button glossaireButton;
     @FXML
     private Button actionButton;
-
     @FXML
     private StackPane spDeathPane;
+    @FXML
+    private RotateTransition backflipTransition;
 
 
    public void initTamagotchi(Tamagotchi _tamagotchi) {
@@ -104,7 +109,6 @@ public class InGameController extends AbstractController implements PropertyChan
    }
 
    @FXML
-   //TODO
    public void statsDisplay() throws IOException{
             try{
                 System.out.println("statsDisplay : " + tamagotchi.getCurrentSatiety());
@@ -252,6 +256,13 @@ public class InGameController extends AbstractController implements PropertyChan
                 } catch (FileNotFoundException e) { System.out.println(e.getMessage()); }
                 break;
             }
+            //init Rotation animation
+            backflipTransition = new RotateTransition();
+            backflipTransition.setDuration(javafx.util.Duration.seconds(1));
+            backflipTransition.setNode(ivSprite);
+            backflipTransition.setFromAngle(0);
+            backflipTransition.setToAngle(360);
+            backflipTransition.setCycleCount(1);
         }
     }
 
@@ -275,7 +286,14 @@ public class InGameController extends AbstractController implements PropertyChan
                 //TODO soundEating en parametre de ingamecontroller et mettre des differents sound pour chaque tama
                 break;
             case LIVINGROOM:
-            //TODO play sound of the nananmaul
+            //DO A BACKFLIP
+                double random = new Random().nextInt(100,2000);
+                backflipTransition.setDuration(javafx.util.Duration.millis(random));
+                backflipTransition.play();
+                sound = new Media(new File("src/resources/sound/goofy_ahh_backflipping.mp3").toURI().toString());
+                mediaPlayer = new MediaPlayer(sound);
+                mediaPlayer.setRate((2000-random)/600);
+                mediaPlayer.play();
                 break;
             case GARDEN:
             //TODO

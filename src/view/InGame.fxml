@@ -13,11 +13,15 @@
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="600.0" minWidth="800.0" prefHeight="720.0" prefWidth="1080.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.InGameController">
    <children>
-      <ImageView fx:id="ivSprite" fitHeight="150.0" fitWidth="200.0" layoutX="440.0" layoutY="285.0" pickOnBounds="true" preserveRatio="true">
-         <image>
-            <Image url="@../resources/tama_sprites/questionmark.jpg" />
-         </image>
-      </ImageView>
+      <StackPane fx:id="spritePane" layoutX="440.0" layoutY="285.0">
+         <children>
+            <ImageView fx:id="ivSprite" fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../resources/tama_sprites/questionmark.jpg" />
+               </image>
+            </ImageView>
+         </children>
+      </StackPane>
       <ProgressBar fx:id="stat1" layoutX="14.0" layoutY="14.0" prefWidth="200.0" progress="0.0" />
       <ProgressBar fx:id="stat2" layoutX="14.0" layoutY="40.0" prefWidth="200.0" progress="0.0" />
       <ProgressBar fx:id="stat3" layoutX="14.0" layoutY="70.0" prefWidth="200.0" progress="0.0" />
