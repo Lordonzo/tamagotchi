@@ -190,7 +190,7 @@ public class InGameController extends AbstractController implements PropertyChan
                 //TODO error
                 break;
         }
-        actionButton.setText(txt);
+        bAction.setText(txt);
    }
 
     public void setNameLabel(){
