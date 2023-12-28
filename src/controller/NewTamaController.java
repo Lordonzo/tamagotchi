@@ -152,7 +152,7 @@ public class NewTamaController extends AbstractController {
         Tamagotchi testing = new Cat(tfName.getText(), 32, pController.getPlaces().get(1));
         testing.setObserver(inGameController);
         testing.startRoutine();
-        inGameController.setTamagotchi(testing);
+        inGameController.initTamagotchi(testing);
         TamagotchiDB tamagotchiDB = new TamagotchiDB();
         tamagotchiDB.add((Animal) testing);
         inGameController.setNameLabel();

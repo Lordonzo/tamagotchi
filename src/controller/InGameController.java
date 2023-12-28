@@ -87,8 +87,11 @@ public class InGameController extends AbstractController implements PropertyChan
     private StackPane spDeathPane;
 
 
-   public void setTamagotchi(Tamagotchi _tamagotchi) {
-        this.tamagotchi = _tamagotchi;      
+   public void initTamagotchi(Tamagotchi _tamagotchi) {
+        this.tamagotchi = _tamagotchi;
+        leftPlaceButton.setText(tamagotchi.getCurrentPlace().getPreviousPlace().getCurrentPlace().name());
+        rightPlaceButton.setText(tamagotchi.getCurrentPlace().getNextPlace().getCurrentPlace().name());
+        currentPlaceText.setText(tamagotchi.getCurrentPlace().getCurrentPlace().name());      
    }
 
    @FXML 
@@ -148,8 +151,12 @@ public class InGameController extends AbstractController implements PropertyChan
 
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
+        System.out.println(evt.getPropertyName());
         try {
-            statsDisplay();
+            if(evt.getPropertyName().equals("statsDisplay")){
+                statsDisplay();
+            }
+            //TODO die event
         }
         catch (Exception e) {
         // TODO: handle exception
@@ -203,7 +210,7 @@ public class InGameController extends AbstractController implements PropertyChan
                 mediaPlayer.play();
                 tamagotchi.startSleep();
                 //TODO au meme niveau que la musique
-                
+                //TODO soundEating en parametre de ingamecontroller et mettre des differents sound pour chaque tama
                 break;
             case LIVINGROOM:
             //TODO
