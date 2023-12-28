@@ -25,6 +25,7 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.layout.StackPane;
 import javafx.scene.control.Label;
 import javafx.scene.control.ProgressBar;
 import javafx.scene.effect.ColorAdjust;
@@ -75,6 +76,15 @@ public class InGameController extends AbstractController implements PropertyChan
     private Button leftPlaceButton;
     @FXML
     private Text currentPlaceText;
+    @FXML
+    private Button bQuitter;
+    @FXML
+    private Button bGlossaire;
+    @FXML
+    private Button bAction;
+
+    @FXML
+    private StackPane spDeathPane;
 
 
    public void setTamagotchi(Tamagotchi _tamagotchi) {
@@ -99,6 +109,9 @@ public class InGameController extends AbstractController implements PropertyChan
                 System.out.println("statsDisplay : " + tamagotchi.getCurrentSatiety());
 
                 stat1.setProgress((double)tamagotchi.getCurrentHealth()/100);
+                if (tamagotchi.getCurrentHealth()==0) {
+                    afficherPaneDeMort();
+                }
                 stat2.setProgress((double)tamagotchi.getCurrentEnergy()/100);
                 stat3.setProgress((double)tamagotchi.getCurrentCleaning()/100);
                 stat4.setProgress((double)tamagotchi.getCurrentSatiety()/100);
@@ -212,6 +225,24 @@ public class InGameController extends AbstractController implements PropertyChan
                 //TODO error handling
                 break;
         }
+    }
+
+    @FXML
+    private void disableAll() {
+        stat1.setDisable(true);
+        stat2.setDisable(true);
+        stat3.setDisable(true);
+        stat4.setDisable(true);
+        bQuitter.setDisable(true);
+        bGlossaire.setDisable(true);
+        bAction.setDisable(true);
+        rightPlaceButton.setDisable(true);
+        leftPlaceButton.setDisable(true);
+    }
+
+    public void afficherPaneDeMort() {
+        spDeathPane.setVisible(true);
+        disableAll();
     }
 
 }

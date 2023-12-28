@@ -17,7 +17,7 @@
                </image>
             </ImageView>
          </graphic></Button>
-      <Button layoutX="456.0" layoutY="281.0" mnemonicParsing="false">
+      <Button layoutX="456.0" layoutY="281.0" mnemonicParsing="false" onAction="#onBtnClick">
          <graphic>
             <ImageView fx:id="slot2Btn" fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
                <image>
