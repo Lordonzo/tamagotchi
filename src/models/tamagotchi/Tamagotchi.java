@@ -360,7 +360,6 @@ public abstract class Tamagotchi {
      * increase currentSatiety
      */
     public void eat() {
-        System.out.println("ozozo");
         if(currentSatiety+satietyGain <=100){
             currentSatiety+=satietyGain;
         }
@@ -384,6 +383,18 @@ public abstract class Tamagotchi {
 
     public void setCurrentWeight(float _currentWeight) {
         this.currentWeight = _currentWeight;
+    }
+
+    /**
+     * increase currentCleanliness
+     */
+    public void clean(){
+        if(currentCleanliness+cleaningGain <=100){
+            currentCleanliness+=cleaningGain;
+        }
+        else{ currentCleanliness =100;
+        }
+        observer.propertyChange(null);
     }
 
     

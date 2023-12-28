@@ -191,6 +191,8 @@ public class InGameController extends AbstractController implements PropertyChan
             case GARDEN:
                 break;
             case TOILET:
+                //TODO clean sound
+                tamagotchi.clean();
                 break;
             case KITCHEN:
                 sound = new Media(new File("src/resources/sound/goofy_ahh_eating.mp3").toURI().toString());

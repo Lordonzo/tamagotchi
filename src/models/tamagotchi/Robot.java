@@ -62,7 +62,6 @@ public class Robot extends Tamagotchi {
      * @param _memory
      */
     public void decreaseStats(int _mental,int _cleaning, int _energy,int _memory){
-        super.decreaseStats(_mental, _cleaning, _energy);
         if(currentMemory+_memory > MIN_MEMORY) currentMemory = 100;
         else currentMemory+=_memory;
     }
@@ -75,7 +74,7 @@ public class Robot extends Tamagotchi {
                 try{
                     do{
                         sleep(NB_SEC);
-                        decreaseStats(mentalDifficulty, cleaningDifficulty, energyDifficulty); //TODO changer les valeurs 
+                        decreaseStats(mentalDifficulty, cleaningDifficulty, energyDifficulty,satietyDifficulty); //TODO changer les valeurs 
                         decreaseHealth(satietyDifficulty, cleaningDifficulty);
                         if(DEBUG){
                             System.out.println("mean : " + mean());
