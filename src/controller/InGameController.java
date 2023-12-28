@@ -75,14 +75,14 @@ public class InGameController extends AbstractController implements PropertyChan
     private Button leftPlaceButton;
     @FXML
     private Text currentPlaceText;
+    @FXML
+    private Button actionButton;
 
 
    public void initTamagotchi(Tamagotchi _tamagotchi) {
         this.tamagotchi = _tamagotchi;
-        leftPlaceButton.setText(tamagotchi.getCurrentPlace().getPreviousPlace().getCurrentPlace().name());
-        rightPlaceButton.setText(tamagotchi.getCurrentPlace().getNextPlace().getCurrentPlace().name());
-        currentPlaceText.setText(tamagotchi.getCurrentPlace().getCurrentPlace().name());      
-   }
+        updateAllText();
+    }
 
    @FXML 
    private void toMenu(ActionEvent actionEvent) throws IOException {
@@ -114,17 +114,73 @@ public class InGameController extends AbstractController implements PropertyChan
 
    public void rightPlace(ActionEvent actionEvent) throws IOException{
         tamagotchi.goToRightPlace();
-        rightPlaceButton.setText(tamagotchi.getCurrentPlace().getNextPlace().getCurrentPlace().name());
-        leftPlaceButton.setText(tamagotchi.getCurrentPlace().getPreviousPlace().getCurrentPlace().name());
-        currentPlaceText.setText(tamagotchi.getCurrentPlace().getCurrentPlace().name());
-            
+        updateAllText();
     }
    public void leftRoom(ActionEvent actionEvent) throws IOException{
         tamagotchi.goToLeftPlace();
-        rightPlaceButton.setText(tamagotchi.getCurrentPlace().getNextPlace().getCurrentPlace().name());
-        leftPlaceButton.setText(tamagotchi.getCurrentPlace().getPreviousPlace().getCurrentPlace().name());
-        currentPlaceText.setText(tamagotchi.getCurrentPlace().getCurrentPlace().name());
+        updateAllText();
     }
+
+    public void updateAllText(){
+        setActionButtonText();
+        setPlaceName(rightPlaceButton,tamagotchi.getCurrentPlace().getNextPlace());
+        setPlaceName(leftPlaceButton,tamagotchi.getCurrentPlace().getPreviousPlace());
+        setPlaceName(currentPlaceText,tamagotchi.getCurrentPlace());
+    }
+
+    public void setPlaceName(Object _button,Place place){
+        String current ="";
+        switch (place.getCurrentPlace()) {
+            case BEDROOM:
+                current = "Chambre";         
+                break;
+            case LIVINGROOM:
+                current = "Salon";
+                break;
+            case TOILET:
+                current = "Salle de bain";
+                break;
+            case GARDEN:
+                current = "Jardin";
+                break;
+            case KITCHEN:
+                current = "Cuisine";
+                break;
+            default:
+                //TODO error
+                break;
+        }
+
+       if(_button.getClass().getName().equals("javafx.scene.control.Button"))((Button)_button).setText(current);
+        else ((Text)_button).setText(current);
+    }
+    /**
+     * set the text of the action button according to the currentPlace
+     */
+   public void setActionButtonText(){
+        String txt = "";
+        switch (tamagotchi.getCurrentPlace().getCurrentPlace()) {
+            case BEDROOM:
+                txt = "Dormir";            
+                break;
+            case LIVINGROOM:
+                txt = "Youpi !!"; //TODO changer j'ai pas d'idée
+                break;
+            case TOILET:
+                txt = "Nettoyer";
+                break;
+            case GARDEN:
+                txt = "Jouer";
+                break;
+            case KITCHEN:
+                txt = "Manger";
+                break;
+            default:
+                //TODO error
+                break;
+        }
+        actionButton.setText(txt);
+   }
 
     public void setNameLabel(){
         if(tamagotchi != null){
@@ -143,7 +199,7 @@ public class InGameController extends AbstractController implements PropertyChan
             if(evt.getPropertyName().equals("statsDisplay")){
                 statsDisplay();
             }
-            //TODO die event
+            //TODO if die event
         }
         catch (Exception e) {
         // TODO: handle exception
@@ -200,7 +256,7 @@ public class InGameController extends AbstractController implements PropertyChan
                 //TODO soundEating en parametre de ingamecontroller et mettre des differents sound pour chaque tama
                 break;
             case LIVINGROOM:
-            //TODO
+            //TODO play sound of the nananmaul
                 break;
             case GARDEN:
             //TODO

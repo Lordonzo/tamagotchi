@@ -1,5 +1,6 @@
 package models.tamagotchi;
 
+import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.time.LocalDateTime;
 import java.util.Random;
@@ -29,7 +30,7 @@ public abstract class Tamagotchi {
     //Gain
     protected final int healthGain = 20;
     protected final int energyGain = 20;
-    protected final int cleaningGain = 20;
+    protected final int cleaningGain = 10;
     protected final int mentalGain = 20;
     protected final int satietyGain = 20;
 
@@ -117,12 +118,8 @@ public abstract class Tamagotchi {
         this.currentMental = mentalState; // 11
     }
     
-    protected void addEnergy() {
-
-    }
-
     protected void play() {
-
+        //TODO increase mental
     }
 
     public int getNB_SEC(){
@@ -231,14 +228,14 @@ public abstract class Tamagotchi {
                 public void run() {
                     while(currentEnergy < 100 && !closeGame.get()){
                         currentEnergy+=energyGain;
-                        observer.propertyChange(null);
+                        observer.propertyChange(new PropertyChangeEvent(this, "statsDisplay", null, null));
 
                         if(currentEnergy > 100){
                             currentEnergy = 100;
                             break;
                         }
                         try {
-                            Thread.sleep(4000);
+                            Thread.sleep(5000);
                         }
                         catch (Exception e) {
                             // TODO: handle exception
@@ -285,6 +282,7 @@ public abstract class Tamagotchi {
     public void die(String _cause){
         System.out.println("L'animal est mort de : " +_cause);
         closeGame.set(true);
+        //TODO property event
     }
 
     /**
@@ -315,8 +313,9 @@ public abstract class Tamagotchi {
 
     }
 
-    public void decreaseHealth(){}
+    public void decreaseHealth(){}//TODO
 
+    public void increaseHealth(){}//TODO
     /**
      * mean of stats
      * @return mean
@@ -335,6 +334,7 @@ public abstract class Tamagotchi {
     public void goToLeftPlace(){
         this.currentPlace = currentPlace.getPreviousPlace();
     }
+
 
     /**
      * Setting weather with equal random chances
@@ -394,7 +394,7 @@ public abstract class Tamagotchi {
         }
         else{ currentCleanliness =100;
         }
-        observer.propertyChange(null);
+        observer.propertyChange(new PropertyChangeEvent(this, "statsDisplay", null, null));
     }
 
     

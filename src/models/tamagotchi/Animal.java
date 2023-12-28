@@ -36,8 +36,9 @@ public abstract class Animal extends Tamagotchi {
      * kill the animal if health <= 0
      * @param _satietyLost
      * @param _cleaningLost
+     * @param _energyLost
      */
-    public void decreaseHealth(int _satietyLost, int _cleaningLost){
+    public void decreaseHealth(int _satietyLost, int _cleaningLost, int _energyLost){
         if(currentSatiety <= 0){
             if(currentHealth-_satietyLost < 0) currentHealth = 0;
             else currentHealth-=_satietyLost;
@@ -70,7 +71,7 @@ public abstract class Animal extends Tamagotchi {
                     do{
                         sleep(NB_SEC);
                         decreaseStats(mentalDifficulty, cleaningDifficulty, energyDifficulty,satietyDifficulty);
-                        decreaseHealth(satietyDifficulty, cleaningDifficulty);
+                        //decreaseHealth(satietyDifficulty, cleaningDifficulty);
                         if(DEBUG){
                             System.out.println("mean : " + mean());
                             System.out.println("currentCleaning :"+currentCleanliness);
@@ -81,8 +82,6 @@ public abstract class Animal extends Tamagotchi {
                             System.out.println("Weather :" + currentPlace.getWeather().toString());
                             System.out.println("Counter : "+cnt);
                     }
-                        //Calling observer
-                        observer.propertyChange(new PropertyChangeEvent(this,"statsDisplay",null,null));
                         
                         //Weather_____________________
                         if(cnt == weatherCnt){
@@ -98,7 +97,15 @@ public abstract class Animal extends Tamagotchi {
                         ranningEvent(rainDamage,mentalDifficulty);
 
 
-                        //Loose weight
+                        //starve and loosing weight________________
+                        starve();
+
+                        //cleaning________________________________
+
+                        
+                        //Calling observer
+                        observer.propertyChange(new PropertyChangeEvent(this,"statsDisplay",null,null));
+
                         
 
                     } while(running.get() && !closeGame.get());
@@ -121,20 +128,22 @@ public abstract class Animal extends Tamagotchi {
             currentSatiety+=satietyGain;
         }
         else{
-            System.out.println("www"); 
             currentSatiety =100;
             setCurrentWeight(currentWeight+(currentWeight/10));
         }
-        System.out.println("Satiety : " + currentSatiety);
-        observer.propertyChange(null);
+        observer.propertyChange(new PropertyChangeEvent(this, "statsDisplay", null,null));
     }
 
-    public void looseWeight(){
-        if(currentSatiety < 10){
-            decreaseHealth();
-        }
-        else if(currentSatiety < 20){
-
+    public void starve(){
+        if(currentSatiety < 20){      
+            if(currentSatiety < 10){
+                decreaseHealth(10,0,0);
+                setCurrentWeight(currentWeight-(currentWeight/10));
+            }
+            else{
+                decreaseHealth(5,0,0);
+                setCurrentWeight(currentWeight-(currentWeight/10));
+            }
         }
     }
 

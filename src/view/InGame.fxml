@@ -21,14 +21,16 @@
       <Text layoutX="233.0" layoutY="29.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Vie" />
       <Text layoutX="233.0" layoutY="55.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Energie" />
       <Text layoutX="233.0" layoutY="85.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Propreté" />
-      <Button layoutX="83.0" layoutY="435.0" mnemonicParsing="false" onAction="#action" text="Action" />
-      <Button fx:id="rightPlaceButton" layoutX="982.0" layoutY="261.0" mnemonicParsing="false" onAction="#rightPlace" text="PièceA" />
-      <Button fx:id="leftPlaceButton" layoutX="982.0" layoutY="447.0" mnemonicParsing="false" onAction="#leftRoom" text="PièceB" />
+      <Button fx:id="actionButton" layoutX="74.0" layoutY="459.0" mnemonicParsing="false" onAction="#action" prefHeight="79.0" prefWidth="177.0" text="Action" textAlignment="CENTER" wrapText="true" />
+      <Button fx:id="rightPlaceButton" layoutX="917.0" layoutY="227.0" mnemonicParsing="false" onAction="#rightPlace" prefHeight="80.0" prefWidth="150.0" text="PièceA" textAlignment="CENTER" wrapText="true" />
+      <Button fx:id="leftPlaceButton" layoutX="914.0" layoutY="447.0" mnemonicParsing="false" onAction="#leftRoom" prefHeight="80.0" prefWidth="150.0" text="PièceB" textAlignment="CENTER" textOverrun="CLIP" wrapText="true" />
       <Button layoutX="1004.0" layoutY="12.0" mnemonicParsing="false" onAction="#toMenu" text="Quitter" />
       <Button layoutX="989.0" layoutY="682.0" mnemonicParsing="false" text="Glossaire" />
       <Label fx:id="idLabel" layoutX="508.0" layoutY="16.0" text="Nom" />
       <Text fx:id="currentPlaceText" layoutX="990.0" layoutY="365.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Pièce" />
       <ProgressBar fx:id="stat4" layoutX="14.0" layoutY="97.0" prefWidth="200.0" progress="0.0" />
       <Text layoutX="234.0" layoutY="112.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Satieté" />
+      <Text fx:id="weatherText" layoutX="34.0" layoutY="142.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Sunny" />
+      <Text fx:id="mentalText" layoutX="142.0" layoutY="142.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Happy" />
    </children>
 </AnchorPane>
