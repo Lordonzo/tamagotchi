@@ -8,6 +8,7 @@ import models.Status.MentalState;
 
 public abstract class Animal extends Tamagotchi {
 
+    private int sleepCancel = 0;
 
     /**
      * init the animal and the adequate game routine
@@ -71,7 +72,6 @@ public abstract class Animal extends Tamagotchi {
                     do{
                         sleep(NB_SEC);
                         decreaseStats(mentalDifficulty, cleaningDifficulty, energyDifficulty,satietyDifficulty);
-                        //decreaseHealth(satietyDifficulty, cleaningDifficulty);
                         if(DEBUG){
                             System.out.println("mean : " + mean());
                             System.out.println("currentCleaning :"+currentCleanliness);
@@ -93,19 +93,30 @@ public abstract class Animal extends Tamagotchi {
                         }
                         //____________________________
 
-                        //Electrocution_______________
+                        //Electrocution___________________________
                         ranningEvent(rainDamage,mentalDifficulty);
+                        //________________________________________
 
 
-                        //starve and loosing weight________________
+                        //starve and loosing weight_______________
                         starve();
+                        //________________________________________
+
 
                         //cleaning________________________________
+                        //TODO cleaning damage
 
-                        
+                        //________________________________________
+
+
+                        //sleepCanceled___________________________
+                        if(sleepCancel > 0){
+                            sleepCancel--;
+                        }
+                        //________________________________________
+
                         //Calling observer
                         observer.propertyChange(new PropertyChangeEvent(this,"statsDisplay",null,null));
-
                         
 
                     } while(running.get() && !closeGame.get());
@@ -121,7 +132,18 @@ public abstract class Animal extends Tamagotchi {
         //stop the routine when the user kill the program with the X button
         routine.setDaemon(true);
     }
+    public int getSleepCancel() {
+        return sleepCancel;
+    }
+    public void setSleepCancel(int _sleepCancel) {
+        this.sleepCancel = _sleepCancel;
+    }
 
+    @Override
+    public void startSleep(){
+        setSleepCancel(2);
+        super.startSleep();
+    }
     @Override
     public void eat(){
         if(currentSatiety+satietyGain <=100){

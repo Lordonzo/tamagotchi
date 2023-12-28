@@ -211,14 +211,17 @@ public abstract class Tamagotchi {
 
     //THREAD__________________________________
     protected void initRoutine(){}
+
     public void stopRoutine(){
         running.set(false);
     }
+
     public void startRoutine(){
         running.set(true);
         initRoutine();
         routine.start();
     }
+    //________________________________________
     /**
      * increase currentEnergy
      */
@@ -254,7 +257,8 @@ public abstract class Tamagotchi {
             };
             sleepRoutine.setDaemon(true);
             sleepRoutine.start();
-            //check if the sleep routine is finished and start the mainRoutine
+
+            //wait the sleep routine to finish and start the main routine
             new Thread(){public void run(){
                 try {
                     sleepRoutine.join();
@@ -369,7 +373,7 @@ public abstract class Tamagotchi {
      * @param _damage
      */
     public void ranningEvent(int _damage,int _mental){
-        if(Place.getWeather().equals(Weather.RAINY) && currentPlace.getCurrentPlace().equals(EPlace.GARDEN)){
+        if((Place.getWeather().equals(Weather.RAINY)|| (Place.getWeather().equals(Weather.THUNDER))) && currentPlace.getCurrentPlace().equals(EPlace.GARDEN)){
             currentHealth-=_damage;
             currentMental-=_mental;
         }

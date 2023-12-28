@@ -81,6 +81,10 @@ public class InGameController extends AbstractController implements PropertyChan
     @FXML
     private Text currentPlaceText;
     @FXML
+    private Text mentalText;
+    @FXML
+    private Text weatherText;
+    @FXML
     private Button quitButton;
     @FXML
     private Button glossaireButton;
@@ -96,6 +100,7 @@ public class InGameController extends AbstractController implements PropertyChan
         this.tamagotchi = _tamagotchi;
         updateAllText();
         statsDisplay();
+        updateWeatherText();
     }
 
    @FXML 
@@ -109,20 +114,17 @@ public class InGameController extends AbstractController implements PropertyChan
        scene.setRoot(root);
    }
 
-   @FXML
    public void statsDisplay(){
-            try{
-                System.out.println("statsDisplay : " + tamagotchi.getCurrentSatiety());
-
-                stat1.setProgress((double)tamagotchi.getCurrentHealth()/100);
-                stat2.setProgress((double)tamagotchi.getCurrentEnergy()/100);
-                stat3.setProgress((double)tamagotchi.getCurrentCleaning()/100);
-                stat4.setProgress((double)tamagotchi.getCurrentSatiety()/100);
-
-            }
-            catch(Exception e){
-                e.printStackTrace();
-            }
+        try{
+            stat1.setProgress((double)tamagotchi.getCurrentHealth()/100);
+            stat2.setProgress((double)tamagotchi.getCurrentEnergy()/100);
+            stat3.setProgress((double)tamagotchi.getCurrentCleaning()/100);
+            stat4.setProgress((double)tamagotchi.getCurrentSatiety()/100);
+            updateWeatherText();
+        }
+        catch(Exception e){
+            e.printStackTrace();
+        }
     }
 
    public void rightPlace(ActionEvent actionEvent) throws IOException{
@@ -166,6 +168,30 @@ public class InGameController extends AbstractController implements PropertyChan
 
        if(_button.getClass().getName().equals("javafx.scene.control.Button"))((Button)_button).setText(current);
         else ((Text)_button).setText(current);
+    }
+
+    public void updateWeatherText(){
+        String txt = "";
+        switch (tamagotchi.getCurrentPlace().getWeather()) {
+            case SUNNY:
+                txt = "Ensoleillé";
+                break;
+            case RAINY:
+                txt = "Pluvieux";
+                break;
+            case CLOUDY:
+                txt = "Nuageux";
+                break;
+            case SNOWY:
+                txt = "Neigeux";
+                break;    
+            case THUNDER:
+                txt = "Orageux";
+                break;
+            default:
+                break;
+        }
+        weatherText.setText(txt);
     }
     /**
      * set the text of the action button according to the currentPlace
@@ -216,15 +242,14 @@ public class InGameController extends AbstractController implements PropertyChan
                 afficherPaneDeMort();
             }
             if(evt.getPropertyName().equals("enableButtons")){
-                if(tamagotchi.getCurrentHealth() > 0){
-                    enableAll();
-                }
+                enableAll();
             }
         }
         catch (Exception e) {
         // TODO: handle exception
         }
     }
+
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         PlaceDB placeDB = new PlaceDB();
@@ -259,7 +284,7 @@ public class InGameController extends AbstractController implements PropertyChan
                 } catch (FileNotFoundException e) { System.out.println(e.getMessage()); }
                 break;
             }
-            //init Rotation animation
+            //init rotation animation
             backflipTransition = new RotateTransition();
             backflipTransition.setDuration(javafx.util.Duration.seconds(1));
             backflipTransition.setNode(ivSprite);
@@ -269,48 +294,23 @@ public class InGameController extends AbstractController implements PropertyChan
         }
     }
 
-
     @FXML
     public void action(ActionEvent event) throws IOException{
         switch (tamagotchi.getCurrentPlace().getCurrentPlace()) {
             case BEDROOM:
-            if(!tamagotchi.getSleepRunning().get()){
-                disableAll();
-                actionButton.setDisable(false);
-                sound = new Media(new File("src/resources/sound/goofy_ahh_sleeping.mp3").toURI().toString());
-                mediaPlayer = new MediaPlayer(sound);
-                mediaPlayer.play();
-                tamagotchi.startSleep();
-            }
-            else{
-                tamagotchi.setSleepRunning(false);
-            }
-                //TODO au meme niveau que la musique
+                bedroomAction();
                 break;
             case LIVINGROOM:
-            //DO A BACKFLIP
-                actionButton.setDisable(true);
-                double random = new Random().nextInt(100,2000);
-                backflipTransition.setDuration(javafx.util.Duration.millis(random));
-                backflipTransition.play();
-                sound = new Media(new File("src/resources/sound/goofy_ahh_backflipping.mp3").toURI().toString());
-                mediaPlayer = new MediaPlayer(sound);
-                mediaPlayer.setRate((2000-random)/600);
-                backflipTransition.setOnFinished(e -> propertyChange(new PropertyChangeEvent(tamagotchi,"enableButtons",null,null)));
-                mediaPlayer.play();
+                livingRoomAction();
                 break;
             case GARDEN:
-            //TODO
+                gardenAction();
                 break;
             case TOILET:
-                //TODO clean sound
-                tamagotchi.clean();
+                toiletAction();
                 break;
             case KITCHEN:
-                sound = new Media(new File("src/resources/sound/goofy_ahh_eating.mp3").toURI().toString());
-                mediaPlayer = new MediaPlayer(sound);
-                mediaPlayer.play();
-                tamagotchi.eat();
+                kitchenAction();
                 break;
             default:
                 //TODO error handling
@@ -318,6 +318,59 @@ public class InGameController extends AbstractController implements PropertyChan
         }
     }
 
+
+    private void bedroomAction(){
+        //TODO au meme niveau que la musique
+        if(!tamagotchi.getSleepRunning().get()){
+            if(!tamagotchi.getClass().getSimpleName().equals("Robot"))
+            {
+                if((((Animal)tamagotchi).getSleepCancel() != 0)){
+                    //don't start the sleep routine
+                    return;
+                }
+            }
+            disableAll();
+            actionButton.setDisable(false);
+            sound = new Media(new File("src/resources/sound/goofy_ahh_sleeping.mp3").toURI().toString());
+            mediaPlayer = new MediaPlayer(sound);
+            mediaPlayer.play();
+            tamagotchi.startSleep();
+        }
+        else{
+            tamagotchi.setSleepRunning(false);
+        }
+    }
+    /**
+     * DO A BACKFLIP
+     */
+    private void livingRoomAction(){
+        actionButton.setDisable(true);
+        double random = new Random().nextInt(100,2000);
+        backflipTransition.setDuration(javafx.util.Duration.millis(random));
+        backflipTransition.play();
+        sound = new Media(new File("src/resources/sound/goofy_ahh_backflipping.mp3").toURI().toString());
+        mediaPlayer = new MediaPlayer(sound);
+        mediaPlayer.setRate((2000-random)/600);
+        backflipTransition.setOnFinished(e -> enableAll());
+        mediaPlayer.play();
+    }
+    private void gardenAction(){
+        //TODO
+    }
+    private void toiletAction(){
+        //TODO clean sound
+        tamagotchi.clean();
+    }
+    private void kitchenAction(){
+        sound = new Media(new File("src/resources/sound/goofy_ahh_eating.mp3").toURI().toString());
+        mediaPlayer = new MediaPlayer(sound);
+        mediaPlayer.play();
+        tamagotchi.eat();
+    }
+
+    private void eee(){
+
+    }
     @FXML
     private void disableAll() {
         stat1.setDisable(true);
@@ -333,6 +386,7 @@ public class InGameController extends AbstractController implements PropertyChan
 
     @FXML
     private void enableAll(){
+        if(tamagotchi.getCurrentHealth() > 0){
         stat1.setDisable(false);
         stat2.setDisable(false);
         stat3.setDisable(false);
@@ -343,6 +397,8 @@ public class InGameController extends AbstractController implements PropertyChan
         rightPlaceButton.setDisable(false);
         leftPlaceButton.setDisable(false);
     }
+        }
+        
 
     public void afficherPaneDeMort() {
         spDeathPane.setVisible(true);
