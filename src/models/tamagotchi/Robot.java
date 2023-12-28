@@ -5,7 +5,9 @@ import java.io.FileNotFoundException;
 
 import javafx.scene.image.Image;
 import models.Place;
+import models.Status.EPlace;
 import models.Status.MentalState;
+import models.Status.Weather;
 
 public class Robot extends Tamagotchi {
     private float damageState = 0;
@@ -27,48 +29,7 @@ public class Robot extends Tamagotchi {
             image = new Image(new FileInputStream("resources/tama_sprites/robot.png"));
         } catch (FileNotFoundException e) {}
         
-        exit = false;
-        routine = new Thread(){
-            public void run() {
-                try{
-                    do{
-                        sleep(NB_SEC);
-                        decreaseStats(10, 10, 10); //TODO changer les valeurs 
-                        decreaseHealth(10, 10);
-                        if(DEBUG){
-                        System.out.println("mean : " + mean());
-                        System.out.println("currentCleaning :"+currentCleanliness);
-                        System.out.println("currentMemory :"+currentMemory);
-                        System.out.println("currentEnergy"+currentEnergy);
-                        System.out.println("currentHealth :"+currentHealth);
-                        System.out.println("currentMental:"+currentMental);
-                        System.out.println("Weather :" + currentPlace.getWeather().toString());
-                        System.out.println("Counter : "+cnt);
-                        }
-                    
-                    //Calling observer
-                    observer.propertyChange(null);
-                    //Weather_____________________
-                    if(cnt == weatherCnt){
-                        weatherHandle();
-                    }
-                    cnt++;
-                    if(cnt > maxCnt){
-                        cnt = 0;
-                    }
-                    //____________________________
-                    }while(!exit);
-                
-                }
-                catch(Exception e){
-                    //TODO routine d'erreur
-                    System.err.println("Thread error : "+e.getMessage());
-                }
-            }
-        };
-        //To stop the routine when the user kill the program with the X button
-        routine.setDaemon(true);
-    } 
+    }
 
     /**
      * decrease the Robot health if the conditions are met
@@ -105,9 +66,63 @@ public class Robot extends Tamagotchi {
         if(currentMemory+_memory > MIN_MEMORY) currentMemory = 100;
         else currentMemory+=_memory;
     }
-    public void takingDamage(int _damage){
-        //TODO when it's ranning, the bot takes damages
+
+    
+    @Override
+    protected void initRoutine(){
+        routine = new Thread(){
+            public void run() {
+                try{
+                    do{
+                        sleep(NB_SEC);
+                        decreaseStats(mentalDifficulty, cleaningDifficulty, energyDifficulty); //TODO changer les valeurs 
+                        decreaseHealth(satietyDifficulty, cleaningDifficulty);
+                        if(DEBUG){
+                            System.out.println("mean : " + mean());
+                            System.out.println("currentCleaning :"+currentCleanliness);
+                            System.out.println("currentSatiety :"+currentSatiety);
+                            System.out.println("currentEnergy"+currentEnergy);
+                            System.out.println("currentHealth :"+currentHealth);
+                            System.out.println("currentMental:"+currentMental);
+                            System.out.println("Weather :" + currentPlace.getWeather().toString());
+                            System.out.println("Counter : "+cnt);
+                    }
+                        //Calling observer
+                        observer.propertyChange(null);
+                        
+                        //Weather_____________________
+                        if(cnt == weatherCnt){
+                            weatherHandle();
+                        }
+                        cnt++;
+                        if(cnt > maxCnt){
+                            cnt = 0;
+                        }
+                        //____________________________
+
+                        //Electrocution_______________
+                        ranningEvent(rainDamage,mentalDifficulty);
+
+                    } while(running.get());
+                
+                    
+                }
+                catch(Exception e){
+                    //TODO routine d'erreur
+                    System.err.println("Thread error : "+e.getMessage());
+                }
+            }
+        };
+        //stop the routine when the user kill the program with the X button
+        routine.setDaemon(true);
     }
+    
+
+    @Override
+    public void startSleep(){
+        super.startSleep();
+    }
+
 
 
 }

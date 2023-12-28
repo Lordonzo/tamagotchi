@@ -3,6 +3,8 @@ package models.tamagotchi;
 import java.beans.PropertyChangeListener;
 import java.time.LocalDateTime;
 import java.util.Random;
+import java.util.concurrent.TimeUnit;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 import javafx.scene.image.Image;
 import models.Place;
@@ -17,15 +19,27 @@ public abstract class Tamagotchi {
     protected final int NB_SEC = 1000;
 
     //Difficulty
+    protected int healthDifficulty;
     protected int cleaningDifficulty;
     protected int mentalDifficulty;
     protected int energyDifficulty;
+    protected int satietyDifficulty;
+    protected final int rainDamage = 10;
+
+    //Gain
+    protected final int healthGain = 20;
+    protected final int energyGain = 20;
+    protected final int cleaningGain = 20;
+    protected final int mentalGain = 20;
+    protected final int satietyGain = 20;
+
     
     protected int id;
     protected String name;
 
     protected int currentHealth;
     protected int currentEnergy; // BATTERY ROBOT
+    protected int currentSatiety; // MEMORY ROBOT
 
     protected PhysicalState state;
     protected Place currentPlace;
@@ -42,22 +56,24 @@ public abstract class Tamagotchi {
 
 
     protected Thread routine;
-    protected boolean exit;
-    //To call some event x routine call
+    protected Thread sleepRoutine;
+    protected final AtomicBoolean closeGame = new AtomicBoolean(false);
+    protected final AtomicBoolean running = new AtomicBoolean(false);
+    //To call some event after x loop
     protected int cnt;
 
     protected PropertyChangeListener observer;
     protected Image image;
 
-    protected final boolean DEBUG = true;
+    protected final boolean DEBUG = false;
 
     protected final int weatherCnt = 6;
     protected final int maxCnt = 10;
 
+    
 
 
     //TODO commenter les getters setters
-    //TODO faire une condition pour que le robot ne puisse pas mourir vieillesse
     /**
      * 
      */
@@ -66,7 +82,6 @@ public abstract class Tamagotchi {
         this.currentEnergy = MAX_ENERGY;
         this.currentCleanliness = MAX_CLEAN;
         this.currentMental = MAX_MENTAL;
-        this.exit = false;
         this.state = PhysicalState.IN_SHAPE;
         
         this.name = _nameString;
@@ -125,11 +140,13 @@ public abstract class Tamagotchi {
             cleaningDifficulty = 2;
             mentalDifficulty = 5;
             energyDifficulty = 2;
+            healthDifficulty = 5;
         }
         else if(_difficulty == 2){
             cleaningDifficulty = 3;
             mentalDifficulty = 7;
             energyDifficulty = 4;
+            
         }
         else if( _difficulty == 56){
             cleaningDifficulty = 0;
@@ -184,21 +201,83 @@ public abstract class Tamagotchi {
     public int getCurrentCleaning() {
         return this.currentCleanliness;
     }
-    public void start(){
-        exit = false;
+
+    //THREAD__________________________________
+    protected void initRoutine(){}
+    public void stopRoutine(){
+        running.set(false);
+    }
+    public void startRoutine(){
+        running.set(true);
+        initRoutine();
         routine.start();
     }
-    public void stop(){
-        exit = true;
+    /**
+     * increase currentEnergy
+     */
+    //TODO arreter quand on quitte le jeu
+    public void startSleep(){
+        try {
+            stopRoutine();
+            routine.join();
+            sleepRoutine = new Thread(){
+                public void run() {
+                    while(currentEnergy < 100 && !closeGame.get()){
+                        currentEnergy+=energyGain;
+                        observer.propertyChange(null);
+
+                        if(currentEnergy > 100){
+                            currentEnergy = 100;
+                            break;
+                        }
+                        try {
+                            Thread.sleep(4000);
+                        } 
+                        catch (Exception e) {
+                            // TODO: handle exception
+                            }
+                    }
+                }
+            };
+            sleepRoutine.setDaemon(true);
+            sleepRoutine.start();
+            //check if the sleep routine is finished and start the mainRoutine
+            new Thread(){public void run(){
+                try {
+                    sleepRoutine.join();
+                    startRoutine();
+
+                } catch (InterruptedException e) {
+                    // TODO Auto-generated catch block
+                    e.printStackTrace();
+                }
+
+                }
+            }.start();
+        } catch (Exception e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+        
+    }
+    //_________________________________________
+
+    /**
+     * set closeGame
+     * used to kill sleepRoutine and the main routine when the game is closed
+     * @param _boolean
+     */
+    public void setCloseGame(boolean _boolean){
+        closeGame.set(_boolean);
     }
 
     /**
-     * kill the tamagotchi and print the cause of the death
+     * kill the tamagotchi and print the cause of death
      * @param _cause
      */
     public void die(String _cause){
         System.out.println("L'animal est mort de : " +_cause);
-        stop();
+        stopRoutine();
     }
 
     /**
@@ -233,7 +312,7 @@ public abstract class Tamagotchi {
      * @return mean
      */
     public float mean(){
-        return (currentCleanliness+currentHealth)/2;
+        return (currentCleanliness+currentHealth+currentEnergy)/3;
     }
 
     public void setObserver(PropertyChangeListener _ob){
@@ -253,4 +332,19 @@ public abstract class Tamagotchi {
     public void weatherHandle(){
         currentPlace.setWeather(Weather.values()[new Random().nextInt(5)]);
     }
+
+
+    /**
+     * when it's ranning and the tamagotchi is outside, it takes damages and lowers is mental
+     * @param _damage
+     */
+    public void ranningEvent(int _damage,int _mental){
+        if(Place.getWeather().equals(Weather.RAINY) && currentPlace.getCurrentPlace().equals(EPlace.GARDEN)){
+            currentHealth-=_damage;
+            currentMental-=_mental;
+        }
+            
+    }
+
+    
 }

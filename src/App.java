@@ -44,7 +44,7 @@ public class App extends Application {
      * @throws IOException
      */
     private MediaView setMusic() throws IOException {
-        MediaView music = new MediaView(new MediaPlayer(new Media(getClass().getResource("resources/music/soul-worker-login-music.mp3").toString())));
+        MediaView music = new MediaView(new MediaPlayer(new Media(getClass().getResource("resources/music/clctamusik.mp3").toString())));
         music.getMediaPlayer().setAutoPlay(true);
         music.getMediaPlayer().setCycleCount(MediaPlayer.INDEFINITE);
         return music;

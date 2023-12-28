@@ -6,8 +6,7 @@ import models.Place;
 import models.Status.MentalState;
 
 public abstract class Animal extends Tamagotchi {
-    private int currentSatiety; // MEMORY ROBOT
-    private int satietyDifficulty;
+
 
     /**
      * init the animal and the adequate game routine
@@ -20,48 +19,9 @@ public abstract class Animal extends Tamagotchi {
         super(_nameString,_weight, place);
         this.mentalState = MentalState.HAPPY;
         this.currentSatiety = MAX_SATIETY;
-        exit = false;
-        routine = new Thread(){
-            public void run() {
-                try{
-                    do{
-                        sleep(NB_SEC);
-                        decreaseStats(10, 3, 10); //TODO changer les valeurs 
-                        decreaseHealth(10, 10);
-                        if(DEBUG){
-                        System.out.println("mean : " + mean());
-                        System.out.println("currentCleaning :"+currentCleanliness);
-                        System.out.println("currentSatiety :"+currentSatiety);
-                        System.out.println("currentEnergy"+currentEnergy);
-                        System.out.println("currentHealth :"+currentHealth);
-                        System.out.println("currentMental:"+currentMental);
-                        System.out.println("Weather :" + currentPlace.getWeather().toString());
-                        System.out.println("Counter : "+cnt);
-                    }
-                    //Calling observer
-                    observer.propertyChange(null);
-                    
-                    //Weather_____________________
-                    if(cnt == weatherCnt){
-                        weatherHandle();
-                    }
-                    cnt++;
-                    if(cnt > maxCnt){
-                        cnt = 0;
-                    }
-                    //____________________________
-                    } while(!exit);
-                
-                }
-                catch(Exception e){
-                    //TODO routine d'erreur
-                    System.err.println("Thread error : "+e.getMessage());
-                }
-            }
-        };
 
-        //To stop the routine when the user kill the program with the X button
-        routine.setDaemon(true);
+        //TODO changer la difficulté
+        setDifficulty(3);
     }
 
     public Animal(int id, String nameString, LocalDateTime birDateTime, int currentHealth, int currentEnergy, float currentWeight, int currentCleanliness, int mentalState, Place place, int slotSaved, int currentSatiety) {
@@ -73,13 +33,14 @@ public abstract class Animal extends Tamagotchi {
      * increase currentSatiety
      */
     public void eat() {
-        if(currentSatiety+satietyDifficulty <=100){
-            currentSatiety+=satietyDifficulty;
+        if(currentSatiety+satietyGain <=100){
+            currentSatiety+=satietyGain;
         }
         else{ currentSatiety =100;
             setCurrentWeight(currentWeight+(currentWeight/10));
         }
     }
+
 
     /**
      * decrease the animal health if the conditions are met
@@ -140,6 +101,56 @@ public abstract class Animal extends Tamagotchi {
         if(currentSatiety-_satiety < 0) currentSatiety = 0;
         else currentSatiety-=_satiety;
     }
+
+    @Override
+    protected void initRoutine(){
+        routine = new Thread(){
+            public void run() {
+                try{
+                    do{
+                        sleep(NB_SEC);
+                        decreaseStats(mentalDifficulty, cleaningDifficulty, energyDifficulty); //TODO changer les valeurs 
+                        decreaseHealth(satietyDifficulty, cleaningDifficulty);
+                        if(DEBUG){
+                            System.out.println("mean : " + mean());
+                            System.out.println("currentCleaning :"+currentCleanliness);
+                            System.out.println("currentSatiety :"+currentSatiety);
+                            System.out.println("currentEnergy"+currentEnergy);
+                            System.out.println("currentHealth :"+currentHealth);
+                            System.out.println("currentMental:"+currentMental);
+                            System.out.println("Weather :" + currentPlace.getWeather().toString());
+                            System.out.println("Counter : "+cnt);
+                    }
+                        //Calling observer
+                        observer.propertyChange(null);
+                        
+                        //Weather_____________________
+                        if(cnt == weatherCnt){
+                            weatherHandle();
+                        }
+                        cnt++;
+                        if(cnt > maxCnt){
+                            cnt = 0;
+                        }
+                        //____________________________
+
+                        //Electrocution_______________
+                        ranningEvent(rainDamage,mentalDifficulty);
+
+                    } while(running.get() && !closeGame.get());
+                
+                    
+                }
+                catch(Exception e){
+                    //TODO routine d'erreur
+                    System.err.println("Thread error : "+e.getMessage());
+                }
+            }
+        };
+        //stop the routine when the user kill the program with the X button
+        routine.setDaemon(true);
+    }
+
 
 }
 

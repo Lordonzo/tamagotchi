@@ -32,6 +32,8 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
+import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;
 import javafx.scene.media.MediaView;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
@@ -45,6 +47,9 @@ import models.tamagotchi.Tamagotchi;
 
 public class InGameController extends AbstractController implements PropertyChangeListener {
     private Tamagotchi tamagotchi;
+
+    private Media sound;
+    private MediaPlayer mediaPlayer;
     @FXML
     //Health
     private ProgressBar stat1;
@@ -70,14 +75,12 @@ public class InGameController extends AbstractController implements PropertyChan
 
 
    public void setTamagotchi(Tamagotchi _tamagotchi) {
-        //TODO je sens ca va faire des problème ca, faire un constructeur par copie
-       this.tamagotchi = _tamagotchi;
-       
+        this.tamagotchi = _tamagotchi;      
    }
 
    @FXML 
    private void toMenu(ActionEvent actionEvent) throws IOException {
-       tamagotchi.stop();
+       tamagotchi.setCloseGame(true);
        FXMLLoader loader = new FXMLLoader(getClass().getResource("../view/Menu.fxml"));
        Pane root = (Pane) loader.load();
        MenuController menuController = loader.getController();
@@ -90,8 +93,7 @@ public class InGameController extends AbstractController implements PropertyChan
    //TODO
    public void statsDisplay() throws IOException{
             try{
-                System.out.println((double)tamagotchi.getCurrentHealth()/100);
-                System.out.println(stat1.getId());
+                System.out.println("statsDisplay : " + tamagotchi.getCurrentEnergy());
                 /*Platform.runLater(() -> stat1.setProgress((double)tamagotchi.getCurrentHealth()/100));
                 Platform.runLater(() -> stat2.setProgress(0.2));*/
                 stat1.setProgress((double)tamagotchi.getCurrentHealth()/100);
@@ -130,8 +132,8 @@ public class InGameController extends AbstractController implements PropertyChan
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
         try {
-            statsDisplay();}
-
+            statsDisplay();
+        }
         catch (Exception e) {
         // TODO: handle exception
         }
@@ -168,5 +170,30 @@ public class InGameController extends AbstractController implements PropertyChan
         }
     }
 
+
+    @FXML
+    public void action(ActionEvent event) throws IOException{
+        switch (tamagotchi.getCurrentPlace().getCurrentPlace()) {
+            case BEDROOM:
+                sound = new Media(new File("src/resources/sound/goofy_ahh_sleeping.mp3").toURI().toString());
+                mediaPlayer = new MediaPlayer(sound);
+                mediaPlayer.play();
+                tamagotchi.startSleep();
+                //TODO au meme niveau que la musique
+                
+                break;
+            case LIVINGROOM:
+                break;
+            case GARDEN:
+                break;
+            case TOILET:
+                break;
+            case KITCHEN:
+                break;
+            default:
+                //TODO error handling
+                break;
+        }
+    }
 
 }
