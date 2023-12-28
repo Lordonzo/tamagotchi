@@ -1,5 +1,6 @@
 package models.tamagotchi;
 
+import java.beans.PropertyChangeEvent;
 import java.time.LocalDateTime;
 
 import models.Place;
@@ -81,7 +82,7 @@ public abstract class Animal extends Tamagotchi {
                             System.out.println("Counter : "+cnt);
                     }
                         //Calling observer
-                        observer.propertyChange(null);
+                        observer.propertyChange(new PropertyChangeEvent(this,"statsDisplay",null,null));
                         
                         //Weather_____________________
                         if(cnt == weatherCnt){
@@ -95,6 +96,10 @@ public abstract class Animal extends Tamagotchi {
 
                         //Electrocution_______________
                         ranningEvent(rainDamage,mentalDifficulty);
+
+
+                        //Loose weight
+                        
 
                     } while(running.get() && !closeGame.get());
                 
@@ -122,6 +127,15 @@ public abstract class Animal extends Tamagotchi {
         }
         System.out.println("Satiety : " + currentSatiety);
         observer.propertyChange(null);
+    }
+
+    public void looseWeight(){
+        if(currentSatiety < 10){
+            decreaseHealth();
+        }
+        else if(currentSatiety < 20){
+
+        }
     }
 
 }
