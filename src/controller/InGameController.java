@@ -193,8 +193,10 @@ public class InGameController extends AbstractController implements PropertyChan
                 
                 break;
             case LIVINGROOM:
+            //TODO
                 break;
             case GARDEN:
+            //TODO
                 break;
             case TOILET:
                 //TODO clean sound
