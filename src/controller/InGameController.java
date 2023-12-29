@@ -11,6 +11,7 @@ import java.net.URL;
 import java.time.Duration;
 import java.util.ArrayList;
 import java.util.EventListener;
+import java.util.Locale;
 import java.util.Random;
 import java.util.ResourceBundle;
 
@@ -35,6 +36,11 @@ import javafx.scene.effect.ColorAdjust;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.Background;
+import javafx.scene.layout.BackgroundImage;
+import javafx.scene.layout.BackgroundPosition;
+import javafx.scene.layout.BackgroundRepeat;
+import javafx.scene.layout.BackgroundSize;
 import javafx.scene.layout.Pane;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
@@ -55,6 +61,7 @@ public class InGameController extends AbstractController implements PropertyChan
 
     private Media sound;
     private MediaPlayer mediaPlayer;
+    private ResourceBundle resourceBundle;
     @FXML
     //Health
     private ProgressBar stat1;
@@ -93,6 +100,8 @@ public class InGameController extends AbstractController implements PropertyChan
     @FXML
     private StackPane spDeathPane;
     @FXML
+    private AnchorPane backPane;
+    @FXML
     private RotateTransition backflipTransition;
 
 
@@ -101,6 +110,54 @@ public class InGameController extends AbstractController implements PropertyChan
         updateAllText();
         statsDisplay();
         updateWeatherText();
+    }
+
+    @Override
+    public void initialize(URL location, ResourceBundle resources) {
+        PlaceDB placeDB = new PlaceDB();
+        ArrayList<Place> places = placeDB.select();
+        TamagotchiDB tamagotchiDB = new TamagotchiDB();
+        ArrayList<Tamagotchi> selectSlotSaved = tamagotchiDB.selectSlotSaved(places);
+        System.out.println(selectSlotSaved);
+        if (!selectSlotSaved.isEmpty()) {
+            System.out.println(selectSlotSaved.get(0).getName());
+            switch (selectSlotSaved.get(0).getClass().getSimpleName()) {
+            case "Dog":
+                try {
+                    ivSprite.setImage(new Image(new FileInputStream("src/resources/tama_sprites/dog.png")));
+                } catch (FileNotFoundException e) { System.out.println(e.getMessage()); }
+                break;
+            case "Cat":
+                System.out.println(ivSprite.getImage());
+                try {
+                    ivSprite.setImage(new Image(new FileInputStream("src/resources/tama_sprites/cat.png")));
+                } catch (FileNotFoundException e) { System.out.println(e.getMessage()); }
+                break;
+            case "Rabbit":
+                System.out.println(ivSprite.getImage());
+                try {
+                    ivSprite.setImage(new Image(new FileInputStream("src/resources/tama_sprites/rabbit.png")));
+                } catch (FileNotFoundException e) { System.out.println(e.getMessage()); }
+                break;
+            case "Robot":
+                System.out.println(ivSprite.getImage());
+                try {
+                    ivSprite.setImage(new Image(new FileInputStream("src/resources/tama_sprites/robot.png")));
+                } catch (FileNotFoundException e) { System.out.println(e.getMessage()); }
+                break;
+            }
+            //init rotation animation
+            backflipTransition = new RotateTransition();
+            backflipTransition.setDuration(javafx.util.Duration.seconds(1));
+            backflipTransition.setNode(ivSprite);
+            backflipTransition.setFromAngle(0);
+            backflipTransition.setToAngle(360);
+            backflipTransition.setCycleCount(1);
+
+            //Localization
+            resourceBundle = ResourceBundle.getBundle("resources/language/Text",Locale.FRENCH);
+            
+        }
     }
 
    @FXML 
@@ -147,52 +204,52 @@ public class InGameController extends AbstractController implements PropertyChan
         String current ="";
         switch (place.getCurrentPlace()) {
             case BEDROOM:
-                current = "Chambre";         
+                current += resourceBundle.getString("bedroom");         
                 break;
             case LIVINGROOM:
-                current = "Salon";
+                current += resourceBundle.getString("livingroom");
                 break;
             case TOILET:
-                current = "Salle de bain";
+                current += resourceBundle.getString("toilet");
                 break;
             case GARDEN:
-                current = "Jardin";
+                current += resourceBundle.getString("garden");
                 break;
             case KITCHEN:
-                current = "Cuisine";
+                current += resourceBundle.getString("kitchen");
                 break;
             default:
                 //TODO error
                 break;
         }
-
-       if(_button.getClass().getName().equals("javafx.scene.control.Button"))((Button)_button).setText(current);
-        else ((Text)_button).setText(current);
+        if(_button.getClass().getName().equals("javafx.scene.control.Button"))((Button)_button).setText(current);
+        else if(_button.getClass().getName().equals("javafx.scene.text.Text")) ((Text)_button).setText(resourceBundle.getString("location")+" : "+current);
     }
 
     public void updateWeatherText(){
         String txt = "";
         switch (tamagotchi.getCurrentPlace().getWeather()) {
             case SUNNY:
-                txt = "Ensoleillé";
+                txt = resourceBundle.getString("sunny");
                 break;
             case RAINY:
-                txt = "Pluvieux";
+                txt = resourceBundle.getString("rainy");
                 break;
             case CLOUDY:
-                txt = "Nuageux";
+                txt = resourceBundle.getString("cloudy");
                 break;
             case SNOWY:
-                txt = "Neigeux";
+                txt = resourceBundle.getString("snowy");
                 break;    
             case THUNDER:
-                txt = "Orageux";
+                txt = resourceBundle.getString("thunder");
                 break;
             default:
                 break;
         }
         weatherText.setText(txt);
     }
+
     /**
      * set the text of the action button according to the currentPlace
      */
@@ -250,49 +307,7 @@ public class InGameController extends AbstractController implements PropertyChan
         }
     }
 
-    @Override
-    public void initialize(URL location, ResourceBundle resources) {
-        PlaceDB placeDB = new PlaceDB();
-        ArrayList<Place> places = placeDB.select();
-        TamagotchiDB tamagotchiDB = new TamagotchiDB();
-        ArrayList<Tamagotchi> selectSlotSaved = tamagotchiDB.selectSlotSaved(places);
-        System.out.println(selectSlotSaved);
-        if (!selectSlotSaved.isEmpty()) {
-            System.out.println(selectSlotSaved.get(0).getName());
-            switch (selectSlotSaved.get(0).getClass().getSimpleName()) {
-            case "Dog":
-                try {
-                    ivSprite.setImage(new Image(new FileInputStream("src/resources/tama_sprites/dog.png")));
-                } catch (FileNotFoundException e) { System.out.println(e.getMessage()); }
-                break;
-            case "Cat":
-                System.out.println(ivSprite.getImage());
-                try {
-                    ivSprite.setImage(new Image(new FileInputStream("src/resources/tama_sprites/cat.png")));
-                } catch (FileNotFoundException e) { System.out.println(e.getMessage()); }
-                break;
-            case "Rabbit":
-                System.out.println(ivSprite.getImage());
-                try {
-                    ivSprite.setImage(new Image(new FileInputStream("src/resources/tama_sprites/rabbit.png")));
-                } catch (FileNotFoundException e) { System.out.println(e.getMessage()); }
-                break;
-            case "Robot":
-                System.out.println(ivSprite.getImage());
-                try {
-                    ivSprite.setImage(new Image(new FileInputStream("src/resources/tama_sprites/robot.png")));
-                } catch (FileNotFoundException e) { System.out.println(e.getMessage()); }
-                break;
-            }
-            //init rotation animation
-            backflipTransition = new RotateTransition();
-            backflipTransition.setDuration(javafx.util.Duration.seconds(1));
-            backflipTransition.setNode(ivSprite);
-            backflipTransition.setFromAngle(0);
-            backflipTransition.setToAngle(360);
-            backflipTransition.setCycleCount(1);
-        }
-    }
+
 
     @FXML
     public void action(ActionEvent event) throws IOException{
