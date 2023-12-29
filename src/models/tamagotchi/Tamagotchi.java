@@ -84,7 +84,6 @@ public abstract class Tamagotchi {
      * 
      */
     public Tamagotchi(String _nameString, Place place) {
-        System.out.println(MIN_STARTING_WEIGHT);
         this.currentHealth = MAX_HEALTH_POINTS;
         this.currentEnergy = MAX_ENERGY;
         this.currentCleanliness = MAX_CLEAN;
