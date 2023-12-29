@@ -33,6 +33,7 @@ public class TamagotchiDB extends AbstractDB {
                 + "mentalState INTEGER NOT NULL," // 11
                 + "currentPlace INTEGER NOT NULL REFERENCES place(id)," // 12
                 + "slotSaved INTEGER NOT NULL" // 13 -- 0 = pas affiché 
+                + "difficulty INTEGER NOT NULL" // 14
             + ")");
             connection.close();
         } catch (SQLException e) {
@@ -163,7 +164,7 @@ public class TamagotchiDB extends AbstractDB {
     public void add(Animal animal) {
         try (Connection connection = this.loadConnection();) {
             freeSlot(1);
-            PreparedStatement statement = connection.prepareStatement("INSERT INTO tamagotchi (name, dateBirth, lastTimeChanged, health, energy, satiety, weightT, cleanliness, mentalState, animalType, currentPlace, slotSaved) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+            PreparedStatement statement = connection.prepareStatement("INSERT INTO tamagotchi (name, dateBirth, lastTimeChanged, health, energy, satiety, weightT, cleanliness, mentalState, animalType, currentPlace, slotSaved, difficulty) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
             statement.setString(1, animal.getName());
             statement.setTimestamp(2, Timestamp.valueOf(LocalDateTime.now()));
             statement.setTimestamp(3, Timestamp.valueOf(LocalDateTime.now()));
@@ -176,6 +177,7 @@ public class TamagotchiDB extends AbstractDB {
             statement.setString(10, animal.getClass().getSimpleName());
             statement.setInt(11, animal.getCurrentPlace().getId());
             statement.setInt(12, 1);
+            statement.setInt(13, animal.getOverallDifficulty());
             // TODO Slot pris + libération du slot si y'a
             statement.executeUpdate();
 

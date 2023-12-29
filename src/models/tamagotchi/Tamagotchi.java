@@ -26,6 +26,7 @@ public abstract class Tamagotchi {
     protected int energyDifficulty;
     protected int satietyDifficulty;
     protected final int rainDamage = 10;
+    protected int overallDifficulty = 1;
 
     //Gain
     protected final int healthGain = 20;
@@ -165,6 +166,10 @@ public abstract class Tamagotchi {
             energyDifficulty = 7;
             satietyDifficulty = 9;
         }   
+    }
+
+    public int getOverallDifficulty() {
+        return this.overallDifficulty;
     }
 
     public int getId() {
