@@ -155,7 +155,7 @@ public class NewTamaController extends AbstractController {
         testing.startRoutine();
         inGameController.initTamagotchi(testing);
         TamagotchiDB tamagotchiDB = new TamagotchiDB();
-        tamagotchiDB.add((Animal) testing);
+        tamagotchiDB.add((Animal) testing, 1);
     }
     
 
