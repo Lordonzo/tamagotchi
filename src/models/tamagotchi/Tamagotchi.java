@@ -491,5 +491,23 @@ public abstract class Tamagotchi {
         observer.propertyChange(new PropertyChangeEvent(this, "statsDisplay", null, null));
     }
 
+    protected void updateMentalState() {
+        int mental = getCurrentMental();
+        if(mental > 80){
+            this.setMentalState(MentalState.HAPPY);
+        }
+        else if(mental > 50){
+            this.setMentalState(MentalState.JOLLY);
+        }
+        else if(mental > 20){
+            this.setMentalState(MentalState.SAD);
+        }
+        else{
+            this.setMentalState(MentalState.DEPRESSED);
+        }
+    }
+
+    
+
     
 }

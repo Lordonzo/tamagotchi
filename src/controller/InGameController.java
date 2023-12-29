@@ -94,6 +94,8 @@ public class InGameController extends AbstractController implements PropertyChan
     @FXML
     private Text weatherText;
     @FXML
+    private Text weigthText;
+    @FXML
     private Button quitButton;
     @FXML
     private Button glossaireButton;
@@ -203,8 +205,9 @@ public class InGameController extends AbstractController implements PropertyChan
             stat2.setProgress((double)tamagotchi.getCurrentEnergy()/100);
             stat3.setProgress((double)tamagotchi.getCurrentCleaning()/100);
             stat4.setProgress((double)tamagotchi.getCurrentSatiety()/100);
-            updateWeatherText();
-            updateMental();
+            updateWeather();
+          //  updateMental();
+            //TODO enveler
         }
         catch(Exception e){
             e.printStackTrace();
@@ -227,8 +230,8 @@ public class InGameController extends AbstractController implements PropertyChan
         setPlaceName(currentPlaceText,tamagotchi.getCurrentPlace());
     }
     
-    public void updateMental(){
-        mentalText.setText(resourceBundle.getString(tamagotchi.getMentalState().name()));
+    public void updateMental(MentalState _newMentalState){
+        mentalText.setText(resourceBundle.getString(_newMentalState.name()));
     }
 
     public void setPlaceName(Object _object,Place place){
@@ -237,7 +240,7 @@ public class InGameController extends AbstractController implements PropertyChan
         else if(_object.getClass().getName().equals("javafx.scene.text.Text")) ((Text)_object).setText(resourceBundle.getString("location")+" : "+ room);
     }
 
-    public void updateWeatherText(){
+    public void updateWeather(){
         weatherText.setText(resourceBundle.getString(tamagotchi.getCurrentPlace().getWeather().name()));
     }
 
@@ -274,7 +277,7 @@ public class InGameController extends AbstractController implements PropertyChan
         System.out.println(evt.getPropertyName());
         try {
             if(evt.getPropertyName().equals("statsDisplay")){
-                statsDisplay();
+                statsDisplay();//TODO enlever
             }
             if(evt.getPropertyName().equals("die")){
                 afficherPaneDeMort((String)evt.getNewValue());
@@ -285,6 +288,29 @@ public class InGameController extends AbstractController implements PropertyChan
             if(evt.getPropertyName().equals("no")){
                 no();
             }
+            if(evt.getPropertyName().equals("updateStat1")){
+                updateStat1((int)evt.getNewValue());
+            }
+            if(evt.getPropertyName().equals("updateStat2")){
+                updateStat2((int)evt.getNewValue());
+            }
+            if(evt.getPropertyName().equals("updateStat3")){
+                updateStat3((int)evt.getNewValue());
+            }
+            if(evt.getPropertyName().equals("updateStat4")){
+                updateStat4((int)evt.getNewValue());
+            }
+            if(evt.getPropertyName().equals("updateWeather")){
+                updateWeather();
+            }
+            if(evt.getPropertyName().equals("updateMental")){
+                updateMental((MentalState)evt.getNewValue());
+
+            }
+            if(evt.getPropertyName().equals("updateWeigth")){
+                updateWeight((float)evt.getNewValue());
+                //TODO
+            }
         }
         catch (Exception e) {
         // TODO: handle exception
@@ -292,6 +318,23 @@ public class InGameController extends AbstractController implements PropertyChan
     }
 
 
+
+    private void updateWeight(float _newValue) {
+        weigthText.setText(resourceBundle.getString("weigth") +" : " +_newValue );
+    }
+
+    private void updateStat1(int _newValue) {
+        stat1.setProgress((double)_newValue/100);
+    }
+    private void updateStat2(int _newValue) {
+        stat2.setProgress((double)_newValue/100);
+    }
+    private void updateStat3(int _newValue) {
+        stat3.setProgress((double)_newValue/100);
+    }
+    private void updateStat4(int _newValue) {
+        stat4.setProgress((double)_newValue/100);
+    }
 
     @FXML
     public void action(ActionEvent event) throws IOException{
@@ -359,12 +402,6 @@ public class InGameController extends AbstractController implements PropertyChan
         //TODO
         if(tamagotchi.play()){
             //animation
-            /*backflipTransition.setDuration(javafx.util.Duration.millis(500)); 
-            backflipTransition.setCycleCount(5);
-            backflipTransition.setAutoReverse(true);
-            backflipTransition.play();
-            backflipTransition.setCycleCount(1);
-            backflipTransition.setAutoReverse(false);*/
             upAndDownTrasition.play();
         }
     }

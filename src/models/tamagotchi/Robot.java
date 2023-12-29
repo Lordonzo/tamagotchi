@@ -1,5 +1,6 @@
 package models.tamagotchi;
 
+import java.beans.PropertyChangeEvent;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 
@@ -10,7 +11,7 @@ import models.Status.MentalState;
 import models.Status.Weather;
 
 public class Robot extends Tamagotchi {
-    private float damageState = 0;
+    private float damageState = 0; //TODO USELESS
     private final int MIN_MEMORY = 100;
     private int currentMemory;
 
@@ -31,6 +32,9 @@ public class Robot extends Tamagotchi {
         
     }
 
+    public int getCurrentMemory() {
+        return currentMemory;
+    }
     /**
      * decrease the Robot health if the conditions are met
      * kill the animal if health <= 0
@@ -74,8 +78,7 @@ public class Robot extends Tamagotchi {
                 try{
                     do{
                         sleep(NB_SEC);
-                        decreaseStats(mentalDifficulty, cleaningDifficulty, energyDifficulty,satietyDifficulty); //TODO changer les valeurs 
-                        decreaseHealth(satietyDifficulty, cleaningDifficulty);
+                        decreaseStats(mentalDifficulty, cleaningDifficulty, energyDifficulty,satietyDifficulty);
                         if(DEBUG){
                             System.out.println("mean : " + mean());
                             System.out.println("currentCleaning :"+currentCleanliness);
@@ -86,8 +89,6 @@ public class Robot extends Tamagotchi {
                             System.out.println("Weather :" + currentPlace.getWeather().toString());
                             System.out.println("Counter : "+cnt);
                     }
-                        //Calling observer
-                        observer.propertyChange(null);
                         
                         //Weather_____________________
                         if(cnt == weatherCnt){
@@ -99,10 +100,33 @@ public class Robot extends Tamagotchi {
                         }
                         //____________________________
 
-                        //Electrocution_______________
+                        //Electrocution___________________________
                         ranningEvent(rainDamage,mentalDifficulty);
+                        //________________________________________
 
-                    } while(running.get());
+
+
+                        //increaseHealth__________________________
+                        increaseHealth();
+                        //________________________________________
+
+
+                        //________________________________________
+                        //MentalCanceled__________________________
+                        if(mentalCancel> 0){
+                            mentalCancel--;
+                        }
+                        //________________________________________
+                        //update Mental State_____________________
+                        updateMentalState();
+                        //________________________________________
+
+
+
+                        //Calling observer
+                        updateAllStats();                        
+
+                    } while(running.get() && !closeGame.get());
                 
                     
                 }
@@ -120,6 +144,15 @@ public class Robot extends Tamagotchi {
     @Override
     public void startSleep(){
         super.startSleep();
+    }
+
+    protected void updateAllStats(){
+        observer.propertyChange(new PropertyChangeEvent(this, "updateStat1", null, getCurrentHealth()));
+        observer.propertyChange(new PropertyChangeEvent(this, "updateStat2", null, getCurrentEnergy()));
+        observer.propertyChange(new PropertyChangeEvent(this, "updateStat3", null, getCurrentCleaning()));
+        observer.propertyChange(new PropertyChangeEvent(this, "updateStat4", null, getCurrentMemory()));
+        observer.propertyChange(new PropertyChangeEvent(this, "updateMental", null, getCurrentMental()));
+        observer.propertyChange(new PropertyChangeEvent(this, "updateWeight", null, getCurrentWeight()));
     }
 
 
