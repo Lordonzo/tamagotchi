@@ -199,7 +199,7 @@ public abstract class Tamagotchi {
     public int getCurrentHealth() {
         return currentHealth;
     }
-    public int getMentalState() {
+    public int getCurrentMental() {
         return this.currentMental;
     }
     public Place getCurrentPlace() {
@@ -207,6 +207,12 @@ public abstract class Tamagotchi {
     }
     public int getCurrentCleaning() {
         return this.currentCleanliness;
+    }
+    public void setMentalState(MentalState mentalState) {
+        this.mentalState = mentalState;
+    }
+    public MentalState getMentalState() {
+        return mentalState;
     }
 
     //THREAD__________________________________
@@ -306,6 +312,7 @@ public abstract class Tamagotchi {
     public void die(String _cause){
         System.out.println("L'animal est mort de : " +_cause);
         closeGame.set(true);
+        currentHealth = 0;
         observer.propertyChange(new PropertyChangeEvent(this, "die", null, null));
     }
 
@@ -328,8 +335,8 @@ public abstract class Tamagotchi {
 
         if(mean()<50){
             if(currentMental-_mental < 0) {
-                currentMental = 0;
                 currentHealth = 0;
+                currentMental = 0;
                 die("Suicide");
             }
             else currentMental-=_mental;

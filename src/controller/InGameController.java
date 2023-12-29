@@ -49,6 +49,7 @@ import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import models.Place;
 import models.Status.EPlace;
+import models.Status.MentalState;
 import models.database.PlaceDB;
 import models.database.TamagotchiDB;
 import models.tamagotchi.Animal;
@@ -103,13 +104,20 @@ public class InGameController extends AbstractController implements PropertyChan
     private AnchorPane backPane;
     @FXML
     private RotateTransition backflipTransition;
+    @FXML
+    private Text healthText;
+    @FXML
+    private Text energyText;
+    @FXML
+    private Text cleanlinessText;
+    @FXML
+    private Text satietyText;
 
 
    public void initTamagotchi(Tamagotchi _tamagotchi) {
         this.tamagotchi = _tamagotchi;
         updateAllText();
         statsDisplay();
-        updateWeatherText();
     }
 
     @Override
@@ -156,7 +164,11 @@ public class InGameController extends AbstractController implements PropertyChan
 
             //Localization
             resourceBundle = ResourceBundle.getBundle("resources/language/Text",Locale.FRENCH);
-            
+            //TODO changer en fonction des options
+            healthText.setText(resourceBundle.getString("health"));
+            energyText.setText(resourceBundle.getString("energy"));
+            cleanlinessText.setText(resourceBundle.getString("cleanliness"));
+            satietyText.setText(resourceBundle.getString("satiety"));
         }
     }
 
@@ -178,6 +190,7 @@ public class InGameController extends AbstractController implements PropertyChan
             stat3.setProgress((double)tamagotchi.getCurrentCleaning()/100);
             stat4.setProgress((double)tamagotchi.getCurrentSatiety()/100);
             updateWeatherText();
+            updateMental();
         }
         catch(Exception e){
             e.printStackTrace();
@@ -198,6 +211,25 @@ public class InGameController extends AbstractController implements PropertyChan
         setPlaceName(rightPlaceButton,tamagotchi.getCurrentPlace().getNextPlace());
         setPlaceName(leftPlaceButton,tamagotchi.getCurrentPlace().getPreviousPlace());
         setPlaceName(currentPlaceText,tamagotchi.getCurrentPlace());
+    }
+    
+    public void updateMental(){
+        String mental ="";
+        switch (tamagotchi.getMentalState()) {
+            case HAPPY:
+                mental = resourceBundle.getString("happy");
+                break;
+            case JOLLY:
+                mental = resourceBundle.getString("jolly");
+                break;
+            case SAD:
+                mental = resourceBundle.getString("sad");
+            case DEPRESSED:
+                mental = resourceBundle.getString("depressed");
+            default:
+                break;
+        }
+        mentalText.setText(mental);
     }
 
     public void setPlaceName(Object _button,Place place){
@@ -360,12 +392,12 @@ public class InGameController extends AbstractController implements PropertyChan
      */
     private void livingRoomAction(){
         actionButton.setDisable(true);
-        double random = new Random().nextInt(100,2000);
+        double random = new Random().nextInt(500,1500);
         backflipTransition.setDuration(javafx.util.Duration.millis(random));
         backflipTransition.play();
         sound = new Media(new File("src/resources/sound/goofy_ahh_backflipping.mp3").toURI().toString());
         mediaPlayer = new MediaPlayer(sound);
-        mediaPlayer.setRate((2000-random)/600);
+        mediaPlayer.setRate(((2000-random)/600));
         backflipTransition.setOnFinished(e -> enableAll());
         mediaPlayer.play();
     }

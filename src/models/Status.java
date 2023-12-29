@@ -6,7 +6,7 @@ public class Status {
     }
 
     public enum MentalState {
-        HAPPY, SAD, ANGRY,DEPRESSED
+        HAPPY, SAD,JOLLY,DEPRESSED
     }
 
     public enum Weather {

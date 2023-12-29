@@ -114,6 +114,12 @@ public abstract class Animal extends Tamagotchi {
                             sleepCancel--;
                         }
                         //________________________________________
+                        
+                        //update Mental State_____________________
+                        updateMentalState();
+                        //________________________________________
+
+
 
                         //Calling observer
                         observer.propertyChange(new PropertyChangeEvent(this,"statsDisplay",null,null));
@@ -156,7 +162,7 @@ public abstract class Animal extends Tamagotchi {
         observer.propertyChange(new PropertyChangeEvent(this, "statsDisplay", null,null));
     }
 
-    public void starve(){
+    private void starve(){
         if(currentSatiety < 20){      
             if(currentSatiety < 10){
                 decreaseHealth(10,0,0);
@@ -166,6 +172,22 @@ public abstract class Animal extends Tamagotchi {
                 decreaseHealth(5,0,0);
                 setCurrentWeight(currentWeight-(currentWeight/10));
             }
+        }
+    }
+
+    private void updateMentalState() {
+        int mental = getCurrentMental();
+        if(mental > 80){
+            this.setMentalState(MentalState.HAPPY);
+        }
+        else if(mental > 50){
+            this.setMentalState(MentalState.JOLLY);
+        }
+        else if(mental > 20){
+            this.setMentalState(MentalState.SAD);
+        }
+        else{
+            this.setMentalState(MentalState.DEPRESSED);
         }
     }
 
