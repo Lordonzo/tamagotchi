@@ -30,7 +30,7 @@
       <Button fx:id="leftPlaceButton" layoutX="261.0" layoutY="613.0" mnemonicParsing="false" onAction="#leftRoom" prefHeight="70.0" prefWidth="125.0" text="PièceB" textAlignment="CENTER" AnchorPane.leftAnchor="261.0" AnchorPane.rightAnchor="694.0" />
       <Button fx:id="quitButton" layoutX="943.0" layoutY="12.0" mnemonicParsing="false" onAction="#toMenu" prefHeight="45.0" prefWidth="125.0" text="Quitter" AnchorPane.leftAnchor="943.0" AnchorPane.rightAnchor="12.0" />
       <Button fx:id="glossaireButton" layoutX="989.0" layoutY="682.0" minWidth="100.0" mnemonicParsing="false" text="Glossaire" AnchorPane.bottomAnchor="13.0" AnchorPane.rightAnchor="13.0" />
-      <Label fx:id="idLabel" layoutX="508.0" layoutY="16.0" text="Nom" />
+      <Label fx:id="nameLabel" layoutX="508.0" layoutY="16.0" text="Nom" />
       <Text fx:id="currentPlaceText" layoutX="494.0" layoutY="440.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Pièce" wrappingWidth="274.0" AnchorPane.leftAnchor="494.0" AnchorPane.rightAnchor="312.0">
          <font>
             <Font size="24.0" />
@@ -41,7 +41,7 @@
       <Text fx:id="mentalText" layoutX="142.0" layoutY="142.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Happy" />
       <StackPane fx:id="spDeathPane" layoutX="313.0" layoutY="212.0" prefHeight="269.0" prefWidth="465.0" style="-fx-border-color: black; -fx-background-color: white;" visible="false">
          <children>
-            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Votre Tamagotchi est mort." StackPane.alignment="TOP_CENTER">
+            <Text fx:id="deathText" strokeType="OUTSIDE" strokeWidth="0.0" text="Votre Tamagotchi est mort." StackPane.alignment="TOP_CENTER">
                <StackPane.margin>
                   <Insets top="70.0" />
                </StackPane.margin>

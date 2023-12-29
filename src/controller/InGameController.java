@@ -80,7 +80,7 @@ public class InGameController extends AbstractController implements PropertyChan
     private ImageView ivSprite;
 
     @FXML
-    private Label idLabel;
+    private Label nameLabel;
 
     @FXML
     private Button rightPlaceButton;
@@ -112,12 +112,15 @@ public class InGameController extends AbstractController implements PropertyChan
     private Text cleanlinessText;
     @FXML
     private Text satietyText;
+    @FXML
+    private Text deathText;
 
 
    public void initTamagotchi(Tamagotchi _tamagotchi) {
         this.tamagotchi = _tamagotchi;
         updateAllText();
         statsDisplay();
+        nameLabel.setText(resourceBundle.getString("name") +" : "+ tamagotchi.getName());
     }
 
     @Override
@@ -163,12 +166,13 @@ public class InGameController extends AbstractController implements PropertyChan
             backflipTransition.setCycleCount(1);
 
             //Localization
-            resourceBundle = ResourceBundle.getBundle("resources/language/Text",Locale.FRENCH);
+            resourceBundle = ResourceBundle.getBundle("resources/language/Text",Locale.ENGLISH);
             //TODO changer en fonction des options
             healthText.setText(resourceBundle.getString("health"));
             energyText.setText(resourceBundle.getString("energy"));
             cleanlinessText.setText(resourceBundle.getString("cleanliness"));
             satietyText.setText(resourceBundle.getString("satiety"));
+            quitButton.setText(resourceBundle.getString("quit"));
         }
     }
 
@@ -310,16 +314,6 @@ public class InGameController extends AbstractController implements PropertyChan
         actionButton.setText(txt);
    }
 
-    public void setNameLabel(){
-        if(tamagotchi != null){
-            idLabel.setText("Nom : "+ tamagotchi.getName());
-        }
-        else{
-            //TODO FAIRE UN TRUC POUR LES ERREURS
-            System.out.println("Erreur du chargement du tamagotchi");
-        }
-    }
-
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
         System.out.println(evt.getPropertyName());
@@ -328,7 +322,7 @@ public class InGameController extends AbstractController implements PropertyChan
                 statsDisplay();
             }
             if(evt.getPropertyName().equals("die")){
-                afficherPaneDeMort();
+                afficherPaneDeMort((String)evt.getNewValue());
             }
             if(evt.getPropertyName().equals("enableButtons")){
                 enableAll();
@@ -415,9 +409,6 @@ public class InGameController extends AbstractController implements PropertyChan
         tamagotchi.eat();
     }
 
-    private void eee(){
-
-    }
     @FXML
     private void disableAll() {
         stat1.setDisable(true);
@@ -447,8 +438,17 @@ public class InGameController extends AbstractController implements PropertyChan
         }
         
 
-    public void afficherPaneDeMort() {
+    public void afficherPaneDeMort(String _cause) {
+        String deathMessage = "Votre tamagotchi est mort.";
+        System.out.println(_cause);
+        if(_cause.equals("Suicide")){
+            deathMessage = resourceBundle.getString("deathSuicide");
+        }
+        else if(_cause.equals("Mistreatement")){
+            deathMessage = resourceBundle.getString("deathMistreatement");
+        }
         spDeathPane.setVisible(true);
+        deathText.setText(deathMessage);
         disableAll();
     }
 

@@ -49,7 +49,7 @@ public abstract class Animal extends Tamagotchi {
             else currentHealth-=_cleaningLost;
         }
         if(currentHealth <= 0){
-            die("Mal traitance.");
+            die("Mistreatement");
         }
     }
 

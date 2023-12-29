@@ -135,10 +135,11 @@ public abstract class Tamagotchi {
      * 1 = easy
      * 2 = normal
      * 56 = godmode for debug
+     * 66 = mental testing
      * 3 or anything else is hard
      * @param _difficulty
      */
-    protected void setDifficulty(int _difficulty){
+    public void setDifficulty(int _difficulty){
         if(_difficulty==1){
             cleaningDifficulty = 2;
             satietyDifficulty = 2;
@@ -158,6 +159,12 @@ public abstract class Tamagotchi {
             mentalDifficulty = 0;
             energyDifficulty = 0;
             satietyDifficulty = 0;
+        }
+        else if(_difficulty == 66){
+            cleaningDifficulty = 20;
+            mentalDifficulty = 100;
+            energyDifficulty = 20;
+            satietyDifficulty = 20;
         }
         else{
             cleaningDifficulty = 5;
@@ -313,7 +320,7 @@ public abstract class Tamagotchi {
         System.out.println("L'animal est mort de : " +_cause);
         closeGame.set(true);
         currentHealth = 0;
-        observer.propertyChange(new PropertyChangeEvent(this, "die", null, null));
+        observer.propertyChange(new PropertyChangeEvent(this, "die", null, _cause));
     }
 
     /**
