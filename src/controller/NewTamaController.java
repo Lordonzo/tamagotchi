@@ -150,7 +150,7 @@ public class NewTamaController extends AbstractController {
          * TODO CHANGE, ONLY FOR TESTING
          */
         Tamagotchi testing = new Cat(tfName.getText(), 32, pController.getPlaces().get(1));
-        testing.setDifficulty(66);
+        testing.setDifficulty(2);
         testing.setObserver(inGameController);
         testing.startRoutine();
         inGameController.initTamagotchi(testing);

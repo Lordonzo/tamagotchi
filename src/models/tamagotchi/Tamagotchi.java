@@ -28,11 +28,11 @@ public abstract class Tamagotchi {
     protected final int rainDamage = 10;
 
     //Gain
-    protected final int healthGain = 20;
-    protected final int energyGain = 20;
-    protected final int cleaningGain = 10;
+    protected final int healthGain = 10;
+    protected final int energyGain = 5;
+    protected final int cleaningGain = 5;
     protected final int mentalGain = 20;
-    protected final int satietyGain = 20;
+    protected final int satietyGain = 5;
 
     
     protected int id;
@@ -372,7 +372,29 @@ public abstract class Tamagotchi {
 
     public void decreaseHealth(int _satietyLost,int _cleaningLost,int _energyLost){}//TODO
 
-    public void increaseHealth(){}//TODO
+    public void increaseHealth(){
+        if(currentHealth< 100){
+            if(currentSatiety > 80){
+                if(currentHealth+satietyGain >=100)
+                {
+                    currentHealth = 100;
+                    return;
+                }
+                else currentHealth+=satietyGain;
+                if(currentHealth+cleaningGain >=100)
+                {
+                    currentHealth = 100;
+                    return;
+                }
+                else currentHealth+=cleaningGain;
+                if(currentHealth+energyGain >=100)
+                {
+                    currentHealth = 100;
+                }
+                else currentHealth+=energyGain;
+            }
+        }
+    }//TODO
     /**
      * mean of stats
      * @return mean

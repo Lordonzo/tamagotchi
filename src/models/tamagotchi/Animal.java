@@ -48,6 +48,10 @@ public abstract class Animal extends Tamagotchi {
             if(currentHealth-_cleaningLost < 0) currentHealth = 0;
             else currentHealth-=_cleaningLost;
         }
+        if(currentEnergy <= 0){
+            if(currentHealth-_energyLost < 0) currentHealth = 0;
+            else currentHealth-=_energyLost;
+        }
         if(currentHealth <= 0){
             die("Mistreatement");
         }
@@ -103,9 +107,8 @@ public abstract class Animal extends Tamagotchi {
                         //________________________________________
 
 
-                        //cleaning________________________________
-                        //TODO cleaning damage
-
+                        //increaseHealth__________________________
+                        increaseHealth();
                         //________________________________________
 
 
