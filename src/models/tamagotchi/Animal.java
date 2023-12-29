@@ -25,8 +25,15 @@ public abstract class Animal extends Tamagotchi {
         setDifficulty(3);
     }
 
-    public Animal(int id, String nameString, LocalDateTime birDateTime, int currentHealth, int currentEnergy, float currentWeight, int currentCleanliness, int mentalState, Place place, int slotSaved, int currentSatiety) {
-        super(id, nameString, birDateTime, currentHealth, currentEnergy, currentWeight, currentCleanliness, mentalState, place, slotSaved);
+    //note de A : je teste des choses
+    public Animal(String _nameString, int difficulty, Place place) {
+        super(_nameString, difficulty, place);
+        this.mentalState = MentalState.HAPPY;
+    }
+
+    //modif par A : ajout difficulty
+    public Animal(int id, String nameString, LocalDateTime birDateTime, int currentHealth, int currentEnergy, float currentWeight, int currentCleanliness, int mentalState, Place place, int slotSaved, int currentSatiety, int difficulty) {
+        super(id, nameString, birDateTime, currentHealth, currentEnergy, currentWeight, currentCleanliness, mentalState, place, slotSaved, difficulty);
         this.currentSatiety = currentSatiety; // 7
     }
 
