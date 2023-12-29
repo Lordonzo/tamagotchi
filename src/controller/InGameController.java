@@ -94,7 +94,7 @@ public class InGameController extends AbstractController implements PropertyChan
     @FXML
     private Text weatherText;
     @FXML
-    private Text weigthText;
+    private Text weightText;
     @FXML
     private Button quitButton;
     @FXML
@@ -123,7 +123,7 @@ public class InGameController extends AbstractController implements PropertyChan
 
    public void initTamagotchi(Tamagotchi _tamagotchi) {
         this.tamagotchi = _tamagotchi;
-        updateAllText();
+        updatePlaceText();
         statsDisplay();
         nameLabel.setText(resourceBundle.getString("name") +" : "+ tamagotchi.getName());
     }
@@ -216,14 +216,14 @@ public class InGameController extends AbstractController implements PropertyChan
 
    public void rightPlace(ActionEvent actionEvent) throws IOException{
         tamagotchi.goToRightPlace();
-        updateAllText();
+        updatePlaceText();
     }
    public void leftRoom(ActionEvent actionEvent) throws IOException{
         tamagotchi.goToLeftPlace();
-        updateAllText();
+        updatePlaceText();
     }
 
-    public void updateAllText(){
+    public void updatePlaceText(){
         setActionButtonText();
         setPlaceName(rightPlaceButton,tamagotchi.getCurrentPlace().getNextPlace());
         setPlaceName(leftPlaceButton,tamagotchi.getCurrentPlace().getPreviousPlace());
@@ -274,7 +274,6 @@ public class InGameController extends AbstractController implements PropertyChan
 
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
-        System.out.println(evt.getPropertyName());
         try {
             if(evt.getPropertyName().equals("statsDisplay")){
                 statsDisplay();//TODO enlever
@@ -320,7 +319,8 @@ public class InGameController extends AbstractController implements PropertyChan
 
 
     private void updateWeight(float _newValue) {
-        weigthText.setText(resourceBundle.getString("weigth") +" : " +_newValue );
+        System.out.println("aaaaa");
+        weightText.setText(resourceBundle.getString("weigth") +" : " +_newValue );
     }
 
     private void updateStat1(int _newValue) {
@@ -447,7 +447,6 @@ public class InGameController extends AbstractController implements PropertyChan
 
     public void afficherPaneDeMort(String _cause) {
         String deathMessage = "Votre tamagotchi est mort.";
-        System.out.println(_cause);
         if(_cause.equals("Suicide")){
             deathMessage = resourceBundle.getString("deathSuicide");
         }

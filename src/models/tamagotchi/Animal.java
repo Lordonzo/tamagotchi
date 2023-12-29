@@ -2,6 +2,7 @@ package models.tamagotchi;
 
 import java.beans.PropertyChangeEvent;
 import java.time.LocalDateTime;
+import java.util.Random;
 
 import models.Place;
 import models.Status.MentalState;
@@ -17,12 +18,12 @@ public abstract class Animal extends Tamagotchi {
      * @param _weight
      * @param place
      */
-    public Animal(String _nameString, float _weight, Place place) {
-        super(_nameString,_weight, place);
-        this.mentalState = MentalState.HAPPY;
-
-        //TODO changer la difficulté
-        setDifficulty(3);
+    public Animal(String _nameString, Place place) {
+        super(_nameString, place);
+    }
+    protected Animal(String _nameString,Place place,float MIN_STARTING_WEIGHT,float MAX_STARTING_WEIGHT){
+        this(_nameString,place);
+        setCurrentWeight(new Random().nextFloat(MIN_STARTING_WEIGHT,MAX_STARTING_WEIGHT));
     }
 
     public Animal(int id, String nameString, LocalDateTime birDateTime, int currentHealth, int currentEnergy, float currentWeight, int currentCleanliness, int mentalState, Place place, int slotSaved, int currentSatiety) {

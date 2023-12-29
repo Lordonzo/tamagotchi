@@ -33,28 +33,6 @@ import javafx.scene.control.Alert.AlertType;
 
 public class NewTamaController extends AbstractController {
     private PlaceController pController = new PlaceController(true);
-    @FXML 
-    private void toNewOrLoad(ActionEvent actionEvent) throws IOException {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("../view/NewOrLoad.fxml"));
-        Pane root = (Pane) loader.load();
-        NewOrLoadController newOrLoadController = loader.getController();
-        newOrLoadController.setMusic(music);
-        Scene scene = (Scene) ((Node) actionEvent.getSource()).getScene();
-        scene.setRoot(root);
-    }
-
-    @FXML 
-    private void toInGame(ActionEvent actionEvent) throws IOException {
-
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("../view/InGame.fxml"));
-        Pane root = (Pane) loader.load();
-        InGameController inGameController = loader.getController();
-        inGameController.setMusic(music);
-
-        Scene scene = (Scene) ((Node) actionEvent.getSource()).getScene();
-        scene.setRoot(root);
-    }
-    
     @FXML
     private TextField tfName;
 
@@ -91,6 +69,28 @@ public class NewTamaController extends AbstractController {
     @FXML
     private ChoiceBox cbDifficulte;
     
+    @FXML 
+    private void toNewOrLoad(ActionEvent actionEvent) throws IOException {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("../view/NewOrLoad.fxml"));
+        Pane root = (Pane) loader.load();
+        NewOrLoadController newOrLoadController = loader.getController();
+        newOrLoadController.setMusic(music);
+        Scene scene = (Scene) ((Node) actionEvent.getSource()).getScene();
+        scene.setRoot(root);
+    }
+
+    @FXML 
+    private void toInGame(ActionEvent actionEvent) throws IOException {
+
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("../view/InGame.fxml"));
+        Pane root = (Pane) loader.load();
+        InGameController inGameController = loader.getController();
+        inGameController.setMusic(music);
+
+        Scene scene = (Scene) ((Node) actionEvent.getSource()).getScene();
+        scene.setRoot(root);
+    }
+
 
     @FXML
     private void onVerifClick() {
@@ -140,22 +140,26 @@ public class NewTamaController extends AbstractController {
 
     @FXML
     private void onOuiClick(ActionEvent actionEvent) throws IOException {
+        Tamagotchi testing = new Cat(tfName.getText(),  pController.getPlaces().get(1));
+        testing.setDifficulty(2);
+        TamagotchiDB tamagotchiDB = new TamagotchiDB();
+        tamagotchiDB.add((Animal) testing);
         FXMLLoader loader = new FXMLLoader(getClass().getResource("../view/InGame.fxml"));
         Pane root = (Pane) loader.load();
-        InGameController inGameController = loader.getController();
-        inGameController.setMusic(music);
-        Scene scene = (Scene) ((Node) actionEvent.getSource()).getScene();
-        scene.setRoot(root);
         /*
          * TODO CHANGE, ONLY FOR TESTING
          */
-        Tamagotchi testing = new Cat(tfName.getText(), 32, pController.getPlaces().get(1));
-        testing.setDifficulty(2);
+
+        InGameController inGameController = loader.getController();
+        inGameController.setMusic(music);
         testing.setObserver(inGameController);
         testing.startRoutine();
         inGameController.initTamagotchi(testing);
-        TamagotchiDB tamagotchiDB = new TamagotchiDB();
-        tamagotchiDB.add((Animal) testing);
+        Scene scene = (Scene) ((Node) actionEvent.getSource()).getScene();
+        scene.setRoot(root);
+
+        
+        
     }
     
 
@@ -175,7 +179,7 @@ public class NewTamaController extends AbstractController {
     
         switch (radioButton.getId()) {
             case "rbChat":
-                typeSelectionne = "Chat";
+                typeSelectionne = "Chat"; //Resource Bundle
                 break;
             case "rbChien":
                 typeSelectionne = "Chien";
@@ -193,8 +197,13 @@ public class NewTamaController extends AbstractController {
         return typeSelectionne;
     }
 
+    private Tamagotchi createTamagotchi(){
+        String name = tfName.getText();
+        float weight = 10;
+        return null;
+    }
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        cbDifficulte.getItems().addAll("Facile", "Normal", "Difficile");
+        cbDifficulte.getItems().addAll("Facile", "Normal", "Difficile"); //TODO resourcesBundle
     }
 }

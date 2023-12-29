@@ -3,6 +3,7 @@ package models.tamagotchi;
 import java.beans.PropertyChangeEvent;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.util.Random;
 
 import javafx.scene.image.Image;
 import models.Place;
@@ -22,10 +23,10 @@ public class Robot extends Tamagotchi {
      * @param _weight
      * @param place
      */
-    public Robot(String _nameString,float _weight, Place place){
-        super(_nameString,_weight, place);
+    public Robot(String _nameString,Place place){
+        super(_nameString,place);
         this.currentMemory = 0;
-        this.mentalState = MentalState.HAPPY;
+        setCurrentWeight(2000);
         try {
             image = new Image(new FileInputStream("resources/tama_sprites/robot.png"));
         } catch (FileNotFoundException e) {}

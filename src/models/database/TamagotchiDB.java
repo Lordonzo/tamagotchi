@@ -71,7 +71,9 @@ public class TamagotchiDB extends AbstractDB {
             if (result.getString(1) == null) return null;
             switch (result.getString(11)) {
                 case "Dog" :
-                    Tamagotchi dog = new Dog(result.getString("name"), result.getFloat("weightT"), allPlaces.get(result.getInt("currentPlace")+1));
+                    Tamagotchi dog = new Dog(result.getString("name"), allPlaces.get(result.getInt("currentPlace")+1));
+                    dog.setCurrentWeight(result.getFloat("weightT"));
+                    //TODO other Tamagotchi constructor
                     return dog;
                 case "Cat" :
             }

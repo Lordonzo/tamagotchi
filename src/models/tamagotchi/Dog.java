@@ -3,6 +3,7 @@ package models.tamagotchi;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.time.LocalDateTime;
+import java.util.Random;
 
 import javafx.scene.image.Image;
 import models.Place;
@@ -13,11 +14,10 @@ public class Dog extends Animal {
     /**
      * init the dog image and call Animal constructor
      * @param _nameString
-     * @param _weight
      * @param place
      */
-    public Dog(String _nameString, float _weight, Place place) {
-        super(_nameString, _weight, place);
+    public Dog(String _nameString, Place place) {
+        super(_nameString, place,4,15);
         try {
             image = new Image(new FileInputStream("resources/tama_sprites/dog.png"));
         } catch (FileNotFoundException e) {}

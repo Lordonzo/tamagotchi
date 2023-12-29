@@ -48,7 +48,7 @@ public abstract class Tamagotchi {
     protected LocalDateTime birthDate;
 
     
-    protected float currentWeight;
+    protected float currentWeight = 0;
     protected int currentCleanliness;
 
     protected MentalState mentalState;
@@ -83,7 +83,8 @@ public abstract class Tamagotchi {
     /**
      * 
      */
-    public Tamagotchi(String _nameString, float _currentWeight, Place place) {
+    public Tamagotchi(String _nameString, Place place) {
+        System.out.println(MIN_STARTING_WEIGHT);
         this.currentHealth = MAX_HEALTH_POINTS;
         this.currentEnergy = MAX_ENERGY;
         this.currentCleanliness = MAX_CLEAN;
@@ -93,11 +94,12 @@ public abstract class Tamagotchi {
         this.state = PhysicalState.IN_SHAPE;
         
         this.name = _nameString;
-        this.currentWeight = _currentWeight;
         this.currentPlace = place;
         //Weather random
         weatherHandle();
+        
     }
+
 
     /**
      * 
@@ -140,7 +142,6 @@ public abstract class Tamagotchi {
     public int getNB_SEC(){
         return NB_SEC;
     }
-
 
     /**
      * set the difficulty of the game
@@ -385,7 +386,7 @@ public abstract class Tamagotchi {
 
     }
 
-    public void decreaseHealth(int _satietyLost,int _cleaningLost,int _energyLost){}//TODO
+    public void decreaseHealth(int _satietyLost,int _cleaningLost,int _energyLost){}//TODO changer car pas la meme pour le robot
 
     public void increaseHealth(){
         if(currentHealth< 100){

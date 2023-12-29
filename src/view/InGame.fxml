@@ -56,6 +56,6 @@
             </Button>
          </children>
       </StackPane>
-      <Text fx:id="weighText" layoutX="502.0" layoutY="62.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Poids" />
+      <Text fx:id="weightText" layoutX="502.0" layoutY="62.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Poids" />
    </children>
 </AnchorPane>
