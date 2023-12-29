@@ -4,6 +4,7 @@ import java.beans.PropertyChangeEvent;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.util.Random;
+import java.time.LocalDateTime;
 
 import javafx.scene.image.Image;
 import models.Place;
@@ -15,6 +16,11 @@ public class Robot extends Tamagotchi {
     private float damageState = 0; //TODO USELESS
     private final int MIN_MEMORY = 100;
     private int currentMemory;
+    //début ajouté par A
+    private final int MIN_BATTERY = 100;
+    private int currentBattery;
+    private int difficulty;
+    //fin ajouté par A
 
     /**
      * init the robot and the adequate game routine
@@ -33,9 +39,28 @@ public class Robot extends Tamagotchi {
         
     }
 
+    //note de A : je teste des trucs
+    public Robot(String _nameString, int difficulty, Place place) {
+        super(_nameString, difficulty, place);
+        try {
+            image = new Image(new FileInputStream("resources/tama_sprites/robot.png"));
+        } catch (FileNotFoundException e) {}
+    }
+
+    //ajouté par A
+    public Robot(int id, String nameString, LocalDateTime birDateTime, int currentHealth, int currentBattery, float currentWeight, int currentCleanliness, int mentalState, Place place, int slotSaved, int currentMemory, int difficulty) {
+        super(id, nameString, birDateTime, currentHealth, currentBattery, currentWeight, currentCleanliness, mentalState, place, slotSaved, currentMemory, difficulty);
+    }
+
     public int getCurrentMemory() {
         return currentMemory;
     }
+
+    //ajouté par A
+    public int getCurrentBattery() {
+        return currentBattery;
+    }
+
     /**
      * decrease the Robot health if the conditions are met
      * kill the animal if health <= 0
