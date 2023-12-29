@@ -246,6 +246,10 @@ public abstract class Tamagotchi {
         initRoutine();
         routine.start();
     }
+
+    protected Tamagotchi getTamagotchi(){
+        return this;
+    }
     //________________________________________
     /**
      * increase currentEnergy
@@ -259,7 +263,7 @@ public abstract class Tamagotchi {
                 public void run() {
                     while(currentEnergy < 100 && !closeGame.get() && sleepRunning.get()){
                         currentEnergy+=energyGain;
-                        observer.propertyChange(new PropertyChangeEvent(this, "statsDisplay", null, null));
+                        observer.propertyChange(new PropertyChangeEvent(getTamagotchi(), "statsDisplay", null, null));
                         if(currentEnergy > 100){
                             currentEnergy = 100;
                             break;

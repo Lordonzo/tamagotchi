@@ -69,9 +69,6 @@ public abstract class Animal extends Tamagotchi {
         return (currentCleanliness+currentHealth+currentSatiety)/3;
     }
 
-    public Animal getAnimal(){
-        return this;
-    }
 
     @Override
     protected void initRoutine(){
@@ -134,7 +131,7 @@ public abstract class Animal extends Tamagotchi {
 
 
                         //Calling observer
-                        observer.propertyChange(new PropertyChangeEvent(getAnimal(),"statsDisplay",null,null));
+                        observer.propertyChange(new PropertyChangeEvent(getTamagotchi(),"statsDisplay",null,null));
                         
 
                     } while(running.get() && !closeGame.get());

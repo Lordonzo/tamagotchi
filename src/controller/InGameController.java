@@ -20,6 +20,7 @@ import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 
 import javafx.animation.RotateTransition;
+import javafx.animation.TranslateTransition;
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.event.*;
@@ -105,6 +106,8 @@ public class InGameController extends AbstractController implements PropertyChan
     @FXML
     private RotateTransition backflipTransition;
     @FXML
+    private TranslateTransition upAndDownTrasition;
+    @FXML
     private Text healthText;
     @FXML
     private Text energyText;
@@ -157,13 +160,20 @@ public class InGameController extends AbstractController implements PropertyChan
                 } catch (FileNotFoundException e) { System.out.println(e.getMessage()); }
                 break;
             }
-            //init rotation animation
+            //init livingroom action animation
             backflipTransition = new RotateTransition();
             backflipTransition.setDuration(javafx.util.Duration.seconds(1));
             backflipTransition.setNode(ivSprite);
             backflipTransition.setFromAngle(0);
             backflipTransition.setToAngle(360);
             backflipTransition.setCycleCount(1);
+            //init garden action animation
+            upAndDownTrasition = new TranslateTransition();
+            upAndDownTrasition.setDuration(javafx.util.Duration.millis(250));
+            upAndDownTrasition.setNode(ivSprite);
+            upAndDownTrasition.setByY(-50);
+            upAndDownTrasition.setCycleCount(4);
+            upAndDownTrasition.setAutoReverse(true);
 
             //Localization
             resourceBundle = ResourceBundle.getBundle("resources/language/Text",Locale.FRENCH);
@@ -334,6 +344,7 @@ public class InGameController extends AbstractController implements PropertyChan
      * DO A BACKFLIP
      */
     private void livingRoomAction(){
+        //play a random duration backflip animation
         actionButton.setDisable(true);
         double random = new Random().nextInt(500,1500);
         backflipTransition.setDuration(javafx.util.Duration.millis(random));
@@ -348,12 +359,13 @@ public class InGameController extends AbstractController implements PropertyChan
         //TODO
         if(tamagotchi.play()){
             //animation
-            backflipTransition.setDuration(javafx.util.Duration.millis(500)); 
+            /*backflipTransition.setDuration(javafx.util.Duration.millis(500)); 
             backflipTransition.setCycleCount(5);
             backflipTransition.setAutoReverse(true);
             backflipTransition.play();
             backflipTransition.setCycleCount(1);
-            backflipTransition.setAutoReverse(false);
+            backflipTransition.setAutoReverse(false);*/
+            upAndDownTrasition.play();
         }
     }
     private void toiletAction(){
