@@ -77,14 +77,14 @@ public class TamagotchiDB extends AbstractDB {
                     //TODO other Tamagotchi constructor
                     return dog;
                 case "Cat" : //début ajouté par A
-                    Tamagotchi cat = new Cat(result.getString("name"), result.getFloat("weightT"), allPlaces.get(result.getInt("currentPlace")+1));
-                    return cat;
+                   // Tamagotchi cat = new Cat(result.getString("name"), result.getFloat("weightT"), allPlaces.get(result.getInt("currentPlace")+1));
+                   // return cat;
                 case "Rabbit":
-                    Tamagotchi rabbit = new Rabbit(result.getString("name"), result.getFloat("weightT"), allPlaces.get(result.getInt("currentPlace")+1));
-                    return rabbit;
+                    //Tamagotchi rabbit = new Rabbit(result.getString("name"), result.getFloat("weightT"), allPlaces.get(result.getInt("currentPlace")+1));
+                    //return rabbit;
                 case "Robot":
-                    Tamagotchi robot = new Robot(result.getString("name"), result.getFloat("weightT"), allPlaces.get(result.getInt("currentPlace")+1));
-                    return robot;
+                    //Tamagotchi robot = new Robot(result.getString("name"), result.getFloat("weightT"), allPlaces.get(result.getInt("currentPlace")+1));
+                    //return robot;
             } //fin ajouté par A
             connection.close();
         } catch (SQLException e) {

@@ -23,13 +23,13 @@ public class Dog extends Animal {
         } catch (FileNotFoundException e) {}
     }
 
-    //note de A : je teste des trucs
+    /*//note de A : je teste des trucs
     public Dog(String _nameString, int difficulty, Place place) {
         super(_nameString, difficulty, place);
         try {
             image = new Image(new FileInputStream("resources/tama_sprites/dog.png"));
         } catch (FileNotFoundException e) {}
-    }
+    }*/
 
     //modif par A : ajout difficulty
     //int, String, LocalDateTime, int, int, int, float, int, int, Place, int

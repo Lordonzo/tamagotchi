@@ -39,13 +39,13 @@ public class Robot extends Tamagotchi {
         
     }
 
-    //note de A : je teste des trucs
+   /* //note de A : je teste des trucs
     public Robot(String _nameString, int difficulty, Place place) {
         super(_nameString, difficulty, place);
         try {
             image = new Image(new FileInputStream("resources/tama_sprites/robot.png"));
         } catch (FileNotFoundException e) {}
-    }
+    }*/
 
     //ajouté par A
     public Robot(int id, String nameString, LocalDateTime birDateTime, int currentHealth, int currentBattery, float currentWeight, int currentCleanliness, int mentalState, Place place, int slotSaved, int currentMemory, int difficulty) {

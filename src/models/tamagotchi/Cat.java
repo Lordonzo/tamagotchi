@@ -23,13 +23,13 @@ public class Cat extends Animal {
         } catch (FileNotFoundException e) {}
     }
 
-    //note de A : je teste des trucs
+    /*//note de A : je teste des trucs
     public Cat(String _nameString, int difficulty, Place place) {
         super(_nameString, difficulty, place);
         try {
             image = new Image(new FileInputStream("resources/tama_sprites/cat.png"));
         } catch (FileNotFoundException e) {}
-    }
+    }*/
 
     //modif par A : ajout difficulty
     public Cat(int id, String nameString, LocalDateTime birDateTime, int currentHealth, int currentEnergy, float currentWeight, int currentCleanliness, int mentalState, Place place, int slotSaved, int currentSatiety, int difficulty) {

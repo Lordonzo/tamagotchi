@@ -146,7 +146,7 @@ public class NewTamaController extends AbstractController {
         Tamagotchi testing = new Cat(tfName.getText(),  pController.getPlaces().get(1));
         testing.setDifficulty(2);
         TamagotchiDB tamagotchiDB = new TamagotchiDB();
-        tamagotchiDB.add((Animal) testing);
+        tamagotchiDB.add((Animal) testing,1);//TODO numéro du slot
         FXMLLoader loader = new FXMLLoader(getClass().getResource("../view/InGame.fxml"));
         Pane root = (Pane) loader.load();
         /*
@@ -256,24 +256,11 @@ public class NewTamaController extends AbstractController {
         }
     }
 
-    private int mapDifficulte(String difficulte) {
-        switch (difficulte) {
-            case "Facile":
-                return 1;
-            case "Normal":
-                return 2;
-            case "Difficile":
-                return 3;
-            default:
-                // Gestion d'un cas par défaut si nécessaire
-                return 0; // Valeur par défaut
-        }
-    }
-
     private Tamagotchi createTamagotchi(){
         String name = tfName.getText();
         float weight = 10;
         return null;
+        //TODO
     }
     @Override
     public void initialize(URL location, ResourceBundle resources) {
