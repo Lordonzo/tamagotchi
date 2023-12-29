@@ -29,10 +29,10 @@ public abstract class Tamagotchi {
 
     //Gain
     protected final int healthGain = 10;
-    protected final int energyGain = 5;
-    protected final int cleaningGain = 5;
+    protected final int energyGain = 15;
+    protected final int cleaningGain = 10;
     protected final int mentalGain = 20;
-    protected final int satietyGain = 5;
+    protected final int satietyGain = 15;
 
     
     protected int id;
@@ -65,6 +65,7 @@ public abstract class Tamagotchi {
 
     //To call some event after x loop
     protected int cnt;
+    protected int mentalCancel = 0;
 
     protected PropertyChangeListener observer;
     protected Image image;
@@ -121,8 +122,19 @@ public abstract class Tamagotchi {
         this.currentMental = mentalState; // 11
     }
     
-    protected void play() {
-        //TODO increase mental garden
+    public boolean play() {
+        if(mentalCancel == 0){
+            if(mentalGain+currentMental > 100)currentMental = 100;
+            else currentMental+=mentalGain;
+            observer.propertyChange(new PropertyChangeEvent(this, "statsDisplay", null, null));
+            mentalCancel = new Random().nextInt(4,8);
+            return true;
+        }
+        else{
+            observer.propertyChange(new PropertyChangeEvent(this, "no", null, null));
+            return false;
+        }
+        
     }
 
     public int getNB_SEC(){
@@ -238,7 +250,6 @@ public abstract class Tamagotchi {
     /**
      * increase currentEnergy
      */
-    //TODO arreter quand on quitte le jeu
     public void startSleep(){
         try {
             sleepRunning.set(true);
@@ -375,23 +386,23 @@ public abstract class Tamagotchi {
     public void increaseHealth(){
         if(currentHealth< 100){
             if(currentSatiety > 80){
-                if(currentHealth+satietyGain >=100)
+                if(currentHealth+healthGain >=100)
                 {
                     currentHealth = 100;
                     return;
                 }
-                else currentHealth+=satietyGain;
-                if(currentHealth+cleaningGain >=100)
+                else currentHealth+=healthGain;
+                if(currentHealth+healthGain >=100)
                 {
                     currentHealth = 100;
                     return;
                 }
-                else currentHealth+=cleaningGain;
-                if(currentHealth+energyGain >=100)
+                else currentHealth+=healthGain;
+                if(currentHealth+healthGain >=100)
                 {
                     currentHealth = 100;
                 }
-                else currentHealth+=energyGain;
+                else currentHealth+=healthGain;
             }
         }
     }//TODO

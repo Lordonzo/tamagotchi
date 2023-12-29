@@ -293,19 +293,19 @@ public class InGameController extends AbstractController implements PropertyChan
         String txt = "";
         switch (tamagotchi.getCurrentPlace().getCurrentPlace()) {
             case BEDROOM:
-                txt = "Dormir";            
+                txt = resourceBundle.getString("sleep");           
                 break;
             case LIVINGROOM:
-                txt = "Youpi !!"; //TODO changer j'ai pas d'idée
+                txt = resourceBundle.getString("yipee");
                 break;
             case TOILET:
-                txt = "Nettoyer";
+                txt = resourceBundle.getString("clean");
                 break;
             case GARDEN:
-                txt = "Jouer";
+                txt = resourceBundle.getString("play");
                 break;
             case KITCHEN:
-                txt = "Manger";
+                txt = resourceBundle.getString("eat");
                 break;
             default:
                 //TODO error
@@ -326,6 +326,9 @@ public class InGameController extends AbstractController implements PropertyChan
             }
             if(evt.getPropertyName().equals("enableButtons")){
                 enableAll();
+            }
+            if(evt.getPropertyName().equals("no")){
+                no();
             }
         }
         catch (Exception e) {
@@ -367,6 +370,7 @@ public class InGameController extends AbstractController implements PropertyChan
             {
                 if((((Animal)tamagotchi).getSleepCancel() != 0)){
                     //don't start the sleep routine
+                    no();
                     return;
                 }
             }
@@ -397,6 +401,15 @@ public class InGameController extends AbstractController implements PropertyChan
     }
     private void gardenAction(){
         //TODO
+        if(tamagotchi.play()){
+            //animation
+            backflipTransition.setDuration(javafx.util.Duration.millis(500)); 
+            backflipTransition.setCycleCount(5);
+            backflipTransition.setAutoReverse(true);
+            backflipTransition.play();
+            backflipTransition.setCycleCount(1);
+            backflipTransition.setAutoReverse(false);
+        }
     }
     private void toiletAction(){
         //TODO clean sound
@@ -450,6 +463,12 @@ public class InGameController extends AbstractController implements PropertyChan
         spDeathPane.setVisible(true);
         deathText.setText(deathMessage);
         disableAll();
+    }
+
+    public void no(){
+        sound = new Media(new File("src/resources/sound/goofy_ahh_no.mp3").toURI().toString());
+        mediaPlayer = new MediaPlayer(sound);
+        mediaPlayer.play();
     }
 
 }

@@ -117,7 +117,11 @@ public abstract class Animal extends Tamagotchi {
                             sleepCancel--;
                         }
                         //________________________________________
-                        
+                        //MentalCanceled__________________________
+                        if(mentalCancel> 0){
+                            mentalCancel--;
+                        }
+                        //________________________________________
                         //update Mental State_____________________
                         updateMentalState();
                         //________________________________________
