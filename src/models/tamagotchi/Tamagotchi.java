@@ -337,7 +337,7 @@ public abstract class Tamagotchi {
         if(currentCleanliness-_cleaning < 0) currentCleanliness = 0;
         else currentCleanliness-=_cleaning;
 
-        if(currentSatiety-_satiety < 0) currentSatiety = 0;
+        if(currentSatiety-_satiety < 0)currentSatiety = 0;
         else currentSatiety-=_satiety;
 
         if(mean()<50){
@@ -348,10 +348,29 @@ public abstract class Tamagotchi {
             }
             else currentMental-=_mental;
         }
+        //Damages
+        if(currentHealth !=0){
+            int satiety = 0;
+            int clean = 0;
+            int energy = 0;
+            if(currentSatiety < 20){
+                if(currentSatiety < 10) satiety = 10;
+                else satiety = 5;
+            }
+            if(currentSatiety < 20){
+                if(currentSatiety < 10) clean=10;
+                else clean = 5;
+            }
+            if(energy < 20){
+                if(currentEnergy < 10) energy= 10;
+                else energy = 5;
+            }
+            decreaseHealth(satiety,clean,energy);
+        }
 
     }
 
-    public void decreaseHealth(){}//TODO
+    public void decreaseHealth(int _satietyLost,int _cleaningLost,int _energyLost){}//TODO
 
     public void increaseHealth(){}//TODO
     /**

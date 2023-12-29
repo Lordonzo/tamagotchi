@@ -164,14 +164,7 @@ public abstract class Animal extends Tamagotchi {
 
     private void starve(){
         if(currentSatiety < 20){      
-            if(currentSatiety < 10){
-                decreaseHealth(10,0,0);
-                setCurrentWeight(currentWeight-(currentWeight/10));
-            }
-            else{
-                decreaseHealth(5,0,0);
-                setCurrentWeight(currentWeight-(currentWeight/10));
-            }
+            setCurrentWeight(currentWeight-(currentWeight/10));
         }
     }
 
