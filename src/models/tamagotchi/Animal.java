@@ -61,11 +61,16 @@ public abstract class Animal extends Tamagotchi {
     
 
     /**
-     * rewrite
+     * 
      * @return mean
      */
+    @Override
     public float mean(){
         return (currentCleanliness+currentHealth+currentSatiety)/3;
+    }
+
+    public Animal getAnimal(){
+        return this;
     }
 
     @Override
@@ -129,7 +134,7 @@ public abstract class Animal extends Tamagotchi {
 
 
                         //Calling observer
-                        observer.propertyChange(new PropertyChangeEvent(this,"statsDisplay",null,null));
+                        observer.propertyChange(new PropertyChangeEvent(getAnimal(),"statsDisplay",null,null));
                         
 
                     } while(running.get() && !closeGame.get());

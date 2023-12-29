@@ -166,7 +166,7 @@ public class InGameController extends AbstractController implements PropertyChan
             backflipTransition.setCycleCount(1);
 
             //Localization
-            resourceBundle = ResourceBundle.getBundle("resources/language/Text",Locale.ENGLISH);
+            resourceBundle = ResourceBundle.getBundle("resources/language/Text",Locale.FRENCH);
             //TODO changer en fonction des options
             healthText.setText(resourceBundle.getString("health"));
             energyText.setText(resourceBundle.getString("energy"));
@@ -218,72 +218,17 @@ public class InGameController extends AbstractController implements PropertyChan
     }
     
     public void updateMental(){
-        String mental ="";
-        switch (tamagotchi.getMentalState()) {
-            case HAPPY:
-                mental = resourceBundle.getString("happy");
-                break;
-            case JOLLY:
-                mental = resourceBundle.getString("jolly");
-                break;
-            case SAD:
-                mental = resourceBundle.getString("sad");
-            case DEPRESSED:
-                mental = resourceBundle.getString("depressed");
-            default:
-                break;
-        }
-        mentalText.setText(mental);
+        mentalText.setText(resourceBundle.getString(tamagotchi.getMentalState().name()));
     }
 
-    public void setPlaceName(Object _button,Place place){
-        String current ="";
-        switch (place.getCurrentPlace()) {
-            case BEDROOM:
-                current += resourceBundle.getString("bedroom");         
-                break;
-            case LIVINGROOM:
-                current += resourceBundle.getString("livingroom");
-                break;
-            case TOILET:
-                current += resourceBundle.getString("toilet");
-                break;
-            case GARDEN:
-                current += resourceBundle.getString("garden");
-                break;
-            case KITCHEN:
-                current += resourceBundle.getString("kitchen");
-                break;
-            default:
-                //TODO error
-                break;
-        }
-        if(_button.getClass().getName().equals("javafx.scene.control.Button"))((Button)_button).setText(current);
-        else if(_button.getClass().getName().equals("javafx.scene.text.Text")) ((Text)_button).setText(resourceBundle.getString("location")+" : "+current);
+    public void setPlaceName(Object _object,Place place){
+        String room = resourceBundle.getString(place.getCurrentPlace().name());
+        if(_object.getClass().getName().equals("javafx.scene.control.Button"))((Button)_object).setText(room);
+        else if(_object.getClass().getName().equals("javafx.scene.text.Text")) ((Text)_object).setText(resourceBundle.getString("location")+" : "+ room);
     }
 
     public void updateWeatherText(){
-        String txt = "";
-        switch (tamagotchi.getCurrentPlace().getWeather()) {
-            case SUNNY:
-                txt = resourceBundle.getString("sunny");
-                break;
-            case RAINY:
-                txt = resourceBundle.getString("rainy");
-                break;
-            case CLOUDY:
-                txt = resourceBundle.getString("cloudy");
-                break;
-            case SNOWY:
-                txt = resourceBundle.getString("snowy");
-                break;    
-            case THUNDER:
-                txt = resourceBundle.getString("thunder");
-                break;
-            default:
-                break;
-        }
-        weatherText.setText(txt);
+        weatherText.setText(resourceBundle.getString(tamagotchi.getCurrentPlace().getWeather().name()));
     }
 
     /**
