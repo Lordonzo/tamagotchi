@@ -173,7 +173,7 @@ public class TamagotchiDB extends AbstractDB {
             statement.setInt(6, animal.getCurrentSatiety());
             statement.setFloat(7, animal.getCurrentWeight());
             statement.setInt(8, animal.getCurrentCleaning());
-            statement.setInt(9, animal.getMentalState());
+            statement.setInt(9, animal.getCurrentMental());
             statement.setString(10, animal.getClass().getSimpleName());
             statement.setInt(11, animal.getCurrentPlace().getId());
             statement.setInt(12, 1);

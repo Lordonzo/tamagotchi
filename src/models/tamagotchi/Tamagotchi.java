@@ -29,11 +29,11 @@ public abstract class Tamagotchi {
     protected int overallDifficulty = 1;
 
     //Gain
-    protected final int healthGain = 20;
-    protected final int energyGain = 20;
+    protected final int healthGain = 10;
+    protected final int energyGain = 15;
     protected final int cleaningGain = 10;
     protected final int mentalGain = 20;
-    protected final int satietyGain = 20;
+    protected final int satietyGain = 15;
 
     
     protected int id;
@@ -66,6 +66,7 @@ public abstract class Tamagotchi {
 
     //To call some event after x loop
     protected int cnt;
+    protected int mentalCancel = 0;
 
     protected PropertyChangeListener observer;
     protected Image image;
@@ -122,8 +123,19 @@ public abstract class Tamagotchi {
         this.currentMental = mentalState; // 11
     }
     
-    protected void play() {
-        //TODO increase mental garden
+    public boolean play() {
+        if(mentalCancel == 0){
+            if(mentalGain+currentMental > 100)currentMental = 100;
+            else currentMental+=mentalGain;
+            observer.propertyChange(new PropertyChangeEvent(this, "statsDisplay", null, null));
+            mentalCancel = new Random().nextInt(4,8);
+            return true;
+        }
+        else{
+            observer.propertyChange(new PropertyChangeEvent(this, "no", null, null));
+            return false;
+        }
+        
     }
 
     public int getNB_SEC(){
@@ -136,10 +148,11 @@ public abstract class Tamagotchi {
      * 1 = easy
      * 2 = normal
      * 56 = godmode for debug
+     * 66 = mental testing
      * 3 or anything else is hard
      * @param _difficulty
      */
-    protected void setDifficulty(int _difficulty){
+    public void setDifficulty(int _difficulty){
         if(_difficulty==1){
             cleaningDifficulty = 2;
             satietyDifficulty = 2;
@@ -159,6 +172,12 @@ public abstract class Tamagotchi {
             mentalDifficulty = 0;
             energyDifficulty = 0;
             satietyDifficulty = 0;
+        }
+        else if(_difficulty == 66){
+            cleaningDifficulty = 20;
+            mentalDifficulty = 100;
+            energyDifficulty = 20;
+            satietyDifficulty = 20;
         }
         else{
             cleaningDifficulty = 5;
@@ -204,7 +223,7 @@ public abstract class Tamagotchi {
     public int getCurrentHealth() {
         return currentHealth;
     }
-    public int getMentalState() {
+    public int getCurrentMental() {
         return this.currentMental;
     }
     public Place getCurrentPlace() {
@@ -213,21 +232,33 @@ public abstract class Tamagotchi {
     public int getCurrentCleaning() {
         return this.currentCleanliness;
     }
+    public void setMentalState(MentalState mentalState) {
+        this.mentalState = mentalState;
+    }
+    public MentalState getMentalState() {
+        return mentalState;
+    }
 
     //THREAD__________________________________
     protected void initRoutine(){}
+
     public void stopRoutine(){
         running.set(false);
     }
+
     public void startRoutine(){
         running.set(true);
         initRoutine();
         routine.start();
     }
+
+    protected Tamagotchi getTamagotchi(){
+        return this;
+    }
+    //________________________________________
     /**
      * increase currentEnergy
      */
-    //TODO arreter quand on quitte le jeu
     public void startSleep(){
         try {
             sleepRunning.set(true);
@@ -237,7 +268,7 @@ public abstract class Tamagotchi {
                 public void run() {
                     while(currentEnergy < 100 && !closeGame.get() && sleepRunning.get()){
                         currentEnergy+=energyGain;
-                        observer.propertyChange(new PropertyChangeEvent(this, "statsDisplay", null, null));
+                        observer.propertyChange(new PropertyChangeEvent(getTamagotchi(), "statsDisplay", null, null));
                         if(currentEnergy > 100){
                             currentEnergy = 100;
                             break;
@@ -259,7 +290,8 @@ public abstract class Tamagotchi {
             };
             sleepRoutine.setDaemon(true);
             sleepRoutine.start();
-            //check if the sleep routine is finished and start the mainRoutine
+
+            //wait the sleep routine to finish and start the main routine
             new Thread(){public void run(){
                 try {
                     sleepRoutine.join();
@@ -307,7 +339,8 @@ public abstract class Tamagotchi {
     public void die(String _cause){
         System.out.println("L'animal est mort de : " +_cause);
         closeGame.set(true);
-        observer.propertyChange(new PropertyChangeEvent(this, "die", null, null));
+        currentHealth = 0;
+        observer.propertyChange(new PropertyChangeEvent(this, "die", null, _cause));
     }
 
     /**
@@ -324,23 +357,64 @@ public abstract class Tamagotchi {
         if(currentCleanliness-_cleaning < 0) currentCleanliness = 0;
         else currentCleanliness-=_cleaning;
 
-        if(currentSatiety-_satiety < 0) currentSatiety = 0;
+        if(currentSatiety-_satiety < 0)currentSatiety = 0;
         else currentSatiety-=_satiety;
 
         if(mean()<50){
             if(currentMental-_mental < 0) {
-                currentMental = 0;
                 currentHealth = 0;
+                currentMental = 0;
                 die("Suicide");
             }
             else currentMental-=_mental;
         }
+        //Damages
+        if(currentHealth !=0){
+            int satiety = 0;
+            int clean = 0;
+            int energy = 0;
+            if(currentSatiety < 20){
+                if(currentSatiety < 10) satiety = 10;
+                else satiety = 5;
+            }
+            if(currentSatiety < 20){
+                if(currentSatiety < 10) clean=10;
+                else clean = 5;
+            }
+            if(energy < 20){
+                if(currentEnergy < 10) energy= 10;
+                else energy = 5;
+            }
+            decreaseHealth(satiety,clean,energy);
+        }
 
     }
 
-    public void decreaseHealth(){}//TODO
+    public void decreaseHealth(int _satietyLost,int _cleaningLost,int _energyLost){}//TODO
 
-    public void increaseHealth(){}//TODO
+    public void increaseHealth(){
+        if(currentHealth< 100){
+            if(currentSatiety > 80){
+                if(currentHealth+healthGain >=100)
+                {
+                    currentHealth = 100;
+                    return;
+                }
+                else currentHealth+=healthGain;
+                if(currentHealth+healthGain >=100)
+                {
+                    currentHealth = 100;
+                    return;
+                }
+                else currentHealth+=healthGain;
+                if(currentHealth+healthGain >=100)
+                {
+                    currentHealth = 100;
+                }
+                else currentHealth+=healthGain;
+            }
+        }
+    }//TODO
     /**
      * mean of stats
      * @return mean
@@ -374,7 +448,7 @@ public abstract class Tamagotchi {
      * @param _damage
      */
     public void ranningEvent(int _damage,int _mental){
-        if(Place.getWeather().equals(Weather.RAINY) && currentPlace.getCurrentPlace().equals(EPlace.GARDEN)){
+        if((Place.getWeather().equals(Weather.RAINY)|| (Place.getWeather().equals(Weather.THUNDER))) && currentPlace.getCurrentPlace().equals(EPlace.GARDEN)){
             currentHealth-=_damage;
             currentMental-=_mental;
         }
@@ -421,6 +495,24 @@ public abstract class Tamagotchi {
         }
         observer.propertyChange(new PropertyChangeEvent(this, "statsDisplay", null, null));
     }
+
+    protected void updateMentalState() {
+        int mental = getCurrentMental();
+        if(mental > 80){
+            this.setMentalState(MentalState.HAPPY);
+        }
+        else if(mental > 50){
+            this.setMentalState(MentalState.JOLLY);
+        }
+        else if(mental > 20){
+            this.setMentalState(MentalState.SAD);
+        }
+        else{
+            this.setMentalState(MentalState.DEPRESSED);
+        }
+    }
+
+    
 
     
 }

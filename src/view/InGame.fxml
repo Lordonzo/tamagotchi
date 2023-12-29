@@ -11,35 +11,37 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="600.0" minWidth="800.0" prefHeight="720.0" prefWidth="1080.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.InGameController">
+<AnchorPane fx:id="backPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="600.0" minWidth="800.0" prefHeight="720.0" prefWidth="1080.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.InGameController">
    <children>
-      <StackPane fx:id="spritePane" layoutX="440.0" layoutY="285.0">
-         <children>
-            <ImageView fx:id="ivSprite" fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@../resources/tama_sprites/questionmark.jpg" />
-               </image>
-            </ImageView>
-         </children>
-      </StackPane>
+      <ImageView fx:id="ivSprite" fitHeight="150.0" fitWidth="200.0" layoutX="502.0" layoutY="257.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../resources/tama_sprites/questionmark.jpg" />
+         </image>
+      </ImageView>
+      <StackPane fx:id="spritePane" layoutX="440.0" layoutY="285.0" />
       <ProgressBar fx:id="stat1" layoutX="14.0" layoutY="14.0" prefWidth="200.0" progress="0.0" />
       <ProgressBar fx:id="stat2" layoutX="14.0" layoutY="40.0" prefWidth="200.0" progress="0.0" />
       <ProgressBar fx:id="stat3" layoutX="14.0" layoutY="70.0" prefWidth="200.0" progress="0.0" />
-      <Text layoutX="233.0" layoutY="29.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Vie" />
-      <Text layoutX="233.0" layoutY="55.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Energie" />
-      <Text layoutX="233.0" layoutY="85.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Propreté" />
-      <Button fx:id="actionButton" layoutX="83.0" layoutY="435.0" mnemonicParsing="false" onAction="#action" text="Action" />
-      <Button fx:id="rightPlaceButton" layoutX="982.0" layoutY="261.0" mnemonicParsing="false" onAction="#rightPlace" text="PièceA" />
-      <Button fx:id="leftPlaceButton" layoutX="982.0" layoutY="447.0" mnemonicParsing="false" onAction="#leftRoom" text="PièceB" />
-      <Button fx:id="quitButton" layoutX="1004.0" layoutY="12.0" mnemonicParsing="false" onAction="#toMenu" text="Quitter" />
+      <Text fx:id="healthText" layoutX="233.0" layoutY="29.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Vie" />
+      <Text fx:id="energyText" layoutX="233.0" layoutY="55.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Energie" />
+      <Text fx:id="cleanlinessText" layoutX="233.0" layoutY="85.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Propreté" />
+      <Button fx:id="actionButton" layoutX="502.0" layoutY="608.0" mnemonicParsing="false" onAction="#action" prefHeight="80.0" prefWidth="150.0" text="Action" textAlignment="CENTER" AnchorPane.leftAnchor="502.0" AnchorPane.rightAnchor="428.0" />
+      <Button fx:id="rightPlaceButton" layoutX="778.0" layoutY="613.0" mnemonicParsing="false" onAction="#rightPlace" prefHeight="70.0" prefWidth="125.0" text="PièceA" textAlignment="CENTER" AnchorPane.leftAnchor="778.0" AnchorPane.rightAnchor="177.0" />
+      <Button fx:id="leftPlaceButton" layoutX="261.0" layoutY="613.0" mnemonicParsing="false" onAction="#leftRoom" prefHeight="70.0" prefWidth="125.0" text="PièceB" textAlignment="CENTER" AnchorPane.leftAnchor="261.0" AnchorPane.rightAnchor="694.0" />
+      <Button fx:id="quitButton" layoutX="943.0" layoutY="12.0" mnemonicParsing="false" onAction="#toMenu" prefHeight="45.0" prefWidth="125.0" text="Quitter" AnchorPane.leftAnchor="943.0" AnchorPane.rightAnchor="12.0" />
       <Button fx:id="glossaireButton" layoutX="989.0" layoutY="682.0" minWidth="100.0" mnemonicParsing="false" text="Glossaire" AnchorPane.bottomAnchor="13.0" AnchorPane.rightAnchor="13.0" />
-      <Label fx:id="idLabel" layoutX="508.0" layoutY="16.0" text="Nom" />
-      <Text fx:id="currentPlaceText" layoutX="990.0" layoutY="365.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Pièce" />
+      <Label fx:id="nameLabel" layoutX="508.0" layoutY="16.0" text="Nom" />
+      <Text fx:id="currentPlaceText" layoutX="494.0" layoutY="440.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Pièce" wrappingWidth="274.0" AnchorPane.leftAnchor="494.0" AnchorPane.rightAnchor="312.0">
+         <font>
+            <Font size="24.0" />
+         </font></Text>
       <ProgressBar fx:id="stat4" layoutX="14.0" layoutY="97.0" prefWidth="200.0" progress="0.0" />
-      <Text layoutX="234.0" layoutY="112.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Satieté" />
+      <Text fx:id="satietyText" layoutX="234.0" layoutY="112.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Faim" />
+      <Text fx:id="weatherText" layoutX="34.0" layoutY="142.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Sunny" />
+      <Text fx:id="mentalText" layoutX="142.0" layoutY="142.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Happy" />
       <StackPane fx:id="spDeathPane" layoutX="313.0" layoutY="212.0" prefHeight="269.0" prefWidth="465.0" style="-fx-border-color: black; -fx-background-color: white;" visible="false">
          <children>
-            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Votre Tamagotchi est mort." StackPane.alignment="TOP_CENTER">
+            <Text fx:id="deathText" strokeType="OUTSIDE" strokeWidth="0.0" text="Votre Tamagotchi est mort." StackPane.alignment="TOP_CENTER">
                <StackPane.margin>
                   <Insets top="70.0" />
                </StackPane.margin>
@@ -54,7 +56,6 @@
             </Button>
          </children>
       </StackPane>
-      <Text fx:id="weatherText" layoutX="34.0" layoutY="142.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Sunny" />
-      <Text fx:id="mentalText" layoutX="142.0" layoutY="142.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Happy" />
+      <Text fx:id="weighText" layoutX="502.0" layoutY="62.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Poids" />
    </children>
 </AnchorPane>

@@ -11,6 +11,7 @@ import java.net.URL;
 import java.time.Duration;
 import java.util.ArrayList;
 import java.util.EventListener;
+import java.util.Locale;
 import java.util.Random;
 import java.util.ResourceBundle;
 
@@ -19,6 +20,7 @@ import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 
 import javafx.animation.RotateTransition;
+import javafx.animation.TranslateTransition;
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.event.*;
@@ -35,6 +37,11 @@ import javafx.scene.effect.ColorAdjust;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.Background;
+import javafx.scene.layout.BackgroundImage;
+import javafx.scene.layout.BackgroundPosition;
+import javafx.scene.layout.BackgroundRepeat;
+import javafx.scene.layout.BackgroundSize;
 import javafx.scene.layout.Pane;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
@@ -43,6 +50,7 @@ import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import models.Place;
 import models.Status.EPlace;
+import models.Status.MentalState;
 import models.database.PlaceDB;
 import models.database.TamagotchiDB;
 import models.tamagotchi.Animal;
@@ -55,6 +63,7 @@ public class InGameController extends AbstractController implements PropertyChan
 
     private Media sound;
     private MediaPlayer mediaPlayer;
+    private ResourceBundle resourceBundle;
     @FXML
     //Health
     private ProgressBar stat1;
@@ -72,7 +81,7 @@ public class InGameController extends AbstractController implements PropertyChan
     private ImageView ivSprite;
 
     @FXML
-    private Label idLabel;
+    private Label nameLabel;
 
     @FXML
     private Button rightPlaceButton;
@@ -80,6 +89,12 @@ public class InGameController extends AbstractController implements PropertyChan
     private Button leftPlaceButton;
     @FXML
     private Text currentPlaceText;
+    @FXML
+    private Text mentalText;
+    @FXML
+    private Text weatherText;
+    @FXML
+    private Text weigthText;
     @FXML
     private Button quitButton;
     @FXML
@@ -89,142 +104,30 @@ public class InGameController extends AbstractController implements PropertyChan
     @FXML
     private StackPane spDeathPane;
     @FXML
+    private AnchorPane backPane;
+    @FXML
     private RotateTransition backflipTransition;
+    @FXML
+    private TranslateTransition upAndDownTrasition;
+    @FXML
+    private Text healthText;
+    @FXML
+    private Text energyText;
+    @FXML
+    private Text cleanlinessText;
+    @FXML
+    private Text satietyText;
+    @FXML
+    private Text deathText;
 
 
    public void initTamagotchi(Tamagotchi _tamagotchi) {
         this.tamagotchi = _tamagotchi;
         updateAllText();
         statsDisplay();
+        nameLabel.setText(resourceBundle.getString("name") +" : "+ tamagotchi.getName());
     }
 
-   @FXML 
-   private void toMenu(ActionEvent actionEvent) throws IOException {
-       tamagotchi.setCloseGame(true);
-       FXMLLoader loader = new FXMLLoader(getClass().getResource("../view/Menu.fxml"));
-       Pane root = (Pane) loader.load();
-       MenuController menuController = loader.getController();
-       menuController.setMusic(music);
-       Scene scene = (Scene) ((Node) actionEvent.getSource()).getScene();
-       scene.setRoot(root);
-   }
-
-   @FXML
-   public void statsDisplay(){
-            try{
-                System.out.println("statsDisplay : " + tamagotchi.getCurrentSatiety());
-
-                stat1.setProgress((double)tamagotchi.getCurrentHealth()/100);
-                stat2.setProgress((double)tamagotchi.getCurrentEnergy()/100);
-                stat3.setProgress((double)tamagotchi.getCurrentCleaning()/100);
-                stat4.setProgress((double)tamagotchi.getCurrentSatiety()/100);
-
-            }
-            catch(Exception e){
-                e.printStackTrace();
-            }
-    }
-
-   public void rightPlace(ActionEvent actionEvent) throws IOException{
-        tamagotchi.goToRightPlace();
-        updateAllText();
-    }
-   public void leftRoom(ActionEvent actionEvent) throws IOException{
-        tamagotchi.goToLeftPlace();
-        updateAllText();
-    }
-
-    public void updateAllText(){
-        setActionButtonText();
-        setPlaceName(rightPlaceButton,tamagotchi.getCurrentPlace().getNextPlace());
-        setPlaceName(leftPlaceButton,tamagotchi.getCurrentPlace().getPreviousPlace());
-        setPlaceName(currentPlaceText,tamagotchi.getCurrentPlace());
-    }
-
-    public void setPlaceName(Object _button,Place place){
-        String current ="";
-        switch (place.getCurrentPlace()) {
-            case BEDROOM:
-                current = "Chambre";         
-                break;
-            case LIVINGROOM:
-                current = "Salon";
-                break;
-            case TOILET:
-                current = "Salle de bain";
-                break;
-            case GARDEN:
-                current = "Jardin";
-                break;
-            case KITCHEN:
-                current = "Cuisine";
-                break;
-            default:
-                //TODO error
-                break;
-        }
-
-       if(_button.getClass().getName().equals("javafx.scene.control.Button"))((Button)_button).setText(current);
-        else ((Text)_button).setText(current);
-    }
-    /**
-     * set the text of the action button according to the currentPlace
-     */
-   public void setActionButtonText(){
-        String txt = "";
-        switch (tamagotchi.getCurrentPlace().getCurrentPlace()) {
-            case BEDROOM:
-                txt = "Dormir";            
-                break;
-            case LIVINGROOM:
-                txt = "Youpi !!"; //TODO changer j'ai pas d'idée
-                break;
-            case TOILET:
-                txt = "Nettoyer";
-                break;
-            case GARDEN:
-                txt = "Jouer";
-                break;
-            case KITCHEN:
-                txt = "Manger";
-                break;
-            default:
-                //TODO error
-                break;
-        }
-        actionButton.setText(txt);
-   }
-
-    public void setNameLabel(){
-        if(tamagotchi != null){
-            idLabel.setText("Nom : "+ tamagotchi.getName());
-        }
-        else{
-            //TODO FAIRE UN TRUC POUR LES ERREURS
-            System.out.println("Erreur du chargement du tamagotchi");
-        }
-    }
-
-    @Override
-    public void propertyChange(PropertyChangeEvent evt) {
-        System.out.println(evt.getPropertyName());
-        try {
-            if(evt.getPropertyName().equals("statsDisplay")){
-                statsDisplay();
-            }
-            if(evt.getPropertyName().equals("die")){
-                afficherPaneDeMort();
-            }
-            if(evt.getPropertyName().equals("enableButtons")){
-                if(tamagotchi.getCurrentHealth() > 0){
-                    enableAll();
-                }
-            }
-        }
-        catch (Exception e) {
-        // TODO: handle exception
-        }
-    }
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         PlaceDB placeDB = new PlaceDB();
@@ -259,63 +162,258 @@ public class InGameController extends AbstractController implements PropertyChan
                 } catch (FileNotFoundException e) { System.out.println(e.getMessage()); }
                 break;
             }
-            //init Rotation animation
+            //init livingroom action animation
             backflipTransition = new RotateTransition();
             backflipTransition.setDuration(javafx.util.Duration.seconds(1));
             backflipTransition.setNode(ivSprite);
             backflipTransition.setFromAngle(0);
             backflipTransition.setToAngle(360);
             backflipTransition.setCycleCount(1);
+            //init garden action animation
+            upAndDownTrasition = new TranslateTransition();
+            upAndDownTrasition.setDuration(javafx.util.Duration.millis(250));
+            upAndDownTrasition.setNode(ivSprite);
+            upAndDownTrasition.setByY(-50);
+            upAndDownTrasition.setCycleCount(4);
+            upAndDownTrasition.setAutoReverse(true);
+
+            //Localization
+            resourceBundle = ResourceBundle.getBundle("resources/language/Text",Locale.FRENCH);
+            //TODO changer en fonction des options
+            healthText.setText(resourceBundle.getString("health"));
+            energyText.setText(resourceBundle.getString("energy"));
+            cleanlinessText.setText(resourceBundle.getString("cleanliness"));
+            satietyText.setText(resourceBundle.getString("satiety"));
+            quitButton.setText(resourceBundle.getString("quit"));
         }
     }
 
+   @FXML 
+   private void toMenu(ActionEvent actionEvent) throws IOException {
+       tamagotchi.setCloseGame(true);
+       FXMLLoader loader = new FXMLLoader(getClass().getResource("../view/Menu.fxml"));
+       Pane root = (Pane) loader.load();
+       MenuController menuController = loader.getController();
+       menuController.setMusic(music);
+       Scene scene = (Scene) ((Node) actionEvent.getSource()).getScene();
+       scene.setRoot(root);
+   }
+
+   public void statsDisplay(){
+        try{
+            stat1.setProgress((double)tamagotchi.getCurrentHealth()/100);
+            stat2.setProgress((double)tamagotchi.getCurrentEnergy()/100);
+            stat3.setProgress((double)tamagotchi.getCurrentCleaning()/100);
+            stat4.setProgress((double)tamagotchi.getCurrentSatiety()/100);
+            updateWeather();
+          //  updateMental();
+            //TODO enveler
+        }
+        catch(Exception e){
+            e.printStackTrace();
+        }
+    }
+
+   public void rightPlace(ActionEvent actionEvent) throws IOException{
+        tamagotchi.goToRightPlace();
+        updateAllText();
+    }
+   public void leftRoom(ActionEvent actionEvent) throws IOException{
+        tamagotchi.goToLeftPlace();
+        updateAllText();
+    }
+
+    public void updateAllText(){
+        setActionButtonText();
+        setPlaceName(rightPlaceButton,tamagotchi.getCurrentPlace().getNextPlace());
+        setPlaceName(leftPlaceButton,tamagotchi.getCurrentPlace().getPreviousPlace());
+        setPlaceName(currentPlaceText,tamagotchi.getCurrentPlace());
+    }
+    
+    public void updateMental(MentalState _newMentalState){
+        mentalText.setText(resourceBundle.getString(_newMentalState.name()));
+    }
+
+    public void setPlaceName(Object _object,Place place){
+        String room = resourceBundle.getString(place.getCurrentPlace().name());
+        if(_object.getClass().getName().equals("javafx.scene.control.Button"))((Button)_object).setText(room);
+        else if(_object.getClass().getName().equals("javafx.scene.text.Text")) ((Text)_object).setText(resourceBundle.getString("location")+" : "+ room);
+    }
+
+    public void updateWeather(){
+        weatherText.setText(resourceBundle.getString(tamagotchi.getCurrentPlace().getWeather().name()));
+    }
+
+    /**
+     * set the text of the action button according to the currentPlace
+     */
+   public void setActionButtonText(){
+        String txt = "";
+        switch (tamagotchi.getCurrentPlace().getCurrentPlace()) {
+            case BEDROOM:
+                txt = resourceBundle.getString("sleep");           
+                break;
+            case LIVINGROOM:
+                txt = resourceBundle.getString("yipee");
+                break;
+            case TOILET:
+                txt = resourceBundle.getString("clean");
+                break;
+            case GARDEN:
+                txt = resourceBundle.getString("play");
+                break;
+            case KITCHEN:
+                txt = resourceBundle.getString("eat");
+                break;
+            default:
+                //TODO error
+                break;
+        }
+        actionButton.setText(txt);
+   }
+
+    @Override
+    public void propertyChange(PropertyChangeEvent evt) {
+        System.out.println(evt.getPropertyName());
+        try {
+            if(evt.getPropertyName().equals("statsDisplay")){
+                statsDisplay();//TODO enlever
+            }
+            if(evt.getPropertyName().equals("die")){
+                afficherPaneDeMort((String)evt.getNewValue());
+            }
+            if(evt.getPropertyName().equals("enableButtons")){
+                enableAll();
+            }
+            if(evt.getPropertyName().equals("no")){
+                no();
+            }
+            if(evt.getPropertyName().equals("updateStat1")){
+                updateStat1((int)evt.getNewValue());
+            }
+            if(evt.getPropertyName().equals("updateStat2")){
+                updateStat2((int)evt.getNewValue());
+            }
+            if(evt.getPropertyName().equals("updateStat3")){
+                updateStat3((int)evt.getNewValue());
+            }
+            if(evt.getPropertyName().equals("updateStat4")){
+                updateStat4((int)evt.getNewValue());
+            }
+            if(evt.getPropertyName().equals("updateWeather")){
+                updateWeather();
+            }
+            if(evt.getPropertyName().equals("updateMental")){
+                updateMental((MentalState)evt.getNewValue());
+
+            }
+            if(evt.getPropertyName().equals("updateWeigth")){
+                updateWeight((float)evt.getNewValue());
+                //TODO
+            }
+        }
+        catch (Exception e) {
+        // TODO: handle exception
+        }
+    }
+
+
+
+    private void updateWeight(float _newValue) {
+        weigthText.setText(resourceBundle.getString("weigth") +" : " +_newValue );
+    }
+
+    private void updateStat1(int _newValue) {
+        stat1.setProgress((double)_newValue/100);
+    }
+    private void updateStat2(int _newValue) {
+        stat2.setProgress((double)_newValue/100);
+    }
+    private void updateStat3(int _newValue) {
+        stat3.setProgress((double)_newValue/100);
+    }
+    private void updateStat4(int _newValue) {
+        stat4.setProgress((double)_newValue/100);
+    }
 
     @FXML
     public void action(ActionEvent event) throws IOException{
         switch (tamagotchi.getCurrentPlace().getCurrentPlace()) {
             case BEDROOM:
-            if(!tamagotchi.getSleepRunning().get()){
-                disableAll();
-                actionButton.setDisable(false);
-                sound = new Media(new File("src/resources/sound/goofy_ahh_sleeping.mp3").toURI().toString());
-                mediaPlayer = new MediaPlayer(sound);
-                mediaPlayer.play();
-                tamagotchi.startSleep();
-            }
-            else{
-                tamagotchi.setSleepRunning(false);
-            }
-                //TODO au meme niveau que la musique
+                bedroomAction();
                 break;
             case LIVINGROOM:
-            //DO A BACKFLIP
-                actionButton.setDisable(true);
-                double random = new Random().nextInt(100,2000);
-                backflipTransition.setDuration(javafx.util.Duration.millis(random));
-                backflipTransition.play();
-                sound = new Media(new File("src/resources/sound/goofy_ahh_backflipping.mp3").toURI().toString());
-                mediaPlayer = new MediaPlayer(sound);
-                mediaPlayer.setRate((2000-random)/600);
-                backflipTransition.setOnFinished(e -> propertyChange(new PropertyChangeEvent(tamagotchi,"enableButtons",null,null)));
-                mediaPlayer.play();
+                livingRoomAction();
                 break;
             case GARDEN:
-            //TODO
+                gardenAction();
                 break;
             case TOILET:
-                //TODO clean sound
-                tamagotchi.clean();
+                toiletAction();
                 break;
             case KITCHEN:
-                sound = new Media(new File("src/resources/sound/goofy_ahh_eating.mp3").toURI().toString());
-                mediaPlayer = new MediaPlayer(sound);
-                mediaPlayer.play();
-                tamagotchi.eat();
+                kitchenAction();
                 break;
             default:
                 //TODO error handling
                 break;
         }
+    }
+
+
+    private void bedroomAction(){
+        //TODO au meme niveau que la musique
+        if(!tamagotchi.getSleepRunning().get()){
+            if(!tamagotchi.getClass().getSimpleName().equals("Robot"))
+            {
+                if((((Animal)tamagotchi).getSleepCancel() != 0)){
+                    //don't start the sleep routine
+                    no();
+                    return;
+                }
+            }
+            disableAll();
+            actionButton.setDisable(false);
+            sound = new Media(new File("src/resources/sound/goofy_ahh_sleeping.mp3").toURI().toString());
+            mediaPlayer = new MediaPlayer(sound);
+            mediaPlayer.play();
+            tamagotchi.startSleep();
+        }
+        else{
+            tamagotchi.setSleepRunning(false);
+        }
+    }
+    /**
+     * DO A BACKFLIP
+     */
+    private void livingRoomAction(){
+        //play a random duration backflip animation
+        actionButton.setDisable(true);
+        double random = new Random().nextInt(500,1500);
+        backflipTransition.setDuration(javafx.util.Duration.millis(random));
+        backflipTransition.play();
+        sound = new Media(new File("src/resources/sound/goofy_ahh_backflipping.mp3").toURI().toString());
+        mediaPlayer = new MediaPlayer(sound);
+        mediaPlayer.setRate(((2000-random)/600));
+        backflipTransition.setOnFinished(e -> enableAll());
+        mediaPlayer.play();
+    }
+    private void gardenAction(){
+        //TODO
+        if(tamagotchi.play()){
+            //animation
+            upAndDownTrasition.play();
+        }
+    }
+    private void toiletAction(){
+        //TODO clean sound
+        tamagotchi.clean();
+    }
+    private void kitchenAction(){
+        sound = new Media(new File("src/resources/sound/goofy_ahh_eating.mp3").toURI().toString());
+        mediaPlayer = new MediaPlayer(sound);
+        mediaPlayer.play();
+        tamagotchi.eat();
     }
 
     @FXML
@@ -333,6 +431,7 @@ public class InGameController extends AbstractController implements PropertyChan
 
     @FXML
     private void enableAll(){
+        if(tamagotchi.getCurrentHealth() > 0){
         stat1.setDisable(false);
         stat2.setDisable(false);
         stat3.setDisable(false);
@@ -343,10 +442,27 @@ public class InGameController extends AbstractController implements PropertyChan
         rightPlaceButton.setDisable(false);
         leftPlaceButton.setDisable(false);
     }
+        }
+        
 
-    public void afficherPaneDeMort() {
+    public void afficherPaneDeMort(String _cause) {
+        String deathMessage = "Votre tamagotchi est mort.";
+        System.out.println(_cause);
+        if(_cause.equals("Suicide")){
+            deathMessage = resourceBundle.getString("deathSuicide");
+        }
+        else if(_cause.equals("Mistreatement")){
+            deathMessage = resourceBundle.getString("deathMistreatement");
+        }
         spDeathPane.setVisible(true);
+        deathText.setText(deathMessage);
         disableAll();
+    }
+
+    public void no(){
+        sound = new Media(new File("src/resources/sound/goofy_ahh_no.mp3").toURI().toString());
+        mediaPlayer = new MediaPlayer(sound);
+        mediaPlayer.play();
     }
 
 }
