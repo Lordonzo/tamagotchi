@@ -31,11 +31,11 @@ public class PlaceController {
      */
     private void setUpPlaces() {
         allPlaces.clear(); // TODO j'ai rajouté ac pour etre sur
-        Place bedroom = new Place(EPlace.BEDROOM);
-        Place garden = new Place(EPlace.GARDEN);
-        Place kitchen = new Place(EPlace.KITCHEN);
-        Place livingroom = new Place(EPlace.LIVINGROOM);
-        Place toilet = new Place(EPlace.TOILET);
+        Place bedroom = new Place(0,EPlace.BEDROOM);
+        Place livingroom = new Place(1,EPlace.LIVINGROOM);
+        Place garden = new Place(2,EPlace.GARDEN);
+        Place kitchen = new Place(3,EPlace.KITCHEN);
+        Place toilet = new Place(4,EPlace.TOILET);
         bedroom.setNextPlace(livingroom);
         bedroom.setPreviousPlace(toilet);
 
@@ -63,7 +63,6 @@ public class PlaceController {
      */
     public void displayPlaces() {
         for (Place place : allPlaces) {
-            System.out.println(place.getId() + ": " + place.getCurrentPlace().name() + " next: " + place.getNextPlace().getCurrentPlace().name() + " previous: " + place.getPreviousPlace().getCurrentPlace().name());
         }
     }
 

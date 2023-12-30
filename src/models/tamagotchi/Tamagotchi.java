@@ -237,6 +237,9 @@ public abstract class Tamagotchi {
     public int getCurrentEnergy() {
         return currentEnergy;
     }
+    public void setCurrentEnergy(int currentEnergy) {
+        this.currentEnergy = currentEnergy;
+    }
     public PhysicalState getState() {
         return state;
     }
@@ -251,6 +254,9 @@ public abstract class Tamagotchi {
     }
     public int getCurrentCleaning() {
         return this.currentCleanliness;
+    }
+    public void setCurrentCleanliness(int currentCleanliness) {
+        this.currentCleanliness = currentCleanliness;
     }
     public void setMentalState(MentalState mentalState) {
         this.mentalState = mentalState;
@@ -498,6 +504,9 @@ public abstract class Tamagotchi {
 
     public float getCurrentWeight() {
         return this.currentWeight;
+    }
+    public void setCurrentHealth(int _currentHealth){
+        this.currentHealth = _currentHealth;
     }
 
     public void setCurrentWeight(float _currentWeight) {

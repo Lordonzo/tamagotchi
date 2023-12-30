@@ -130,10 +130,10 @@ public class InGameController extends AbstractController implements PropertyChan
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        PlaceDB placeDB = new PlaceDB();
-        ArrayList<Place> places = placeDB.select();
+        PlaceController pc = new PlaceController(false);
+        ArrayList<Place> places = pc.getPlaces(); //TODO faire quelque chose avec ca
         TamagotchiDB tamagotchiDB = new TamagotchiDB();
-        ArrayList<Tamagotchi> selectSlotSaved = tamagotchiDB.selectSlotSaved(places);
+        ArrayList<Tamagotchi> selectSlotSaved = tamagotchiDB.selectSlotSaved();
         System.out.println(selectSlotSaved);
         if (!selectSlotSaved.isEmpty()) {
             System.out.println(selectSlotSaved.get(0).getName());
