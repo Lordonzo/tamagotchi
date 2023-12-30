@@ -70,13 +70,13 @@ public class NewOrLoadController extends AbstractController {
                         break;
                 }
                 try {
-                    if(tamagotchi.getId()==1){
-                            slot1Btn.setImage(new Image(new FileInputStream(path)));
+                    if(tamagotchi.getSlot()==1){
+                        slot1Btn.setImage(new Image(new FileInputStream(path)));
                     }
-                    else if(tamagotchi.getId() == 2){
+                    else if(tamagotchi.getSlot() == 2){
                         slot2Btn.setImage(new Image(new FileInputStream(path)));
                     }
-                    else if(tamagotchi.getId() == 3){
+                    else if(tamagotchi.getSlot() == 3){
                         slot3Btn.setImage(new Image(new FileInputStream(path)));
                     }
                 }
@@ -124,7 +124,7 @@ public class NewOrLoadController extends AbstractController {
 
 
     private void onBtnClick(ActionEvent actionEvent,int slot)throws IOException {
-        Tamagotchi tamagotchi = tamagotchiDB.selectById(slot);
+        Tamagotchi tamagotchi = tamagotchiDB.selectBySlot(slot);
         //TODO faire un choix pour reset la partie ou alors un autre bouton en desssous de chaque parties
         if (tamagotchi == null) {
             toNewTama(actionEvent,slot);

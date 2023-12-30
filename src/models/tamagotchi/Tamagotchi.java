@@ -2,6 +2,7 @@ package models.tamagotchi;
 
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
+import java.security.Timestamp;
 import java.time.LocalDateTime;
 import java.util.Random;
 import java.util.concurrent.TimeUnit;
@@ -47,7 +48,7 @@ public abstract class Tamagotchi {
     protected PhysicalState state;
     protected Place currentPlace;
 
-    protected LocalDateTime birthDate;
+    protected LocalDateTime dateBirth;
 
     
     protected int currentBattery;
@@ -58,7 +59,7 @@ public abstract class Tamagotchi {
     protected MentalState mentalState;
     protected int currentMental;
 
-    protected int slotTaken;
+    protected int slot;
 
 
     protected Thread routine;
@@ -98,6 +99,7 @@ public abstract class Tamagotchi {
         
         this.name = _nameString;
         this.currentPlace = place;
+        dateBirth = LocalDateTime.now();
         //Weather random
         weatherHandle();
         
@@ -121,8 +123,8 @@ public abstract class Tamagotchi {
         this.name = nameString; // 2
         this.currentWeight = currentWeight; // 8
         this.currentPlace = place; // 12
-        this.slotTaken = slotSaved; // 13
-        this.birthDate = birDateTime; // 3
+        this.slot = slotSaved; // 13
+        this.dateBirth = birDateTime; // 3
         this.currentMental = mentalState; // 11
         this.difficulty = difficulty; // 14
         setDifficulty(difficulty);
@@ -138,8 +140,8 @@ public abstract class Tamagotchi {
         this.name = nameString; // 2
         this.currentWeight = currentWeight; // 8
         this.currentPlace = place; // 12
-        this.slotTaken = slotSaved; // 13
-        this.birthDate = birDateTime; // 3
+        this.slot = slotSaved; // 13
+        this.dateBirth = birDateTime; // 3
         this.currentMental = mentalState; // 11
         this.currentMemory = currentMemory; // 7, memory=satiety
         this.difficulty = difficulty; // 14
@@ -163,6 +165,9 @@ public abstract class Tamagotchi {
 
     public int getNB_SEC(){
         return NB_SEC;
+    }
+    public int getSlot() {
+        return slot;
     }
 
     /**
@@ -219,6 +224,9 @@ public abstract class Tamagotchi {
 
     public void setId(int id) {
         this.id = id;
+    }
+    public LocalDateTime getDateBirth() {
+        return dateBirth;
     }
     /**
      * 
