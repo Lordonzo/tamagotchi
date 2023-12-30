@@ -2,6 +2,7 @@ package models.tamagotchi;
 
 import java.beans.PropertyChangeEvent;
 import java.time.LocalDateTime;
+import java.util.Random;
 
 import models.Place;
 import models.Status.MentalState;
@@ -17,16 +18,23 @@ public abstract class Animal extends Tamagotchi {
      * @param _weight
      * @param place
      */
-    public Animal(String _nameString, float _weight, Place place) {
-        super(_nameString,_weight, place);
-        this.mentalState = MentalState.HAPPY;
-
-        //TODO changer la difficulté
-        setDifficulty(3);
+    public Animal(String _nameString, Place place) {
+        super(_nameString, place);
+    }
+    protected Animal(String _nameString,Place place,float MIN_STARTING_WEIGHT,float MAX_STARTING_WEIGHT){
+        this(_nameString,place);
+        setCurrentWeight(new Random().nextFloat(MIN_STARTING_WEIGHT,MAX_STARTING_WEIGHT));
     }
 
-    public Animal(int id, String nameString, LocalDateTime birDateTime, int currentHealth, int currentEnergy, float currentWeight, int currentCleanliness, int mentalState, Place place, int slotSaved, int currentSatiety) {
-        super(id, nameString, birDateTime, currentHealth, currentEnergy, currentWeight, currentCleanliness, mentalState, place, slotSaved);
+    /*//note de A : je teste des choses
+    public Animal(String _nameString, int difficulty, Place place) {
+        super(_nameString, difficulty, place);
+        this.mentalState = MentalState.HAPPY;
+    }*/
+
+    //modif par A : ajout difficulty
+    public Animal(int id, String nameString, LocalDateTime birDateTime, int currentHealth, int currentEnergy, float currentWeight, int currentCleanliness, int mentalState, Place place, int slotSaved, int currentSatiety, int difficulty) {
+        super(id, nameString, birDateTime, currentHealth, currentEnergy, currentWeight, currentCleanliness, mentalState, place, slotSaved, difficulty);
         this.currentSatiety = currentSatiety; // 7
     }
 
@@ -75,6 +83,8 @@ public abstract class Animal extends Tamagotchi {
         routine = new Thread(){
             public void run() {
                 try{
+                    //Calling observer
+                        updateAllStats();
                     do{
                         sleep(NB_SEC);
                         decreaseStats(mentalDifficulty, cleaningDifficulty, energyDifficulty,satietyDifficulty);
@@ -129,9 +139,12 @@ public abstract class Animal extends Tamagotchi {
                         //________________________________________
 
 
-
                         //Calling observer
                         updateAllStats();
+
+                        //save____________________________________
+                        save();
+                        //________________________________________
 
                     } while(running.get() && !closeGame.get());
                 
@@ -183,6 +196,10 @@ public abstract class Animal extends Tamagotchi {
         observer.propertyChange(new PropertyChangeEvent(this, "updateStat4", null, getCurrentSatiety()));
         observer.propertyChange(new PropertyChangeEvent(this, "updateMental", null, getMentalState()));
         observer.propertyChange(new PropertyChangeEvent(this, "updateWeight", null, getCurrentWeight()));
+    }
+
+    protected void save(){
+        observer.propertyChange(new PropertyChangeEvent(this, "saveGame", null,null));
     }
 
 }

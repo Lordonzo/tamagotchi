@@ -15,7 +15,6 @@ public class Place {
     private static Weather weather;
     private Image image;
 
-    // TODO Ajouter image aux places
     public Place(EPlace ePlace) {
         this.currentPlace = ePlace;
         this.nextPlace = null;

@@ -18,6 +18,7 @@ import javafx.scene.layout.Pane;
 import models.Place;
 import models.database.PlaceDB;
 import models.database.TamagotchiDB;
+import models.tamagotchi.Animal;
 import models.tamagotchi.Tamagotchi;
 
 public class NewOrLoadController extends AbstractController {
@@ -27,6 +28,12 @@ public class NewOrLoadController extends AbstractController {
     private ImageView slot2Btn;
     @FXML
     private ImageView slot3Btn;
+
+    @FXML
+    private Pane isDeathPane;
+    private TamagotchiDB tamagotchiDB;
+
+    //TODO pue la merde
     private boolean Exists; // indique si un tama existe ou non
 
     // TODO AFFICHER QUAND TU REVIENS
@@ -36,38 +43,45 @@ public class NewOrLoadController extends AbstractController {
     public void initialize(URL location, ResourceBundle resources) {
         PlaceDB placeDB = new PlaceDB();
         ArrayList<Place> places = placeDB.select();
-        TamagotchiDB tamagotchiDB = new TamagotchiDB();
+
+
+        tamagotchiDB = new TamagotchiDB();
         tamagotchiDB.select();
-        ArrayList<Tamagotchi> selectSlotSaved = tamagotchiDB.selectSlotSaved(places);
+        ArrayList<Tamagotchi> selectSlotSaved = tamagotchiDB.selectSlotSaved();
         System.out.println(selectSlotSaved);
         if (!selectSlotSaved.isEmpty()) {
             Exists = true;
             System.out.println(selectSlotSaved.get(0).getName());
-            switch (selectSlotSaved.get(0).getClass().getSimpleName()) {
-            case "Dog":
-                //System.out.println(slot1Btn.getImage());
+            for(Tamagotchi tamagotchi : selectSlotSaved){
+                String path = "";
+                switch (tamagotchi.getClass().getSimpleName()) {
+                    case "Dog":
+                        path = "src/resources/tama_sprites/dog.png";
+                        break;
+                    case "Cat":
+                        path = "src/resources/tama_sprites/cat.png";
+                        break;
+                    case "Rabbit":
+                        path = "src/resources/tama_sprites/rabbit.png";
+                        break;
+                    case "Robot":
+                        path = "src/resources/tama_sprites/robot.png";
+                        
+                        break;
+                }
                 try {
-                    slot1Btn.setImage(new Image(new FileInputStream("src/resources/tama_sprites/dog.png")));
-                } catch (FileNotFoundException e) { System.out.println(e.getMessage()); }
-                break;
-            case "Cat":
-                System.out.println(slot1Btn.getImage());
-                try {
-                    slot1Btn.setImage(new Image(new FileInputStream("src/resources/tama_sprites/cat.png")));
-                } catch (FileNotFoundException e) { System.out.println(e.getMessage()); }
-                break;
-            case "Rabbit":
-                System.out.println(slot1Btn.getImage());
-                try {
-                    slot1Btn.setImage(new Image(new FileInputStream("src/resources/tama_sprites/rabbit.png")));
-                } catch (FileNotFoundException e) { System.out.println(e.getMessage()); }
-                break;
-            case "Robot":
-            System.out.println(slot1Btn.getImage());
-                try {
-                    slot1Btn.setImage(new Image(new FileInputStream("src/resources/tama_sprites/robot.png")));
-                } catch (FileNotFoundException e) { System.out.println(e.getMessage()); }
-                break;
+                    if(tamagotchi.getId()==1){
+                            slot1Btn.setImage(new Image(new FileInputStream(path)));
+                    }
+                    else if(tamagotchi.getId() == 2){
+                        slot2Btn.setImage(new Image(new FileInputStream(path)));
+                    }
+                    else if(tamagotchi.getId() == 3){
+                        slot3Btn.setImage(new Image(new FileInputStream(path)));
+                    }
+                }
+                catch (FileNotFoundException e) { System.out.println(e.getMessage()); }
+
             }
         }
     }
@@ -83,31 +97,64 @@ public class NewOrLoadController extends AbstractController {
     }
 
     @FXML 
-    private void toNewTama(ActionEvent actionEvent) throws IOException {
+    private void toNewTama(ActionEvent actionEvent,int slot) throws IOException {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("../view/NewTama.fxml"));
         Pane root = (Pane) loader.load();
         NewTamaController newTamaController = loader.getController();
         newTamaController.setMusic(music);
+        newTamaController.setSlot(slot);
         Scene scene = (Scene) ((Node) actionEvent.getSource()).getScene();
         scene.setRoot(root);
     }
+ 
+    private void toInGame(ActionEvent actionEvent,Tamagotchi tamagotchi) throws IOException {
+        if(tamagotchi.getCurrentHealth() >0){
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("../view/InGame.fxml"));
+            Pane root = (Pane) loader.load();
+            InGameController inGameController = loader.getController();
+            inGameController.initTamagotchi(tamagotchi);
+            inGameController.setMusic(music);
+            Scene scene = (Scene) ((Node) actionEvent.getSource()).getScene();
+            scene.setRoot(root);
+        }
+        else{
+            isDeathPane.setVisible(true);
+        }
+        }
 
-    @FXML 
-    private void toInGame(ActionEvent actionEvent) throws IOException {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("../view/InGame.fxml"));
-        Pane root = (Pane) loader.load();
-        InGameController inGameController = loader.getController();
-        inGameController.setMusic(music);
-        Scene scene = (Scene) ((Node) actionEvent.getSource()).getScene();
-        scene.setRoot(root);
+
+    private void onBtnClick(ActionEvent actionEvent,int slot)throws IOException {
+        Tamagotchi tamagotchi = tamagotchiDB.selectById(slot);
+        //TODO faire un choix pour reset la partie ou alors un autre bouton en desssous de chaque parties
+        if (tamagotchi == null) {
+            toNewTama(actionEvent,slot);
+        } else {
+            toInGame(actionEvent,tamagotchi);
+        }
+        //TODO check slot number
     }
 
     @FXML
-    private void onBtnClick(ActionEvent actionEvent) throws IOException {
-        if (Exists==false) {
-            toNewTama(actionEvent);
-        } else {
-            toInGame(actionEvent);
-        }
+    private void slot1Click(ActionEvent actionEvent) throws IOException {
+        onBtnClick(actionEvent, 1);
+    }
+    @FXML
+    private void slot2Click(ActionEvent actionEvent) throws IOException {
+        onBtnClick(actionEvent, 2);
+    }
+    @FXML
+    private void slot3Click(ActionEvent actionEvent) throws IOException {
+        onBtnClick(actionEvent, 3);
+    }
+
+    @FXML
+    private void returnToSelection(ActionEvent actionEvent) throws IOException{
+        isDeathPane.setVisible(false);
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("../view/NewOrLoad.fxml"));
+        Pane root = (Pane) loader.load();
+        NewOrLoadController newOrLoadController = loader.getController();
+        newOrLoadController.setMusic(music);
+        Scene scene = (Scene) ((Node) actionEvent.getSource()).getScene();
+        scene.setRoot(root);
     }
 }
