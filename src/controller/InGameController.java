@@ -126,18 +126,7 @@ public class InGameController extends AbstractController implements PropertyChan
         updatePlaceText();
         statsDisplay();
         nameLabel.setText(resourceBundle.getString("name") +" : "+ tamagotchi.getName());
-    }
-
-    @Override
-    public void initialize(URL location, ResourceBundle resources) {
-        PlaceController pc = new PlaceController(false);
-        ArrayList<Place> places = pc.getPlaces(); //TODO faire quelque chose avec ca
-        TamagotchiDB tamagotchiDB = new TamagotchiDB();
-        ArrayList<Tamagotchi> selectSlotSaved = tamagotchiDB.selectSlotSaved();
-        System.out.println(selectSlotSaved);
-        if (!selectSlotSaved.isEmpty()) {
-            System.out.println(selectSlotSaved.get(0).getName());
-            switch (selectSlotSaved.get(0).getClass().getSimpleName()) {
+        switch (tamagotchi.getClass().getSimpleName()) {
             case "Dog":
                 try {
                     ivSprite.setImage(new Image(new FileInputStream("src/resources/tama_sprites/dog.png")));
@@ -162,6 +151,19 @@ public class InGameController extends AbstractController implements PropertyChan
                 } catch (FileNotFoundException e) { System.out.println(e.getMessage()); }
                 break;
             }
+    }
+
+    @Override
+    public void initialize(URL location, ResourceBundle resources) {
+      /*  PlaceController pc = new PlaceController(false);
+        ArrayList<Place> places = pc.getPlaces(); //TODO faire quelque chose avec ca
+        TamagotchiDB tamagotchiDB = new TamagotchiDB();
+        ArrayList<Tamagotchi> selectSlotSaved = tamagotchiDB.selectSlotSaved();
+        System.out.println(selectSlotSaved);
+        if (!selectSlotSaved.isEmpty()) {
+            System.out.println(selectSlotSaved.get(0).getName());
+            
+            }*/
             //init livingroom action animation
             backflipTransition = new RotateTransition();
             backflipTransition.setDuration(javafx.util.Duration.seconds(1));
@@ -185,7 +187,6 @@ public class InGameController extends AbstractController implements PropertyChan
             cleanlinessText.setText(resourceBundle.getString("cleanliness"));
             satietyText.setText(resourceBundle.getString("satiety"));
             quitButton.setText(resourceBundle.getString("quit"));
-        }
     }
 
    @FXML 
