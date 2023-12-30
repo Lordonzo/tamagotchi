@@ -83,6 +83,8 @@ public abstract class Animal extends Tamagotchi {
         routine = new Thread(){
             public void run() {
                 try{
+                    //Calling observer
+                        updateAllStats();
                     do{
                         sleep(NB_SEC);
                         decreaseStats(mentalDifficulty, cleaningDifficulty, energyDifficulty,satietyDifficulty);
@@ -140,10 +142,9 @@ public abstract class Animal extends Tamagotchi {
                         //Calling observer
                         updateAllStats();
 
-                        //
-                        if(cnt%1==0){
-                            save();
-                        }
+                        //save____________________________________
+                        save();
+                        //________________________________________
 
                     } while(running.get() && !closeGame.get());
                 
@@ -198,7 +199,7 @@ public abstract class Animal extends Tamagotchi {
     }
 
     protected void save(){
-        observer.propertyChange(new PropertyChangeEvent(this, "save", null,null));
+        observer.propertyChange(new PropertyChangeEvent(this, "saveGame", null,null));
     }
 
 }

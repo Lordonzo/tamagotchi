@@ -24,6 +24,7 @@ import javafx.scene.effect.ColorAdjust;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 import javafx.scene.media.MediaView;
+import models.Place;
 import models.database.TamagotchiDB;
 import models.tamagotchi.Animal;
 import models.tamagotchi.Cat;
@@ -35,7 +36,11 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 
 public class NewTamaController extends AbstractController {
-    private PlaceController pController = new PlaceController(true);
+    private PlaceController pController = new PlaceController(false);
+
+    private int slot;
+    private String type;
+    private String difficulty;
     @FXML
     private TextField tfName;
 
@@ -113,11 +118,11 @@ public class NewTamaController extends AbstractController {
             String valeurTextField = tfName.getText();
             lNom.setText("Nom : " + valeurTextField);
             // Récupérer le Radio Button coché
-            String typeSelectionne = mapType(selectedRadioButton);
-            lType.setText("Type : " + typeSelectionne);
+            type = mapType(selectedRadioButton);
+            lType.setText("Type : " + type);
             // Récupérer la difficulté
-            String valeurDifficulte = (String) cbDifficulte.getSelectionModel().getSelectedItem();
-            lDifficulte.setText("Difficulté : " + valeurDifficulte);
+            difficulty = (String) cbDifficulte.getSelectionModel().getSelectedItem();
+            lDifficulte.setText("Difficulté : " + difficulty);
             showConfirmationPane();
         }
     }
@@ -143,10 +148,9 @@ public class NewTamaController extends AbstractController {
 
     @FXML
     private void onOuiClick(ActionEvent actionEvent) throws IOException {
-        Tamagotchi testing = new Cat(tfName.getText(),  pController.getPlaces().get(1));
-        testing.setDifficulty(2);
+        Tamagotchi tamagotchi = createTamagotchi(tfName.getText(),slot,type, difficulty, pController.getPlaces().get(1));
         TamagotchiDB tamagotchiDB = new TamagotchiDB();
-        tamagotchiDB.add((Animal) testing,1);//TODO numéro du slot
+        tamagotchiDB.add((Animal) tamagotchi,slot);//TODO changer pour pouvoir faire le robot
         FXMLLoader loader = new FXMLLoader(getClass().getResource("../view/InGame.fxml"));
         Pane root = (Pane) loader.load();
         /*
@@ -197,9 +201,7 @@ public class NewTamaController extends AbstractController {
         // ce qu'il y avait avant, je teste des trucs
         InGameController inGameController = loader.getController();
         inGameController.setMusic(music);
-        testing.setObserver(inGameController);
-        testing.startRoutine();
-        inGameController.initTamagotchi(testing);
+        inGameController.initTamagotchi(tamagotchi);
         Scene scene = (Scene) ((Node) actionEvent.getSource()).getScene();
         scene.setRoot(root);
 
@@ -207,7 +209,9 @@ public class NewTamaController extends AbstractController {
         
     }
     
-
+    public void setSlot(int slot) {
+        this.slot = slot;
+    }
     @FXML
     private void onNonClick() {
         pConfirmation.setVisible(false);
@@ -224,13 +228,13 @@ public class NewTamaController extends AbstractController {
     
         switch (radioButton.getId()) {
             case "rbChat":
-                typeSelectionne = "Chat"; //Resource Bundle
+                typeSelectionne = "Cat"; //Resource Bundle
                 break;
             case "rbChien":
-                typeSelectionne = "Chien";
+                typeSelectionne = "Dog";
                 break;
             case "rbLapin":
-                typeSelectionne = "Lapin";
+                typeSelectionne = "Rabbit";
                 break;
             case "rbRobot":
                 typeSelectionne = "Robot";
@@ -256,11 +260,30 @@ public class NewTamaController extends AbstractController {
         }
     }
 
-    private Tamagotchi createTamagotchi(){
-        String name = tfName.getText();
-        float weight = 10;
-        return null;
-        //TODO
+    private Tamagotchi createTamagotchi(String _name,int _id,String type,String _difficulty,Place place){
+        Tamagotchi tamagotchi;
+        switch (type) {
+            case "Cat":
+                tamagotchi = new Cat(_name,place );
+                break;
+            case "Dog":
+                tamagotchi = new Dog(_name, place);
+                break;
+            case "Rabbit":
+                tamagotchi = new Rabbit(_name, place);
+                break;
+            case "Robot":
+                tamagotchi = new Robot(_name, place);
+                break;
+            default:
+                tamagotchi = new Cat(_name,place); //TODO trouver une meilleure solution
+                break;
+        }
+        tamagotchi.setDifficulty(mapDifficulte(_difficulty));
+        tamagotchi.setId(_id);
+        return tamagotchi;
+        
+        
     }
     @Override
     public void initialize(URL location, ResourceBundle resources) {

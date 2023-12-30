@@ -126,33 +126,27 @@ public class InGameController extends AbstractController implements PropertyChan
    public void initTamagotchi(Tamagotchi _tamagotchi) {
         this.tamagotchi = _tamagotchi;
         tamagotchi.setObserver(this);
-        updatePlaceText();
-        statsDisplay();
+        tamagotchi.startRoutine();
         nameLabel.setText(resourceBundle.getString("name") +" : "+ tamagotchi.getName());
+        updatePlaceText();
         switch (tamagotchi.getClass().getSimpleName()) {
             case "Dog":
                 try {
-                ((Animal)tamagotchi).startRoutine();
-                System.out.println("foezifizei");
                     ivSprite.setImage(new Image(new FileInputStream("src/resources/tama_sprites/dog.png")));
                 } catch (FileNotFoundException e) { System.out.println(e.getMessage()); }
                 break;
             case "Cat":
                 try {
-                    ((Animal)tamagotchi).startRoutine();
-                                System.out.println("faaaaaaaaaaaaaaaaaaai");
                     ivSprite.setImage(new Image(new FileInputStream("src/resources/tama_sprites/cat.png")));
                 } catch (FileNotFoundException e) { System.out.println(e.getMessage()); }
                 break;
             case "Rabbit":
                 try {
-                    ((Animal)tamagotchi).startRoutine();
                     ivSprite.setImage(new Image(new FileInputStream("src/resources/tama_sprites/rabbit.png")));
                 } catch (FileNotFoundException e) { System.out.println(e.getMessage()); }
                 break;
             case "Robot":
                 try {
-                    ((models.tamagotchi.Robot)tamagotchi).startRoutine();
                     ivSprite.setImage(new Image(new FileInputStream("src/resources/tama_sprites/robot.png")));
                 } catch (FileNotFoundException e) { System.out.println(e.getMessage()); }
                 break;
@@ -161,29 +155,32 @@ public class InGameController extends AbstractController implements PropertyChan
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-            //init livingroom action animation
-            backflipTransition = new RotateTransition();
-            backflipTransition.setDuration(javafx.util.Duration.seconds(1));
-            backflipTransition.setNode(ivSprite);
-            backflipTransition.setFromAngle(0);
-            backflipTransition.setToAngle(360);
-            backflipTransition.setCycleCount(1);
-            //init garden action animation
-            upAndDownTrasition = new TranslateTransition();
-            upAndDownTrasition.setDuration(javafx.util.Duration.millis(250));
-            upAndDownTrasition.setNode(ivSprite);
-            upAndDownTrasition.setByY(-50);
-            upAndDownTrasition.setCycleCount(4);
-            upAndDownTrasition.setAutoReverse(true);
+        //Database
+        tamagotchiDB = new TamagotchiDB();
+        
+        //init livingroom action animation
+        backflipTransition = new RotateTransition();
+        backflipTransition.setDuration(javafx.util.Duration.seconds(1));
+        backflipTransition.setNode(ivSprite);
+        backflipTransition.setFromAngle(0);
+        backflipTransition.setToAngle(360);
+        backflipTransition.setCycleCount(1);
+        //init garden action animation
+        upAndDownTrasition = new TranslateTransition();
+        upAndDownTrasition.setDuration(javafx.util.Duration.millis(250));
+        upAndDownTrasition.setNode(ivSprite);
+        upAndDownTrasition.setByY(-50);
+        upAndDownTrasition.setCycleCount(4);
+        upAndDownTrasition.setAutoReverse(true);
 
-            //Localization
-            resourceBundle = ResourceBundle.getBundle("resources/language/Text",Locale.FRENCH);
-            //TODO changer en fonction des options
-            healthText.setText(resourceBundle.getString("health"));
-            energyText.setText(resourceBundle.getString("energy"));
-            cleanlinessText.setText(resourceBundle.getString("cleanliness"));
-            satietyText.setText(resourceBundle.getString("satiety"));
-            quitButton.setText(resourceBundle.getString("quit"));
+        //Localization
+        resourceBundle = ResourceBundle.getBundle("resources/language/Text",Locale.FRENCH);
+        //TODO changer en fonction des options
+        healthText.setText(resourceBundle.getString("health"));
+        energyText.setText(resourceBundle.getString("energy"));
+        cleanlinessText.setText(resourceBundle.getString("cleanliness"));
+        satietyText.setText(resourceBundle.getString("satiety"));
+        quitButton.setText(resourceBundle.getString("quit"));
     }
 
    @FXML 
@@ -196,21 +193,6 @@ public class InGameController extends AbstractController implements PropertyChan
        Scene scene = (Scene) ((Node) actionEvent.getSource()).getScene();
        scene.setRoot(root);
    }
-
-   public void statsDisplay(){
-        try{
-            stat1.setProgress((double)tamagotchi.getCurrentHealth()/100);
-            stat2.setProgress((double)tamagotchi.getCurrentEnergy()/100);
-            stat3.setProgress((double)tamagotchi.getCurrentCleaning()/100);
-            stat4.setProgress((double)tamagotchi.getCurrentSatiety()/100);
-            updateWeather();
-          //  updateMental();
-            //TODO enveler
-        }
-        catch(Exception e){
-            e.printStackTrace();
-        }
-    }
 
    public void rightPlace(ActionEvent actionEvent) throws IOException{
         tamagotchi.goToRightPlace();
@@ -273,9 +255,6 @@ public class InGameController extends AbstractController implements PropertyChan
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
         try {
-            if(evt.getPropertyName().equals("statsDisplay")){
-                statsDisplay();//TODO enlever
-            }
             if(evt.getPropertyName().equals("die")){
                 afficherPaneDeMort((String)evt.getNewValue());
             }
@@ -308,7 +287,7 @@ public class InGameController extends AbstractController implements PropertyChan
             if(evt.getPropertyName().equals("updateWeigth")){
                 updateWeight((float)evt.getNewValue());
             }
-            if(evt.getPropertyName().equals("save")){
+            if(evt.getPropertyName().equals("saveGame")){
                 save();
             }
         }
@@ -320,8 +299,8 @@ public class InGameController extends AbstractController implements PropertyChan
 
 
     private void updateWeight(float _newValue) {
-        System.out.println("aaaaa");
         weightText.setText(resourceBundle.getString("weigth") +" : " +_newValue );
+        //TODO
     }
 
     private void updateStat1(int _newValue) {
@@ -399,6 +378,7 @@ public class InGameController extends AbstractController implements PropertyChan
         backflipTransition.setOnFinished(e -> enableAll());
         mediaPlayer.play();
     }
+
     private void gardenAction(){
         //TODO
         if(tamagotchi.play()){
@@ -406,10 +386,12 @@ public class InGameController extends AbstractController implements PropertyChan
             upAndDownTrasition.play();
         }
     }
+
     private void toiletAction(){
         //TODO clean sound
         tamagotchi.clean();
     }
+
     private void kitchenAction(){
         sound = new Media(new File("src/resources/sound/goofy_ahh_eating.mp3").toURI().toString());
         mediaPlayer = new MediaPlayer(sound);
@@ -468,12 +450,11 @@ public class InGameController extends AbstractController implements PropertyChan
     private void save(){
         if(tamagotchi.getClass().getSimpleName().equals("Robot")){
             //TODO
+            System.out.println("oijfse");
         }
         else{
-            tamagotchiDB.add((Animal)tamagotchi, tamagotchi.getId());
-            System.out.println("save donne");
+            tamagotchiDB.add(((Animal)tamagotchi), tamagotchi.getId());
         }
-
     }
 
 }

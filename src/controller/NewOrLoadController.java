@@ -97,11 +97,12 @@ public class NewOrLoadController extends AbstractController {
     }
 
     @FXML 
-    private void toNewTama(ActionEvent actionEvent) throws IOException {
+    private void toNewTama(ActionEvent actionEvent,int slot) throws IOException {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("../view/NewTama.fxml"));
         Pane root = (Pane) loader.load();
         NewTamaController newTamaController = loader.getController();
         newTamaController.setMusic(music);
+        newTamaController.setSlot(slot);
         Scene scene = (Scene) ((Node) actionEvent.getSource()).getScene();
         scene.setRoot(root);
     }
@@ -126,7 +127,7 @@ public class NewOrLoadController extends AbstractController {
         Tamagotchi tamagotchi = tamagotchiDB.selectById(slot);
         //TODO faire un choix pour reset la partie ou alors un autre bouton en desssous de chaque parties
         if (tamagotchi == null) {
-            toNewTama(actionEvent);
+            toNewTama(actionEvent,slot);
         } else {
             toInGame(actionEvent,tamagotchi);
         }
