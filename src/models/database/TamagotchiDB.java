@@ -193,6 +193,39 @@ public class TamagotchiDB extends AbstractDB {
 
     /**
      * 
+     */
+    public void add(Robot robot, int slot) {
+        try (Connection connection = this.loadConnection();) {
+            freeSlot(slot);
+            PreparedStatement statement = connection.prepareStatement("INSERT INTO tamagotchi (name, dateBirth, lastTimeChanged, health, energy, satiety, weightT, cleanliness, mentalState, animalType, currentPlace, slotSaved, difficulty) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+            statement.setString(1, robot.getName());
+            statement.setTimestamp(2, Timestamp.valueOf(LocalDateTime.now()));
+            statement.setTimestamp(3, Timestamp.valueOf(LocalDateTime.now()));
+            statement.setInt(4, robot.getCurrentHealth());
+            statement.setInt(5, robot.getCurrentEnergy());
+            statement.setInt(6, robot.getCurrentSatiety());
+            statement.setFloat(7, robot.getCurrentWeight());
+            statement.setInt(8, robot.getCurrentCleaning());
+            statement.setInt(9, robot.getCurrentMental());
+            statement.setString(10, robot.getClass().getSimpleName());
+            statement.setInt(11, robot.getCurrentPlace().getId());
+            statement.setInt(12, slot);
+            statement.setInt(13, robot.getOverallDifficulty());
+            // TODO Slot pris + libération du slot si y'a
+            statement.executeUpdate();
+
+            statement = connection.prepareStatement("SELECT id FROM tamagotchi WHERE name=?");
+            statement.setString(1, robot.getName());
+            ResultSet result = statement.executeQuery();
+            robot.setId(result.getInt(1));
+            connection.close();
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+    }
+
+    /**
+     * 
      * @param slotTaken
      */
     private void freeSlot(int slotTaken) {
