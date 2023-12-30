@@ -46,6 +46,7 @@ import javafx.scene.layout.Pane;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import javafx.scene.media.MediaView;
+import javafx.scene.robot.Robot;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import models.Place;
@@ -64,6 +65,7 @@ public class InGameController extends AbstractController implements PropertyChan
     private Media sound;
     private MediaPlayer mediaPlayer;
     private ResourceBundle resourceBundle;
+    private TamagotchiDB tamagotchiDB;
     @FXML
     //Health
     private ProgressBar stat1;
@@ -123,30 +125,34 @@ public class InGameController extends AbstractController implements PropertyChan
 
    public void initTamagotchi(Tamagotchi _tamagotchi) {
         this.tamagotchi = _tamagotchi;
+        tamagotchi.setObserver(this);
         updatePlaceText();
         statsDisplay();
         nameLabel.setText(resourceBundle.getString("name") +" : "+ tamagotchi.getName());
         switch (tamagotchi.getClass().getSimpleName()) {
             case "Dog":
                 try {
+                ((Animal)tamagotchi).startRoutine();
+                System.out.println("foezifizei");
                     ivSprite.setImage(new Image(new FileInputStream("src/resources/tama_sprites/dog.png")));
                 } catch (FileNotFoundException e) { System.out.println(e.getMessage()); }
                 break;
             case "Cat":
-                System.out.println(ivSprite.getImage());
                 try {
+                    ((Animal)tamagotchi).startRoutine();
+                                System.out.println("faaaaaaaaaaaaaaaaaaai");
                     ivSprite.setImage(new Image(new FileInputStream("src/resources/tama_sprites/cat.png")));
                 } catch (FileNotFoundException e) { System.out.println(e.getMessage()); }
                 break;
             case "Rabbit":
-                System.out.println(ivSprite.getImage());
                 try {
+                    ((Animal)tamagotchi).startRoutine();
                     ivSprite.setImage(new Image(new FileInputStream("src/resources/tama_sprites/rabbit.png")));
                 } catch (FileNotFoundException e) { System.out.println(e.getMessage()); }
                 break;
             case "Robot":
-                System.out.println(ivSprite.getImage());
                 try {
+                    ((models.tamagotchi.Robot)tamagotchi).startRoutine();
                     ivSprite.setImage(new Image(new FileInputStream("src/resources/tama_sprites/robot.png")));
                 } catch (FileNotFoundException e) { System.out.println(e.getMessage()); }
                 break;
@@ -155,15 +161,6 @@ public class InGameController extends AbstractController implements PropertyChan
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-      /*  PlaceController pc = new PlaceController(false);
-        ArrayList<Place> places = pc.getPlaces(); //TODO faire quelque chose avec ca
-        TamagotchiDB tamagotchiDB = new TamagotchiDB();
-        ArrayList<Tamagotchi> selectSlotSaved = tamagotchiDB.selectSlotSaved();
-        System.out.println(selectSlotSaved);
-        if (!selectSlotSaved.isEmpty()) {
-            System.out.println(selectSlotSaved.get(0).getName());
-            
-            }*/
             //init livingroom action animation
             backflipTransition = new RotateTransition();
             backflipTransition.setDuration(javafx.util.Duration.seconds(1));
@@ -290,6 +287,7 @@ public class InGameController extends AbstractController implements PropertyChan
             }
             if(evt.getPropertyName().equals("updateStat1")){
                 updateStat1((int)evt.getNewValue());
+                System.out.println((int)evt.getNewValue());
             }
             if(evt.getPropertyName().equals("updateStat2")){
                 updateStat2((int)evt.getNewValue());
@@ -309,7 +307,9 @@ public class InGameController extends AbstractController implements PropertyChan
             }
             if(evt.getPropertyName().equals("updateWeigth")){
                 updateWeight((float)evt.getNewValue());
-                //TODO
+            }
+            if(evt.getPropertyName().equals("save")){
+                save();
             }
         }
         catch (Exception e) {
@@ -446,7 +446,7 @@ public class InGameController extends AbstractController implements PropertyChan
         }
         
 
-    public void afficherPaneDeMort(String _cause) {
+    private void afficherPaneDeMort(String _cause) {
         String deathMessage = "Votre tamagotchi est mort.";
         if(_cause.equals("Suicide")){
             deathMessage = resourceBundle.getString("deathSuicide");
@@ -459,10 +459,21 @@ public class InGameController extends AbstractController implements PropertyChan
         disableAll();
     }
 
-    public void no(){
+    private void no(){
         sound = new Media(new File("src/resources/sound/goofy_ahh_no.mp3").toURI().toString());
         mediaPlayer = new MediaPlayer(sound);
         mediaPlayer.play();
+    }
+
+    private void save(){
+        if(tamagotchi.getClass().getSimpleName().equals("Robot")){
+            //TODO
+        }
+        else{
+            tamagotchiDB.add((Animal)tamagotchi, tamagotchi.getId());
+            System.out.println("save donne");
+        }
+
     }
 
 }

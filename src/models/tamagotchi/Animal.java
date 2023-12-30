@@ -137,9 +137,13 @@ public abstract class Animal extends Tamagotchi {
                         //________________________________________
 
 
-
                         //Calling observer
                         updateAllStats();
+
+                        //
+                        if(cnt%1==0){
+                            save();
+                        }
 
                     } while(running.get() && !closeGame.get());
                 
@@ -191,6 +195,10 @@ public abstract class Animal extends Tamagotchi {
         observer.propertyChange(new PropertyChangeEvent(this, "updateStat4", null, getCurrentSatiety()));
         observer.propertyChange(new PropertyChangeEvent(this, "updateMental", null, getMentalState()));
         observer.propertyChange(new PropertyChangeEvent(this, "updateWeight", null, getCurrentWeight()));
+    }
+
+    protected void save(){
+        observer.propertyChange(new PropertyChangeEvent(this, "save", null,null));
     }
 
 }

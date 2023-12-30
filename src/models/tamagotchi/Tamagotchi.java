@@ -125,6 +125,7 @@ public abstract class Tamagotchi {
         this.birthDate = birDateTime; // 3
         this.currentMental = mentalState; // 11
         this.difficulty = difficulty; // 14
+        setDifficulty(difficulty);
     }
 
     //pour le robot
@@ -142,6 +143,7 @@ public abstract class Tamagotchi {
         this.currentMental = mentalState; // 11
         this.currentMemory = currentMemory; // 7, memory=satiety
         this.difficulty = difficulty; // 14
+        setDifficulty(difficulty);
     }
     
     public boolean play() {

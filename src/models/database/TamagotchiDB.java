@@ -314,6 +314,7 @@ public class TamagotchiDB extends AbstractDB {
      * @param robot
      */
     public void add(Robot robot, int slot) {
+        //TODO comme pour l'animal
         try (Connection connection = this.loadConnection();) {
             //freeSlot(slot);
             PreparedStatement statement = connection.prepareStatement("INSERT INTO tamagotchi (name, dateBirth, lastTimeChanged, health, energy, satiety, weightT, cleanliness, mentalState, animalType, currentPlace, slotSaved, difficulty) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");

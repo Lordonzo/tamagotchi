@@ -18,6 +18,7 @@ import javafx.scene.layout.Pane;
 import models.Place;
 import models.database.PlaceDB;
 import models.database.TamagotchiDB;
+import models.tamagotchi.Animal;
 import models.tamagotchi.Tamagotchi;
 
 public class NewOrLoadController extends AbstractController {
@@ -68,21 +69,18 @@ public class NewOrLoadController extends AbstractController {
                         
                         break;
                 }
-                if(tamagotchi.getId()==1){
-                    try {
-                        slot1Btn.setImage(new Image(new FileInputStream(path)));
-                    } catch (FileNotFoundException e) { System.out.println(e.getMessage()); }
+                try {
+                    if(tamagotchi.getId()==1){
+                            slot1Btn.setImage(new Image(new FileInputStream(path)));
+                    }
+                    else if(tamagotchi.getId() == 2){
+                        slot2Btn.setImage(new Image(new FileInputStream(path)));
+                    }
+                    else if(tamagotchi.getId() == 3){
+                        slot3Btn.setImage(new Image(new FileInputStream(path)));
+                    }
                 }
-                else if(tamagotchi.getId() == 2){
-                    try {
-                    slot2Btn.setImage(new Image(new FileInputStream(path)));
-                } catch (FileNotFoundException e) { System.out.println(e.getMessage()); }
-                }
-                else if(tamagotchi.getId() == 3){
-                    try {
-                    slot3Btn.setImage(new Image(new FileInputStream(path)));
-                } catch (FileNotFoundException e) { System.out.println(e.getMessage()); }
-                }
+                catch (FileNotFoundException e) { System.out.println(e.getMessage()); }
 
             }
         }
@@ -114,7 +112,6 @@ public class NewOrLoadController extends AbstractController {
             Pane root = (Pane) loader.load();
             InGameController inGameController = loader.getController();
             inGameController.initTamagotchi(tamagotchi);
-            tamagotchi.setObserver(inGameController);
             inGameController.setMusic(music);
             Scene scene = (Scene) ((Node) actionEvent.getSource()).getScene();
             scene.setRoot(root);
