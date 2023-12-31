@@ -61,10 +61,11 @@ public abstract class Tamagotchi {
 
 
     protected Thread routine;
-    protected Thread bedroomActionRoutine = new Thread();
+    protected Thread bedroomActionRoutine = null;
     protected final AtomicBoolean closeGame = new AtomicBoolean(false);
     protected final AtomicBoolean running = new AtomicBoolean(false);
     protected final AtomicBoolean bedroomActionRunning = new AtomicBoolean(false);
+    protected final AtomicBoolean bedroomActionStop = new AtomicBoolean(true);
 
     //To call some event after x loop
     protected int cnt;
@@ -388,44 +389,67 @@ public abstract class Tamagotchi {
         observer.propertyChange(new PropertyChangeEvent(this, "updateStat3", null, currentCleanliness));
     }
 
-    public boolean gardenAction(){
+    public void gardenAction(){
         if(gardenActionCd == 0){
+            observer.propertyChange(new PropertyChangeEvent(this, "gardenActionPrep", null, mentalState));
             if(mentalGain+currentMental > 100)currentMental = 100;
             else currentMental+=mentalGain;
             updateMentalState();
             observer.propertyChange(new PropertyChangeEvent(this, "UpdateMental", null, mentalState));
             gardenActionCd = new Random().nextInt(4,8);
-            return true;
         }
         else{
             observer.propertyChange(new PropertyChangeEvent(this, "no", null, null));
-            return false;
         }
     }
 
-    public void livingroomAction(){}
+    public void livingroomAction(){
+        observer.propertyChange(new PropertyChangeEvent(getTamagotchi(), "livingroomActionPrep", null, currentEnergy));
+    }
 
 
-
-    public void bedroomAction(){
+    static  int k = 0;
+    public void initBedroomActionRoutine(){
         try {
-            
-            bedroomActionRoutine = new Thread(){
+        bedroomActionRoutine = new Thread(){
                 public void run() {
                     try {
-                        bedroomActionRunning.set(true);
-                        stopRoutine();
-                        routine.join();
-                        System.out.println("ISALIVED routine : " + routine.isAlive());
-                        int i = 0;
-                        while(i < 5000){
-                            Thread.sleep(100);
-                            i+=100;
-                            //if actionButton is pressed
-                            if(bedroomActionRunning.get()) break;
+                        while(!closeGame.get()){
+                            int i = 0;
+                            if(!bedroomActionRunning.get() && !bedroomActionStop.get()){
+                                stopRoutine();
+                                routine.join();
+                                System.out.println("ISALIVED routine : " + routine.isAlive());
+                                /*while(i < 5000){
+                                    Thread.sleep(100);
+                                    i+=100;
+                                    //if actionButton is pressed
+                                    if(bedroomActionStop.get()) break;
+                                }*/
+                                //if actionButton is pressed
+                                if(!bedroomActionStop.get()){ //TODO trouver une autre solution car si le mec est assez rapide il peut cancel et recancel
+                                    currentEnergyIncrease(); //TODO changer le nom
+                                }
+                            }
+                            //if the button has been pressed again
+                            if(bedroomActionRunning.get() && bedroomActionStop.get()){
+                                System.out.println("FIN");
+                                
+                            }
                         }
-
-                        while(currentEnergy < 100 && !closeGame.get() && bedroomActionRunning.get()){
+                        }
+                    catch (Exception e) {
+                                // TODO: handle exception
+                                }    
+                }
+                public void currentEnergyIncrease(){
+                    try {
+                        observer.propertyChange(new PropertyChangeEvent(getTamagotchi(), "bedroomActionPrep", null, currentEnergy));
+                        bedroomActionRunning.set(true);
+                        int i = 0;
+                        k++;
+                        System.out.println(k);
+                        while(currentEnergy < 100 && !closeGame.get() && !bedroomActionStop.get()){
                             currentEnergy+=energyGain;
                             System.out.println("CURRENT ENERGY : " + currentEnergy);
                             observer.propertyChange(new PropertyChangeEvent(getTamagotchi(), "updateStat2", null, currentEnergy));
@@ -438,20 +462,18 @@ public abstract class Tamagotchi {
                                     Thread.sleep(100);
                                     i+=100;
                                     //if actionButton is pressed
-                                    if(!bedroomActionRunning.get()) break;
+                                    if(bedroomActionStop.get()) break;
                                 }
-                            }
-                        
-                            
                         }
-                    catch (Exception e) {
-                                // TODO: handle exception
-                                }
-                    bedroomActionRunning.set(false);
-                    System.out.println("FIN");
-                    observer.propertyChange(new PropertyChangeEvent(this, "enableButtons", null, null));
-                    startRoutine();
+                        bedroomActionStop.set(true);
+                        bedroomActionRunning.set(false);
+                        observer.propertyChange(new PropertyChangeEvent(this, "enableButtons", null, null));
+                        startRoutine();  
+                    } catch (InterruptedException e) {
+                        // TODO Auto-generated catch block
+                        e.printStackTrace();
                     }
+                }
                 
             };
             bedroomActionRoutine.setDaemon(true);
@@ -461,7 +483,20 @@ public abstract class Tamagotchi {
             e.printStackTrace();
         }
 
+
     }
+    public void bedroomAction(){
+        if(bedroomActionRoutine == null){
+            initBedroomActionRoutine();
+        }
+        bedroomActionStop.set(!bedroomActionStop.get());
+    }
+
+    public AtomicBoolean getBedroomActionStop() {
+        return bedroomActionStop;
+    }
+
+    //TODO USELESS I THINK
     public Thread getBedroomActionRoutine() {
         return bedroomActionRoutine;
     }

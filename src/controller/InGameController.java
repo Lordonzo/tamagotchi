@@ -267,6 +267,15 @@ public class InGameController extends AbstractController implements PropertyChan
             if(evt.getPropertyName().equals("no")){
                 no();
             }
+            if(evt.getPropertyName().equals("bedroomActionPrep")){
+                bedRoomActionPrep();
+            }
+            if(evt.getPropertyName().equals("livingroomActionPrep")){
+                livingroomActionPrep();
+            }
+            if(evt.getPropertyName().equals("gardenActionPrep")){
+                gardenActionPrep();
+            }
             if(evt.getPropertyName().equals("updateStat1")){
                 updateStat1((int)evt.getNewValue());
             }
@@ -317,56 +326,16 @@ public class InGameController extends AbstractController implements PropertyChan
     private void updateStat4(int _newValue) {
         stat4.setProgress((double)_newValue/100);
     }
-
-    @FXML
-    public void action(ActionEvent event) throws IOException{
-        switch (tamagotchi.getCurrentPlace().getCurrentPlace()) {
-            case BEDROOM:
-                bedroomAction();
-                break;
-            case LIVINGROOM:
-                livingRoomAction();
-                break;
-            case GARDEN:
-                gardenAction();
-                break;
-            case TOILET:
-                toiletAction();
-                break;
-            case KITCHEN:
-                kitchenAction();
-                break;
-            default:
-                //TODO error handling
-                break;
-        }
-    }
-
-
-    private void bedroomAction(){
+    private void bedRoomActionPrep(){
         //TODO au meme niveau que la musique
-        System.out.println("action Running : "+ tamagotchi.getBedroomActionRunning().get());
-        if(!tamagotchi.getBedroomActionRunning().get() && !actionButton.isDisable()){
-            disableAll();
-            tamagotchi.getBedroomActionRunning().set(true);
-            actionButton.setDisable(false); 
-            sound = new Media(new File("src/resources/sound/goofy_ahh_sleeping.mp3").toURI().toString());
-            mediaPlayer = new MediaPlayer(sound);
-            mediaPlayer.play();
-            tamagotchi.bedroomAction();
-        }
-        else{
-            System.out.println("TIMEOUT");
-            tamagotchi.setBedroomActionRunning(false);
-            actionButton.setDisable(false);
-            
-        }
+        sound = new Media(new File("src/resources/sound/goofy_ahh_sleeping.mp3").toURI().toString());
+        mediaPlayer = new MediaPlayer(sound);
+        mediaPlayer.play();
+        disableAll();
+        actionButton.setDisable(false); 
     }
-    /**
-     * DO A BACKFLIP
-     */
-    private void livingRoomAction(){
-        //play a random duration backflip animation
+
+    private void livingroomActionPrep(){
         actionButton.setDisable(true);
         double random = new Random().nextInt(500,1500);
         backflipTransition.setDuration(javafx.util.Duration.millis(random));
@@ -378,25 +347,42 @@ public class InGameController extends AbstractController implements PropertyChan
         mediaPlayer.play();
     }
 
-    private void gardenAction(){
-        //TODO
-        if(tamagotchi.gardenAction()){
-            //animation
-            upAndDownTrasition.play();
-        }
+    private void gardenActionPrep(){
+        upAndDownTrasition.play();
     }
-
-    private void toiletAction(){
-        //TODO clean sound
-        tamagotchi.toiletAction();
-    }
-
-    private void kitchenAction(){
+    
+    private void kitchenActionPrep(){
         sound = new Media(new File("src/resources/sound/goofy_ahh_eating.mp3").toURI().toString());
         mediaPlayer = new MediaPlayer(sound);
         mediaPlayer.play();
         tamagotchi.kitchenAction();
     }
+
+    @FXML
+    public void action(ActionEvent event) throws IOException{
+        switch (tamagotchi.getCurrentPlace().getCurrentPlace()) {
+            case BEDROOM:
+                tamagotchi.bedroomAction();
+                break;
+            case LIVINGROOM:
+                tamagotchi.livingroomAction();
+                break;
+            case GARDEN:
+                tamagotchi.gardenAction();
+                break;
+            case TOILET:
+                tamagotchi.toiletAction();
+                break;
+            case KITCHEN:
+                tamagotchi.kitchenAction();
+                break;
+            default:
+                //TODO error handling
+                break;
+        }
+    }
+
+    
 
     @FXML
     private void disableAll() {
@@ -429,7 +415,7 @@ public class InGameController extends AbstractController implements PropertyChan
         
 
     private void afficherPaneDeMort(String _cause) {
-        String deathMessage = "Votre tamagotchi est mort.";
+        String deathMessage = "Votre tamagotchi est mort."; //TODO par défaut
         if(_cause.equals("Suicide")){
             deathMessage = resourceBundle.getString("deathSuicide");
         }

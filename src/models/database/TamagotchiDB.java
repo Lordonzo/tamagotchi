@@ -267,7 +267,6 @@ public class TamagotchiDB extends AbstractDB {
      * @param animal
      */
     public void add(Animal animal, int slot) {
-        System.out.println("difficulty"+animal.getDifficulty());
         try (Connection connection = this.loadConnection();) {
             PreparedStatement isSlotExisting = connection.prepareStatement("SELECT 1 FROM tamagotchi WHERE slotSaved = "+slot+";");
             ResultSet resultSlot = isSlotExisting.executeQuery();

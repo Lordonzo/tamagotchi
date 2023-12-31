@@ -217,14 +217,15 @@ public abstract class Animal extends Tamagotchi {
 
     @Override
     public void bedroomAction(){
-        if((this.getSleepCd() != 0)){
+        if((this.getSleepCd() != 0 && !this.getBedroomActionRunning().get())){
             //don't start the sleep routine
             observer.propertyChange(new PropertyChangeEvent(getTamagotchi(), "no", null, currentEnergy));
         }
         else{
-            setSleepCd(2);
+            setSleepCd(5);
             super.bedroomAction();
         }
+
     }
 
     public void kitchenAction(){
