@@ -414,18 +414,11 @@ public abstract class Tamagotchi {
                 public void run() {
                     try {
                         while(!closeGame.get()){
+                            //if the method currentEnergy is finished
                             if(!bedroomActionRunning.get() && !bedroomActionStop.get()){
                                 stopRoutine();
                                 routine.join();
-                                System.out.println("ISALIVED routine : " + routine.isAlive());
-                                
-                                //if actionButton is pressed
                                 currentEnergyIncrease(); 
-                            }
-                            //if the button has been pressed again
-                            if(bedroomActionRunning.get() && bedroomActionStop.get()){
-                                System.out.println("FIN");
-                                
                             }
                         }
                         }
@@ -446,7 +439,6 @@ public abstract class Tamagotchi {
                         }
                         while(currentEnergy < 100 && !closeGame.get() && !bedroomActionStop.get()){
                             currentEnergy+=energyGain;
-                            System.out.println("CURRENT ENERGY : " + currentEnergy);
                             observer.propertyChange(new PropertyChangeEvent(getTamagotchi(), "updateStat2", null, currentEnergy));
                             if(currentEnergy > 100){
                                 currentEnergy = 100;
@@ -463,6 +455,7 @@ public abstract class Tamagotchi {
                         bedroomActionStop.set(true);
                         bedroomActionRunning.set(false);
                         observer.propertyChange(new PropertyChangeEvent(this, "enableButtons", null, null));
+                        observer.propertyChange(new PropertyChangeEvent(this, "updatePlaceText", null, null));
                         startRoutine();  
                     } catch (InterruptedException e) {
                         // TODO Auto-generated catch block

@@ -177,7 +177,7 @@ public class InGameController extends AbstractController implements PropertyChan
         upAndDownTrasition.setAutoReverse(true);
 
         //Localization
-        resourceBundle = ResourceBundle.getBundle("resources/language/Text",Locale.FRENCH);
+        resourceBundle = ResourceBundle.getBundle("resources/language/Text",Locale.FRENCH); //TODO avec les options
         //TODO changer en fonction des options
         healthText.setText(resourceBundle.getString("health"));
         energyText.setText(resourceBundle.getString("energy"));
@@ -268,7 +268,10 @@ public class InGameController extends AbstractController implements PropertyChan
                 no();
             }
             if(evt.getPropertyName().equals("bedroomActionPrep")){
-                bedRoomActionPrep();
+               bedRoomActionPrep();
+            }
+            if(evt.getPropertyName().equals("updatePlaceText")){
+               Platform.runLater(()->updatePlaceText());
             }
             if(evt.getPropertyName().equals("livingroomActionPrep")){
                 livingroomActionPrep();
@@ -331,11 +334,13 @@ public class InGameController extends AbstractController implements PropertyChan
     }
     private void bedRoomActionPrep(){
         //TODO au meme niveau que la musique
-        sound = new Media(new File("src/resources/sound/goofy_ahh_sleeping.mp3").toURI().toString());
-        mediaPlayer = new MediaPlayer(sound);
-        mediaPlayer.play();
-        disableAll();
-        actionButton.setDisable(false); 
+            sound = new Media(new File("src/resources/sound/goofy_ahh_sleeping.mp3").toURI().toString());
+            mediaPlayer = new MediaPlayer(sound);
+            mediaPlayer.play();
+            disableAll();
+            Platform.runLater(() -> actionButton.setText(resourceBundle.getString("wakeUp")));
+            actionButton.setDisable(false);
+        
     }
 
     private void livingroomActionPrep(){
@@ -402,22 +407,21 @@ public class InGameController extends AbstractController implements PropertyChan
     @FXML
     private void enableAll(){
         if(tamagotchi.getCurrentHealth() > 0){
-            System.out.println("ENABLE BUTTONS");
-        stat1.setDisable(false);
-        stat2.setDisable(false);
-        stat3.setDisable(false);
-        stat4.setDisable(false);
-        quitButton.setDisable(false);
-        glossaireButton.setDisable(false);
-        actionButton.setDisable(false);
-        rightPlaceButton.setDisable(false);
-        leftPlaceButton.setDisable(false);
-    }
+            stat1.setDisable(false);
+            stat2.setDisable(false);
+            stat3.setDisable(false);
+            stat4.setDisable(false);
+            quitButton.setDisable(false);
+            glossaireButton.setDisable(false);
+            actionButton.setDisable(false);
+            rightPlaceButton.setDisable(false);
+            leftPlaceButton.setDisable(false);
         }
+    }
         
 
     private void afficherPaneDeMort(String _cause) {
-        String deathMessage = "Votre tamagotchi est mort."; //TODO par défaut
+        String deathMessage = "Votre tamagotchi est mort."; //TODO changer par défaut
         if(_cause.equals("Suicide")){
             deathMessage = resourceBundle.getString("deathSuicide");
         }
@@ -435,7 +439,7 @@ public class InGameController extends AbstractController implements PropertyChan
         mediaPlayer.play();
     }
 
-    private void save(){
+    private void save(){//TODO cast dans la method save de tamagotchiDB
         if(tamagotchi.getClass().getSimpleName().equals("Robot")){
             tamagotchiDB.add(((models.tamagotchi.Robot)tamagotchi), tamagotchi.getId());
 
