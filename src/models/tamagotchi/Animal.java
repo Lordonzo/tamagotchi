@@ -229,6 +229,7 @@ public abstract class Animal extends Tamagotchi {
     }
 
     public void kitchenAction(){
+        observer.propertyChange(new PropertyChangeEvent(this, "kitchenActionPrep", null,null));
         if(currentSatiety+satietyGain <=100){
             currentSatiety+=satietyGain;
         }

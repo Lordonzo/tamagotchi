@@ -276,6 +276,9 @@ public class InGameController extends AbstractController implements PropertyChan
             if(evt.getPropertyName().equals("gardenActionPrep")){
                 gardenActionPrep();
             }
+            if(evt.getPropertyName().equals("kitchenActionPrep")){
+                kitchenActionPrep();
+            }
             if(evt.getPropertyName().equals("updateStat1")){
                 updateStat1((int)evt.getNewValue());
             }
@@ -350,12 +353,11 @@ public class InGameController extends AbstractController implements PropertyChan
     private void gardenActionPrep(){
         upAndDownTrasition.play();
     }
-    
+
     private void kitchenActionPrep(){
         sound = new Media(new File("src/resources/sound/goofy_ahh_eating.mp3").toURI().toString());
         mediaPlayer = new MediaPlayer(sound);
         mediaPlayer.play();
-        tamagotchi.kitchenAction();
     }
 
     @FXML

@@ -408,28 +408,19 @@ public abstract class Tamagotchi {
     }
 
 
-    static  int k = 0;
     public void initBedroomActionRoutine(){
         try {
         bedroomActionRoutine = new Thread(){
                 public void run() {
                     try {
                         while(!closeGame.get()){
-                            int i = 0;
                             if(!bedroomActionRunning.get() && !bedroomActionStop.get()){
                                 stopRoutine();
                                 routine.join();
                                 System.out.println("ISALIVED routine : " + routine.isAlive());
-                                /*while(i < 5000){
-                                    Thread.sleep(100);
-                                    i+=100;
-                                    //if actionButton is pressed
-                                    if(bedroomActionStop.get()) break;
-                                }*/
+                                
                                 //if actionButton is pressed
-                                if(!bedroomActionStop.get()){ //TODO trouver une autre solution car si le mec est assez rapide il peut cancel et recancel
-                                    currentEnergyIncrease(); //TODO changer le nom
-                                }
+                                currentEnergyIncrease(); 
                             }
                             //if the button has been pressed again
                             if(bedroomActionRunning.get() && bedroomActionStop.get()){
@@ -444,11 +435,15 @@ public abstract class Tamagotchi {
                 }
                 public void currentEnergyIncrease(){
                     try {
-                        observer.propertyChange(new PropertyChangeEvent(getTamagotchi(), "bedroomActionPrep", null, currentEnergy));
                         bedroomActionRunning.set(true);
+                        observer.propertyChange(new PropertyChangeEvent(getTamagotchi(), "bedroomActionPrep", null, currentEnergy));
                         int i = 0;
-                        k++;
-                        System.out.println(k);
+                        while(i < 5000){
+                                    Thread.sleep(100);
+                                    i+=100;
+                                    //if actionButton is pressed
+                                    if(bedroomActionStop.get()) break;
+                        }
                         while(currentEnergy < 100 && !closeGame.get() && !bedroomActionStop.get()){
                             currentEnergy+=energyGain;
                             System.out.println("CURRENT ENERGY : " + currentEnergy);
