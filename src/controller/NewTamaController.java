@@ -150,7 +150,14 @@ public class NewTamaController extends AbstractController {
     private void onOuiClick(ActionEvent actionEvent) throws IOException {
         Tamagotchi tamagotchi = createTamagotchi(tfName.getText(),slot,type, difficulty, pController.getPlaces().get(1));
         TamagotchiDB tamagotchiDB = new TamagotchiDB();
-        tamagotchiDB.add((Animal) tamagotchi,slot);//TODO changer pour pouvoir faire le robot
+        //TODO changer pour pouvoir faire le robot
+        if(type.equals("Robot")){
+            tamagotchiDB.add((Robot) tamagotchi,slot);
+        }
+        else{
+            tamagotchiDB.add((Animal) tamagotchi,slot);
+        }
+
         FXMLLoader loader = new FXMLLoader(getClass().getResource("../view/InGame.fxml"));
         Pane root = (Pane) loader.load();
         /*
@@ -264,22 +271,21 @@ public class NewTamaController extends AbstractController {
         Tamagotchi tamagotchi;
         switch (type) {
             case "Cat":
-                tamagotchi = new Cat(_name,place );
+                tamagotchi = new Cat(_name,place,mapDifficulte(_difficulty));
                 break;
             case "Dog":
-                tamagotchi = new Dog(_name, place);
+                tamagotchi = new Dog(_name, place,mapDifficulte(_difficulty));
                 break;
             case "Rabbit":
-                tamagotchi = new Rabbit(_name, place);
+                tamagotchi = new Rabbit(_name, place,mapDifficulte(_difficulty));
                 break;
             case "Robot":
-                tamagotchi = new Robot(_name, place);
+                tamagotchi = new Robot(_name, place,mapDifficulte(_difficulty));
                 break;
             default:
-                tamagotchi = new Cat(_name,place); //TODO trouver une meilleure solution
+                tamagotchi = new Cat(_name,place,mapDifficulte(_difficulty)); //TODO trouver une meilleure solution
                 break;
         }
-        tamagotchi.setDifficulty(mapDifficulte(_difficulty));
         tamagotchi.setId(_id);
         return tamagotchi;
         

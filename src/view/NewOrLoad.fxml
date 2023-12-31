@@ -48,14 +48,14 @@
             <Font size="35.0" />
          </font>
       </Text>
-      <StackPane fx:id="isDeathPane" layoutX="159.0" layoutY="125.0" prefHeight="454.0" prefWidth="787.0" style="-fx-border-color: black; -fx-background-color: white;" visible="false">
+      <StackPane fx:id="isDeathPane" layoutX="164.0" layoutY="183.0" prefHeight="396.0" prefWidth="782.0" style="-fx-border-color: black; -fx-background-color: white;" visible="false">
          <children>
-            <Button fx:id="returnToSelection" mnemonicParsing="false" onAction="#returnToSelection" text="Retour" />
-            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Le tamagotchi est mort, désolé !">
+            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Le tamagotchi est mort, désolé !" StackPane.alignment="TOP_CENTER">
                <font>
                   <Font size="25.0" />
                </font>
             </Text>
+            <Button fx:id="returnToSelection" mnemonicParsing="false" onAction="#returnToSelection" prefHeight="130.0" prefWidth="180.0" text="Retour" StackPane.alignment="BOTTOM_CENTER" />
          </children>
       </StackPane>
    </children>

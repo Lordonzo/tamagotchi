@@ -9,7 +9,7 @@ import models.Status.MentalState;
 
 public abstract class Animal extends Tamagotchi {
 
-    private int sleepCancel = 0;
+    private int sleepCd = 0;
 
     /**
      * init the animal and the adequate game routine
@@ -18,12 +18,15 @@ public abstract class Animal extends Tamagotchi {
      * @param _weight
      * @param place
      */
-    public Animal(String _nameString, Place place) {
-        super(_nameString, place);
+    public Animal(String _nameString, Place _place, int _difficulty) {
+        super(_nameString, _place,_difficulty);
     }
-    protected Animal(String _nameString,Place place,float MIN_STARTING_WEIGHT,float MAX_STARTING_WEIGHT){
-        this(_nameString,place);
-        setCurrentWeight(new Random().nextFloat(MIN_STARTING_WEIGHT,MAX_STARTING_WEIGHT));
+    protected Animal(String _nameString,Place _place,int _difficulty,float MIN_STARTING_WEIGHT,float MAX_STARTING_WEIGHT){
+        this(_nameString,_place,_difficulty);
+        //setcurrentweight and round it to two digit
+        float random = Math.round(new Random().nextFloat(MIN_STARTING_WEIGHT,MAX_STARTING_WEIGHT) *100);
+        random /=100;
+        setCurrentWeight(random);
     }
 
     /*//note de A : je teste des choses
@@ -39,6 +42,52 @@ public abstract class Animal extends Tamagotchi {
     }
 
 
+        /**
+     * decrease the mental,cleaning and energy stats
+     * call die routine if mental = 0
+     * @param _mental
+     * @param _cleaning
+     * @param _energy
+     */
+    protected void decreaseStats(int _mental,int _cleaning, int _energy, int _satiety){
+        if(currentEnergy-_energy < 0) currentEnergy = 0;
+        else currentEnergy-=_energy;
+        
+        if(currentCleanliness-_cleaning < 0) currentCleanliness = 0;
+        else currentCleanliness-=_cleaning;
+
+        if(currentSatiety-_satiety < 0)currentSatiety = 0;
+        else currentSatiety-=_satiety;
+
+        if(mean()<50){
+            if(currentMental-_mental < 0) {
+                currentHealth = 0;
+                currentMental = 0;
+                die("Suicide");
+            }
+            else currentMental-=_mental;
+        }
+        //Damages
+        if(currentHealth !=0){
+            int satiety = 0;
+            int clean = 0;
+            int energy = 0;
+            if(currentSatiety < 20){
+                if(currentSatiety < 10) satiety = 10;
+                else satiety = 5;
+            }
+            if(currentCleanliness < 20){
+                if(currentCleanliness < 10) clean=10;
+                else clean = 5;
+            }
+            if(energy < 20){
+                if(currentEnergy < 10) energy= 10;
+                else energy = 5;
+            }
+            decreaseHealth(satiety,clean,energy);
+        }
+
+    }
 
     /**
      * decrease the animal health if the conditions are met
@@ -47,7 +96,7 @@ public abstract class Animal extends Tamagotchi {
      * @param _cleaningLost
      * @param _energyLost
      */
-    public void decreaseHealth(int _satietyLost, int _cleaningLost, int _energyLost){
+    protected void decreaseHealth(int _satietyLost, int _cleaningLost, int _energyLost){
         if(currentSatiety <= 0){
             if(currentHealth-_satietyLost < 0) currentHealth = 0;
             else currentHealth-=_satietyLost;
@@ -124,14 +173,14 @@ public abstract class Animal extends Tamagotchi {
                         //________________________________________
 
 
-                        //sleepCanceled___________________________
-                        if(sleepCancel > 0){
-                            sleepCancel--;
+                        //sleepCd_________________________________
+                        if(sleepCd > 0){
+                            sleepCd--;
                         }
                         //________________________________________
                         //MentalCanceled__________________________
-                        if(mentalCancel> 0){
-                            mentalCancel--;
+                        if(gardenActionCd > 0){
+                            gardenActionCd--;
                         }
                         //________________________________________
                         //update Mental State_____________________
@@ -159,20 +208,26 @@ public abstract class Animal extends Tamagotchi {
         //stop the routine when the user kill the program with the X button
         routine.setDaemon(true);
     }
-    public int getSleepCancel() {
-        return sleepCancel;
+    public int getSleepCd() {
+        return sleepCd;
     }
-    public void setSleepCancel(int _sleepCancel) {
-        this.sleepCancel = _sleepCancel;
+    public void setSleepCd(int _sleepCd) {
+        this.sleepCd = _sleepCd;
     }
 
     @Override
-    public void startSleep(){
-        setSleepCancel(2);
-        super.startSleep();
+    public void bedroomAction(){
+        if((this.getSleepCd() != 0)){
+            //don't start the sleep routine
+            observer.propertyChange(new PropertyChangeEvent(getTamagotchi(), "no", null, currentEnergy));
+        }
+        else{
+            setSleepCd(2);
+            super.bedroomAction();
+        }
     }
-    @Override
-    public void eat(){
+
+    public void kitchenAction(){
         if(currentSatiety+satietyGain <=100){
             currentSatiety+=satietyGain;
         }
@@ -180,12 +235,22 @@ public abstract class Animal extends Tamagotchi {
             currentSatiety =100;
             setCurrentWeight(currentWeight+(currentWeight/10));
         }
-        observer.propertyChange(new PropertyChangeEvent(this, "statsDisplay", null,null));
+        observer.propertyChange(new PropertyChangeEvent(this, "updateStat4", null,currentSatiety));
     }
 
     private void starve(){
         if(currentSatiety < 20){      
             setCurrentWeight(currentWeight-(currentWeight/10));
+        }
+    }
+
+
+    
+    @Override
+    protected void increaseHealth(){
+        super.increaseHealth();
+        if(currentSatiety > 80){
+            healthInc();
         }
     }
 
@@ -196,11 +261,11 @@ public abstract class Animal extends Tamagotchi {
         observer.propertyChange(new PropertyChangeEvent(this, "updateStat4", null, getCurrentSatiety()));
         observer.propertyChange(new PropertyChangeEvent(this, "updateMental", null, getMentalState()));
         observer.propertyChange(new PropertyChangeEvent(this, "updateWeight", null, getCurrentWeight()));
+        observer.propertyChange(new PropertyChangeEvent(this, "updateWeather", null,null));
+
     }
 
-    protected void save(){
-        observer.propertyChange(new PropertyChangeEvent(this, "saveGame", null,null));
-    }
+
 
 }
 

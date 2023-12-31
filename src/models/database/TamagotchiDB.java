@@ -33,7 +33,7 @@ public class TamagotchiDB extends AbstractDB {
                 + "satiety INTEGER NOT NULL," // 7
                 + "weightT FLOAT NOT NULL," // 8
                 + "cleanliness INTEGER NOT NULL," // 9
-                + "animalType VARCHAR(255) NOT NULL," // 10
+                + "type VARCHAR(255) NOT NULL," // 10
                 + "mentalState INTEGER NOT NULL," // 11
                 + "currentPlace INTEGER NOT NULL REFERENCES place(id)," // 12
                 + "slotSaved INTEGER NOT NULL," // 13 -- 0 = pas affiché 
@@ -76,10 +76,10 @@ public class TamagotchiDB extends AbstractDB {
             if (result.getString(1) == null) return null;
             switch (result.getString(11)) {
                 case "Dog" :
-                    Tamagotchi dog = new Dog(result.getString("name"), allPlaces.get(result.getInt("currentPlace")+1));
-                    dog.setCurrentWeight(result.getFloat("weightT"));
+                   // Tamagotchi dog = new Dog(result.getString("name"), allPlaces.get(result.getInt("currentPlace")+1));
+                    //dog.setCurrentWeight(result.getFloat("weightT"));
                     //TODO other Tamagotchi constructor
-                    return dog;
+                    //return dog;
                 case "Cat" : //début ajouté par A
                    // Tamagotchi cat = new Cat(result.getString("name"), result.getFloat("weightT"), allPlaces.get(result.getInt("currentPlace")+1));
                    // return cat;
@@ -117,7 +117,7 @@ public class TamagotchiDB extends AbstractDB {
                 switch (result.getString(10)) {
                     case "Dog" : // No 4, No 10
                         Tamagotchi dog = new Dog(
-                            result.getInt(14), 
+                            result.getInt(1), 
                             result.getString(2), 
                             result.getTimestamp(3).toLocalDateTime(), 
                             result.getInt(5), 
@@ -210,7 +210,7 @@ public class TamagotchiDB extends AbstractDB {
                 PlaceController pc = new PlaceController(false);
                 ArrayList<Place> places = pc.getPlaces();
                 for (Place place : places) if (result.getInt("currentPlace") == place.getId()) p = place;
-                tamagotchi = createTamagotchi(_slot, result.getString("name"), result.getTimestamp("dateBirth").toLocalDateTime(), result.getTimestamp("lastTimeChanged").toLocalDateTime(),result.getInt("health"),result.getInt("energy"),result.getInt("satiety"),result.getFloat("weightT"),result.getInt("cleanliness"),result.getString("animalType"),result.getInt("mentalState"),p, result.getInt("slotSaved"),result.getInt("difficulty"));
+                tamagotchi = createTamagotchi(_slot, result.getString("name"), result.getTimestamp("dateBirth").toLocalDateTime(), result.getTimestamp("lastTimeChanged").toLocalDateTime(),result.getInt("health"),result.getInt("energy"),result.getInt("satiety"),result.getFloat("weightT"),result.getInt("cleanliness"),result.getString("type"),result.getInt("mentalState"),p, result.getInt("slotSaved"),result.getInt("difficulty"));
             }
             connection.close();
         } catch (SQLException e) {
@@ -239,12 +239,13 @@ public class TamagotchiDB extends AbstractDB {
      */
     public Tamagotchi createTamagotchi(int _id, String _name, LocalDateTime _dateBirth, LocalDateTime _lastTimeChanged,int _health,int _energy, int _satiety, float _weightT,int _cleanliness,String _type,int _mental,Place _place,int _slotTake, int _difficulty){
         Tamagotchi tamagotchi;
+        System.out.println("ENERGY in createTamagotchi : "+ _energy);
         switch (_type) {
             case "Cat":
                 tamagotchi = new Cat(_id,_name, _dateBirth,_health, _energy, _weightT,_cleanliness,_mental,_place,_slotTake,_satiety,_difficulty);
                 break;
             case "Robot":
-                tamagotchi = new Cat(_id,_name, _dateBirth,_health, _energy, _weightT,_cleanliness,_mental,_place,_slotTake,_satiety,_difficulty); //TODO changer pour le robot
+                tamagotchi = new Robot(_id,_name, _dateBirth,_health, _energy, _weightT,_cleanliness,_mental,_place,_slotTake,_satiety,_difficulty); //TODO changer pour le robot
                 break;
             case "Rabbit":
                 tamagotchi = new Rabbit(_id,_name, _dateBirth,_health, _energy, _weightT,_cleanliness,_mental,_place,_slotTake,_satiety,_difficulty);
@@ -254,7 +255,7 @@ public class TamagotchiDB extends AbstractDB {
                 break;
             default:
                 //TODO Error
-                tamagotchi = new Cat(_name,_place);
+                tamagotchi = null;
                 break;
         }
 
@@ -266,6 +267,7 @@ public class TamagotchiDB extends AbstractDB {
      * @param animal
      */
     public void add(Animal animal, int slot) {
+        System.out.println("difficulty"+animal.getDifficulty());
         try (Connection connection = this.loadConnection();) {
             PreparedStatement isSlotExisting = connection.prepareStatement("SELECT 1 FROM tamagotchi WHERE slotSaved = "+slot+";");
             ResultSet resultSlot = isSlotExisting.executeQuery();
@@ -276,7 +278,7 @@ public class TamagotchiDB extends AbstractDB {
                 update(animal, slot);
             }
             else{
-                String saveQuery = "INSERT INTO tamagotchi (id ,name, dateBirth, lastTimeChanged, health, energy, satiety, weightT, cleanliness, mentalState, animalType, currentPlace, slotSaved, difficulty) VALUES (?,?,?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)"+";";
+                String saveQuery = "INSERT INTO tamagotchi (id ,name, dateBirth, lastTimeChanged, health, energy, satiety, weightT, cleanliness, mentalState, type, currentPlace, slotSaved, difficulty) VALUES (?,?,?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)"+";";
                 PreparedStatement statement = connection.prepareStatement(saveQuery);
                 statement.setString(2, animal.getName());
                 statement.setTimestamp(3, Timestamp.valueOf(animal.getDateBirth()));
@@ -290,10 +292,9 @@ public class TamagotchiDB extends AbstractDB {
                 statement.setString(11, animal.getClass().getSimpleName());
                 statement.setInt(12, animal.getCurrentPlace().getId());
                 statement.setInt(13, slot);
-                statement.setInt(14, animal.getOverallDifficulty());
+                statement.setInt(14, animal.getDifficulty());
                 statement.executeUpdate();
             }
-            System.out.println("add : " + animal.getCurrentPlace().getCurrentPlace().name());
             
             // TODO Slot pris + libération du slot si y'a
 
@@ -313,31 +314,42 @@ public class TamagotchiDB extends AbstractDB {
      * @param robot
      */
     public void add(Robot robot, int slot) {
-        //TODO comme pour l'animal
-        try (Connection connection = this.loadConnection();) {
-            //freeSlot(slot);
-            PreparedStatement statement = connection.prepareStatement("INSERT INTO tamagotchi (name, dateBirth, lastTimeChanged, health, energy, satiety, weightT, cleanliness, mentalState, animalType, currentPlace, slotSaved, difficulty) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
-            statement.setString(1, robot.getName());
-            statement.setTimestamp(2, Timestamp.valueOf(robot.getDateBirth()));
-            statement.setTimestamp(3, Timestamp.valueOf(LocalDateTime.now()));
-            statement.setInt(4, robot.getCurrentHealth());
-            statement.setInt(5, robot.getCurrentBattery());
-            statement.setInt(6, robot.getCurrentMemory());
-            statement.setFloat(7, robot.getCurrentWeight());
-            statement.setInt(8, robot.getCurrentCleaning());
-            statement.setInt(9, robot.getCurrentMental());
-            statement.setString(10, robot.getClass().getSimpleName());
-            statement.setInt(11, robot.getCurrentPlace().getId());
-            statement.setInt(12, slot);
-            statement.setInt(13, robot.getOverallDifficulty());
+       try (Connection connection = this.loadConnection();) {
+            PreparedStatement isSlotExisting = connection.prepareStatement("SELECT 1 FROM tamagotchi WHERE slotSaved = "+slot+";");
+            ResultSet resultSlot = isSlotExisting.executeQuery();
+            
+            //The slot is taken
+            if(resultSlot.next()){
+                connection.close();
+                update(robot, slot);
+            }
+            else{
+                String saveQuery = "INSERT INTO tamagotchi (id ,name, dateBirth, lastTimeChanged, health, energy, satiety, weightT, cleanliness, mentalState, type, currentPlace, slotSaved, difficulty) VALUES (?,?,?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)"+";";
+                PreparedStatement statement = connection.prepareStatement(saveQuery);
+                statement.setString(2, robot.getName());
+                statement.setTimestamp(3, Timestamp.valueOf(robot.getDateBirth()));
+                statement.setTimestamp(4, Timestamp.valueOf(LocalDateTime.now()));
+                statement.setInt(5, robot.getCurrentHealth());
+                statement.setInt(6, robot.getCurrentEnergy());
+                statement.setInt(7, robot.getCurrentSatiety());
+                statement.setFloat(8, robot.getCurrentWeight());
+                statement.setInt(9, robot.getCurrentCleaning());
+                statement.setInt(10, robot.getCurrentMental());
+                statement.setString(11, robot.getClass().getSimpleName());
+                statement.setInt(12, robot.getCurrentPlace().getId());
+                statement.setInt(13, slot);
+                statement.setInt(14, robot.getDifficulty());
+                statement.executeUpdate();
+            }
+            
             // TODO Slot pris + libération du slot si y'a
-            statement.executeUpdate();
 
-            statement = connection.prepareStatement("SELECT id FROM tamagotchi WHERE name=?");
-            statement.setString(1, robot.getName());
-            ResultSet result = statement.executeQuery();
-            robot.setId(result.getInt(1));
-            connection.close();
+
+            // statement = connection.prepareStatement("SELECT id FROM tamagotchi WHERE name=?");
+            // statement.setString(1, robot.getName());
+            // ResultSet result = statement.executeQuery();
+            // robot.setId(result.getInt(1));
+        connection.close();
         } catch (SQLException e) {
             System.out.println(e.getMessage());
         }
@@ -367,17 +379,17 @@ public class TamagotchiDB extends AbstractDB {
             statement.executeUpdate("UPDATE tamagotchi SET "
             + "name=\"" + animal.getName()+"\""
             + ", health=" + animal.getCurrentHealth()
-            // + ", dateBirth="+ Timestamp.valueOf(LocalDateTime.now()) //a changer
-            // + ", lastTimeChanged="+Timestamp.valueOf(LocalDateTime.now())
+            + ", dateBirth=\""+ Timestamp.valueOf(animal.getDateBirth())+"\"" 
+            + ", lastTimeChanged=\""+Timestamp.valueOf(LocalDateTime.now())+"\""
             + ", energy=" + animal.getCurrentEnergy()
             + ", satiety=" + animal.getCurrentSatiety() 
             + ", weightT=" + animal.getCurrentWeight()
             + ", cleanliness=" + animal.getCurrentCleaning()
-            + ", animalType=\"" + animal.getClass().getSimpleName()+"\""
+            + ", type=\"" + animal.getClass().getSimpleName()+"\""
             + ", mentalState=" + animal.getCurrentMental()
-            + ", currentPlace=" + animal.getCurrentPlace().getId() //SUS
+            + ", currentPlace=" + animal.getCurrentPlace().getId()
+            +", difficulty="+animal.getDifficulty()
             + " WHERE id=" + slot+";");
-            System.out.println("coool");
             connection.close();
         } catch (SQLException e) {
             System.out.println(e.getSQLState());
@@ -389,18 +401,22 @@ public class TamagotchiDB extends AbstractDB {
      * 
      * @param robot
      */
-    public void update(Robot robot) {
+    public void update(Robot robot,int slot) {
         try (Connection connection = this.loadConnection(); Statement statement = connection.createStatement();) {
             statement.executeUpdate("UPDATE tamagotchi SET "
-            + " health=" + robot.getCurrentHealth() 
-            + ", energy=" + robot.getCurrentBattery()
+            + "name=\"" + robot.getName()+"\""
+            + ", health=" + robot.getCurrentHealth()
+            + ", dateBirth=\""+ Timestamp.valueOf(robot.getDateBirth())+"\"" 
+            + ", lastTimeChanged=\""+Timestamp.valueOf(LocalDateTime.now())+"\""
+            + ", energy=" + robot.getCurrentEnergy()
             + ", satiety=" + robot.getCurrentMemory() 
             + ", weightT=" + robot.getCurrentWeight()
             + ", cleanliness=" + robot.getCurrentCleaning()
-            + ", physicalState=" + robot.getState().toString()
-            + ", mentalState=" + robot.getMentalState()
-            + ", currentPlace=" + robot.getCurrentPlace().getCurrentPlace()
-            + ", WHERE name=" + robot.getName());
+            + ", type=\"" + robot.getClass().getSimpleName()+"\""
+            + ", mentalState=" + robot.getCurrentMental()
+            + ", currentPlace=" + robot.getCurrentPlace().getId()
+            +", difficulty="+robot.getDifficulty()
+            + " WHERE id=" + slot+";");
             connection.close();
         } catch (SQLException e) {
             System.out.println(e.getSQLState());
@@ -415,10 +431,10 @@ public class TamagotchiDB extends AbstractDB {
         PlaceDB placeDB = new PlaceDB();
         ArrayList<Place> places = pc.getPlaces();
         database.createTable();
-        Animal dog = new Rabbit("cat",places.get(1));
+        Animal dog = new Rabbit("cat",places.get(1),1);
         dog.setCurrentHealth(0);
         database.add(dog,1);
-        dog = new Dog("doberman",places.get(2));
+        dog = new Dog("doberman",places.get(2),2);
         database.add(dog,2);
         //database.select();
         ArrayList<Tamagotchi> tamagotchis = new ArrayList<>();

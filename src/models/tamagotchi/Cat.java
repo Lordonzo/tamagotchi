@@ -15,8 +15,8 @@ public class Cat extends Animal {
      * @param _nameString
      * @param place
      */
-    public Cat(String _nameString, Place place) {
-        super(_nameString, place,2,7);
+    public Cat(String _nameString, Place place,int _difficulty) {
+        super(_nameString, place,_difficulty,2,7);
 
         try {
             image = new Image(new FileInputStream("resources/tama_sprites/cat.png"));

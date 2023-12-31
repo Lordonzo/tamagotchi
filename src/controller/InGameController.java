@@ -129,6 +129,9 @@ public class InGameController extends AbstractController implements PropertyChan
         tamagotchi.startRoutine();
         nameLabel.setText(resourceBundle.getString("name") +" : "+ tamagotchi.getName());
         updatePlaceText();
+        /*updateWeather();
+        updateMental(tamagotchi.getMentalState());
+        updateWeight(tamagotchi.getCurrentWeight());*/
         switch (tamagotchi.getClass().getSimpleName()) {
             case "Dog":
                 try {
@@ -266,7 +269,6 @@ public class InGameController extends AbstractController implements PropertyChan
             }
             if(evt.getPropertyName().equals("updateStat1")){
                 updateStat1((int)evt.getNewValue());
-                System.out.println((int)evt.getNewValue());
             }
             if(evt.getPropertyName().equals("updateStat2")){
                 updateStat2((int)evt.getNewValue());
@@ -299,7 +301,7 @@ public class InGameController extends AbstractController implements PropertyChan
 
 
     private void updateWeight(float _newValue) {
-        weightText.setText(resourceBundle.getString("weigth") +" : " +_newValue );
+        weightText.setText(resourceBundle.getString("weight") +" : " +_newValue );
         //TODO
     }
 
@@ -343,24 +345,21 @@ public class InGameController extends AbstractController implements PropertyChan
 
     private void bedroomAction(){
         //TODO au meme niveau que la musique
-        if(!tamagotchi.getSleepRunning().get()){
-            if(!tamagotchi.getClass().getSimpleName().equals("Robot"))
-            {
-                if((((Animal)tamagotchi).getSleepCancel() != 0)){
-                    //don't start the sleep routine
-                    no();
-                    return;
-                }
-            }
+        System.out.println("action Running : "+ tamagotchi.getBedroomActionRunning().get());
+        if(!tamagotchi.getBedroomActionRunning().get() && !actionButton.isDisable()){
             disableAll();
-            actionButton.setDisable(false);
+            tamagotchi.getBedroomActionRunning().set(true);
+            actionButton.setDisable(false); 
             sound = new Media(new File("src/resources/sound/goofy_ahh_sleeping.mp3").toURI().toString());
             mediaPlayer = new MediaPlayer(sound);
             mediaPlayer.play();
-            tamagotchi.startSleep();
+            tamagotchi.bedroomAction();
         }
         else{
-            tamagotchi.setSleepRunning(false);
+            System.out.println("TIMEOUT");
+            tamagotchi.setBedroomActionRunning(false);
+            actionButton.setDisable(false);
+            
         }
     }
     /**
@@ -381,7 +380,7 @@ public class InGameController extends AbstractController implements PropertyChan
 
     private void gardenAction(){
         //TODO
-        if(tamagotchi.play()){
+        if(tamagotchi.gardenAction()){
             //animation
             upAndDownTrasition.play();
         }
@@ -389,14 +388,14 @@ public class InGameController extends AbstractController implements PropertyChan
 
     private void toiletAction(){
         //TODO clean sound
-        tamagotchi.clean();
+        tamagotchi.toiletAction();
     }
 
     private void kitchenAction(){
         sound = new Media(new File("src/resources/sound/goofy_ahh_eating.mp3").toURI().toString());
         mediaPlayer = new MediaPlayer(sound);
         mediaPlayer.play();
-        tamagotchi.eat();
+        tamagotchi.kitchenAction();
     }
 
     @FXML
@@ -415,6 +414,7 @@ public class InGameController extends AbstractController implements PropertyChan
     @FXML
     private void enableAll(){
         if(tamagotchi.getCurrentHealth() > 0){
+            System.out.println("ENABLE BUTTONS");
         stat1.setDisable(false);
         stat2.setDisable(false);
         stat3.setDisable(false);
@@ -449,8 +449,8 @@ public class InGameController extends AbstractController implements PropertyChan
 
     private void save(){
         if(tamagotchi.getClass().getSimpleName().equals("Robot")){
-            //TODO
-            System.out.println("oijfse");
+            tamagotchiDB.add(((models.tamagotchi.Robot)tamagotchi), tamagotchi.getId());
+
         }
         else{
             tamagotchiDB.add(((Animal)tamagotchi), tamagotchi.getId());

@@ -27,7 +27,6 @@ public abstract class Tamagotchi {
     protected int energyDifficulty;
     protected int satietyDifficulty;
     protected final int rainDamage = 10;
-    protected int overallDifficulty = 1;
     protected int difficulty;
 
     //Gain
@@ -45,7 +44,6 @@ public abstract class Tamagotchi {
     protected int currentEnergy; // BATTERY ROBOT
     protected int currentSatiety; // MEMORY ROBOT
 
-    protected PhysicalState state;
     protected Place currentPlace;
 
     protected LocalDateTime dateBirth;
@@ -63,23 +61,23 @@ public abstract class Tamagotchi {
 
 
     protected Thread routine;
-    protected Thread sleepRoutine;
+    protected Thread bedroomActionRoutine = new Thread();
     protected final AtomicBoolean closeGame = new AtomicBoolean(false);
     protected final AtomicBoolean running = new AtomicBoolean(false);
-    protected final AtomicBoolean sleepRunning = new AtomicBoolean(false);
+    protected final AtomicBoolean bedroomActionRunning = new AtomicBoolean(false);
 
     //To call some event after x loop
     protected int cnt;
-    protected int mentalCancel = 0;
+    protected int gardenActionCd= 0;
+    protected final int weatherCnt = 6;
+    protected final int maxCnt = 10;
 
     protected PropertyChangeListener observer;
     protected Image image;
 
     protected final boolean DEBUG = false;
 
-    protected final int weatherCnt = 6;
-    protected final int maxCnt = 10;
-    protected final int sleepCnt = 2;
+
 
     
 
@@ -88,20 +86,21 @@ public abstract class Tamagotchi {
     /**
      * 
      */
-    public Tamagotchi(String _nameString, Place place) {
+    public Tamagotchi(String _nameString, Place place,int difficulty) {
         this.currentHealth = MAX_HEALTH_POINTS;
         this.currentEnergy = MAX_ENERGY;
         this.currentCleanliness = MAX_CLEAN;
         this.currentMental = MAX_MENTAL;
         this.currentSatiety = MAX_SATIETY;
-
-        this.state = PhysicalState.IN_SHAPE;
-        
+        this.mentalState = MentalState.HAPPY;
         this.name = _nameString;
         this.currentPlace = place;
+        this.difficulty = difficulty;
         dateBirth = LocalDateTime.now();
         //Weather random
-        weatherHandle();
+        currentPlace.setWeather(Weather.values()[new Random().nextInt(5)]);
+        setDifficulty(difficulty);
+
         
     }
 
@@ -128,6 +127,7 @@ public abstract class Tamagotchi {
         this.currentMental = mentalState; // 11
         this.difficulty = difficulty; // 14
         setDifficulty(difficulty);
+        updateMentalState();
     }
 
     //pour le robot
@@ -146,21 +146,7 @@ public abstract class Tamagotchi {
         this.currentMemory = currentMemory; // 7, memory=satiety
         this.difficulty = difficulty; // 14
         setDifficulty(difficulty);
-    }
-    
-    public boolean play() {
-        if(mentalCancel == 0){
-            if(mentalGain+currentMental > 100)currentMental = 100;
-            else currentMental+=mentalGain;
-            observer.propertyChange(new PropertyChangeEvent(this, "statsDisplay", null, null));
-            mentalCancel = new Random().nextInt(4,8);
-            return true;
-        }
-        else{
-            observer.propertyChange(new PropertyChangeEvent(this, "no", null, null));
-            return false;
-        }
-        
+        updateMentalState();
     }
 
     public int getNB_SEC(){
@@ -214,10 +200,9 @@ public abstract class Tamagotchi {
         }   
     }
 
-    public int getOverallDifficulty() {
-        return this.overallDifficulty;
+    public int getDifficulty() {
+        return difficulty;
     }
-
     public int getId() {
         return this.id;
     }
@@ -250,9 +235,7 @@ public abstract class Tamagotchi {
     public void setCurrentEnergy(int currentEnergy) {
         this.currentEnergy = currentEnergy;
     }
-    public PhysicalState getState() {
-        return state;
-    }
+
     public int getCurrentHealth() {
         return currentHealth;
     }
@@ -291,77 +274,25 @@ public abstract class Tamagotchi {
     protected Tamagotchi getTamagotchi(){
         return this;
     }
-    //________________________________________
-    /**
-     * increase currentEnergy
-     */
-    public void startSleep(){
-        try {
-            sleepRunning.set(true);
-            stopRoutine();
-            routine.join();
-            sleepRoutine = new Thread(){
-                public void run() {
-                    while(currentEnergy < 100 && !closeGame.get() && sleepRunning.get()){
-                        currentEnergy+=energyGain;
-                        observer.propertyChange(new PropertyChangeEvent(getTamagotchi(), "statsDisplay", null, null));
-                        if(currentEnergy > 100){
-                            currentEnergy = 100;
-                            break;
-                        }
-                        try {
-                            int i = 0;
-                            while(i < 5000){
-                                Thread.sleep(100);
-                                i+=100;
-                                //if actionButton is pressed
-                                if(!sleepRunning.get()) break;
-                            }
-                        }
-                        catch (Exception e) {
-                            // TODO: handle exception
-                            }
-                    }
-                }
-            };
-            sleepRoutine.setDaemon(true);
-            sleepRoutine.start();
+    //_______________________________________
 
-            //wait the sleep routine to finish and start the main routine
-            new Thread(){public void run(){
-                try {
-                    sleepRoutine.join();
-                    observer.propertyChange(new PropertyChangeEvent(this, "enableButtons", null, null));
-                    startRoutine();
-
-                } catch (InterruptedException e) {
-                    // TODO Auto-generated catch block
-                    e.printStackTrace();
-                }
-
-                }
-            }.start();
-        } catch (Exception e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        }
-    }
-
-    public AtomicBoolean getSleepRunning() {
-        return sleepRunning;
+    public AtomicBoolean getBedroomActionRunning() {
+        return bedroomActionRunning;
     }
     /**
-     * set sleepRunning
+     * set bedroomActionRunning
      * @param _boolean
      */
-    public void setSleepRunning(boolean _boolean){
-        sleepRunning.set(_boolean);
+    public void setBedroomActionRunning(boolean _boolean){
+        bedroomActionRunning.set(_boolean);
     }
+
+    
     //_________________________________________
 
     /**
      * set closeGame
-     * used to kill sleepRoutine and the main routine when the game is closed
+     * used to kill bedroomActionRoutine and the main routine when the game is closed
      * @param _boolean
      */
     public void setCloseGame(boolean _boolean){
@@ -373,84 +304,35 @@ public abstract class Tamagotchi {
      * @param _cause
      */
     public void die(String _cause){
-        System.out.println("L'animal est mort de : " +_cause);
         closeGame.set(true);
         currentHealth = 0;
         observer.propertyChange(new PropertyChangeEvent(this, "die", null, _cause));
     }
 
-    /**
-     * decrease the mental,cleaning and energy stats
-     * call die routine if mental = 0
-     * @param _mental
-     * @param _cleaning
-     * @param _energy
-     */
-    public void decreaseStats(int _mental,int _cleaning, int _energy, int _satiety){
-        if(currentEnergy-_energy < 0) currentEnergy = 0;
-        else currentEnergy-=_energy;
-        
-        if(currentCleanliness-_cleaning < 0) currentCleanliness = 0;
-        else currentCleanliness-=_cleaning;
 
-        if(currentSatiety-_satiety < 0)currentSatiety = 0;
-        else currentSatiety-=_satiety;
 
-        if(mean()<50){
-            if(currentMental-_mental < 0) {
-                currentHealth = 0;
-                currentMental = 0;
-                die("Suicide");
-            }
-            else currentMental-=_mental;
+    //public void decreaseHealth(int _satietyLost,int _cleaningLost,int _energyLost){}//TODO changer car pas la meme pour le robot
+
+    protected void increaseHealth(){
+        if(currentEnergy > 80){
+            healthInc();
         }
-        //Damages
-        if(currentHealth !=0){
-            int satiety = 0;
-            int clean = 0;
-            int energy = 0;
-            if(currentSatiety < 20){
-                if(currentSatiety < 10) satiety = 10;
-                else satiety = 5;
-            }
-            if(currentSatiety < 20){
-                if(currentSatiety < 10) clean=10;
-                else clean = 5;
-            }
-            if(energy < 20){
-                if(currentEnergy < 10) energy= 10;
-                else energy = 5;
-            }
-            decreaseHealth(satiety,clean,energy);
-        }
-
-    }
-
-    public void decreaseHealth(int _satietyLost,int _cleaningLost,int _energyLost){}//TODO changer car pas la meme pour le robot
-
-    public void increaseHealth(){
-        if(currentHealth< 100){
-            if(currentSatiety > 80){
-                if(currentHealth+healthGain >=100)
-                {
-                    currentHealth = 100;
-                    return;
-                }
-                else currentHealth+=healthGain;
-                if(currentHealth+healthGain >=100)
-                {
-                    currentHealth = 100;
-                    return;
-                }
-                else currentHealth+=healthGain;
-                if(currentHealth+healthGain >=100)
-                {
-                    currentHealth = 100;
-                }
-                else currentHealth+=healthGain;
-            }
+        if(currentCleanliness > 80){
+            healthInc();
         }
     }//TODO
+
+    /**
+     * increase currentHealth by healthGain
+     * check if the result is  <100
+     */
+    protected void healthInc(){
+        if(currentHealth+healthGain >=100){
+            currentHealth = 100;
+            return;
+        }
+        else currentHealth+=healthGain;
+    }
     /**
      * mean of stats
      * @return mean
@@ -476,6 +358,7 @@ public abstract class Tamagotchi {
      */
     public void weatherHandle(){
         currentPlace.setWeather(Weather.values()[new Random().nextInt(5)]);
+        observer.propertyChange(new PropertyChangeEvent(this, "updateWeather", null,null));
     }
 
 
@@ -491,17 +374,98 @@ public abstract class Tamagotchi {
             
     }
 
+    public void kitchenAction(){}
+
     /**
-     * increase currentSatiety
+     * increase currentCleanliness
      */
-    public void eat() {
-        if(currentSatiety+satietyGain <=100){
-            currentSatiety+=satietyGain;
+    public void toiletAction(){
+        if(currentCleanliness+cleaningGain <=100){
+            currentCleanliness+=cleaningGain;
         }
-        else{ currentSatiety =100;
-        }
-        observer.propertyChange(new PropertyChangeEvent(this, "statsDisplay", null, null));
+        else{ currentCleanliness =100;
+        }    
+        observer.propertyChange(new PropertyChangeEvent(this, "updateStat3", null, currentCleanliness));
     }
+
+    public boolean gardenAction(){
+        if(gardenActionCd == 0){
+            if(mentalGain+currentMental > 100)currentMental = 100;
+            else currentMental+=mentalGain;
+            updateMentalState();
+            observer.propertyChange(new PropertyChangeEvent(this, "UpdateMental", null, mentalState));
+            gardenActionCd = new Random().nextInt(4,8);
+            return true;
+        }
+        else{
+            observer.propertyChange(new PropertyChangeEvent(this, "no", null, null));
+            return false;
+        }
+    }
+
+    public void livingroomAction(){}
+
+
+
+    public void bedroomAction(){
+        try {
+            
+            bedroomActionRoutine = new Thread(){
+                public void run() {
+                    try {
+                        bedroomActionRunning.set(true);
+                        stopRoutine();
+                        routine.join();
+                        System.out.println("ISALIVED routine : " + routine.isAlive());
+                        int i = 0;
+                        while(i < 5000){
+                            Thread.sleep(100);
+                            i+=100;
+                            //if actionButton is pressed
+                            if(bedroomActionRunning.get()) break;
+                        }
+
+                        while(currentEnergy < 100 && !closeGame.get() && bedroomActionRunning.get()){
+                            currentEnergy+=energyGain;
+                            System.out.println("CURRENT ENERGY : " + currentEnergy);
+                            observer.propertyChange(new PropertyChangeEvent(getTamagotchi(), "updateStat2", null, currentEnergy));
+                            if(currentEnergy > 100){
+                                currentEnergy = 100;
+                                break;
+                            }
+                            i = 0;
+                                while(i < 5000){
+                                    Thread.sleep(100);
+                                    i+=100;
+                                    //if actionButton is pressed
+                                    if(!bedroomActionRunning.get()) break;
+                                }
+                            }
+                        
+                            
+                        }
+                    catch (Exception e) {
+                                // TODO: handle exception
+                                }
+                    bedroomActionRunning.set(false);
+                    System.out.println("FIN");
+                    observer.propertyChange(new PropertyChangeEvent(this, "enableButtons", null, null));
+                    startRoutine();
+                    }
+                
+            };
+            bedroomActionRoutine.setDaemon(true);
+            bedroomActionRoutine.start();
+        } catch (Exception e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+
+    }
+    public Thread getBedroomActionRoutine() {
+        return bedroomActionRoutine;
+    }
+
 
 
     public int getCurrentSatiety() {
@@ -523,17 +487,6 @@ public abstract class Tamagotchi {
         this.currentWeight = _currentWeight;
     }
 
-    /**
-     * increase currentCleanliness
-     */
-    public void clean(){
-        if(currentCleanliness+cleaningGain <=100){
-            currentCleanliness+=cleaningGain;
-        }
-        else{ currentCleanliness =100;
-        }
-        observer.propertyChange(new PropertyChangeEvent(this, "statsDisplay", null, null));
-    }
 
     protected void updateMentalState() {
         int mental = getCurrentMental();
@@ -550,8 +503,10 @@ public abstract class Tamagotchi {
             this.setMentalState(MentalState.DEPRESSED);
         }
     }
-
     
+    protected void save(){
+        observer.propertyChange(new PropertyChangeEvent(this, "saveGame", null,null));
+    }
 
     
 }

@@ -19,7 +19,6 @@ public class Robot extends Tamagotchi {
     //début ajouté par A
     private final int MIN_BATTERY = 100;
     private int currentBattery;
-    private int difficulty;
     //fin ajouté par A
 
     /**
@@ -29,8 +28,8 @@ public class Robot extends Tamagotchi {
      * @param _weight
      * @param place
      */
-    public Robot(String _nameString,Place place){
-        super(_nameString,place);
+    public Robot(String _nameString,Place _place,int _difficulty){
+        super(_nameString,_place,_difficulty);
         this.currentMemory = 0;
         setCurrentWeight(2000);
         try {
@@ -67,7 +66,7 @@ public class Robot extends Tamagotchi {
      * @param _memoryLost
      * @param _cleaningLost
      */
-    public void decreaseHealth(int _memoryLost, int _cleaningLost){
+    public void decreaseHealth(int _memoryLost,int _cleaningLost,int _energyLost){
         if(currentMemory >= MIN_MEMORY){
             if(currentHealth-_memoryLost < 0) currentHealth = 0;
             else currentHealth-=_memoryLost;
@@ -76,8 +75,20 @@ public class Robot extends Tamagotchi {
             if(currentHealth-_cleaningLost < 0) currentHealth = 0;
             else currentHealth-=_cleaningLost;
         }
+        if(currentEnergy <= 0){
+            if(currentHealth-_energyLost < 0) currentHealth = 0;
+            else currentHealth-=_energyLost;
+        }
         if(currentHealth <= 0){
-            die("Mal traitance.");
+            die("Mistreatement");
+        }
+    }
+
+    @Override
+    protected void increaseHealth(){
+        super.increaseHealth();
+        if(currentMemory < 20){
+            healthInc();
         }
     }
 
@@ -91,9 +102,28 @@ public class Robot extends Tamagotchi {
      * @param _energy
      * @param _memory
      */
-    public void decreaseStats(int _mental,int _cleaning, int _energy,int _memory){
+    public void updateStats(int _mental,int _cleaning, int _energy,int _memory){
         if(currentMemory+_memory > MIN_MEMORY) currentMemory = 100;
         else currentMemory+=_memory;
+        //Damages
+        if(currentHealth !=0){
+            int memory = 0;
+            int clean = 0;
+            int energy = 0;
+            if(currentMemory > 80){
+                if(currentMemory > 90) memory = 10;
+                else memory = 5;
+            }
+            if(currentCleanliness < 20){
+                if(currentCleanliness < 10) clean=10;
+                else clean = 5;
+            }
+            if(currentEnergy < 20){
+                if(currentEnergy < 10) energy= 10;
+                else energy = 5;
+            }
+            decreaseHealth(memory,clean,energy);
+        }
     }
 
     
@@ -104,7 +134,7 @@ public class Robot extends Tamagotchi {
                 try{
                     do{
                         sleep(NB_SEC);
-                        decreaseStats(mentalDifficulty, cleaningDifficulty, energyDifficulty,satietyDifficulty);
+                        updateStats(mentalDifficulty, cleaningDifficulty, energyDifficulty,satietyDifficulty);
                         if(DEBUG){
                             System.out.println("mean : " + mean());
                             System.out.println("currentCleaning :"+currentCleanliness);
@@ -138,9 +168,9 @@ public class Robot extends Tamagotchi {
 
 
                         //________________________________________
-                        //MentalCanceled__________________________
-                        if(mentalCancel> 0){
-                            mentalCancel--;
+                        //gardenActionCd__________________________
+                        if(gardenActionCd> 0){
+                            gardenActionCd--;
                         }
                         //________________________________________
                         //update Mental State_____________________
@@ -150,7 +180,10 @@ public class Robot extends Tamagotchi {
 
 
                         //Calling observer
-                        updateAllStats();                        
+                        updateAllStats();           
+                        
+                        //save____________________________________
+                        save();
 
                     } while(running.get() && !closeGame.get());
                 
@@ -167,12 +200,8 @@ public class Robot extends Tamagotchi {
     }
     
 
-    @Override
-    public void startSleep(){
-        super.startSleep();
-    }
-
     protected void updateAllStats(){
+        System.out.println(getCurrentCleaning());
         observer.propertyChange(new PropertyChangeEvent(this, "updateStat1", null, getCurrentHealth()));
         observer.propertyChange(new PropertyChangeEvent(this, "updateStat2", null, getCurrentEnergy()));
         observer.propertyChange(new PropertyChangeEvent(this, "updateStat3", null, getCurrentCleaning()));

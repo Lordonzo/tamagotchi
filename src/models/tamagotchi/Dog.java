@@ -16,8 +16,8 @@ public class Dog extends Animal {
      * @param _nameString
      * @param place
      */
-    public Dog(String _nameString, Place place) {
-        super(_nameString, place,4,15);
+    public Dog(String _nameString, Place place,int _difficulty) {
+        super(_nameString, place,_difficulty,4,15);
         try {
             image = new Image(new FileInputStream("resources/tama_sprites/dog.png"));
         } catch (FileNotFoundException e) {}

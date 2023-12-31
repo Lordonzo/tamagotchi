@@ -14,8 +14,8 @@ public class Rabbit extends Animal {
      * @param _nameString
      * @param place
      */
-    public Rabbit(String _nameString, Place place) {
-        super(_nameString, place,4,8);
+    public Rabbit(String _nameString, Place place,int _difficulty) {
+        super(_nameString, place,_difficulty,4,8);
         try {
             image = new Image(new FileInputStream("resources/tama_sprites/rabbit.png"));
         } catch (FileNotFoundException e) {}
