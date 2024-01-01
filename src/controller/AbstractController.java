@@ -30,7 +30,6 @@ public abstract class AbstractController implements Initializable {
      */
     protected boolean databaseHere() {
         File file = new File("src/resources/data/tamagotchi.db");
-        //System.out.println(file.exists());
         return file.exists();
     }
 
@@ -41,10 +40,7 @@ public abstract class AbstractController implements Initializable {
         PlaceController pController = new PlaceController(false);
         TamagotchiDB tamagotchiDB = new TamagotchiDB();
         tamagotchiDB.createTable();
-        tamagotchiDB.select();
         PlaceDB placeDB = new PlaceDB();
-        System.out.println(pController.getPlaces());
-        //pController.displayPlaces();
         placeDB.createTable(pController.getPlaces());
         pController.displayPlaces();
         OptionDB optionDB = new OptionDB();

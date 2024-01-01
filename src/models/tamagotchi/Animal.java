@@ -25,6 +25,7 @@ public abstract class Animal extends Tamagotchi {
      */
    public Animal(String _nameString, Place _place, int _difficulty) {
         super(_nameString, _place,_difficulty);
+        this.currentSatiety = MAX_SATIETY;
         setUIString("health","energy","cleanliness","satiety","sleep","wakeup","eat","play","clean","yipee");
     }
 

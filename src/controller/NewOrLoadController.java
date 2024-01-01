@@ -7,6 +7,7 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
 
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -43,47 +44,58 @@ public class NewOrLoadController extends AbstractController {
     public void initialize(URL location, ResourceBundle resources) {
         PlaceDB placeDB = new PlaceDB();
         ArrayList<Place> places = placeDB.select();
-
-
         tamagotchiDB = new TamagotchiDB();
-        tamagotchiDB.select();
         ArrayList<Tamagotchi> selectSlotSaved = tamagotchiDB.selectSlotSaved();
-        System.out.println(selectSlotSaved);
-        if (!selectSlotSaved.isEmpty()) {
-            Exists = true;
-            System.out.println(selectSlotSaved.get(0).getName());
-            for(Tamagotchi tamagotchi : selectSlotSaved){
-                String path = "";
-                switch (tamagotchi.getClass().getSimpleName()) {
-                    case "Dog":
-                        path = "src/resources/tama_sprites/dog.png";
-                        break;
-                    case "Cat":
-                        path = "src/resources/tama_sprites/cat.png";
-                        break;
-                    case "Rabbit":
-                        path = "src/resources/tama_sprites/rabbit.png";
-                        break;
-                    case "Robot":
-                        path = "src/resources/tama_sprites/robot.png";
-                        
-                        break;
-                }
-                try {
-                    if(tamagotchi.getSlot()==1){
-                        slot1Btn.setImage(new Image(new FileInputStream(path)));
-                    }
-                    else if(tamagotchi.getSlot() == 2){
-                        slot2Btn.setImage(new Image(new FileInputStream(path)));
-                    }
-                    else if(tamagotchi.getSlot() == 3){
-                        slot3Btn.setImage(new Image(new FileInputStream(path)));
-                    }
-                }
-                catch (FileNotFoundException e) { System.out.println(e.getMessage()); }
-
+        String path = "";
+        for(Tamagotchi tamagotchi : selectSlotSaved){
+            switch (tamagotchi.getClass().getSimpleName()) {
+            case "Dog":
+                path = "src/resources/tama_sprites/dog.png";
+                break;
+            case "Cat":
+                path = "src/resources/tama_sprites/cat.png";
+                break;
+            case "Rabbit":
+                path = "src/resources/tama_sprites/rabbit.png";
+                break;
+            case "Robot":
+                path = "src/resources/tama_sprites/robot.png";
+                break;
+            default:
+                path = "src/resources/tama_sprites/questionmark.jpg";
+                break;
             }
+            try {
+                if(tamagotchi.getSlot()==1){
+                    slot1Btn.setImage(new Image(new FileInputStream(path)));
+                }
+                else if(tamagotchi.getSlot() == 2){
+                    slot2Btn.setImage(new Image(new FileInputStream(path)));
+                }
+                else if(tamagotchi.getSlot() == 3){
+                    slot3Btn.setImage(new Image(new FileInputStream(path)));
+                }
+            }
+            catch (FileNotFoundException e) { System.out.println(e.getMessage()); }
+
         }
+    }
+    
+
+    private void setImageToNull(int _slot){
+        try{
+        if(_slot == 1){
+            slot1Btn.setImage(new Image(new FileInputStream("src/resources/tama_sprites/questionmark.jpg")));
+        }
+        else if(_slot == 2){
+            slot2Btn.setImage(new Image(new FileInputStream("src/resources/tama_sprites/questionmark.jpg")));
+        }
+        else if(_slot == 3){
+            slot3Btn.setImage(new Image(new FileInputStream("src/resources/tama_sprites/questionmark.jpg")));
+        }
+        }
+        catch(FileNotFoundException e) { System.out.println(e.getMessage()); }
+        
     }
 
     @FXML 
@@ -133,6 +145,12 @@ public class NewOrLoadController extends AbstractController {
         }
         //TODO check slot number
     }
+    private void onBtnDelete(ActionEvent actionEvent,int slot)throws IOException {
+        tamagotchiDB.delete(slot);
+        setImageToNull(slot);
+        //Platform.runLater(() -> init());
+        
+    }
 
     @FXML
     private void slot1Click(ActionEvent actionEvent) throws IOException {
@@ -145,6 +163,20 @@ public class NewOrLoadController extends AbstractController {
     @FXML
     private void slot3Click(ActionEvent actionEvent) throws IOException {
         onBtnClick(actionEvent, 3);
+    }
+
+
+    @FXML
+    private void slot1Delete(ActionEvent actionEvent) throws IOException {
+        onBtnDelete(actionEvent, 1);
+    }
+    @FXML
+    private void slot2Delete(ActionEvent actionEvent) throws IOException {
+        onBtnDelete(actionEvent, 2);
+    }
+    @FXML
+    private void slot3Delete(ActionEvent actionEvent) throws IOException {
+        onBtnDelete(actionEvent, 3);
     }
 
     @FXML

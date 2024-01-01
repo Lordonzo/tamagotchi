@@ -45,21 +45,6 @@ public class TamagotchiDB extends AbstractDB {
         }
     }
 
-    /**
-     * Select all rows in <b>tamagotchi</b> table
-     */
-    public void select() {
-        try (Connection connection = this.loadConnection(); Statement statement = connection.createStatement();) {
-            ResultSet result = statement.executeQuery("SELECT * FROM tamagotchi");
-            System.out.println("Tamagotchi SELECT: ");
-            //LocalDateTime dateBirth = result.getTimestamp(3).toLocalDateTime();
-            while (result.next()) for (int i=1; i<=result.getMetaData().getColumnCount(); i++) System.out.println(result.getMetaData().getColumnName(i) + ": " + result.getString(i));
-            //System.out.println(dateBirth.toString());
-            connection.close();
-        } catch (SQLException e) {
-            System.out.println(e.getMessage());
-        }
-    }
 
     /**
      * 
@@ -71,7 +56,6 @@ public class TamagotchiDB extends AbstractDB {
             statement.setString(1, name);
             ResultSet result = statement.executeQuery();
             for (int i=1; i<=result.getMetaData().getColumnCount(); i++) System.out.println(result.getMetaData().getColumnName(i) + ": " + result.getString(i));
-            System.out.println(result.getString(10));
             // TODO switches
             if (result.getString(1) == null) return null;
             switch (result.getString(11)) {
@@ -271,7 +255,6 @@ public class TamagotchiDB extends AbstractDB {
 
         }
         else{
-            System.out.println("save animal");
             add(((Animal)_tamagotchi), _tamagotchi.getId());
         }
     }
@@ -368,17 +351,12 @@ public class TamagotchiDB extends AbstractDB {
         }
     } //fin ajouté par A
 
-    /**
-     * 
-     * @param slotTaken
-     */
-    private void freeSlot(int slotTaken) {
-        try (Connection connection = this.loadConnection();) {
-            PreparedStatement statement = connection.prepareStatement("UPDATE tamagotchi SET slotSaved=0 WHERE slotSaved=?");
-            statement.setInt(1, slotTaken);
-            statement.executeUpdate();
+    public void delete(int _slot){
+         try (Connection connection = this.loadConnection(); Statement statement = connection.createStatement();) {
+            statement.executeUpdate("DELETE FROM `tamagotchi` WHERE slotSaved="+_slot+";");
             connection.close();
         } catch (SQLException e) {
+            System.out.println(e.getSQLState());
             System.out.println(e.getMessage());
         }
     }
@@ -402,7 +380,7 @@ public class TamagotchiDB extends AbstractDB {
             + ", mentalState=" + animal.getCurrentMental()
             + ", currentPlace=" + animal.getCurrentPlace().getId()
             +", difficulty="+animal.getDifficulty()
-            + " WHERE id=" + slot+";");
+            + " WHERE slotSaved=" + slot+";");
             connection.close();
         } catch (SQLException e) {
             System.out.println(e.getSQLState());
@@ -429,7 +407,7 @@ public class TamagotchiDB extends AbstractDB {
             + ", mentalState=" + robot.getCurrentMental()
             + ", currentPlace=" + robot.getCurrentPlace().getId()
             +", difficulty="+robot.getDifficulty()
-            + " WHERE id=" + slot+";");
+            + " WHERE slotSaved=" + slot+";");
             connection.close();
         } catch (SQLException e) {
             System.out.println(e.getSQLState());

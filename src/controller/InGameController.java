@@ -193,8 +193,6 @@ public class InGameController extends AbstractController implements PropertyChan
     }
     
     public void updateMental(MentalState _newMentalState){
-        System.out.println(_newMentalState.name());
-        System.out.println("eehpaizefoih");
         mentalText.setText(resourceBundle.getString(_newMentalState.name()));
     }
 
@@ -279,11 +277,10 @@ public class InGameController extends AbstractController implements PropertyChan
                 updateWeather();
             }
             if(evt.getPropertyName().equals("updateMental")){
-                System.out.println("pfouiuehzaopfihzueuf");
                 updateMental((MentalState)evt.getNewValue());
 
             }
-            if(evt.getPropertyName().equals("updateWeigth")){
+            if(evt.getPropertyName().equals("updateWeight")){
                 updateWeight((float)evt.getNewValue());
             }
             if(evt.getPropertyName().equals("saveGame")){
@@ -326,9 +323,10 @@ public class InGameController extends AbstractController implements PropertyChan
     }
 
     private void livingroomActionPrep(){
-        actionButton.setDisable(true);
+        disableAll();
         double random = new Random().nextInt(500,1500);
         backflipTransition.setDuration(javafx.util.Duration.millis(random));
+        backflipTransition.setNode(ivSprite);
         backflipTransition.play();
         sound = new Media(new File("src/resources/sound/goofy_ahh_backflipping.mp3").toURI().toString());
         mediaPlayer = new MediaPlayer(sound);
