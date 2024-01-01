@@ -14,8 +14,12 @@ import models.Status.Weather;
 
 public class Robot extends Tamagotchi {
     protected final int MIN_MEMORY = 100;
+    protected final int MAX_MEMORY = 0;
+    protected final int memoryGain = 10;
     protected int currentMemory;
     protected int memoryDifficulty;
+
+
     //début ajouté par A
     protected final int MIN_BATTERY = 100;
     protected int currentBattery;
@@ -30,7 +34,7 @@ public class Robot extends Tamagotchi {
      */
     public Robot(String _nameString,Place _place,int _difficulty){
         super(_nameString,_place,_difficulty);
-        this.currentMemory = 0;
+        this.currentMemory = MAX_MEMORY;
         setCurrentWeight(2000);
         setImage("src/resources/tama_sprites/robot.png");
         setUIString("health","energy","cleanliness","memory","charge","unplug","clear","play","clean","yipee");        
@@ -167,7 +171,7 @@ public void setDifficulty(int _difficulty) {
                         if(DEBUG){
                             System.out.println("mean : " + mean());
                             System.out.println("currentCleaning :"+currentCleanliness);
-                            System.out.println("currentSatiety :"+currentSatiety);
+                            System.out.println("currentMemory :"+currentMemory);
                             System.out.println("currentEnergy"+currentEnergy);
                             System.out.println("currentHealth :"+currentHealth);
                             System.out.println("currentMental:"+currentMental);
@@ -228,7 +232,21 @@ public void setDifficulty(int _difficulty) {
         routine.setDaemon(true);
     }
     
+    //ACTIONS__________________________________________________________________________
+    @Override
+    public void kitchenAction() {
+        observer.propertyChange(new PropertyChangeEvent(this, "kitchenActionPrep", null,null));
+        if(currentMemory-memoryGain > MAX_MEMORY){
+            currentMemory-=memoryGain;
+        }
+        else{
+            currentMemory =MAX_MEMORY;
+        }
+        observer.propertyChange(new PropertyChangeEvent(this, "updateStat4", null,getCurrentMemory()));
+    }
 
+
+    //_________________________________________________________________________________
     /**
      * call the observer to visually update the stats
      */
@@ -237,8 +255,10 @@ public void setDifficulty(int _difficulty) {
         observer.propertyChange(new PropertyChangeEvent(this, "updateStat2", null, getCurrentEnergy()));
         observer.propertyChange(new PropertyChangeEvent(this, "updateStat3", null, getCurrentCleaning()));
         observer.propertyChange(new PropertyChangeEvent(this, "updateStat4", null, getCurrentMemory()));
-        observer.propertyChange(new PropertyChangeEvent(this, "updateMental", null, getCurrentMental()));
+        observer.propertyChange(new PropertyChangeEvent(this, "updateMental", null, getMentalState()));
         observer.propertyChange(new PropertyChangeEvent(this, "updateWeight", null, getCurrentWeight()));
+        observer.propertyChange(new PropertyChangeEvent(this, "updateWeather", null, getCurrentWeight()));
+
     }
 
 

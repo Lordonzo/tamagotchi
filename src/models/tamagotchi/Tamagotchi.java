@@ -32,11 +32,11 @@ public abstract class Tamagotchi {
     protected int difficulty;
 
     //Gain
-    protected final int healthGain = 10;
-    protected final int energyGain = 15;
-    protected final int cleaningGain = 10;
-    protected final int mentalGain = 20;
-    protected final int satietyGain = 15;
+    protected final int HEALTH_GAIN = 10;
+    protected final int ENERGY_GAIN = 15;
+    protected final int CLEANLINESS_GAIN = 10;
+    protected final int MENTAL_GAIN = 20;
+    protected final int SATIETY_GAIN = 15;
 
     
     protected int id;
@@ -44,15 +44,13 @@ public abstract class Tamagotchi {
 
     protected int currentHealth;
     protected int currentEnergy;
-    protected int currentSatiety;
 
     protected Place currentPlace;
 
     protected LocalDateTime dateBirth;
     protected LocalDateTime lastTimeChanged;
     
-    protected int currentBattery;
-    protected int currentMemory;
+
     protected float currentWeight;
     protected int currentCleanliness;
 
@@ -105,7 +103,6 @@ public abstract class Tamagotchi {
         this.currentEnergy = MAX_ENERGY;
         this.currentCleanliness = MAX_CLEAN;
         this.currentMental = MAX_MENTAL;
-        this.currentSatiety = MAX_SATIETY;
         this.mentalState = MentalState.HAPPY;
         this.name = _nameString;
         this.currentPlace = place;
@@ -340,15 +337,15 @@ public abstract class Tamagotchi {
     }//TODO
 
     /**
-     * increase currentHealth by healthGain
+     * increase currentHealth by HEALTH_GAIN
      * check if the result is  <MAX_HEALTH_POINTS
      */
     protected void healthInc(){
-        if(currentHealth+healthGain >=MAX_HEALTH_POINTS){
+        if(currentHealth+HEALTH_GAIN >=MAX_HEALTH_POINTS){
             currentHealth = MAX_HEALTH_POINTS;
             return;
         }
-        else currentHealth+=healthGain;
+        else currentHealth+=HEALTH_GAIN;
     }
     /**
      * mean of stats
@@ -402,8 +399,8 @@ public abstract class Tamagotchi {
      * increase currentCleanliness
      */
     public void toiletAction(){
-        if(currentCleanliness+cleaningGain <=MAX_CLEAN){
-            currentCleanliness+=cleaningGain;
+        if(currentCleanliness+CLEANLINESS_GAIN <=MAX_CLEAN){
+            currentCleanliness+=CLEANLINESS_GAIN;
         }
         else{ currentCleanliness =MAX_CLEAN;
         }    
@@ -417,8 +414,8 @@ public abstract class Tamagotchi {
     public void gardenAction(){
         if(gardenActionCd == 0){
             observer.propertyChange(new PropertyChangeEvent(this, "gardenActionPrep", null, mentalState));
-            if(mentalGain+currentMental > MAX_MENTAL)currentMental = MAX_MENTAL;
-            else currentMental+=mentalGain;
+            if(MENTAL_GAIN+currentMental > MAX_MENTAL)currentMental = MAX_MENTAL;
+            else currentMental+=MENTAL_GAIN;
             updateMentalState();
             observer.propertyChange(new PropertyChangeEvent(this, "UpdateMental", null, mentalState));
             gardenActionCd = new Random().nextInt(4,8);
@@ -480,7 +477,7 @@ public abstract class Tamagotchi {
 
                         //increase currentEnergy until it's full or the game is closed or the actionButton has been pressed
                         while(currentEnergy < MAX_ENERGY && !closeGame.get() && !bedroomActionStop.get()){
-                            currentEnergy+=energyGain;
+                            currentEnergy+=ENERGY_GAIN;
                             observer.propertyChange(new PropertyChangeEvent(getTamagotchi(), "updateStat2", null, currentEnergy));
                             if(currentEnergy > MAX_ENERGY){
                                 currentEnergy = MAX_ENERGY;
@@ -539,13 +536,6 @@ public abstract class Tamagotchi {
 
 
 
-    public int getCurrentSatiety() {
-        return this.currentSatiety;
-    }
-
-    public void setCurrentSatiety(int _currentSatiety) {
-        this.currentSatiety = _currentSatiety;
-    }
 
     public float getCurrentWeight() {
         return this.currentWeight;

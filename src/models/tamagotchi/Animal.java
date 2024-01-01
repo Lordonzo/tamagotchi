@@ -11,6 +11,9 @@ public abstract class Animal extends Tamagotchi {
 
     private int sleepCd = 0;
     protected int satietyDifficulty;
+    protected int currentSatiety;
+    protected final int SATIETY_GAIN = 10;
+    protected final int MAX_SATIETY = 100;
 
 
     /**
@@ -123,6 +126,13 @@ public abstract class Animal extends Tamagotchi {
 
 
     
+    public int getCurrentSatiety() {
+        return this.currentSatiety;
+    }
+
+    public void setCurrentSatiety(int _currentSatiety) {
+        this.currentSatiety = _currentSatiety;
+    }
 
     /**
      * 
@@ -268,8 +278,8 @@ public abstract class Animal extends Tamagotchi {
     @Override
     public void kitchenAction(){
         observer.propertyChange(new PropertyChangeEvent(this, "kitchenActionPrep", null,null));
-        if(currentSatiety+satietyGain <=MAX_SATIETY){
-            currentSatiety+=satietyGain;
+        if(currentSatiety+SATIETY_GAIN <=MAX_SATIETY){
+            currentSatiety+=SATIETY_GAIN;
         }
         else{
             currentSatiety =MAX_SATIETY;

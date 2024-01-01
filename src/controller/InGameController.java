@@ -193,6 +193,8 @@ public class InGameController extends AbstractController implements PropertyChan
     }
     
     public void updateMental(MentalState _newMentalState){
+        System.out.println(_newMentalState.name());
+        System.out.println("eehpaizefoih");
         mentalText.setText(resourceBundle.getString(_newMentalState.name()));
     }
 
@@ -277,6 +279,7 @@ public class InGameController extends AbstractController implements PropertyChan
                 updateWeather();
             }
             if(evt.getPropertyName().equals("updateMental")){
+                System.out.println("pfouiuehzaopfihzueuf");
                 updateMental((MentalState)evt.getNewValue());
 
             }
