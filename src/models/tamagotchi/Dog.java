@@ -18,9 +18,7 @@ public class Dog extends Animal {
      */
     public Dog(String _nameString, Place place,int _difficulty) {
         super(_nameString, place,_difficulty,4,15);
-        try {
-            image = new Image(new FileInputStream("resources/tama_sprites/dog.png"));
-        } catch (FileNotFoundException e) {}
+        setImage("src/resources/tama_sprites/dog.png");
     }
 
     /*//note de A : je teste des trucs
@@ -35,5 +33,6 @@ public class Dog extends Animal {
     //int, String, LocalDateTime, int, int, int, float, int, int, Place, int
     public Dog(int id, String nameString, LocalDateTime birDateTime,LocalDateTime lastTimeChanged,int currentHealth, int currentEnergy, int currentCleanliness, int currentSatiety, float currentWeight, int mentalState, Place place, int slotSaved, int difficulty) {
         super(id, nameString, birDateTime,lastTimeChanged, currentHealth, currentEnergy, currentCleanliness, currentSatiety, currentWeight, mentalState, place, slotSaved, difficulty);
+        setImage("src/resources/tama_sprites/dog.png");
     }
 }

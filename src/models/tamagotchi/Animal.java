@@ -22,6 +22,7 @@ public abstract class Animal extends Tamagotchi {
      */
     public Animal(String _nameString, Place _place, int _difficulty) {
         super(_nameString, _place,_difficulty);
+        setUIString("health","energy","cleanliness","satiety","sleep","wakeup","eat","play","clean","yipee");
     }
     protected Animal(String _nameString,Place _place,int _difficulty,float MIN_STARTING_WEIGHT,float MAX_STARTING_WEIGHT){
         this(_nameString,_place,_difficulty);
@@ -29,6 +30,7 @@ public abstract class Animal extends Tamagotchi {
         float random = Math.round(new Random().nextFloat(MIN_STARTING_WEIGHT,MAX_STARTING_WEIGHT) *100);
         random /=100;
         setCurrentWeight(random);
+        setUIString("health","energy","cleanliness","satiety","sleep","wakeup","eat","play","clean","yipee");
     }
 
     /*//note de A : je teste des choses

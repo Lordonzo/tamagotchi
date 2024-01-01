@@ -127,33 +127,16 @@ public class InGameController extends AbstractController implements PropertyChan
         this.tamagotchi = _tamagotchi;
         tamagotchi.setObserver(this);
         tamagotchi.startRoutine();
+        ivSprite.setImage(tamagotchi.getImage());
+        //setting UI text
         nameLabel.setText(resourceBundle.getString("name") +" : "+ tamagotchi.getName());
+        
         updatePlaceText();
-        /*updateWeather();
-        updateMental(tamagotchi.getMentalState());
-        updateWeight(tamagotchi.getCurrentWeight());*/
-        switch (tamagotchi.getClass().getSimpleName()) {
-            case "Dog":
-                try {
-                    ivSprite.setImage(new Image(new FileInputStream("src/resources/tama_sprites/dog.png")));
-                } catch (FileNotFoundException e) { System.out.println(e.getMessage()); }
-                break;
-            case "Cat":
-                try {
-                    ivSprite.setImage(new Image(new FileInputStream("src/resources/tama_sprites/cat.png")));
-                } catch (FileNotFoundException e) { System.out.println(e.getMessage()); }
-                break;
-            case "Rabbit":
-                try {
-                    ivSprite.setImage(new Image(new FileInputStream("src/resources/tama_sprites/rabbit.png")));
-                } catch (FileNotFoundException e) { System.out.println(e.getMessage()); }
-                break;
-            case "Robot":
-                try {
-                    ivSprite.setImage(new Image(new FileInputStream("src/resources/tama_sprites/robot.png")));
-                } catch (FileNotFoundException e) { System.out.println(e.getMessage()); }
-                break;
-            }
+        healthText.setText(resourceBundle.getString(tamagotchi.stat1String));
+        energyText.setText(resourceBundle.getString(tamagotchi.stat2String));
+        cleanlinessText.setText(resourceBundle.getString(tamagotchi.stat3String));
+        satietyText.setText(resourceBundle.getString(tamagotchi.stat4String));
+        quitButton.setText(resourceBundle.getString("quit"));
     }
 
     @Override
@@ -179,11 +162,7 @@ public class InGameController extends AbstractController implements PropertyChan
         //Localization
         resourceBundle = ResourceBundle.getBundle("resources/language/Text",Locale.FRENCH); //TODO avec les options
         //TODO changer en fonction des options
-        healthText.setText(resourceBundle.getString("health"));
-        energyText.setText(resourceBundle.getString("energy"));
-        cleanlinessText.setText(resourceBundle.getString("cleanliness"));
-        satietyText.setText(resourceBundle.getString("satiety"));
-        quitButton.setText(resourceBundle.getString("quit"));
+
     }
 
    @FXML 
@@ -234,19 +213,19 @@ public class InGameController extends AbstractController implements PropertyChan
         String txt = "";
         switch (tamagotchi.getCurrentPlace().getCurrentPlace()) {
             case BEDROOM:
-                txt = resourceBundle.getString("sleep");           
+                txt = resourceBundle.getString(tamagotchi.bedRoomActionString);           
                 break;
             case LIVINGROOM:
-                txt = resourceBundle.getString("yipee");
+                txt = resourceBundle.getString(tamagotchi.livingroomActionString);
                 break;
             case TOILET:
-                txt = resourceBundle.getString("clean");
+                txt = resourceBundle.getString(tamagotchi.toiletActionString);
                 break;
             case GARDEN:
-                txt = resourceBundle.getString("play");
+                txt = resourceBundle.getString(tamagotchi.gardenActionString);
                 break;
             case KITCHEN:
-                txt = resourceBundle.getString("eat");
+                txt = resourceBundle.getString(tamagotchi.kitchenActionString);
                 break;
             default:
                 //TODO error
@@ -338,7 +317,7 @@ public class InGameController extends AbstractController implements PropertyChan
             mediaPlayer = new MediaPlayer(sound);
             mediaPlayer.play();
             disableAll();
-            Platform.runLater(() -> actionButton.setText(resourceBundle.getString("wakeUp")));
+            Platform.runLater(() -> actionButton.setText(resourceBundle.getString(tamagotchi.bedRoomActionStopString)));
             actionButton.setDisable(false);
         
     }

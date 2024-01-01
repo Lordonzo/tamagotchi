@@ -2,6 +2,8 @@ package models.tamagotchi;
 
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.security.Timestamp;
 import java.time.LocalDateTime;
 import java.util.Random;
@@ -41,8 +43,8 @@ public abstract class Tamagotchi {
     protected String name;
 
     protected int currentHealth;
-    protected int currentEnergy; // BATTERY ROBOT
-    protected int currentSatiety; // MEMORY ROBOT
+    protected int currentEnergy;
+    protected int currentSatiety;
 
     protected Place currentPlace;
 
@@ -77,6 +79,17 @@ public abstract class Tamagotchi {
     protected Image image;
 
     protected final boolean DEBUG = false;
+
+    public String stat1String;
+    public String stat2String;
+    public String stat3String;
+    public String stat4String;
+    public String bedRoomActionString;
+    public String bedRoomActionStopString;
+    public String kitchenActionString;
+    public String gardenActionString;
+    public String toiletActionString;
+    public String livingroomActionString;
 
 
 
@@ -131,6 +144,32 @@ public abstract class Tamagotchi {
         this.difficulty = difficulty; // 14
         setDifficulty(difficulty);
         updateMentalState();     
+    }
+
+    public void setUIString(String _stat1,String _stat2, String _stat3,String _stat4,String _bedroomAction, String _bedroomStop,String _kitchenAction,String _gardenAction,String _toiletAction, String _livingroomAction){
+        stat1String = _stat1;
+        stat2String = _stat2;
+        stat3String = _stat3;
+        stat4String = _stat4;
+        bedRoomActionString = _bedroomAction;
+        bedRoomActionStopString = _bedroomStop;
+        kitchenActionString = _kitchenAction;
+        gardenActionString = _gardenAction;
+        toiletActionString = _toiletAction;
+        livingroomActionString = _livingroomAction;
+
+    }
+
+    public Image getImage() {
+        return image;
+    }
+    public void setImage(String _image) {
+        try {
+            this.image = new Image(new FileInputStream(_image));
+        } catch (FileNotFoundException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
     }
 
     public int getNB_SEC(){

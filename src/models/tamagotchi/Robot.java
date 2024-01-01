@@ -32,9 +32,8 @@ public class Robot extends Tamagotchi {
         super(_nameString,_place,_difficulty);
         this.currentMemory = 0;
         setCurrentWeight(2000);
-        try {
-            image = new Image(new FileInputStream("resources/tama_sprites/robot.png"));
-        } catch (FileNotFoundException e) {}
+        setImage("src/resources/tama_sprites/robot.png");
+        setUIString("health","energy","cleanliness","memory","charge","unplug","clear","play","clean","yipee");        
         
     }
 
@@ -50,6 +49,8 @@ public class Robot extends Tamagotchi {
     public Robot(int id, String nameString, LocalDateTime birDateTime,LocalDateTime lastTimeChanged, int currentHealth, int currentEnergy, int currentCleanliness, int currentMemory, float currentWeight, int mentalState, Place place, int slotSaved, int difficulty) {
         super(id, nameString, birDateTime,lastTimeChanged, currentHealth, currentEnergy, currentCleanliness, currentWeight, mentalState, place, slotSaved, difficulty);
         this.currentMemory = currentMemory;
+        setUIString("health","energy","cleanliness","memory","charge","unplug","clear","play","clean","yipee");
+        setImage("src/resources/tama_sprites/robot.png");
     }
 
 @Override
@@ -159,6 +160,7 @@ public void setDifficulty(int _difficulty) {
         routine = new Thread(){
             public void run() {
                 try{
+                    updateAllStats();
                     do{
                         sleep(NB_SEC);
                         updateStats(mentalDifficulty, cleaningDifficulty, energyDifficulty,memoryDifficulty);

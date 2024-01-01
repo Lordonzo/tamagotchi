@@ -17,10 +17,7 @@ public class Cat extends Animal {
      */
     public Cat(String _nameString, Place place,int _difficulty) {
         super(_nameString, place,_difficulty,2,7);
-
-        try {
-            image = new Image(new FileInputStream("resources/tama_sprites/cat.png"));
-        } catch (FileNotFoundException e) {}
+        setImage("src/resources/tama_sprites/cat.png");
     }
 
     /*//note de A : je teste des trucs
@@ -34,6 +31,7 @@ public class Cat extends Animal {
     //modif par A : ajout difficulty
     public Cat(int id, String nameString, LocalDateTime birDateTime,LocalDateTime lastTimeChanged,int currentHealth, int currentEnergy, int currentCleanliness, int currentSatiety, float currentWeight, int mentalState, Place place, int slotSaved, int difficulty) {
         super(id, nameString, birDateTime,lastTimeChanged, currentHealth, currentEnergy, currentCleanliness, currentSatiety, currentWeight, mentalState, place, slotSaved, difficulty);
+            setImage("src/resources/tama_sprites/cat.png");
     }
     
 }
