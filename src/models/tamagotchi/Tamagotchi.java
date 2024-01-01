@@ -47,7 +47,7 @@ public abstract class Tamagotchi {
     protected Place currentPlace;
 
     protected LocalDateTime dateBirth;
-
+    protected LocalDateTime lastTimeChanged;
     
     protected int currentBattery;
     protected int currentMemory;
@@ -97,7 +97,8 @@ public abstract class Tamagotchi {
         this.name = _nameString;
         this.currentPlace = place;
         this.difficulty = difficulty;
-        dateBirth = LocalDateTime.now();
+        this.dateBirth = LocalDateTime.now();
+        this.lastTimeChanged = LocalDateTime.now();
         //Weather random
         currentPlace.setWeather(Weather.values()[new Random().nextInt(5)]);
         setDifficulty(difficulty);
@@ -115,39 +116,21 @@ public abstract class Tamagotchi {
      * @param state
      * @param place
      */
-    public Tamagotchi(int id, String nameString, LocalDateTime birDateTime, int currentHealth, int currentEnergy, float currentWeight, int currentCleanliness, int mentalState, Place place, int slotSaved, int difficulty) {
+    public Tamagotchi(int id, String nameString, LocalDateTime birDateTime,LocalDateTime lastTimeChanged, int currentHealth, int currentEnergy, int currentCleanliness, float currentWeight, int mentalState, Place place, int slotSaved, int difficulty) {
         this.id = id; // 1
+        this.name = nameString; // 2
+        this.dateBirth = birDateTime; // 3
+        this.lastTimeChanged = lastTimeChanged; // 4
         this.currentHealth = currentHealth; // 5
         this.currentEnergy = currentEnergy; // 6
-        this.currentCleanliness = currentCleanliness; // 9
-        this.name = nameString; // 2
-        this.currentWeight = currentWeight; // 8
+        this.currentCleanliness = currentCleanliness; // 7
+        this.currentWeight = currentWeight; // 9
+        this.currentMental = mentalState; // 11
         this.currentPlace = place; // 12
         this.slot = slotSaved; // 13
-        this.dateBirth = birDateTime; // 3
-        this.currentMental = mentalState; // 11
         this.difficulty = difficulty; // 14
         setDifficulty(difficulty);
-        updateMentalState();
-    }
-
-    //pour le robot
-    //ajouté par A
-    public Tamagotchi(int id, String nameString, LocalDateTime birDateTime, int currentHealth, int currentBattery, float currentWeight, int currentCleanliness, int mentalState, Place place, int slotSaved, int currentMemory, int difficulty) {
-        this.id = id; // 1
-        this.currentHealth = currentHealth; // 5
-        this.currentBattery = currentBattery; // 6, energy=battery
-        this.currentCleanliness = currentCleanliness; // 9
-        this.name = nameString; // 2
-        this.currentWeight = currentWeight; // 8
-        this.currentPlace = place; // 12
-        this.slot = slotSaved; // 13
-        this.dateBirth = birDateTime; // 3
-        this.currentMental = mentalState; // 11
-        this.currentMemory = currentMemory; // 7, memory=satiety
-        this.difficulty = difficulty; // 14
-        setDifficulty(difficulty);
-        updateMentalState();
+        updateMentalState();     
     }
 
     public int getNB_SEC(){

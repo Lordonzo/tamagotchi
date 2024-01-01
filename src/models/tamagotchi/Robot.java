@@ -47,8 +47,9 @@ public class Robot extends Tamagotchi {
     }*/
 
     //ajouté par A
-    public Robot(int id, String nameString, LocalDateTime birDateTime, int currentHealth, int currentBattery, float currentWeight, int currentCleanliness, int mentalState, Place place, int slotSaved, int currentMemory, int difficulty) {
-        super(id, nameString, birDateTime, currentHealth, currentBattery, currentWeight, currentCleanliness, mentalState, place, slotSaved, currentMemory, difficulty);
+    public Robot(int id, String nameString, LocalDateTime birDateTime,LocalDateTime lastTimeChanged, int currentHealth, int currentEnergy, int currentCleanliness, int currentMemory, float currentWeight, int mentalState, Place place, int slotSaved, int difficulty) {
+        super(id, nameString, birDateTime,lastTimeChanged, currentHealth, currentEnergy, currentCleanliness, currentWeight, mentalState, place, slotSaved, difficulty);
+        this.currentMemory = currentMemory;
     }
 
     public int getCurrentMemory() {
