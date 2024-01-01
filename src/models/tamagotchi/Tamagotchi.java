@@ -19,6 +19,7 @@ public abstract class Tamagotchi {
     protected final int MAX_SATIETY = 100;
     protected final int MAX_MENTAL = 100;
     protected final int NB_SEC = 1000;
+    protected final int BEDROOM_WAIT = 5000;
 
     //Difficulty
     protected int healthDifficulty;
@@ -301,11 +302,11 @@ public abstract class Tamagotchi {
 
     /**
      * increase currentHealth by healthGain
-     * check if the result is  <100
+     * check if the result is  <MAX_HEALTH_POINTS
      */
     protected void healthInc(){
-        if(currentHealth+healthGain >=100){
-            currentHealth = 100;
+        if(currentHealth+healthGain >=MAX_HEALTH_POINTS){
+            currentHealth = MAX_HEALTH_POINTS;
             return;
         }
         else currentHealth+=healthGain;
@@ -351,24 +352,33 @@ public abstract class Tamagotchi {
             
     }
 
+    /**
+     * perform the kitchen action
+     * override in sub classes
+     */
     public void kitchenAction(){}
 
     /**
+     * perfom the toilet action
      * increase currentCleanliness
      */
     public void toiletAction(){
-        if(currentCleanliness+cleaningGain <=100){
+        if(currentCleanliness+cleaningGain <=MAX_CLEAN){
             currentCleanliness+=cleaningGain;
         }
-        else{ currentCleanliness =100;
+        else{ currentCleanliness =MAX_CLEAN;
         }    
         observer.propertyChange(new PropertyChangeEvent(this, "updateStat3", null, currentCleanliness));
     }
 
+    /**
+     * perform the garden action
+     * increase currentMental
+     */
     public void gardenAction(){
         if(gardenActionCd == 0){
             observer.propertyChange(new PropertyChangeEvent(this, "gardenActionPrep", null, mentalState));
-            if(mentalGain+currentMental > 100)currentMental = 100;
+            if(mentalGain+currentMental > MAX_MENTAL)currentMental = MAX_MENTAL;
             else currentMental+=mentalGain;
             updateMentalState();
             observer.propertyChange(new PropertyChangeEvent(this, "UpdateMental", null, mentalState));
@@ -379,11 +389,20 @@ public abstract class Tamagotchi {
         }
     }
 
+    /**
+     * perform livingroom action
+     * call observer to do an backflip animation on the tamagotchi's sprite
+     */
     public void livingroomAction(){
         observer.propertyChange(new PropertyChangeEvent(getTamagotchi(), "livingroomActionPrep", null, currentEnergy));
     }
 
 
+
+    /**
+     * init bedroom action routine
+     * used in bedroomAction
+     */
     public void initBedroomActionRoutine(){
         try {
         bedroomActionRoutine = new Thread(){
@@ -402,30 +421,39 @@ public abstract class Tamagotchi {
                                 // TODO: handle exception
                                 }    
                 }
+
+                /**
+                 * 
+                 */
                 public void currentEnergyIncrease(){
                     try {
                         bedroomActionRunning.set(true);
                         observer.propertyChange(new PropertyChangeEvent(getTamagotchi(), "bedroomActionPrep", null, currentEnergy));
+                        
+                        //wait
                         int i = 0;
-                        while(i < 5000){
-                                    Thread.sleep(100);
-                                    i+=100;
-                                    //if actionButton is pressed
-                                    if(bedroomActionStop.get()) break;
+                        while(i < BEDROOM_WAIT){
+                                Thread.sleep(100);
+                                i+=100;
+                                //if actionButton is pressed
+                                if(bedroomActionStop.get()) break;
                         }
-                        while(currentEnergy < 100 && !closeGame.get() && !bedroomActionStop.get()){
+
+                        //increase currentEnergy until it's full or the game is closed or the actionButton has been pressed
+                        while(currentEnergy < MAX_ENERGY && !closeGame.get() && !bedroomActionStop.get()){
                             currentEnergy+=energyGain;
                             observer.propertyChange(new PropertyChangeEvent(getTamagotchi(), "updateStat2", null, currentEnergy));
-                            if(currentEnergy > 100){
-                                currentEnergy = 100;
-                                break;
+                            if(currentEnergy > MAX_ENERGY){
+                                currentEnergy = MAX_ENERGY;
+                                break; // quit if currentEnergy is full
                             }
+
                             i = 0;
-                                while(i < 5000){
-                                    Thread.sleep(100);
-                                    i+=100;
-                                    //if actionButton is pressed
-                                    if(bedroomActionStop.get()) break;
+                            while(i < BEDROOM_WAIT){
+                                Thread.sleep(100);
+                                i+=100;
+                                //if actionButton is pressed
+                                if(bedroomActionStop.get()) break;
                                 }
                         }
                         bedroomActionStop.set(true);
@@ -449,6 +477,11 @@ public abstract class Tamagotchi {
 
 
     }
+
+    /**
+     * init bedroomActionRoutine on the first call
+     * reverse bedroomActionStop value on the other 
+     */
     public void bedroomAction(){
         if(bedroomActionRoutine == null){
             initBedroomActionRoutine();

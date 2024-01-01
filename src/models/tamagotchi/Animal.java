@@ -243,6 +243,10 @@ public abstract class Animal extends Tamagotchi {
         this.sleepCd = _sleepCd;
     }
 
+
+    /**
+     * perform the bedroom action
+     */
     @Override
     public void bedroomAction(){
         if((this.getSleepCd() != 0 && !this.getBedroomActionRunning().get())){
@@ -256,18 +260,24 @@ public abstract class Animal extends Tamagotchi {
 
     }
 
+    
+    @Override
     public void kitchenAction(){
         observer.propertyChange(new PropertyChangeEvent(this, "kitchenActionPrep", null,null));
-        if(currentSatiety+satietyGain <=100){
+        if(currentSatiety+satietyGain <=MAX_SATIETY){
             currentSatiety+=satietyGain;
         }
         else{
-            currentSatiety =100;
+            currentSatiety =MAX_SATIETY;
             setCurrentWeight(currentWeight+(currentWeight/10));
         }
         observer.propertyChange(new PropertyChangeEvent(this, "updateStat4", null,currentSatiety));
     }
 
+
+    /**
+     * the animal loose weight if currentSatiety < 20
+     */
     private void starve(){
         if(currentSatiety < 20){      
             setCurrentWeight(currentWeight-(currentWeight/10));
@@ -275,7 +285,9 @@ public abstract class Animal extends Tamagotchi {
     }
 
 
-    
+    /**
+     * increase health
+     */
     @Override
     protected void increaseHealth(){
         super.increaseHealth();
@@ -284,6 +296,9 @@ public abstract class Animal extends Tamagotchi {
         }
     }
 
+    /**
+     * call the observer to visually update the stats
+     */
     protected void updateAllStats(){
         observer.propertyChange(new PropertyChangeEvent(this, "updateStat1", null, getCurrentHealth()));
         observer.propertyChange(new PropertyChangeEvent(this, "updateStat2", null, getCurrentEnergy()));

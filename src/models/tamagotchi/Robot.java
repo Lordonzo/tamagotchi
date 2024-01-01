@@ -227,8 +227,10 @@ public void setDifficulty(int _difficulty) {
     }
     
 
+    /**
+     * call the observer to visually update the stats
+     */
     protected void updateAllStats(){
-        System.out.println(getCurrentCleaning());
         observer.propertyChange(new PropertyChangeEvent(this, "updateStat1", null, getCurrentHealth()));
         observer.propertyChange(new PropertyChangeEvent(this, "updateStat2", null, getCurrentEnergy()));
         observer.propertyChange(new PropertyChangeEvent(this, "updateStat3", null, getCurrentCleaning()));
