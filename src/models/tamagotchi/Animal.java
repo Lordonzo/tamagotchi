@@ -10,6 +10,8 @@ import models.Status.MentalState;
 public abstract class Animal extends Tamagotchi {
 
     private int sleepCd = 0;
+    protected int satietyDifficulty;
+
 
     /**
      * init the animal and the adequate game routine
@@ -125,6 +127,31 @@ public abstract class Animal extends Tamagotchi {
     @Override
     public float mean(){
         return (currentCleanliness+currentHealth+currentSatiety)/3;
+    }
+
+    /**
+     * call to tamagotchi setdifficulty
+     * set satiety difficulty
+     */
+    @Override
+    public void setDifficulty(int _difficulty) {
+        // TODO Auto-generated method stub
+        super.setDifficulty(_difficulty);
+        if(_difficulty == 1){
+            this.satietyDifficulty = 2;
+        }
+        else if(_difficulty == 2){
+            this.satietyDifficulty = 6;
+        }
+        else if(_difficulty == 56){
+            this.satietyDifficulty = 0;
+        }
+        else if(_difficulty == 66){
+            satietyDifficulty = 20;
+        }
+        else{
+            satietyDifficulty = 9;
+        }
     }
 
 

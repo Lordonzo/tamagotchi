@@ -25,7 +25,6 @@ public abstract class Tamagotchi {
     protected int cleaningDifficulty;
     protected int mentalDifficulty;
     protected int energyDifficulty;
-    protected int satietyDifficulty;
     protected final int rainDamage = 10;
     protected int difficulty;
 
@@ -152,7 +151,6 @@ public abstract class Tamagotchi {
     public void setDifficulty(int _difficulty){
         if(_difficulty==1){
             cleaningDifficulty = 2;
-            satietyDifficulty = 2;
             energyDifficulty = 2;
             mentalDifficulty = 5;
             healthDifficulty = 5;
@@ -160,27 +158,22 @@ public abstract class Tamagotchi {
         else if(_difficulty == 2){
             cleaningDifficulty = 3;
             mentalDifficulty = 7;
-            energyDifficulty = 4;
-            satietyDifficulty = 6;
-            
+            energyDifficulty = 4;            
         }
         else if( _difficulty == 56){
             cleaningDifficulty = 0;
             mentalDifficulty = 0;
             energyDifficulty = 0;
-            satietyDifficulty = 0;
         }
         else if(_difficulty == 66){
             cleaningDifficulty = 20;
             mentalDifficulty = 100;
             energyDifficulty = 20;
-            satietyDifficulty = 20;
         }
         else{
             cleaningDifficulty = 5;
             mentalDifficulty = 10;
             energyDifficulty = 7;
-            satietyDifficulty = 9;
         }   
     }
 

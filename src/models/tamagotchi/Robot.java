@@ -13,12 +13,12 @@ import models.Status.MentalState;
 import models.Status.Weather;
 
 public class Robot extends Tamagotchi {
-    private float damageState = 0; //TODO USELESS
-    private final int MIN_MEMORY = 100;
-    private int currentMemory;
+    protected final int MIN_MEMORY = 100;
+    protected int currentMemory;
+    protected int memoryDifficulty;
     //début ajouté par A
-    private final int MIN_BATTERY = 100;
-    private int currentBattery;
+    protected final int MIN_BATTERY = 100;
+    protected int currentBattery;
     //fin ajouté par A
 
     /**
@@ -51,6 +51,28 @@ public class Robot extends Tamagotchi {
         super(id, nameString, birDateTime,lastTimeChanged, currentHealth, currentEnergy, currentCleanliness, currentWeight, mentalState, place, slotSaved, difficulty);
         this.currentMemory = currentMemory;
     }
+
+@Override
+public void setDifficulty(int _difficulty) {
+    // TODO Auto-generated method stub
+    super.setDifficulty(_difficulty);
+    if(_difficulty == 1){
+        this.memoryDifficulty = 2;
+    }
+    else if(_difficulty == 2){
+        this.memoryDifficulty = 6;
+    }
+    else if(_difficulty == 56){
+        this.memoryDifficulty = 0;
+    }
+    else if(_difficulty == 66){
+        memoryDifficulty = 20;
+    }
+    else{
+        memoryDifficulty = 9;
+    }
+}
+
 
     public int getCurrentMemory() {
         return currentMemory;
@@ -104,8 +126,12 @@ public class Robot extends Tamagotchi {
      * @param _memory
      */
     public void updateStats(int _mental,int _cleaning, int _energy,int _memory){
-        if(currentMemory+_memory > MIN_MEMORY) currentMemory = 100;
+        if(currentMemory+_memory >= MIN_MEMORY) currentMemory = 100;
         else currentMemory+=_memory;
+        if(currentCleanliness-_cleaning <= 0) currentCleanliness = 0;
+        else currentCleanliness-=_cleaning;
+        if(currentEnergy-_energy <= 0) currentEnergy = 0;
+        else currentEnergy-=_energy;
         //Damages
         if(currentHealth !=0){
             int memory = 0;
@@ -135,7 +161,7 @@ public class Robot extends Tamagotchi {
                 try{
                     do{
                         sleep(NB_SEC);
-                        updateStats(mentalDifficulty, cleaningDifficulty, energyDifficulty,satietyDifficulty);
+                        updateStats(mentalDifficulty, cleaningDifficulty, energyDifficulty,memoryDifficulty);
                         if(DEBUG){
                             System.out.println("mean : " + mean());
                             System.out.println("currentCleaning :"+currentCleanliness);
