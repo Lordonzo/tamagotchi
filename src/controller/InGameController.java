@@ -419,13 +419,7 @@ public class InGameController extends AbstractController implements PropertyChan
     }
 
     private void save(){//TODO cast dans la method save de tamagotchiDB
-        if(tamagotchi.getClass().getSimpleName().equals("Robot")){
-            tamagotchiDB.add(((models.tamagotchi.Robot)tamagotchi), tamagotchi.getId());
-
-        }
-        else{
-            tamagotchiDB.add(((Animal)tamagotchi), tamagotchi.getId());
-        }
+        tamagotchiDB.save(tamagotchi);
     }
 
 }

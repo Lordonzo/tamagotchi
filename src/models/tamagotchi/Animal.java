@@ -20,10 +20,11 @@ public abstract class Animal extends Tamagotchi {
      * @param _weight
      * @param place
      */
-    public Animal(String _nameString, Place _place, int _difficulty) {
+   public Animal(String _nameString, Place _place, int _difficulty) {
         super(_nameString, _place,_difficulty);
         setUIString("health","energy","cleanliness","satiety","sleep","wakeup","eat","play","clean","yipee");
     }
+
     protected Animal(String _nameString,Place _place,int _difficulty,float MIN_STARTING_WEIGHT,float MAX_STARTING_WEIGHT){
         this(_nameString,_place,_difficulty);
         //setcurrentweight and round it to two digit
@@ -43,6 +44,7 @@ public abstract class Animal extends Tamagotchi {
     public Animal(int id, String nameString, LocalDateTime birDateTime,LocalDateTime lastTimeChanged, int currentHealth, int currentEnergy,int currentCleanliness, int currentSatiety, float currentWeight, int mentalState, Place place, int slotSaved, int difficulty) {
         super(id, nameString, birDateTime,lastTimeChanged, currentHealth, currentEnergy, currentCleanliness, currentWeight, mentalState, place, slotSaved, difficulty);
         this.currentSatiety = currentSatiety; // 8
+        setUIString("health","energy","cleanliness","satiety","sleep","wakeup","eat","play","clean","yipee");
    
     }
 

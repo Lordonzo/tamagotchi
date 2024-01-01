@@ -265,6 +265,17 @@ public class TamagotchiDB extends AbstractDB {
         return tamagotchi;
     }
 
+    public void save(Tamagotchi _tamagotchi){
+        if(_tamagotchi.getClass().getSimpleName().equals("Robot")){
+            add(((models.tamagotchi.Robot)_tamagotchi), _tamagotchi.getId());
+
+        }
+        else{
+            System.out.println("save animal");
+            add(((Animal)_tamagotchi), _tamagotchi.getId());
+        }
+    }
+
     /**
      * 
      * @param animal
