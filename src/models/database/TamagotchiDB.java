@@ -303,11 +303,6 @@ public class TamagotchiDB extends AbstractDB {
             
             // TODO Slot pris + libération du slot si y'a
 
-
-            // statement = connection.prepareStatement("SELECT id FROM tamagotchi WHERE name=?");
-            // statement.setString(1, robot.getName());
-            // ResultSet result = statement.executeQuery();
-            // robot.setId(result.getInt(1));
         connection.close();
         } catch (SQLException e) {
             System.out.println(e.getMessage());
