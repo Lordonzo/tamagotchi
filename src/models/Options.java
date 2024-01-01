@@ -3,14 +3,16 @@ package models;
 public class Options {
     private double volume;
     private int resX, resY;
+    private String language;
 
-    public Options(double _volume, int _resX, int _resY) {
+    public Options(double _volume, int _resX, int _resY,String _language) {
         this.volume = _volume;
         this.resX = _resX;
         this.resY = _resY;
+        this.language = _language;
     }
 
-    public Options() {}
+   // public Options() {} //TODO useless ?
 
 
     public double getVolume() {
@@ -19,6 +21,12 @@ public class Options {
 
     public void setVolume(double volume) {
         this.volume = volume;
+    }
+    public String getLanguage() {
+        return language;
+    }
+    public void setLanguage(String language) {
+        this.language = language;
     }
 
     public int getResX() {

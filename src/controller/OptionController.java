@@ -5,6 +5,7 @@ import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.net.URL;
+import java.util.Locale;
 import java.util.ResourceBundle;
 
 import org.json.simple.JSONObject;
@@ -17,6 +18,8 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
+import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.Slider;
 import javafx.scene.layout.Pane;
@@ -30,9 +33,24 @@ public class OptionController extends AbstractController {
     private Slider volumeSlider;
     @FXML
     private Label volumeValue;
+    @FXML
+    private ChoiceBox<String> languageChoiceBox;
+    @FXML
+    private Label languageLabel;
+    @FXML
+    private Button applyButton;
+
+    private String[] languages = {"fr","en"};
+    private OptionDB optionDB;
+    private ResourceBundle resourceBundle;
+    private String languageCode;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+        this.optionDB = new OptionDB();
+        options = optionDB.select();
+        languageCode = options.getLanguage();
+        setResourceBundle();
         volumeSlider.valueProperty().addListener(new ChangeListener<Number>() {
             @Override
             public void changed(ObservableValue<? extends Number> observableValue,
@@ -41,6 +59,33 @@ public class OptionController extends AbstractController {
                 volumeValue.textProperty().setValue(String.valueOf(newValue.intValue()));
             }
         });
+        for(int i = 0; i < languages.length;i++){
+            languageChoiceBox.getItems().add(i, resourceBundle.getString(languages[i]));
+        }
+        languageChoiceBox.setValue(resourceBundle.getString(languageCode));
+        updateText();
+    }
+
+    public void changeLanguage(){
+        setLanguageCode(languageChoiceBox.getValue());
+        options.setLanguage(languageCode);
+        optionDB.update(options);
+        setResourceBundle();
+        updateText();
+    }
+
+    public void setLanguageCode(String _entry){
+        if(_entry.equals("Français") ||_entry.equals("French") ) languageCode = "fr";
+        else if(_entry.equals("Anglais") || _entry.equals("Anglais") ) languageCode = "en";
+    }
+    public void updateText(){
+        for(int i = 0; i < languages.length;i++){
+                languageChoiceBox.getItems().set(i, resourceBundle.getString(languages[i]));
+        }
+        languageChoiceBox.setValue(resourceBundle.getString(languageCode));
+        languageLabel.setText(resourceBundle.getString("language"));
+        applyButton.setText(resourceBundle.getString("apply"));
+    
     }
 
     public void setMusic(MediaView musicView) {
@@ -53,7 +98,11 @@ public class OptionController extends AbstractController {
         this.options = options;
         this.volumeSlider.adjustValue(options.getVolume() * 100);
     }
-    
+
+    public void setResourceBundle(){
+        ResourceBundle.clearCache();
+        resourceBundle = ResourceBundle.getBundle("resources/language/Text", Locale.forLanguageTag(languageCode));
+    }
     /**
      * 
      * @param actionEvent
@@ -69,51 +118,13 @@ public class OptionController extends AbstractController {
         scene.setRoot(root);
     }
 
-    /**
-     * OPTIONS
-     */
-    private void loadOptions() throws FileNotFoundException, IOException, ParseException {
-        /* 
-        if (options == null) this.options = new Options();
-        JSONParser parser = new JSONParser();
-        File jsonFile = new File(getClass().getResource("../resources/data/options.json").getFile());
-        Object json = parser.parse(new FileReader(jsonFile));
-        JSONObject optionsJson = (JSONObject) ((JSONObject) json).get("options");
-        this.options.setVolume((double) optionsJson.get("volume"));
-        this.volumeSlider.adjustValue((double) optionsJson.get("volume") * 100);
-        */
-        //System.out.println((double) optionsJson.get("volume"));
-        //System.out.println(volumeSlider.valueProperty());
-        //System.out.println(options.getVolume());
-    }
 
     @FXML
     private void applyOptions() {
-        // JSON
-        File jsonFile = new File(getClass().getResource("../resources/data/options.json").getFile());
-        JSONObject obj = new JSONObject();
-        obj.put("volume", volumeSlider.getValue()/100);
-        JSONObject options = new JSONObject();
-        options.put("options", obj);
-        System.out.println(options.toString());
-        try (FileWriter data = new FileWriter(jsonFile)) {
-            data.write(options.toString());
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
+        changeLanguage();
         OptionDB optionDB = new OptionDB();
         this.options.setVolume(volumeSlider.getValue()/100);
-        // TODO options supplémentaires
         optionDB.update(this.options);
-
-
-        // Apply all changes
-        try {
-            loadOptions();
-        } catch (IOException | ParseException e) {
-            e.printStackTrace();
-        }
         setMusic(this.music);
     }
 }

@@ -17,9 +17,10 @@ public class OptionDB extends AbstractDB {
             statement.executeUpdate("CREATE TABLE IF NOT EXISTS options"
             + "("
                 + "id INTEGER NOT NULL PRIMARY KEY,"
-                + "musicVolume DOUBLE NOT NULL,"
-                + "resX INT NOT NULL,"
-                + "resY INT NOT NULL"
+                + "musicVolume DOUBLE NOT NULL DEFAULT 70,"
+                + "resX INT NOT NULL DEFAULT 1080, "
+                + "resY INT NOT NULL DEFAULT 720,"
+                +"language VARCHAR(255) NOT NULL"
             + ")");
             connection.close();
             this.setUp();
@@ -34,13 +35,13 @@ public class OptionDB extends AbstractDB {
     private void setUp() {
         try (Connection connection = this.loadConnection();) {
             if (!exists()) {
-                PreparedStatement statement = connection.prepareStatement("INSERT INTO options (musicVolume, resX, resY) VALUES (?, ?, ?)");
+                PreparedStatement statement = connection.prepareStatement("INSERT INTO options (musicVolume, resX, resY, language) VALUES (?, ?, ?,?)");
                 statement.setDouble(1, 0.5);
                 statement.setInt(2, 1080);
                 statement.setInt(3, 720);
+                statement.setString(4, "fr");
                 statement.executeUpdate();
             }
-            //else statement.executeUpdate("UPDATE options SET musicVolume=? resX=? resY=?");
             connection.close();
         } catch (SQLException e) {
             System.out.println(e.getMessage());
@@ -55,7 +56,6 @@ public class OptionDB extends AbstractDB {
         try (Connection connection = this.loadConnection(); Statement statement = connection.createStatement();) {
             ResultSet result = statement.executeQuery("SELECT COUNT(*) FROM options");
             result.next();
-            //System.out.println(result.getInt("COUNT(*)") > 0);
             return result.getInt("COUNT(*)") > 0;
         } catch (SQLException e) {
             System.out.println(e.getMessage());
@@ -69,11 +69,7 @@ public class OptionDB extends AbstractDB {
     public Options select() {
         try (Connection connection = this.loadConnection(); Statement statement = connection.createStatement();) {
             ResultSet result = statement.executeQuery("SELECT * FROM options");
-            //LocalDateTime dateBirth = result.getTimestamp(3).toLocalDateTime();
-            //System.out.println("Options SELECT: ");
-            //for (int i=1; i<=result.getMetaData().getColumnCount(); i++) System.out.println(result.getMetaData().getColumnName(i) + ": " + result.getString(i));
-            //System.out.println(dateBirth.toString());
-            Options options = new Options(result.getDouble("musicVolume"), result.getInt("resX"), result.getInt("resY"));
+            Options options = new Options(result.getDouble("musicVolume"), result.getInt("resX"), result.getInt("resY"),result.getString("language"));
             connection.close();
             return options;
         } catch (SQLException e) {
@@ -88,10 +84,11 @@ public class OptionDB extends AbstractDB {
      */
     public void update(Options options) {
         try (Connection connection = this.loadConnection();) {
-            PreparedStatement statement = connection.prepareStatement("UPDATE options SET musicVolume=?, resX=?, resY=? WHERE id = 1");
+            PreparedStatement statement = connection.prepareStatement("UPDATE options SET musicVolume=?, resX=?, resY=?, language=? WHERE id = 1");
             statement.setDouble(1, options.getVolume());
             statement.setInt(2, options.getResX());
             statement.setInt(3, options.getResY());
+            statement.setString(4,options.getLanguage());
             statement.executeUpdate();
             connection.close();
         } catch (SQLException e) {

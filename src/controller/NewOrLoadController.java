@@ -5,6 +5,7 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.Locale;
 import java.util.ResourceBundle;
 
 import javafx.application.Platform;
@@ -13,10 +14,14 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
+import javafx.scene.text.Text;
+import models.Options;
 import models.Place;
+import models.database.OptionDB;
 import models.database.PlaceDB;
 import models.database.TamagotchiDB;
 import models.tamagotchi.Animal;
@@ -29,25 +34,76 @@ public class NewOrLoadController extends AbstractController {
     private ImageView slot2Btn;
     @FXML
     private ImageView slot3Btn;
-
     @FXML
-    private Pane isDeathPane;
+    private Button slot1DeleteButton;
+    @FXML
+    private Button slot2DeleteButton;
+    @FXML
+    private Button slot3DeleteButton;
+    @FXML
+    private Text slot1NameText;
+    @FXML
+    private Text slot2NameText;
+    @FXML
+    private Text slot3NameText;
+    @FXML
+    private Text slot1LastConnexionText;
+    @FXML
+    private Text slot2LastConnexionText;
+    @FXML
+    private Text slot3LastConnexionText;
+    @FXML
+    private Text gamesText;
+    @FXML
+    private Pane isDeadPane;
+    @FXML
+    private Text isDeadText;
+    @FXML
+    private Button returnToSelectionButton;
+
     private TamagotchiDB tamagotchiDB;
+    private OptionDB optionDB;
+    private Options options;
+    private ResourceBundle resourceBundle;
 
-    //TODO pue la merde
-    private boolean Exists; // indique si un tama existe ou non
-
-    // TODO AFFICHER QUAND TU REVIENS
-    //TODO ingamecontrooler.setNameLabel  POUR QUAND ON CHARGE UNE PARTIE
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         PlaceDB placeDB = new PlaceDB();
-        ArrayList<Place> places = placeDB.select();
         tamagotchiDB = new TamagotchiDB();
+        optionDB = new OptionDB();
+        options = optionDB.select();
+        resourceBundle = ResourceBundle.getBundle("resources/language/Text", Locale.forLanguageTag(options.getLanguage()));
+
+        //Setting Text__________________________________________________________
+        slot1NameText.setText("");
+        slot2NameText.setText("");
+        slot3NameText.setText("");
+        slot1LastConnexionText.setText("");
+        slot2LastConnexionText.setText("");
+        slot3LastConnexionText.setText("");
+        gamesText.setText(resourceBundle.getString("games") +" :");
+        slot1DeleteButton.setText(resourceBundle.getString("deleteMessage") + " 1");
+        slot2DeleteButton.setText(resourceBundle.getString("deleteMessage") + " 2");
+        slot3DeleteButton.setText(resourceBundle.getString("deleteMessage") + " 3");
+        isDeadText.setText(resourceBundle.getString("isDeadMessage"));
+        returnToSelectionButton.setText(resourceBundle.getString("return"));
+
+        
+        
+        
+        //Setting Images
         ArrayList<Tamagotchi> selectSlotSaved = tamagotchiDB.selectSlotSaved();
         String path = "";
         for(Tamagotchi tamagotchi : selectSlotSaved){
+            String date ="";
+            //
+            if(options.getLanguage().equals("en")){
+                date = tamagotchi.getLastTimeChangedUSFormat();
+            }
+            else{
+                date=tamagotchi.getLastTimeChangedRegularFormat();
+            }
             switch (tamagotchi.getClass().getSimpleName()) {
             case "Dog":
                 path = "src/resources/tama_sprites/dog.png";
@@ -68,30 +124,43 @@ public class NewOrLoadController extends AbstractController {
             try {
                 if(tamagotchi.getSlot()==1){
                     slot1Btn.setImage(new Image(new FileInputStream(path)));
+                    slot1NameText.setText(resourceBundle.getString("name")+ " : " + tamagotchi.getName());
+                    slot1LastConnexionText.setText(resourceBundle.getString("lastConnexion")+" :\n"+date);
                 }
                 else if(tamagotchi.getSlot() == 2){
                     slot2Btn.setImage(new Image(new FileInputStream(path)));
+                    slot2NameText.setText(resourceBundle.getString("name")+ " : " + tamagotchi.getName());
+                    slot2LastConnexionText.setText(resourceBundle.getString("lastConnexion")+" :\n"+date);
                 }
                 else if(tamagotchi.getSlot() == 3){
                     slot3Btn.setImage(new Image(new FileInputStream(path)));
+                    slot3NameText.setText(resourceBundle.getString("name") + " : " + tamagotchi.getName());
+                    slot3LastConnexionText.setText(resourceBundle.getString("lastConnexion")+" :\n"+date);
                 }
             }
             catch (FileNotFoundException e) { System.out.println(e.getMessage()); }
-
         }
+
+
     }
     
 
-    private void setImageToNull(int _slot){
+    private void setTamagotchiTextToNull(int _slot){
         try{
         if(_slot == 1){
             slot1Btn.setImage(new Image(new FileInputStream("src/resources/tama_sprites/questionmark.jpg")));
+            slot1NameText.setText("");
+            slot1LastConnexionText.setText("");
         }
         else if(_slot == 2){
             slot2Btn.setImage(new Image(new FileInputStream("src/resources/tama_sprites/questionmark.jpg")));
+            slot2NameText.setText("");
+            slot2LastConnexionText.setText("");
         }
         else if(_slot == 3){
             slot3Btn.setImage(new Image(new FileInputStream("src/resources/tama_sprites/questionmark.jpg")));
+            slot3NameText.setText("");
+            slot3LastConnexionText.setText("");
         }
         }
         catch(FileNotFoundException e) { System.out.println(e.getMessage()); }
@@ -130,7 +199,7 @@ public class NewOrLoadController extends AbstractController {
             scene.setRoot(root);
         }
         else{
-            isDeathPane.setVisible(true);
+            isDeadPane.setVisible(true);
         }
         }
 
@@ -147,7 +216,7 @@ public class NewOrLoadController extends AbstractController {
     }
     private void onBtnDelete(ActionEvent actionEvent,int slot)throws IOException {
         tamagotchiDB.delete(slot);
-        setImageToNull(slot);
+        setTamagotchiTextToNull(slot);
         //Platform.runLater(() -> init());
         
     }
@@ -181,7 +250,7 @@ public class NewOrLoadController extends AbstractController {
 
     @FXML
     private void returnToSelection(ActionEvent actionEvent) throws IOException{
-        isDeathPane.setVisible(false);
+        isDeadPane.setVisible(false);
         FXMLLoader loader = new FXMLLoader(getClass().getResource("../view/NewOrLoad.fxml"));
         Pane root = (Pane) loader.load();
         NewOrLoadController newOrLoadController = loader.getController();

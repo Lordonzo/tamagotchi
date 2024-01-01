@@ -6,6 +6,7 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.security.Timestamp;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Random;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicBoolean;
@@ -20,8 +21,8 @@ public abstract class Tamagotchi {
     protected final int MAX_CLEAN = 100;
     protected final int MAX_SATIETY = 100;
     protected final int MAX_MENTAL = 100;
-    protected final int NB_SEC = 4000;
-    protected final int BEDROOM_WAIT = 5000;
+    protected final int NB_SEC = 3000;
+    protected final int BEDROOM_WAIT = 4000;
 
     //Difficulty
     protected int healthDifficulty;
@@ -160,6 +161,28 @@ public abstract class Tamagotchi {
     public Image getImage() {
         return image;
     }
+    /**
+     * return a string of the last time changed in the MM/DD/YYYY hh:mm:ss format
+     * @return
+     */
+    public String getLastTimeChangedUSFormat() {
+        return lastTimeChanged.format(DateTimeFormatter.ofPattern("MM/dd/yyyy HH:mm:ss"));
+    }
+    /**
+     * return a string of the last time changed in the DD/MM/YYYY hh:mm:ss format
+     * @return
+     */
+    public String getLastTimeChangedRegularFormat() {
+        return lastTimeChanged.format(DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss"));
+    }
+    /**
+     * return a string of the last time changed
+     * @return
+     */
+    public LocalDateTime getLastTimeChanged() {
+        return lastTimeChanged;
+    }
+    
     public void setImage(String _image) {
         try {
             this.image = new Image(new FileInputStream(_image));

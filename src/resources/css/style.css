@@ -1,6 +1,4 @@
 .root {
-    min-width: 800;
-    min-height: 600;
     -fx-min-width: 800;
     -fx-min-height: 600;
     -fx-pref-width: 1080;
@@ -12,10 +10,9 @@
     -fx-background-color: transparent;
     -fx-border-color: black;
     -fx-border-width: 2px;
-    min-width: 70;
-    min-height: 70;
-    -fx-pref-height: 70;
-    -fx-pref-width: 70;
+    -fx-min-width: 70;
+    -fx-min-height: 70;
+
 }
 
 .button:hover {

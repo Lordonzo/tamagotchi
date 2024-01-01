@@ -45,43 +45,6 @@ public class TamagotchiDB extends AbstractDB {
         }
     }
 
-
-    /**
-     * 
-     * @param name
-     */
-    public Tamagotchi select(String name, ArrayList<Place> allPlaces) {
-        try (Connection connection = this.loadConnection();) {
-            PreparedStatement statement = connection.prepareStatement("SELECT * FROM tamagotchi WHERE name=?");
-            statement.setString(1, name);
-            ResultSet result = statement.executeQuery();
-            for (int i=1; i<=result.getMetaData().getColumnCount(); i++) System.out.println(result.getMetaData().getColumnName(i) + ": " + result.getString(i));
-            // TODO switches
-            if (result.getString(1) == null) return null;
-            switch (result.getString(11)) {
-                case "Dog" :
-                   // Tamagotchi dog = new Dog(result.getString("name"), allPlaces.get(result.getInt("currentPlace")+1));
-                    //dog.setCurrentWeight(result.getFloat("weightT"));
-                    //TODO other Tamagotchi constructor
-                    //return dog;
-                case "Cat" : //début ajouté par A
-                   // Tamagotchi cat = new Cat(result.getString("name"), result.getFloat("weightT"), allPlaces.get(result.getInt("currentPlace")+1));
-                   // return cat;
-                case "Rabbit":
-                    //Tamagotchi rabbit = new Rabbit(result.getString("name"), result.getFloat("weightT"), allPlaces.get(result.getInt("currentPlace")+1));
-                    //return rabbit;
-                case "Robot":
-                    //Tamagotchi robot = new Robot(result.getString("name"), result.getFloat("weightT"), allPlaces.get(result.getInt("currentPlace")+1));
-                    //return robot;
-            } //fin ajouté par A
-            connection.close();
-        } catch (SQLException e) {
-            System.out.println(e.getMessage());
-        }
-        return null;
-    }
-
-
     /**
      * 
      * @param places

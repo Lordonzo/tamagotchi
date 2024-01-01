@@ -10,7 +10,25 @@
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" stylesheets="@../resources/css/style.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.NewOrLoadController">
    <children>
-      <Button fx:id="slot1Button" layoutX="186.0" layoutY="281.0" mnemonicParsing="false" onAction="#slot1Click" prefWidth="247.0">
+      <Text fx:id="slot1NameText" layoutX="225.0" layoutY="233.0" strokeType="OUTSIDE" strokeWidth="0.0" text="slot1" wrappingWidth="172.0">
+         <font>
+            <Font size="15.0" />
+         </font>
+      </Text>
+      <Text fx:id="slot2NameText" layoutX="469.0" layoutY="232.0" strokeType="OUTSIDE" strokeWidth="0.0" text="slot2" wrappingWidth="172.0">
+         <font>
+            <Font size="15.0" />
+         </font>
+      </Text>
+      <Text fx:id="slot3NameText" layoutX="725.0" layoutY="232.0" strokeType="OUTSIDE" strokeWidth="0.0" text="slot3" wrappingWidth="172.0">
+         <font>
+            <Font size="15.0" />
+         </font>
+      </Text>
+      <Text fx:id="slot1LastConnexionText" layoutX="221.0" layoutY="468.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Dernière connexion" wrappingWidth="172.0" />
+      <Text fx:id="slot2LastConnexionText" layoutX="469.0" layoutY="467.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Dernière connexion" wrappingWidth="172.0" />
+      <Text fx:id="slot3LastConnexionText" layoutX="729.0" layoutY="467.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Dernière connexion" wrappingWidth="172.0" />
+      <Button fx:id="slot1Button" layoutX="224.0" layoutY="281.0" maxWidth="180.0" mnemonicParsing="false" onAction="#slot1Click">
          <graphic>
             <ImageView fx:id="slot1Btn" fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
                <image>
@@ -18,7 +36,7 @@
                </image>
             </ImageView>
          </graphic></Button>
-      <Button fx:id="slot2Button" layoutX="456.0" layoutY="281.0" mnemonicParsing="false" onAction="#slot2Click">
+      <Button fx:id="slot2Button" layoutX="469.0" layoutY="281.0" maxWidth="180.0" minHeight="150.0" minWidth="180.0" mnemonicParsing="false" onAction="#slot2Click">
          <graphic>
             <ImageView fx:id="slot2Btn" fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
                <image>
@@ -26,7 +44,7 @@
                </image>
             </ImageView>
          </graphic></Button>
-      <Button fx:id="slot3Button" layoutX="725.0" layoutY="281.0" mnemonicParsing="false" onAction="#slot3Click">
+      <Button fx:id="slot3Button" layoutX="725.0" layoutY="281.0" maxWidth="180.0" mnemonicParsing="false" onAction="#slot3Click">
          <graphic>
             <ImageView fx:id="slot3Btn" fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
                <image>
@@ -43,22 +61,22 @@
             </ImageView>
          </graphic>
       </Button>
-      <Text layoutX="480.0" layoutY="95.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Parties" textAlignment="CENTER">
+      <Text fx:id="gamesText" layoutX="480.0" layoutY="95.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Parties" textAlignment="CENTER">
          <font>
             <Font size="35.0" />
          </font>
       </Text>
-      <Button layoutX="191.0" layoutY="497.0" maxHeight="600.0" maxWidth="200.0" minHeight="-Infinity" minWidth="172.0" mnemonicParsing="false" onAction="#slot1Delete" prefHeight="600.0" prefWidth="172.0" text="Supprimer la partie 1" />
-      <Button layoutX="456.0" layoutY="497.0" maxHeight="600.0" maxWidth="200.0" minHeight="-Infinity" minWidth="172.0" mnemonicParsing="false" onAction="#slot2Delete" prefHeight="600.0" prefWidth="172.0" text="Supprimer la partie 2" />
-      <Button fx:id="delSlot3" layoutX="725.0" layoutY="497.0" maxHeight="600.0" maxWidth="200.0" minHeight="-Infinity" minWidth="172.0" mnemonicParsing="false" onAction="#slot3Delete" prefHeight="600.0" prefWidth="172.0" text="Supprimer la partie 3" />
-      <StackPane fx:id="isDeathPane" layoutX="164.0" layoutY="183.0" prefHeight="396.0" prefWidth="782.0" style="-fx-border-color: black; -fx-background-color: white;" visible="false">
+      <Button fx:id="slot1DeleteButton" layoutX="221.0" layoutY="497.0" maxHeight="70.0" maxWidth="180.0" minHeight="70.0" minWidth="180.0" mnemonicParsing="false" onAction="#slot1Delete" prefHeight="70.0" prefWidth="180.0" text="Supprimer la partie 1" />
+      <Button fx:id="slot2DeleteButton" layoutX="465.0" layoutY="497.0" maxHeight="70.0" maxWidth="180.0" minHeight="70.0" minWidth="180.0" mnemonicParsing="false" onAction="#slot2Delete" prefHeight="70.0" prefWidth="180.0" text="Supprimer la partie 2" />
+      <Button fx:id="slot3DeleteButton" layoutX="725.0" layoutY="497.0" maxHeight="70.0" maxWidth="180.0" minHeight="70.0" minWidth="180.0" mnemonicParsing="false" onAction="#slot3Delete" prefHeight="70.0" prefWidth="180.0" text="Supprimer la partie 3" />
+      <StackPane fx:id="isDeadPane" layoutX="164.0" layoutY="183.0" prefHeight="396.0" prefWidth="782.0" style="-fx-border-color: black; -fx-background-color: white;" visible="false">
          <children>
-            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Le tamagotchi est mort, désolé !" StackPane.alignment="TOP_CENTER">
+            <Text fx:id="isDeadText" strokeType="OUTSIDE" strokeWidth="0.0" text="Le tamagotchi est mort, désolé !" StackPane.alignment="TOP_CENTER">
                <font>
                   <Font size="25.0" />
                </font>
             </Text>
-            <Button fx:id="returnToSelection" mnemonicParsing="false" onAction="#returnToSelection" prefHeight="130.0" prefWidth="180.0" text="Retour" StackPane.alignment="BOTTOM_CENTER" />
+            <Button fx:id="returnToSelectionButton" mnemonicParsing="false" onAction="#returnToSelection" prefHeight="130.0" prefWidth="180.0" text="Retour" StackPane.alignment="BOTTOM_CENTER" />
          </children>
       </StackPane>
    </children>

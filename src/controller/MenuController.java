@@ -2,6 +2,7 @@ package controller;
 
 import java.io.IOException;
 import java.net.URL;
+import java.util.Locale;
 import java.util.ResourceBundle;
 
 import javafx.application.Platform;
@@ -10,6 +11,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.layout.Pane;
 import javafx.scene.media.MediaView;
 import models.Options;
@@ -17,12 +19,20 @@ import models.database.OptionDB;
 
 public class MenuController extends AbstractController {
     private Options options;
+    private OptionDB optionDB;
+    private ResourceBundle resourceBundle;
+    @FXML
+    private Button playButton;
+    @FXML
+    private Button optionsButton;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        //System.out.println(this.databaseHere());
         if (!this.databaseHere()) this.setUpDatabase();
         this.loadOptions();
+        playButton.setText(resourceBundle.getString("play"));
+        optionsButton.setText(resourceBundle.getString("options"));
+
     }
 
     /**
@@ -78,25 +88,8 @@ public class MenuController extends AbstractController {
      * OPTIONS
      */
     private void loadOptions() {
-        // JSON
-        this.options = new Options();
-        /*
-        JSONParser parser = new JSONParser();
-        File jsonFile = new File(getClass().getResource("../resources/data/options.json").getFile());
-        Object json;
-        try {
-            json = parser.parse(new FileReader(jsonFile));
-            JSONObject optionsJson = (JSONObject) ((JSONObject) json).get("options");
-            this.options.setVolume((double) optionsJson.get("volume"));
-        //System.out.println(options.getVolume());
-        } catch (IOException | ParseException e) {
-            System.out.println(e.getMessage());
-        } */
-
-
-        // SQL
-        OptionDB optionDB = new OptionDB();
+        optionDB = new OptionDB();
         this.options = optionDB.select();
-        //System.out.println(this.options.getVolume() + " " + this.options.getResX() + " " + this.options.getResY());
+        resourceBundle = ResourceBundle.getBundle("resources/language/Text", Locale.forLanguageTag(options.getLanguage()));
     }
 }

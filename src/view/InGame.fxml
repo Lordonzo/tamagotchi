@@ -25,11 +25,11 @@
       <Text fx:id="healthText" layoutX="233.0" layoutY="29.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Vie" />
       <Text fx:id="energyText" layoutX="233.0" layoutY="55.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Energie" />
       <Text fx:id="cleanlinessText" layoutX="233.0" layoutY="85.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Propreté" />
-      <Button fx:id="actionButton" layoutX="502.0" layoutY="608.0" mnemonicParsing="false" onAction="#action" prefHeight="80.0" prefWidth="150.0" text="Action" textAlignment="CENTER" AnchorPane.leftAnchor="502.0" AnchorPane.rightAnchor="428.0" />
-      <Button fx:id="rightPlaceButton" layoutX="778.0" layoutY="613.0" mnemonicParsing="false" onAction="#rightPlace" prefHeight="70.0" prefWidth="125.0" text="PièceA" textAlignment="CENTER" AnchorPane.leftAnchor="778.0" AnchorPane.rightAnchor="177.0" />
-      <Button fx:id="leftPlaceButton" layoutX="261.0" layoutY="613.0" mnemonicParsing="false" onAction="#leftRoom" prefHeight="70.0" prefWidth="125.0" text="PièceB" textAlignment="CENTER" AnchorPane.leftAnchor="261.0" AnchorPane.rightAnchor="694.0" />
-      <Button fx:id="quitButton" layoutX="943.0" layoutY="12.0" mnemonicParsing="false" onAction="#toMenu" prefHeight="45.0" prefWidth="125.0" text="Quitter" AnchorPane.leftAnchor="943.0" AnchorPane.rightAnchor="12.0" />
-      <Button fx:id="glossaireButton" layoutX="989.0" layoutY="682.0" minWidth="100.0" mnemonicParsing="false" text="Glossaire" AnchorPane.bottomAnchor="13.0" AnchorPane.rightAnchor="13.0" />
+      <Button fx:id="actionButton" layoutX="502.0" layoutY="557.0" mnemonicParsing="false" onAction="#action" prefHeight="80.0" prefWidth="150.0" text="Action" textAlignment="CENTER" AnchorPane.leftAnchor="502.0" AnchorPane.rightAnchor="428.0" />
+      <Button fx:id="rightPlaceButton" layoutX="693.0" layoutY="557.0" mnemonicParsing="false" onAction="#rightPlace" prefHeight="80.0" prefWidth="150.0" text="PièceA" textAlignment="CENTER" AnchorPane.leftAnchor="693.0" AnchorPane.rightAnchor="237.0" />
+      <Button fx:id="leftPlaceButton" layoutX="313.0" layoutY="557.0" mnemonicParsing="false" onAction="#leftRoom" prefHeight="80.0" prefWidth="150.0" text="PièceB" textAlignment="CENTER" AnchorPane.leftAnchor="313.0" AnchorPane.rightAnchor="617.0" />
+      <Button fx:id="quitButton" layoutX="943.0" layoutY="12.0" mnemonicParsing="false" onAction="#toMenu" prefHeight="70.0" prefWidth="125.0" text="Quitter" AnchorPane.leftAnchor="943.0" AnchorPane.rightAnchor="12.0" />
+      <Button fx:id="glossaireButton" layoutX="989.0" layoutY="682.0" minWidth="100.0" mnemonicParsing="false" prefHeight="70.0" prefWidth="100.0" text="Glossaire" AnchorPane.bottomAnchor="13.0" AnchorPane.rightAnchor="13.0" />
       <Label fx:id="nameLabel" layoutX="508.0" layoutY="16.0" text="Nom" />
       <Text fx:id="currentPlaceText" layoutX="494.0" layoutY="440.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Pièce" wrappingWidth="274.0" AnchorPane.leftAnchor="494.0" AnchorPane.rightAnchor="312.0">
          <font>

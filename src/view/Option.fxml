@@ -15,8 +15,8 @@
       <Label layoutX="136.0" layoutY="141.0" text="Volume :" />
       <Slider fx:id="volumeSlider" layoutX="136.0" layoutY="167.0" prefHeight="24.0" prefWidth="200.0" value="80.0" />
       <Label fx:id="volumeValue" layoutX="194.0" layoutY="141.0" prefHeight="18.0" prefWidth="58.0" />
-      <Label layoutX="272.0" layoutY="336.0" text="Label" />
-      <ChoiceBox layoutX="476.0" layoutY="353.0" prefWidth="150.0" />
+      <Label fx:id="languageLabel" layoutX="492.0" layoutY="141.0" text="Langue" />
+      <ChoiceBox fx:id="languageChoiceBox" layoutX="487.0" layoutY="179.0" prefWidth="150.0" />
       <Button layoutX="15.0" layoutY="15.0" mnemonicParsing="false" onAction="#toMenu" onMouseEntered="#changeImageEntered" onMouseExited="#changeImageExited" prefHeight="256.0" prefWidth="366.0">
          <styleClass>
             <String fx:value="nav-btn" />
@@ -33,6 +33,6 @@
             </ImageView>
          </graphic>
       </Button>
-      <Button layoutX="75.0" layoutY="607.0" mnemonicParsing="false" onAction="#applyOptions" text="Apply" />
+      <Button fx:id="applyButton" layoutX="835.0" layoutY="132.0" minHeight="-Infinity" minWidth="25.0" mnemonicParsing="false" onAction="#applyOptions" prefHeight="70.0" prefWidth="150.0" style="-fx-min-height: 50;" text="Apply" />
    </children>
 </AnchorPane>

@@ -166,8 +166,22 @@ public void setDifficulty(int _difficulty) {
                 try{
                     updateAllStats();
                     do{
-                        sleep(NB_SEC);
+                        //timeout___________________
+                        int i = 0;
+                        while(i < NB_SEC){
+                            i+=100;
+                            sleep(100);
+                            //stop the timeout
+                            if(!running.get()) break;
+                        }
+                        //stop the routine
+                        if(!running.get()) break;
+                        //__________________________
+
+                        //statUpdate
                         updateStats(mentalDifficulty, cleaningDifficulty, energyDifficulty,memoryDifficulty);
+                        
+                        //DEBUG_________________________________________________________________
                         if(DEBUG){
                             System.out.println("mean : " + mean());
                             System.out.println("currentCleaning :"+currentCleanliness);
@@ -177,7 +191,8 @@ public void setDifficulty(int _difficulty) {
                             System.out.println("currentMental:"+currentMental);
                             System.out.println("Weather :" + currentPlace.getWeather().toString());
                             System.out.println("Counter : "+cnt);
-                    }
+                        }
+                        //______________________________________________________________________
                         
                         //Weather_____________________
                         if(cnt == weatherCnt){
