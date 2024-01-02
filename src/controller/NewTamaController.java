@@ -148,15 +148,10 @@ public class NewTamaController extends AbstractController {
 
     @FXML
     private void onOuiClick(ActionEvent actionEvent) throws IOException {
-        Tamagotchi tamagotchi = createTamagotchi(tfName.getText(),slot,type, difficulty, pController.getPlaces().get(1));
+        Tamagotchi tamagotchi = createTamagotchi(tfName.getText(),slot,type, difficulty, pController.getPlaces().get(1),slot);
         TamagotchiDB tamagotchiDB = new TamagotchiDB();
-        //TODO changer pour pouvoir faire le robot
-        if(type.equals("Robot")){
-            tamagotchiDB.add((Robot) tamagotchi,slot);
-        }
-        else{
-            tamagotchiDB.add((Animal) tamagotchi,slot);
-        }
+        tamagotchiDB.save(tamagotchi);
+
 
         FXMLLoader loader = new FXMLLoader(getClass().getResource("../view/InGame.fxml"));
         Pane root = (Pane) loader.load();
@@ -267,7 +262,7 @@ public class NewTamaController extends AbstractController {
         }
     }
 
-    private Tamagotchi createTamagotchi(String _name,int _id,String type,String _difficulty,Place place){
+    private Tamagotchi createTamagotchi(String _name,int _id,String type,String _difficulty,Place place,int _slot){
         Tamagotchi tamagotchi;
         switch (type) {
             case "Cat":
@@ -287,6 +282,7 @@ public class NewTamaController extends AbstractController {
                 break;
         }
         tamagotchi.setId(_id);
+        tamagotchi.setSlot(_slot);
         return tamagotchi;
         
         

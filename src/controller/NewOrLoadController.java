@@ -22,7 +22,6 @@ import javafx.scene.text.Text;
 import models.Options;
 import models.Place;
 import models.database.OptionDB;
-import models.database.PlaceDB;
 import models.database.TamagotchiDB;
 import models.tamagotchi.Animal;
 import models.tamagotchi.Tamagotchi;
@@ -69,7 +68,6 @@ public class NewOrLoadController extends AbstractController {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        PlaceDB placeDB = new PlaceDB();
         tamagotchiDB = new TamagotchiDB();
         optionDB = new OptionDB();
         options = optionDB.select();

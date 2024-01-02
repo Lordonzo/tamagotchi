@@ -201,6 +201,9 @@ public abstract class Tamagotchi {
     public int getSlot() {
         return slot;
     }
+    public void setSlot(int slot) {
+        this.slot = slot;
+    }
 
     /**
      * set the difficulty of the game
@@ -593,6 +596,7 @@ public abstract class Tamagotchi {
     }
     
     protected void save(){
+        System.out.println("dans le jeu :"+ lastTimeChanged);
         this.lastTimeChanged = LocalDateTime.now();
         observer.propertyChange(new PropertyChangeEvent(this, "saveGame", null,null));
     }

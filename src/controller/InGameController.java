@@ -238,7 +238,7 @@ public class InGameController extends AbstractController implements PropertyChan
     public void propertyChange(PropertyChangeEvent evt) {
         try {
             if(evt.getPropertyName().equals("die")){
-                afficherPaneDeMort((String)evt.getNewValue());
+                showDeathPane((String)evt.getNewValue());
             }
             if(evt.getPropertyName().equals("enableButtons")){
                 enableAll();
@@ -400,7 +400,7 @@ public class InGameController extends AbstractController implements PropertyChan
     }
         
 
-    private void afficherPaneDeMort(String _cause) {
+    private void showDeathPane(String _cause) {
         String deathMessage = "Votre tamagotchi est mort."; //TODO changer par défaut
         if(_cause.equals("Suicide")){
             deathMessage = resourceBundle.getString("deathSuicide");
