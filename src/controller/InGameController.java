@@ -334,6 +334,7 @@ public class InGameController extends AbstractController implements PropertyChan
         backflipTransition.setNode(ivSprite);
         backflipTransition.play();
         sound = new Media(new File("src/resources/sound/goofy_ahh_backflipping.mp3").toURI().toString());
+        //TODO
         mediaPlayer = new MediaPlayer(sound);
         mediaPlayer.setRate(((2000-random)/600));
         backflipTransition.setOnFinished(e -> enableAll());
@@ -341,11 +342,14 @@ public class InGameController extends AbstractController implements PropertyChan
     }
 
     private void gardenActionPrep(){
+        sound = tamagotchi.makeGardenSound();
+        mediaPlayer = new MediaPlayer(sound);
+        mediaPlayer.play();
         upAndDownTrasition.play();
     }
 
     private void kitchenActionPrep(){
-        sound = new Media(new File("src/resources/sound/goofy_ahh_eating.mp3").toURI().toString());
+        sound = tamagotchi.makeKitchenSound();
         mediaPlayer = new MediaPlayer(sound);
         mediaPlayer.play();
     }

@@ -1,9 +1,11 @@
 package models.tamagotchi;
 
 import java.beans.PropertyChangeEvent;
+import java.io.File;
 import java.time.LocalDateTime;
 import java.util.Random;
 
+import javafx.scene.media.Media;
 import models.Place;
 import models.Status.MentalState;
 
@@ -330,6 +332,19 @@ public abstract class Animal extends Tamagotchi {
         if(currentSatiety > 80){
             healthInc();
         }
+    }
+
+    @Override
+    public Media makeGardenSound() {
+        return super.makeGardenSound();
+    }
+
+    @Override
+    public Media makeKitchenSound() {
+        return animalKitchenSound();
+    }
+    private Media animalKitchenSound(){
+        return new Media(new File("src/resources/sound/goofy_ahh_eating.mp3").toURI().toString());
     }
 
     /**

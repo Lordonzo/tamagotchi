@@ -1,12 +1,14 @@
 package models.tamagotchi;
 
 import java.beans.PropertyChangeEvent;
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.util.Random;
 import java.time.LocalDateTime;
 
 import javafx.scene.image.Image;
+import javafx.scene.media.Media;
 import models.Place;
 import models.Status.EPlace;
 import models.Status.MentalState;
@@ -265,6 +267,22 @@ public void setDifficulty(int _difficulty) {
 
 
     //_________________________________________________________________________________
+    @Override
+    public Media makeGardenSound() {
+        return robotGardenSound();
+    }
+    private Media robotGardenSound(){
+        return new Media(new File("src/resources/sound/goofy_ahh_robot.mp3").toURI().toString());
+    }
+    @Override
+    public Media makeKitchenSound() {
+        return robotKitchenSound();
+    }
+    private Media robotKitchenSound(){
+        return new Media(new File("src/resources/sound/goofy_ahh_eating_robot.mp3").toURI().toString());
+    }
+
+
     /**
      * call the observer to visually update the stats
      */

@@ -2,6 +2,7 @@ package models.tamagotchi;
 
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.security.Timestamp;
@@ -13,6 +14,7 @@ import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 import javafx.scene.image.Image;
+import javafx.scene.media.Media;
 import models.Place;
 import models.Status.*;
 
@@ -470,7 +472,7 @@ public abstract class Tamagotchi {
      */
     public void gardenAction(){
         if(gardenActionCd == 0){
-            observer.propertyChange(new PropertyChangeEvent(this, "gardenActionPrep", null, mentalState));
+            observer.propertyChange(new PropertyChangeEvent(this, "gardenActionPrep", null, null));
             if(MENTAL_GAIN+currentMental > MAX_MENTAL)currentMental = MAX_MENTAL;
             else currentMental+=MENTAL_GAIN;
             updateMentalState();
@@ -487,7 +489,7 @@ public abstract class Tamagotchi {
      * call observer to do an backflip animation on the tamagotchi's sprite
      */
     public void livingroomAction(){
-        observer.propertyChange(new PropertyChangeEvent(getTamagotchi(), "livingroomActionPrep", null, currentEnergy));
+        observer.propertyChange(new PropertyChangeEvent(getTamagotchi(), "livingroomActionPrep", null, null));
     }
 
 
@@ -521,7 +523,7 @@ public abstract class Tamagotchi {
                 public void currentEnergyIncrease(){
                     try {
                         bedroomActionRunning.set(true);
-                        observer.propertyChange(new PropertyChangeEvent(getTamagotchi(), "bedroomActionPrep", null, currentEnergy));
+                        observer.propertyChange(new PropertyChangeEvent(getTamagotchi(), "bedroomActionPrep", null, null));
                         
                         //wait
                         int i = 0;
@@ -586,14 +588,6 @@ public abstract class Tamagotchi {
         return bedroomActionStop;
     }
 
-    //TODO USELESS I THINK
-    public Thread getBedroomActionRoutine() {
-        return bedroomActionRoutine;
-    }
-
-
-
-
     public void setCurrentHealth(int _currentHealth){
         this.currentHealth = _currentHealth;
     }
@@ -622,6 +616,25 @@ public abstract class Tamagotchi {
             this.setMentalState(MentalState.DEPRESSED);
         }
     }
+
+    /**
+     * return the audio file used for garden action
+     * @return
+     */
+    public Media makeGardenSound(){
+        //default
+        return new Media(new File("src/resources/sound/goofy_ahh_what_the_hell.mp3").toURI().toString());
+    }
+
+    /**
+     * return the audio file used for kitchen action
+     * @return
+     */
+    public Media makeKitchenSound(){
+        //default
+        return new Media(new File("src/resources/sound/goofy_ahh_what_the_hell.mp3").toURI().toString());
+    }
+
     
     protected void save(){
         this.lastTimeChanged = LocalDateTime.now();
