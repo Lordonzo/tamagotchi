@@ -308,13 +308,13 @@ public abstract class Animal extends Tamagotchi {
 
 
 
-    private void gainWeight(){
+    protected void gainWeight(){
             setCurrentWeight(Math.round(currentWeight+(currentWeight/10)));
     }
     /**
      * the animal loose weight if currentSatiety < 20
      */
-    private void looseWeight(){
+    protected void looseWeight(){
         if(currentSatiety < 20){      
             setCurrentWeight(Math.round(currentWeight-(currentWeight/10)));
         }
