@@ -49,97 +49,35 @@ public class TamagotchiDB extends AbstractDB {
      * @param places
      * @return
      */
-    public ArrayList<Tamagotchi> selectSlotSaved() { //TODO enlever tout les trucs inutiles
-        PlaceController placeController = new PlaceController(false);
-        ArrayList<Place> places = placeController.getPlaces();
-        
+    public ArrayList<Tamagotchi> selectSlotSaved() {
         try (Connection connection = this.loadConnection();) {
             PreparedStatement statement = connection.prepareStatement("SELECT * FROM tamagotchi WHERE slotSaved > 0");
             ResultSet result = statement.executeQuery();
+
             if (result.getString(1) == null) return new ArrayList<Tamagotchi>();
             ArrayList<Tamagotchi> tg = new ArrayList<Tamagotchi>();
             while (result.next()) {
                 System.out.println("timestamp : " +result.getTimestamp(4));
                 Place p = null;
-                switch (result.getString(10)) {
-                    case "Dog" :
-                        Tamagotchi dog = new Dog(
-                            result.getInt(1), 
-                            result.getString(2), 
-                            result.getTimestamp(3).toLocalDateTime(), 
-                            result.getTimestamp(4).toLocalDateTime(),
-                            result.getInt(5), 
-                            result.getInt(6), 
-                            result.getInt(7),
-                            result.getInt(8),
-                            result.getFloat(9), 
-                            result.getInt(11), 
-                            p, 
-                            result.getInt(13),
-                            result.getInt(14)
-                        );
-                        tg.add(dog);
-                        break;
-                    case "Cat" :
-                        Tamagotchi cat = new Cat(
-                            result.getInt(1), 
-                            result.getString(2), 
-                            result.getTimestamp(3).toLocalDateTime(), 
-                            result.getTimestamp(4).toLocalDateTime(),
-                            result.getInt(5), 
-                            result.getInt(6), 
-                            result.getInt(7),
-                            result.getInt(8),
-                            result.getFloat(9), 
-                            result.getInt(11), 
-                            p, 
-                            result.getInt(13),
-                            result.getInt(14)
-                        );
-                        tg.add(cat);
-                        break;
-                    case "Rabbit" :
-                        Tamagotchi rabbit = new Rabbit(
-                            result.getInt(1), 
-                            result.getString(2), 
-                            result.getTimestamp(3).toLocalDateTime(), 
-                            result.getTimestamp(4).toLocalDateTime(),
-                            result.getInt(5), 
-                            result.getInt(6), 
-                            result.getInt(7),
-                            result.getInt(8),
-                            result.getFloat(9), 
-                            result.getInt(11), 
-                            p, 
-                            result.getInt(13),
-                            result.getInt(14)
-                        );
-                        tg.add(rabbit); //début ajouté par A
-                        break;
-                    case "Robot" :
-                        Tamagotchi robot = new Robot(
-                            result.getInt(1), 
-                            result.getString(2), 
-                            result.getTimestamp(3).toLocalDateTime(), 
-                            result.getTimestamp(4).toLocalDateTime(),
-                            result.getInt(5), 
-                            result.getInt(6), 
-                            result.getInt(7),
-                            result.getInt(8),
-                            result.getFloat(9), 
-                            result.getInt(11), 
-                            p, 
-                            result.getInt(13),
-                            result.getInt(14)
-                        );
-                        tg.add(robot); //fin ajouté par A
-                        break;
-                    default:
-                        break;
+                Tamagotchi tamagotchi = createTamagotchi(
+                    result.getInt(1),
+                    result.getString(2),
+                    result.getTimestamp(3).toLocalDateTime(),
+                    result.getTimestamp(4).toLocalDateTime(),
+                    result.getInt(5),
+                    result.getInt(6),
+                    result.getInt(7),
+                    result.getInt(8),
+                    result.getFloat(9),
+                    result.getString(10),
+                    result.getInt(11),
+                    p,
+                    result.getInt(13),
+                    result.getInt(14));
+                tg.add(tamagotchi);
                 }
-            }
             connection.close();
-            return tg;
+            return tg;        
         } catch (SQLException e) {
             System.out.println(e.getMessage());
         }
