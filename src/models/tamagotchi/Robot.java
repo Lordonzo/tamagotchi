@@ -96,7 +96,7 @@ public void setDifficulty(int _difficulty) {
      * @param _memoryLost
      * @param _cleaningLost
      */
-    public void decreaseHealth(int _memoryLost,int _cleaningLost,int _energyLost){
+    private void decreaseHealth(int _memoryLost,int _cleaningLost,int _energyLost){
         if(currentMemory >= MIN_MEMORY){
             if(currentHealth-_memoryLost < 0) currentHealth = 0;
             else currentHealth-=_memoryLost;
