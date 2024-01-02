@@ -16,8 +16,9 @@ import models.Status.EPlace;
 import models.tamagotchi.*;
 
 public class TamagotchiDB extends AbstractDB {
+
     /**
-     * 
+     * create the tamagotchi table in the database if it doesn't exists
      */
     public void createTable() {
         try (Connection connection = this.loadConnection(); Statement statement = connection.createStatement();) {
@@ -45,8 +46,8 @@ public class TamagotchiDB extends AbstractDB {
     }
 
     /**
+     * return an array of all the tamagotchis stored
      * 
-     * @param places
      * @return
      */
     public ArrayList<Tamagotchi> selectSlotSaved() {
@@ -57,7 +58,6 @@ public class TamagotchiDB extends AbstractDB {
             if (result.getString(1) == null) return new ArrayList<Tamagotchi>();
             ArrayList<Tamagotchi> tg = new ArrayList<Tamagotchi>();
             while (result.next()) {
-                System.out.println("timestamp : " +result.getTimestamp(4));
                 Place p = null;
                 Tamagotchi tamagotchi = createTamagotchi(
                     result.getInt(1),
@@ -105,8 +105,6 @@ public class TamagotchiDB extends AbstractDB {
                         }
                     }
                 for (Place place : places) if (result.getInt("currentPlace") == place.getId()) p = place;
-                LocalDateTime lastTimeChangedFromDB = result.getTimestamp("lastTimeChanged").toLocalDateTime();
-                System.out.println("lastTimeChanged from DB: " + lastTimeChangedFromDB); // Vérification de la valeur extraite depuis la base de données
                 tamagotchi = createTamagotchi(_slot, result.getString("name"), result.getTimestamp("dateBirth").toLocalDateTime(), result.getTimestamp("lastTimeChanged").toLocalDateTime(),result.getInt("stat1"),result.getInt("stat2"),result.getInt("stat3"),result.getInt("stat4"),result.getFloat("weightT"),result.getString("type"),result.getInt("mentalState"),p, result.getInt("slotSaved"),result.getInt("difficulty"));
             }
             connection.close();
@@ -136,7 +134,6 @@ public class TamagotchiDB extends AbstractDB {
      */
     public Tamagotchi createTamagotchi(int _id, String _name, LocalDateTime _dateBirth, LocalDateTime _lastTimeChanged,int _stat1,int _stat2,int stat3,int stat4, float _weightT,String _type,int _mental,Place _place,int _slotTake, int _difficulty){
         Tamagotchi tamagotchi;
-        System.out.println("Create tamagotchi : "+_lastTimeChanged.toString());
         switch (_type) {
             case "Cat":
                 tamagotchi = new Cat(_id,_name, _dateBirth,_lastTimeChanged,_stat1, _stat2, stat3 ,stat4,_weightT,_mental,_place,_slotTake,_difficulty);
@@ -160,7 +157,6 @@ public class TamagotchiDB extends AbstractDB {
     }
 
     public void save(Tamagotchi _tamagotchi){
-        System.out.println("timestamp in save : " +Timestamp.valueOf(_tamagotchi.getLastTimeChanged()));
         if(_tamagotchi.getClass().getSimpleName().equals("Robot")){
             add(((models.tamagotchi.Robot)_tamagotchi), _tamagotchi.getSlot());
 
@@ -188,7 +184,7 @@ public class TamagotchiDB extends AbstractDB {
                 PreparedStatement statement = connection.prepareStatement(saveQuery);
                 statement.setString(2, animal.getName());
                 statement.setTimestamp(3, Timestamp.valueOf(animal.getDateBirth()));
-                statement.setTimestamp(4, Timestamp.valueOf(LocalDateTime.now()));
+                statement.setTimestamp(4, Timestamp.valueOf(animal.getLastTimeChanged()));
                 statement.setInt(5, animal.getCurrentHealth());
                 statement.setInt(6, animal.getCurrentEnergy());
                 statement.setInt(7, animal.getCurrentCleaning());
@@ -227,7 +223,7 @@ public class TamagotchiDB extends AbstractDB {
                 PreparedStatement statement = connection.prepareStatement(saveQuery);
                 statement.setString(2, robot.getName());
                 statement.setTimestamp(3, Timestamp.valueOf(robot.getDateBirth()));
-                statement.setTimestamp(4, Timestamp.valueOf(LocalDateTime.now()));
+                statement.setTimestamp(4, Timestamp.valueOf(robot.getLastTimeChanged()));
                 statement.setInt(5, robot.getCurrentHealth());
                 statement.setInt(6, robot.getCurrentEnergy());
                 statement.setInt(7, robot.getCurrentMemory());
@@ -262,7 +258,6 @@ public class TamagotchiDB extends AbstractDB {
      * @param animal 
      */
     public void update(Animal animal,int slot) {
-        System.out.println("ici");
         String updateQuery = "UPDATE tamagotchi SET "
         + "name=?, "
         + "stat1=?, "

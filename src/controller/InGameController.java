@@ -49,9 +49,11 @@ import javafx.scene.media.MediaView;
 import javafx.scene.robot.Robot;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
+import models.Options;
 import models.Place;
 import models.Status.EPlace;
 import models.Status.MentalState;
+import models.database.OptionDB;
 import models.database.PlaceDB;
 import models.database.TamagotchiDB;
 import models.tamagotchi.Animal;
@@ -66,6 +68,8 @@ public class InGameController extends AbstractController implements PropertyChan
     private MediaPlayer mediaPlayer;
     private ResourceBundle resourceBundle;
     private TamagotchiDB tamagotchiDB;
+    private OptionDB optionDB;
+    private Options options;
     @FXML
     //Health
     private ProgressBar stat1;
@@ -160,8 +164,9 @@ public class InGameController extends AbstractController implements PropertyChan
         upAndDownTrasition.setAutoReverse(true);
 
         //Localization
-        resourceBundle = ResourceBundle.getBundle("resources/language/Text",Locale.FRENCH); //TODO avec les options
-        //TODO changer en fonction des options
+        optionDB = new OptionDB();
+        options = optionDB.select();
+        resourceBundle = ResourceBundle.getBundle("resources/language/Text",Locale.forLanguageTag(options.getLanguage())); //TODO avec les options
 
     }
 

@@ -121,7 +121,6 @@ public void setDifficulty(int _difficulty) {
     }
 
     /**
-     * rewrite
      * decrease the mental,cleaning,energy
      * increase memory stat
      * call die routine if mental = 0
@@ -130,6 +129,7 @@ public void setDifficulty(int _difficulty) {
      * @param _energy
      * @param _memory
      */
+    @Override
     public void updateStats(int _mental,int _cleaning, int _energy,int _memory){
         if(currentMemory+_memory >= MIN_MEMORY) currentMemory = 100;
         else currentMemory+=_memory;
@@ -164,6 +164,9 @@ public void setDifficulty(int _difficulty) {
         routine = new Thread(){
             public void run() {
                 try{
+                    //last Connexion stats update
+                    updateStats((timePassed*mentalDifficulty)/10, (timePassed*cleaningDifficulty)/10, (timePassed*energyDifficulty)/10, (timePassed*memoryDifficulty)/10);
+                    //call observer
                     updateAllStats();
                     do{
                         //timeout___________________

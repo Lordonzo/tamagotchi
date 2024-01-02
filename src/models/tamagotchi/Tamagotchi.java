@@ -7,6 +7,7 @@ import java.io.FileNotFoundException;
 import java.security.Timestamp;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.time.temporal.ChronoUnit;
 import java.util.Random;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicBoolean;
@@ -42,6 +43,7 @@ public abstract class Tamagotchi {
     
     protected int id;
     protected String name;
+    protected int timePassed;
 
     protected int currentHealth;
     protected int currentEnergy;
@@ -97,7 +99,7 @@ public abstract class Tamagotchi {
 
     //TODO commenter les getters setters
     /**
-     * 
+     * First creation constructor
      */
     public Tamagotchi(String _nameString, Place place,int difficulty) {
         this.currentHealth = MAX_HEALTH_POINTS;
@@ -110,6 +112,7 @@ public abstract class Tamagotchi {
         this.difficulty = difficulty;
         this.dateBirth = LocalDateTime.now();
         this.lastTimeChanged = LocalDateTime.now();
+        this.timePassed = 0;
         //Weather random
         currentPlace.setWeather(Weather.values()[new Random().nextInt(5)]);
         setDifficulty(difficulty);
@@ -118,7 +121,7 @@ public abstract class Tamagotchi {
     }
 
     /**
-     * 
+     * database constructor
      * @param nameString
      * @param currentWeight
      * @param currentHealth
@@ -142,9 +145,31 @@ public abstract class Tamagotchi {
         this.slot = slotSaved; // 13
         this.difficulty = difficulty; // 14
         setDifficulty(difficulty);
-        updateMentalState();     
+        updateMentalState();
+        
+        timePassed = (int)ChronoUnit.HOURS.between(this.lastTimeChanged,LocalDateTime.now());
+        
+        if(timePassed < 0){
+            System.out.println("t'es un tricheur");
+            //TODO écran pour dire que c'est un scammer avec le nom du tamagotchi
+        }
     }
 
+
+    /**
+     * set up strings that represent the characteristic of the tamagotchi
+     * used in the inGameController
+     * @param _stat1
+     * @param _stat2
+     * @param _stat3
+     * @param _stat4
+     * @param _bedroomAction
+     * @param _bedroomStop
+     * @param _kitchenAction
+     * @param _gardenAction
+     * @param _toiletAction
+     * @param _livingroomAction
+     */
     public void setUIString(String _stat1,String _stat2, String _stat3,String _stat4,String _bedroomAction, String _bedroomStop,String _kitchenAction,String _gardenAction,String _toiletAction, String _livingroomAction){
         stat1String = _stat1;
         stat2String = _stat2;
@@ -167,7 +192,6 @@ public abstract class Tamagotchi {
      * @return
      */
     public String getLastTimeChangedUSFormat() {
-        System.out.println("US  " +lastTimeChanged.toString());
         return lastTimeChanged.format(DateTimeFormatter.ofPattern("MM/dd/yyyy HH:mm:ss"));
     }
     /**
@@ -175,7 +199,6 @@ public abstract class Tamagotchi {
      * @return
      */
     public String getLastTimeChangedRegularFormat() {
-        System.out.println("REGULAR   "+lastTimeChanged.toString());
         return lastTimeChanged.format(DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss"));
     }
     /**
@@ -352,9 +375,15 @@ public abstract class Tamagotchi {
         observer.propertyChange(new PropertyChangeEvent(this, "die", null, _cause));
     }
 
+    /**
+     * update tamagotchi's stats
+     * @param stat1Difficulty
+     * @param stat2Difficulty
+     * @param stat3Difficulty
+     * @param stat4Difficulty
+     */
+    protected void updateStats(int stat1Difficulty,int stat2Difficulty, int stat3Difficulty,int stat4Difficulty){}
 
-
-    //public void decreaseHealth(int _satietyLost,int _cleaningLost,int _energyLost){}//TODO changer car pas la meme pour le robot
 
     protected void increaseHealth(){
         if(currentEnergy > 80){
@@ -596,7 +625,6 @@ public abstract class Tamagotchi {
     }
     
     protected void save(){
-        System.out.println("dans le jeu :"+ lastTimeChanged);
         this.lastTimeChanged = LocalDateTime.now();
         observer.propertyChange(new PropertyChangeEvent(this, "saveGame", null,null));
     }

@@ -53,14 +53,15 @@ public abstract class Animal extends Tamagotchi {
     }
 
 
-        /**
+    /**
      * decrease the mental,cleaning and energy stats
      * call die routine if mental = 0
      * @param _mental
      * @param _cleaning
      * @param _energy
      */
-    protected void decreaseStats(int _mental,int _cleaning, int _energy, int _satiety){
+    @Override
+    protected void updateStats(int _mental,int _cleaning, int _energy, int _satiety){
         if(currentEnergy-_energy < 0) currentEnergy = 0;
         else currentEnergy-=_energy;
         
@@ -175,6 +176,8 @@ public abstract class Animal extends Tamagotchi {
         routine = new Thread(){
             public void run() {
                 try{
+                    //last Connexion stats deacrease
+                    updateStats((timePassed*mentalDifficulty)/10, (timePassed*cleaningDifficulty)/10, (timePassed*energyDifficulty)/10, (timePassed*satietyDifficulty)/10);
                     //Calling observer
                         updateAllStats();
                     do{
@@ -191,7 +194,7 @@ public abstract class Animal extends Tamagotchi {
                         //__________________________
 
                         //statUpdate
-                        decreaseStats(mentalDifficulty, cleaningDifficulty, energyDifficulty,satietyDifficulty);
+                        updateStats(mentalDifficulty, cleaningDifficulty, energyDifficulty,satietyDifficulty);
                         
                         //DEBUG_________________________________________________________________
                         if(DEBUG){
@@ -220,8 +223,8 @@ public abstract class Animal extends Tamagotchi {
                         //________________________________________
 
 
-                        //starve and loosing weight_______________
-                        starve();
+                        //looseWeight_____________________________
+                        looseWeight();
                         //________________________________________
 
 
@@ -298,16 +301,20 @@ public abstract class Animal extends Tamagotchi {
         }
         else{
             currentSatiety =MAX_SATIETY;
-            setCurrentWeight(currentWeight+(currentWeight/10));
+            gainWeight();
         }
         observer.propertyChange(new PropertyChangeEvent(this, "updateStat4", null,currentSatiety));
     }
 
 
+
+    private void gainWeight(){
+            setCurrentWeight(Math.round(currentWeight+(currentWeight/10)));
+    }
     /**
      * the animal loose weight if currentSatiety < 20
      */
-    private void starve(){
+    private void looseWeight(){
         if(currentSatiety < 20){      
             setCurrentWeight(Math.round(currentWeight-(currentWeight/10)));
         }
