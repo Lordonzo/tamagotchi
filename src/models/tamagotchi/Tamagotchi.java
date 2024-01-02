@@ -458,6 +458,7 @@ public abstract class Tamagotchi {
      * increase currentCleanliness
      */
     public void toiletAction(){
+        observer.propertyChange(new PropertyChangeEvent(this, "toiletActionPrep", null, null));
         if(currentCleanliness+CLEANLINESS_GAIN <=MAX_CLEAN){
             currentCleanliness+=CLEANLINESS_GAIN;
         }
@@ -553,8 +554,7 @@ public abstract class Tamagotchi {
                         }
                         bedroomActionStop.set(true);
                         bedroomActionRunning.set(false);
-                        observer.propertyChange(new PropertyChangeEvent(this, "enableButtons", null, null));
-                        observer.propertyChange(new PropertyChangeEvent(this, "updatePlaceText", null, null));
+                        observer.propertyChange(new PropertyChangeEvent(this, "stopBedroomActionPrep", null, null));                       
                         startRoutine();  
                     } catch (InterruptedException e) {
                         // TODO Auto-generated catch block
@@ -642,9 +642,40 @@ public abstract class Tamagotchi {
         //default
         return new Media(new File("src/resources/sound/goofy_ahh_what_the_hell.mp3").toURI().toString());
     }
+    /**
+     * return the audio file used for livingroom action
+     * @return
+     */
+    public Media makeToiletSound(){
+        //default
+        return new Media(new File("src/resources/sound/goofy_ahh_cleaning.mp3").toURI().toString());
+    }
+    /**
+     * return the audio file used for livingroom action
+     * @return
+     */
+    public Media makeBedroomSound(){
+        //default
+        return new Media(new File("src/resources/sound/goofy_ahh_sleeping.mp3").toURI().toString());
+    }
+    /**
+     * return the audio file used for livingroom action
+     * @return
+     */
+    public Media makeStopBedroomSound(){
+        //default
+        return new Media(new File("src/resources/sound/goofy_ahh_sleeping_ahh_what_the_hell.mp3").toURI().toString());
+    }
+
+    
 
 
     
+
+
+    /**
+     * save the game
+     */
     protected void save(){
         this.lastTimeChanged = LocalDateTime.now();
         observer.propertyChange(new PropertyChangeEvent(this, "saveGame", null,null));

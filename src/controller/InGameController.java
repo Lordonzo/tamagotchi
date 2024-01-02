@@ -254,6 +254,9 @@ public class InGameController extends AbstractController implements PropertyChan
             if(evt.getPropertyName().equals("bedroomActionPrep")){
                bedRoomActionPrep();
             }
+            if(evt.getPropertyName().equals("stopBedroomActionPrep")){
+               stopBedRoomActionPrep();
+            }
             if(evt.getPropertyName().equals("updatePlaceText")){
                Platform.runLater(()->updatePlaceText());
             }
@@ -265,6 +268,9 @@ public class InGameController extends AbstractController implements PropertyChan
             }
             if(evt.getPropertyName().equals("kitchenActionPrep")){
                 kitchenActionPrep();
+            }
+            if(evt.getPropertyName().equals("toiletActionPrep")){
+                toiletActionPrep();
             }
             if(evt.getPropertyName().equals("updateStat1")){
                 updateStat1((int)evt.getNewValue());
@@ -318,12 +324,21 @@ public class InGameController extends AbstractController implements PropertyChan
     }
     private void bedRoomActionPrep(){
         //TODO au meme niveau que la musique
-            sound = new Media(new File("src/resources/sound/goofy_ahh_sleeping.mp3").toURI().toString());
+            sound = tamagotchi.makeBedroomSound();
             mediaPlayer = new MediaPlayer(sound);
             mediaPlayer.play();
             disableAll();
             Platform.runLater(() -> actionButton.setText(resourceBundle.getString(tamagotchi.bedRoomActionStopString)));
             actionButton.setDisable(false);
+        
+    }
+    private void stopBedRoomActionPrep(){
+            sound = tamagotchi.makeStopBedroomSound();
+            mediaPlayer = new MediaPlayer(sound);
+            mediaPlayer.play();
+            Platform.runLater(() -> enableAll());
+            Platform.runLater(() -> updatePlaceText());
+
         
     }
 
@@ -349,6 +364,12 @@ public class InGameController extends AbstractController implements PropertyChan
 
     private void kitchenActionPrep(){
         sound = tamagotchi.makeKitchenSound();
+        mediaPlayer = new MediaPlayer(sound);
+        mediaPlayer.play();
+    }
+
+    private void toiletActionPrep(){
+        sound = tamagotchi.makeToiletSound();
         mediaPlayer = new MediaPlayer(sound);
         mediaPlayer.play();
     }

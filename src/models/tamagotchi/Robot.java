@@ -288,7 +288,20 @@ public void setDifficulty(int _difficulty) {
     private Media robotLivingroomSound(){
         return new Media(new File("src/resources/sound/goofy_ahh_backflipping_robot.mp3").toURI().toString());
     }
-
+    @Override
+    public Media makeBedroomSound() {
+        return robotBedroomsound();
+    }
+    private Media robotBedroomsound() {
+        return new Media(new File("src/resources/sound/goofy_ahh_sleeping_robot.mp3").toURI().toString());
+    }
+    @Override
+    public Media makeStopBedroomSound() {
+        return robotStopBedroomsound();
+    }
+    private Media robotStopBedroomsound() {
+        return new Media(new File("src/resources/sound/goofy_ahh_sleeping_stop_robot.mp3").toURI().toString());
+    }
 
     /**
      * call the observer to visually update the stats
