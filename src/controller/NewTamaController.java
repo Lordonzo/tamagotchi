@@ -2,6 +2,7 @@ package controller;
 
 import java.io.IOException;
 import java.net.URL;
+import java.util.Locale;
 import java.util.ResourceBundle;
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -24,7 +25,10 @@ import javafx.scene.effect.ColorAdjust;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 import javafx.scene.media.MediaView;
+import javafx.scene.text.Text;
+import models.Options;
 import models.Place;
+import models.database.OptionDB;
 import models.database.TamagotchiDB;
 import models.tamagotchi.Animal;
 import models.tamagotchi.Cat;
@@ -41,6 +45,9 @@ public class NewTamaController extends AbstractController {
     private int slot;
     private String type;
     private String difficulty;
+    private OptionDB optionDB;
+    private Options options;
+    private ResourceBundle resourceBundle;
     @FXML
     private TextField tfName;
 
@@ -60,7 +67,7 @@ public class NewTamaController extends AbstractController {
     private ToggleGroup tgType;
 
     @FXML
-    private Button bVerif;
+    private Button returnButton;
 
     @FXML
     private Pane pConfirmation;
@@ -75,7 +82,13 @@ public class NewTamaController extends AbstractController {
     private Label lDifficulte;
 
     @FXML
-    private ChoiceBox cbDifficulte;
+    private ChoiceBox<String> cbDifficulte;
+    @FXML
+    private Text difficultyText;
+    @FXML
+    private Button confirmButton;
+    @FXML
+    private Text nameText;
     
     @FXML 
     private void toNewOrLoad(ActionEvent actionEvent) throws IOException {
@@ -243,6 +256,13 @@ public class NewTamaController extends AbstractController {
     }
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        cbDifficulte.getItems().addAll("Facile", "Normal", "Difficile"); //TODO resourcesBundle
+        optionDB = new OptionDB();
+        options = optionDB.select();
+        resourceBundle = ResourceBundle.getBundle("resources/language/Text", Locale.forLanguageTag(options.getLanguage()));
+        difficultyText.setText(resourceBundle.getString("difficulty")+" :");
+        returnButton.setText(resourceBundle.getString("return"));
+        confirmButton.setText(resourceBundle.getString("confirm"));
+        cbDifficulte.getItems().addAll(resourceBundle.getString("easy"), resourceBundle.getString("normal"), resourceBundle.getString("hard")); //TODO resourcesBundle
+        nameText.setText(resourceBundle.getString("name")+" :");
     }
 }

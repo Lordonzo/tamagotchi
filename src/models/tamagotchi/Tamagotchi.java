@@ -134,7 +134,6 @@ public abstract class Tamagotchi {
         this.id = id; // 1
         this.name = nameString; // 2
         this.dateBirth = birDateTime; // 3
-        System.out.println("LAST TIME IN TAMAGOTCHI : " +lastTimeChanged);
         this.lastTimeChanged = lastTimeChanged; // 4
         this.currentHealth = currentHealth; // 5
         this.currentEnergy = currentEnergy; // 6

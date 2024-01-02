@@ -28,11 +28,11 @@
             <Insets bottom="1.0" left="1.0" right="1.0" top="1.0" />
          </opaqueInsets>
       </Pane>
-      <Button layoutX="14.0" layoutY="14.0" mnemonicParsing="false" onAction="#toNewOrLoad" text="Retour" />
+      <Button fx:id="returnButton" layoutX="14.0" layoutY="14.0" mnemonicParsing="false" onAction="#toNewOrLoad" text="Retour" />
       <TextField fx:id="tfName" layoutX="352.0" layoutY="104.0" />
-      <Text layoutX="298.0" layoutY="120.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Nom :" />
-      <Text layoutX="76.0" layoutY="228.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Type :" />
-      <Button fx:id="bVerif" layoutX="851.0" layoutY="86.0" minHeight="60.0" minWidth="100.0" mnemonicParsing="false" onAction="#onVerifClick" text="Validation" />
+      <Text fx:id="nameText" layoutX="298.0" layoutY="120.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Nom :" />
+      <Text fx:id="TypeText" layoutX="76.0" layoutY="228.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Type :" />
+      <Button fx:id="confirmButton" layoutX="851.0" layoutY="86.0" minHeight="60.0" minWidth="100.0" mnemonicParsing="false" onAction="#onVerifClick" text="Validation" />
       <fx:define>
          <ToggleGroup fx:id="group" />
       </fx:define>
@@ -71,7 +71,7 @@
                </image>
             </ImageView>
          </graphic></RadioButton>
-      <Text layoutX="67.0" layoutY="178.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Difficulté :" />
+      <Text fx:id="difficultyText" layoutX="67.0" layoutY="178.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Difficulté :" />
       <ChoiceBox fx:id="cbDifficulte" layoutX="160.0" layoutY="161.0" prefWidth="150.0" />
    </children>
 </AnchorPane>
