@@ -634,6 +634,15 @@ public abstract class Tamagotchi {
         //default
         return new Media(new File("src/resources/sound/goofy_ahh_what_the_hell.mp3").toURI().toString());
     }
+    /**
+     * return the audio file used for livingroom action
+     * @return
+     */
+    public Media makeLivingroomSound(){
+        //default
+        return new Media(new File("src/resources/sound/goofy_ahh_what_the_hell.mp3").toURI().toString());
+    }
+
 
     
     protected void save(){

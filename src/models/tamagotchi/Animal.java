@@ -346,6 +346,13 @@ public abstract class Animal extends Tamagotchi {
     private Media animalKitchenSound(){
         return new Media(new File("src/resources/sound/goofy_ahh_eating.mp3").toURI().toString());
     }
+    @Override
+    public Media makeLivingroomSound(){
+        return animalLivingroomSound();
+    }
+    private Media animalLivingroomSound(){
+        return new Media(new File("src/resources/sound/goofy_ahh_backflipping.mp3").toURI().toString());
+    }
 
     /**
      * call the observer to visually update the stats

@@ -281,6 +281,13 @@ public void setDifficulty(int _difficulty) {
     private Media robotKitchenSound(){
         return new Media(new File("src/resources/sound/goofy_ahh_eating_robot.mp3").toURI().toString());
     }
+    @Override
+    public Media makeLivingroomSound(){
+        return robotLivingroomSound();
+    }
+    private Media robotLivingroomSound(){
+        return new Media(new File("src/resources/sound/goofy_ahh_backflipping_robot.mp3").toURI().toString());
+    }
 
 
     /**

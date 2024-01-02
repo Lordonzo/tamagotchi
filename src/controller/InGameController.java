@@ -333,8 +333,7 @@ public class InGameController extends AbstractController implements PropertyChan
         backflipTransition.setDuration(javafx.util.Duration.millis(random));
         backflipTransition.setNode(ivSprite);
         backflipTransition.play();
-        sound = new Media(new File("src/resources/sound/goofy_ahh_backflipping.mp3").toURI().toString());
-        //TODO
+        sound = tamagotchi.makeLivingroomSound();
         mediaPlayer = new MediaPlayer(sound);
         mediaPlayer.setRate(((2000-random)/600));
         backflipTransition.setOnFinished(e -> enableAll());
