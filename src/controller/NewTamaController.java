@@ -155,52 +155,6 @@ public class NewTamaController extends AbstractController {
 
         FXMLLoader loader = new FXMLLoader(getClass().getResource("../view/InGame.fxml"));
         Pane root = (Pane) loader.load();
-        /*
-         * TODO CHANGE, ONLY FOR TESTING
-         */
-
-        // note de A: je teste des trucs
-        // String typeSelectionne = mapType((RadioButton) tgType.getSelectedToggle());
-        // Tamagotchi testing = null;
-        // switch (typeSelectionne) {
-        //     case "Chat":
-        //         testing = new Cat(tfName.getText(), valeurDifficulte, pController.getPlaces().get(1));
-        //         testing.setObserver(inGameController);
-        //         testing.startRoutine();
-        //         inGameController.initTamagotchi(testing);
-        //         TamagotchiDB tamagotchiDBcat = new TamagotchiDB();
-        //         tamagotchiDBcat.add((Animal) testing, 1);
-        //         break;
-        //     case "Chien":
-        //         testing = new Dog(tfName.getText(), valeurDifficulte, pController.getPlaces().get(1));
-        //         testing.setObserver(inGameController);
-        //         testing.startRoutine();
-        //         inGameController.initTamagotchi(testing);
-        //         TamagotchiDB tamagotchiDBdog = new TamagotchiDB();
-        //         tamagotchiDBdog.add((Animal) testing, 1);
-        //         break;
-        //    case "Lapin":
-        //         testing = new Rabbit(tfName.getText(), valeurDifficulte, pController.getPlaces().get(1));
-        //         testing.setObserver(inGameController);
-        //         testing.startRoutine();
-        //         inGameController.initTamagotchi(testing);
-        //         TamagotchiDB tamagotchiDBrabbit = new TamagotchiDB();
-        //         tamagotchiDBrabbit.add((Animal) testing, 1);
-        //         break;
-        //     case "Robot":
-        //         testing = new Robot(tfName.getText(), valeurDifficulte, pController.getPlaces().get(1));
-        //         testing.setObserver(inGameController);
-        //         testing.startRoutine();
-        //         inGameController.initTamagotchi(testing);
-        //         TamagotchiDB tamagotchiDBrobot = new TamagotchiDB();
-        //         tamagotchiDBrobot.add((Animal) testing, 1);
-        //         break;
-        //     default:
-        //     // Gestion d'un cas par défaut si nécessaire
-        // }
-        
-        
-        // ce qu'il y avait avant, je teste des trucs
         InGameController inGameController = loader.getController();
         inGameController.setMusic(music);
         inGameController.initTamagotchi(tamagotchi);
