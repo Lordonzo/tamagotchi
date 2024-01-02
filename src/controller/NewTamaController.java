@@ -120,12 +120,12 @@ public class NewTamaController extends AbstractController {
         RadioButton selectedRadioButton = (RadioButton) tgType.getSelectedToggle();
         if (isTfNameEmpty) {
             //affiche message "rentrer le nom du tama"
-            showAlert("Erreur", "Veuillez entrer le nom du tamagotchi.", AlertType.ERROR);
+            showAlert(resourceBundle.getString("error"), resourceBundle.getString("enterName"), AlertType.ERROR);
         } else if (selectedRadioButton == null) {
             //affiche message "rentrer type tama"
-            showAlert("Erreur", "Veuillez sélectionner le type du tamagotchi.", AlertType.ERROR);
+            showAlert(resourceBundle.getString("error"), resourceBundle.getString("enterType"), AlertType.ERROR);
         } else if (isCbDifficulte) {
-            showAlert("Erreur", "Veuillez sélectionner la difficulté de votre partie.", AlertType.ERROR);
+            showAlert(resourceBundle.getString("error"), resourceBundle.getString("enterDifficulty"), AlertType.ERROR);
         } else {
             // Récupérer la valeur du TextField
             String valeurTextField = tfName.getText();
