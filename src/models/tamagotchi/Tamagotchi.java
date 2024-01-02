@@ -131,6 +131,7 @@ public abstract class Tamagotchi {
         this.id = id; // 1
         this.name = nameString; // 2
         this.dateBirth = birDateTime; // 3
+        System.out.println("LAST TIME IN TAMAGOTCHI : " +lastTimeChanged);
         this.lastTimeChanged = lastTimeChanged; // 4
         this.currentHealth = currentHealth; // 5
         this.currentEnergy = currentEnergy; // 6
@@ -166,6 +167,7 @@ public abstract class Tamagotchi {
      * @return
      */
     public String getLastTimeChangedUSFormat() {
+        System.out.println("US  " +lastTimeChanged.toString());
         return lastTimeChanged.format(DateTimeFormatter.ofPattern("MM/dd/yyyy HH:mm:ss"));
     }
     /**
@@ -173,6 +175,7 @@ public abstract class Tamagotchi {
      * @return
      */
     public String getLastTimeChangedRegularFormat() {
+        System.out.println("REGULAR   "+lastTimeChanged.toString());
         return lastTimeChanged.format(DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss"));
     }
     /**
@@ -590,6 +593,7 @@ public abstract class Tamagotchi {
     }
     
     protected void save(){
+        this.lastTimeChanged = LocalDateTime.now();
         observer.propertyChange(new PropertyChangeEvent(this, "saveGame", null,null));
     }
 

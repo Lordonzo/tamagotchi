@@ -172,10 +172,10 @@ public void setDifficulty(int _difficulty) {
                             i+=100;
                             sleep(100);
                             //stop the timeout
-                            if(!running.get()) break;
+                            if(!running.get() || closeGame.get()) break;
                         }
                         //stop the routine
-                        if(!running.get()) break;
+                        if(!running.get() || closeGame.get()) break;
                         //__________________________
 
                         //statUpdate

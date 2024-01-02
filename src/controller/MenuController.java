@@ -30,8 +30,8 @@ public class MenuController extends AbstractController {
     public void initialize(URL location, ResourceBundle resources) {
         if (!this.databaseHere()) this.setUpDatabase();
         this.loadOptions();
-        playButton.setText(resourceBundle.getString("play"));
-        optionsButton.setText(resourceBundle.getString("options"));
+        playButton.setText(resourceBundle.getString("play").toUpperCase());
+        optionsButton.setText(resourceBundle.getString("options").toUpperCase());
 
     }
 

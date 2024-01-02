@@ -184,10 +184,10 @@ public abstract class Animal extends Tamagotchi {
                             i+=100;
                             sleep(100);
                             //stop the timeout
-                            if(!running.get()) break;
+                            if(!running.get() || closeGame.get()) break;
                         }
                         //stop the routine
-                        if(!running.get()) break;
+                        if(!running.get() || closeGame.get()) break;
                         //__________________________
 
                         //statUpdate
@@ -309,7 +309,7 @@ public abstract class Animal extends Tamagotchi {
      */
     private void starve(){
         if(currentSatiety < 20){      
-            setCurrentWeight(currentWeight-(currentWeight/10));
+            setCurrentWeight(Math.round(currentWeight-(currentWeight/10)));
         }
     }
 

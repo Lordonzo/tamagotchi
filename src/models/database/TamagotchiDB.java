@@ -58,11 +58,12 @@ public class TamagotchiDB extends AbstractDB {
             ResultSet result = statement.executeQuery();
             if (result.getString(1) == null) return new ArrayList<Tamagotchi>();
             ArrayList<Tamagotchi> tg = new ArrayList<Tamagotchi>();
+            
             while (result.next()) {
                 Place p = null;
                 for (Place place : places) if (result.getInt("currentPlace") == place.getId()) p = place;
                 switch (result.getString(10)) {
-                    case "Dog" : // No 4, No 10
+                    case "Dog" :
                         Tamagotchi dog = new Dog(
                             result.getInt(1), 
                             result.getString(2), 
@@ -190,6 +191,7 @@ public class TamagotchiDB extends AbstractDB {
      */
     public Tamagotchi createTamagotchi(int _id, String _name, LocalDateTime _dateBirth, LocalDateTime _lastTimeChanged,int _stat1,int _stat2,int stat3,int stat4, float _weightT,String _type,int _mental,Place _place,int _slotTake, int _difficulty){
         Tamagotchi tamagotchi;
+        System.out.println("Create tamagotchi : "+_lastTimeChanged.toString());
         switch (_type) {
             case "Cat":
                 tamagotchi = new Cat(_id,_name, _dateBirth,_lastTimeChanged,_stat1, _stat2, stat3 ,stat4,_weightT,_mental,_place,_slotTake,_difficulty);
@@ -230,8 +232,7 @@ public class TamagotchiDB extends AbstractDB {
         try (Connection connection = this.loadConnection();) {
             PreparedStatement isSlotExisting = connection.prepareStatement("SELECT 1 FROM tamagotchi WHERE slotSaved = "+slot+";");
             ResultSet resultSlot = isSlotExisting.executeQuery();
-            
-            //The slot is taken
+            //if the slot is taken
             if(resultSlot.next()){
                 connection.close();
                 update(animal, slot);
@@ -255,13 +256,6 @@ public class TamagotchiDB extends AbstractDB {
                 statement.executeUpdate();
             }
             
-            // TODO Slot pris + libération du slot si y'a
-
-
-            // statement = connection.prepareStatement("SELECT id FROM tamagotchi WHERE name=?");
-            // statement.setString(1, animal.getName());
-            // ResultSet result = statement.executeQuery();
-            // animal.setId(result.getInt(1));
         connection.close();
         } catch (SQLException e) {
             System.out.println(e.getMessage());
@@ -277,7 +271,7 @@ public class TamagotchiDB extends AbstractDB {
             PreparedStatement isSlotExisting = connection.prepareStatement("SELECT 1 FROM tamagotchi WHERE slotSaved = "+slot+";");
             ResultSet resultSlot = isSlotExisting.executeQuery();
             
-            //The slot is taken
+            //if the slot is taken
             if(resultSlot.next()){
                 connection.close();
                 update(robot, slot);
@@ -301,8 +295,6 @@ public class TamagotchiDB extends AbstractDB {
                 statement.executeUpdate();
             }
             
-            // TODO Slot pris + libération du slot si y'a
-
         connection.close();
         } catch (SQLException e) {
             System.out.println(e.getMessage());
@@ -340,6 +332,7 @@ public class TamagotchiDB extends AbstractDB {
             +", difficulty="+animal.getDifficulty()
             + " WHERE slotSaved=" + slot+";");
             connection.close();
+
         } catch (SQLException e) {
             System.out.println(e.getSQLState());
             System.out.println(e.getMessage());
@@ -374,7 +367,7 @@ public class TamagotchiDB extends AbstractDB {
     } //fin ajouté par A
 
 
-    public static void main(String[] args) {
+    /*public static void main(String[] args) {
         PlaceController pc = new PlaceController(false);
         TamagotchiDB database = new TamagotchiDB();
         PlaceDB placeDB = new PlaceDB();
@@ -393,5 +386,5 @@ public class TamagotchiDB extends AbstractDB {
         for(Tamagotchi tamagotchi : tamagotchis){
             System.out.println(tamagotchi.getCurrentWeight());
         }
-    }
+    }*/
 }
