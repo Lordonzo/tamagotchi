@@ -70,7 +70,12 @@ public class NewTamaController extends AbstractController {
     private Button returnButton;
 
     @FXML
-    private Pane pConfirmation;
+    private Pane confirmPane;
+    @FXML
+    private Button confirmPaneYesButton;
+    @FXML
+    private Button confirmPaneNoButton;
+
 
     @FXML
     private Label lNom;
@@ -86,9 +91,13 @@ public class NewTamaController extends AbstractController {
     @FXML
     private Text difficultyText;
     @FXML
+    private Text typeText;
+    @FXML
     private Button confirmButton;
     @FXML
     private Text nameText;
+    @FXML
+    private Text confirmPaneText;
     
     @FXML 
     private void toNewOrLoad(ActionEvent actionEvent) throws IOException {
@@ -129,13 +138,13 @@ public class NewTamaController extends AbstractController {
         } else {
             // Récupérer la valeur du TextField
             String valeurTextField = tfName.getText();
-            lNom.setText("Nom : " + valeurTextField);
+            lNom.setText(resourceBundle.getString("name")+" : " + valeurTextField);
             // Récupérer le Radio Button coché
             type = mapType(selectedRadioButton);
-            lType.setText("Type : " + type);
+            lType.setText(resourceBundle.getString("type")+" : " + type);
             // Récupérer la difficulté
             difficulty = (String) cbDifficulte.getSelectionModel().getSelectedItem();
-            lDifficulte.setText("Difficulté : " + difficulty);
+            lDifficulte.setText(resourceBundle.getString("difficulty")+" : " + difficulty);
             showConfirmationPane();
         }
     }
@@ -149,8 +158,8 @@ public class NewTamaController extends AbstractController {
     }
 
     private void showConfirmationPane() {
-        pConfirmation.setVisible(true);
-        pConfirmation.toFront();
+        confirmPane.setVisible(true);
+        confirmPane.toFront();
         tfName.setDisable(true);
         rbChat.setDisable(true);
         rbChien.setDisable(true);
@@ -183,7 +192,7 @@ public class NewTamaController extends AbstractController {
     }
     @FXML
     private void onNonClick() {
-        pConfirmation.setVisible(false);
+        confirmPane.setVisible(false);
         tfName.setDisable(false);
         rbChat.setDisable(false);
         rbChien.setDisable(false);
@@ -264,5 +273,9 @@ public class NewTamaController extends AbstractController {
         confirmButton.setText(resourceBundle.getString("confirm"));
         cbDifficulte.getItems().addAll(resourceBundle.getString("easy"), resourceBundle.getString("normal"), resourceBundle.getString("hard")); //TODO resourcesBundle
         nameText.setText(resourceBundle.getString("name")+" :");
+        typeText.setText(resourceBundle.getString("type"));
+        confirmPaneNoButton.setText(resourceBundle.getString("no"));
+        confirmPaneYesButton.setText(resourceBundle.getString("yes"));
+        confirmPaneText.setText(resourceBundle.getString("confirmStartGame"));
     }
 }

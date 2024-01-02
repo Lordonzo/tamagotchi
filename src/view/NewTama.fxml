@@ -15,12 +15,12 @@
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="600.0" minWidth="800.0" prefHeight="720.0" prefWidth="1080.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.NewTamaController">
    <children>
-      <Pane fx:id="pConfirmation" layoutX="235.0" layoutY="224.0" prefHeight="272.0" prefWidth="610.0" style="-fx-border-color: black; -fx-background-color: white;" visible="false">
+      <Pane fx:id="confirmPane" layoutX="235.0" layoutY="224.0" prefHeight="272.0" prefWidth="610.0" style="-fx-border-color: black; -fx-background-color: white;" visible="false">
          <children>
-            <Text layoutX="54.0" layoutY="46.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Êtes-vous sûr de vouloir commencer une nouvelle partie avec ces paramètres ?" />
+            <Text fx:id="confirmPaneText" layoutX="54.0" layoutY="46.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Êtes-vous sûr de vouloir commencer une nouvelle partie avec ces paramètres ?" />
             <Label fx:id="lNom" layoutX="54.0" layoutY="84.0" />
-            <Button layoutX="314.0" layoutY="151.0" mnemonicParsing="false" onAction="#onOuiClick" text="Oui" />
-            <Button layoutX="461.0" layoutY="151.0" mnemonicParsing="false" onAction="#onNonClick" text="Non" />
+            <Button fx:id="confirmPaneYesButton" layoutX="314.0" layoutY="151.0" mnemonicParsing="false" onAction="#onOuiClick" text="Oui" />
+            <Button fx:id="confirmPaneNoButton" layoutX="461.0" layoutY="151.0" mnemonicParsing="false" onAction="#onNonClick" text="Non" />
             <Label fx:id="lType" layoutX="54.0" layoutY="124.0" />
             <Label fx:id="lDifficulte" layoutX="54.0" layoutY="164.0" />
          </children>
@@ -31,7 +31,7 @@
       <Button fx:id="returnButton" layoutX="14.0" layoutY="14.0" mnemonicParsing="false" onAction="#toNewOrLoad" text="Retour" />
       <TextField fx:id="tfName" layoutX="352.0" layoutY="104.0" />
       <Text fx:id="nameText" layoutX="298.0" layoutY="120.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Nom :" />
-      <Text fx:id="TypeText" layoutX="76.0" layoutY="228.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Type :" />
+      <Text fx:id="typeText" layoutX="76.0" layoutY="228.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Type :" />
       <Button fx:id="confirmButton" layoutX="851.0" layoutY="86.0" minHeight="60.0" minWidth="100.0" mnemonicParsing="false" onAction="#onVerifClick" text="Validation" />
       <fx:define>
          <ToggleGroup fx:id="group" />
