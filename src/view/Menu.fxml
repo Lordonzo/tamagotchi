@@ -43,7 +43,7 @@
                <media>
                   <Media>
                      <source>
-                        <URL value="@../resources/music/soul-worker-login-music.mp3" />
+                        <URL value="@../resources/music/mainTheme.mp3" />
                      </source>
                   </Media>
                </media>

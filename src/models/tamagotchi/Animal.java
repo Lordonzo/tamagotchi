@@ -391,6 +391,7 @@ public abstract class Animal extends Tamagotchi {
             return sound;
         } catch (NullPointerException e) {
             // TODO: handle exception
+            System.out.println("test");
 
             return null;
         }
