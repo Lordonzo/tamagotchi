@@ -40,7 +40,7 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 
 public class NewTamaController extends AbstractController {
-    private PlaceController pController = new PlaceController(false);
+    private PlaceController pController = new PlaceController();
 
     private int slot;
     private String type;

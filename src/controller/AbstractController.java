@@ -10,7 +10,6 @@ import javafx.scene.effect.ColorAdjust;
 import javafx.scene.image.ImageView;
 import javafx.scene.media.MediaView;
 import models.database.OptionDB;
-import models.database.PlaceDB;
 import models.database.TamagotchiDB;
 
 public abstract class AbstractController implements Initializable {
@@ -37,12 +36,9 @@ public abstract class AbstractController implements Initializable {
      * 
      */
     protected void setUpDatabase() {
-        PlaceController pController = new PlaceController(false);
+        PlaceController pController = new PlaceController();
         TamagotchiDB tamagotchiDB = new TamagotchiDB();
         tamagotchiDB.createTable();
-        PlaceDB placeDB = new PlaceDB();
-        placeDB.createTable(pController.getPlaces());
-        pController.displayPlaces();
         OptionDB optionDB = new OptionDB();
         optionDB.createTable();
         optionDB.select();

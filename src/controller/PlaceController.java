@@ -3,19 +3,15 @@ package controller;
 import java.util.ArrayList;
 import models.Place;
 import models.Status.EPlace;
-import models.database.PlaceDB;
 
 public class PlaceController {
     private ArrayList<Place> allPlaces = new ArrayList<Place>();
-    private PlaceDB placeDB = new PlaceDB();
 
     /**
      * 
      */
-    public PlaceController(boolean databaseHere) {
+    public PlaceController() {
         this.setUpPlaces();
-        if (databaseHere) allPlaces = placeDB.select();
-        displayPlaces();
     }
 
     /**
@@ -57,15 +53,6 @@ public class PlaceController {
         allPlaces.add(kitchen);
         allPlaces.add(toilet);
     }
-
-    /**
-     * 
-     */
-    public void displayPlaces() {
-        for (Place place : allPlaces) {
-        }
-    }
-
     /**
      * 
      * @return

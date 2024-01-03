@@ -54,7 +54,6 @@ import models.Place;
 import models.Status.EPlace;
 import models.Status.MentalState;
 import models.database.OptionDB;
-import models.database.PlaceDB;
 import models.database.TamagotchiDB;
 import models.tamagotchi.Animal;
 import models.tamagotchi.Cat;
@@ -125,6 +124,15 @@ public class InGameController extends AbstractController implements PropertyChan
     private Text satietyText;
     @FXML
     private Text deathText;
+    @FXML
+    private Button toMenuButton;
+
+    @FXML
+    private Pane glossairePane;
+    @FXML
+    private Text glossaireIntroText;
+    @FXML
+    private Text glossaireText;
 
 
    public void initTamagotchi(Tamagotchi _tamagotchi) {
@@ -242,60 +250,64 @@ public class InGameController extends AbstractController implements PropertyChan
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
         try {
-            if(evt.getPropertyName().equals("die")){
-                showDeathPane((String)evt.getNewValue());
-            }
-            if(evt.getPropertyName().equals("enableButtons")){
-                enableAll();
-            }
-            if(evt.getPropertyName().equals("no")){
-                no();
-            }
-            if(evt.getPropertyName().equals("bedroomActionPrep")){
-               bedRoomActionPrep();
-            }
-            if(evt.getPropertyName().equals("stopBedroomActionPrep")){
-               stopBedRoomActionPrep();
-            }
-            if(evt.getPropertyName().equals("updatePlaceText")){
-               Platform.runLater(()->updatePlaceText());
-            }
-            if(evt.getPropertyName().equals("livingroomActionPrep")){
-                livingroomActionPrep();
-            }
-            if(evt.getPropertyName().equals("gardenActionPrep")){
-                gardenActionPrep();
-            }
-            if(evt.getPropertyName().equals("kitchenActionPrep")){
-                kitchenActionPrep();
-            }
-            if(evt.getPropertyName().equals("toiletActionPrep")){
-                toiletActionPrep();
-            }
-            if(evt.getPropertyName().equals("updateStat1")){
-                updateStat1((int)evt.getNewValue());
-            }
-            if(evt.getPropertyName().equals("updateStat2")){
-                updateStat2((int)evt.getNewValue());
-            }
-            if(evt.getPropertyName().equals("updateStat3")){
-                updateStat3((int)evt.getNewValue());
-            }
-            if(evt.getPropertyName().equals("updateStat4")){
-                updateStat4((int)evt.getNewValue());
-            }
-            if(evt.getPropertyName().equals("updateWeather")){
-                updateWeather();
-            }
-            if(evt.getPropertyName().equals("updateMental")){
-                updateMental((MentalState)evt.getNewValue());
-
-            }
-            if(evt.getPropertyName().equals("updateWeight")){
-                updateWeight((float)evt.getNewValue());
-            }
-            if(evt.getPropertyName().equals("saveGame")){
-                save();
+            switch (evt.getPropertyName()) {
+                case "die":
+                    showDeathPane((String)evt.getNewValue());
+                    break;
+                case "enableButtons":
+                    enableAll();
+                    break;
+                case "no":
+                    no();
+                    break;
+                case "bedroomActionPrep":
+                    bedRoomActionPrep();
+                    break;
+                case "stopBedroomActionPrep":
+                    stopBedRoomActionPrep();
+                    break;
+                case "updatePlaceText":
+                    Platform.runLater(()->updatePlaceText());
+                    break;
+                case "livingroomActionPrep":
+                    livingroomActionPrep();
+                    break;
+                case "gardenActionPrep":
+                    gardenActionPrep();
+                    break;
+                case "kitchenActionPrep":
+                    kitchenActionPrep();
+                    break;
+                case "toiletActionPrep":
+                    toiletActionPrep();
+                    break;
+                case "updateStat1":
+                    updateStat1((int)evt.getNewValue());
+                    break;
+                case "updateStat2":
+                    updateStat2((int)evt.getNewValue());
+                    break;
+                case "updateStat3":
+                    updateStat3((int)evt.getNewValue());
+                    break;
+                case "updateStat4":
+                    updateStat4((int)evt.getNewValue());
+                    break;
+                case "updateWeather":
+                    updateWeather();
+                    break;
+                case "updateMental":
+                    updateMental((MentalState)evt.getNewValue());
+                    break;
+                case "updateWeight":
+                    updateWeight();
+                    break;
+                case "saveGame":
+                    save();
+                    break;
+                default:
+                    //TODO error
+                    break;
             }
         }
         catch (Exception e) {
@@ -305,9 +317,8 @@ public class InGameController extends AbstractController implements PropertyChan
 
 
 
-    private void updateWeight(float _newValue) {
-        weightText.setText(resourceBundle.getString("weight") +" : " +_newValue );
-        //TODO
+    private void updateWeight() {
+        weightText.setText(resourceBundle.getString("weight") +" : " +tamagotchi.getCurrentWeight() );
     }
 
     private void updateStat1(int _newValue) {
@@ -430,15 +441,28 @@ public class InGameController extends AbstractController implements PropertyChan
         
 
     private void showDeathPane(String _cause) {
-        String deathMessage = "Votre tamagotchi est mort."; //TODO changer par défaut
+        String deathMessage = "";
         if(_cause.equals("Suicide")){
             deathMessage = resourceBundle.getString("deathSuicide");
         }
         else if(_cause.equals("Mistreatement")){
             deathMessage = resourceBundle.getString("deathMistreatement");
         }
+        switch(_cause){
+            case "Suicide":
+                deathMessage=resourceBundle.getString("deathSuicide");
+                break;
+            case "Mistreatment":
+                deathMessage = resourceBundle.getString("deathMistreatement");
+                break;
+            default:
+                //TODO error
+                break;
+
+        }
         spDeathPane.setVisible(true);
         deathText.setText(deathMessage);
+        toMenuButton.setText(resourceBundle.getString("toMenu"));
         disableAll();
     }
 

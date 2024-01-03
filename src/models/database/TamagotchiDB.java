@@ -95,7 +95,7 @@ public class TamagotchiDB extends AbstractDB {
             PreparedStatement statement = connection.prepareStatement("SELECT * FROM tamagotchi WHERE slotSaved="+_slot+";");
             ResultSet result = statement.executeQuery();
             if(result.next()){
-                PlaceController pc = new PlaceController(false);
+                PlaceController pc = new PlaceController();
                 ArrayList<Place> places = pc.getPlaces();
                     Place p = null;
                     for (Place place : places) {
