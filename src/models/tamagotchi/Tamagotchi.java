@@ -653,7 +653,7 @@ public abstract class Tamagotchi {
      */
     public Media makeLivingroomSound(){
         try {
-            Media sound = new Media(new File("src/resources/sound/goofy_ahh_sleeping_ahh_what_the_hell.mp3").toURI().toString());
+            Media sound = new Media(new File("src/resources/sound/goofy_ahh_what_the_hell.mp3").toURI().toString());
             return sound;
         } catch (NullPointerException e) {
             // TODO: handle exception
@@ -667,7 +667,7 @@ public abstract class Tamagotchi {
      */
     public Media makeToiletSound(){
         try {
-            Media sound = new Media(new File("src/resources/sound/goofy_ahh_sleeping_ahh_cleaning.mp3").toURI().toString());
+            Media sound = new Media(new File("src/resources/sound/goofy_ahh_cleaning.mp3").toURI().toString());
             return sound;
         } catch (NullPointerException e) {
             // TODO: handle exception
@@ -681,7 +681,7 @@ public abstract class Tamagotchi {
      */
     public Media makeBedroomSound(){
        try {
-            Media sound = new Media(new File("src/resources/sound/goofy_ahh_sleeping_ahh_what_the_hell.mp3").toURI().toString());
+            Media sound = new Media(new File("src/resources/sound/goofy_ahh_what_the_hell.mp3").toURI().toString());
             return sound;
         } catch (NullPointerException e) {
             // TODO: handle exception
@@ -697,7 +697,7 @@ public abstract class Tamagotchi {
     public Media makeStopBedroomSound(){
         //default
         try {
-            Media sound = new Media(new File("src/resources/sound/goofy_ahh_sleeping_ahh_what_the_hell.mp3").toURI().toString());
+            Media sound = new Media(new File("src/resources/sound/goofy_ahh_what_the_hell.mp3").toURI().toString());
             return sound;
         } catch (NullPointerException e) {
             // TODO: handle exception

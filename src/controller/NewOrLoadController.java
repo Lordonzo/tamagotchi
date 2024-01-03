@@ -116,7 +116,7 @@ public class NewOrLoadController extends AbstractController {
                 path = "src/resources/tama_sprites/robot.png";
                 break;
             default:
-                path = "src/resources/tama_sprites/questionmark.jpg";
+                path = "src/resources/tama_sprites/questionmark.png";
                 break;
             }
             try {
@@ -146,17 +146,17 @@ public class NewOrLoadController extends AbstractController {
     private void setTamagotchiTextToNull(int _slot){
         try{
         if(_slot == 1){
-            slot1Btn.setImage(new Image(new FileInputStream("src/resources/tama_sprites/questionmark.jpg")));
+            slot1Btn.setImage(new Image(new FileInputStream("src/resources/tama_sprites/questionmark.png")));
             slot1NameText.setText("");
             slot1LastConnexionText.setText("");
         }
         else if(_slot == 2){
-            slot2Btn.setImage(new Image(new FileInputStream("src/resources/tama_sprites/questionmark.jpg")));
+            slot2Btn.setImage(new Image(new FileInputStream("src/resources/tama_sprites/questionmark.png")));
             slot2NameText.setText("");
             slot2LastConnexionText.setText("");
         }
         else if(_slot == 3){
-            slot3Btn.setImage(new Image(new FileInputStream("src/resources/tama_sprites/questionmark.jpg")));
+            slot3Btn.setImage(new Image(new FileInputStream("src/resources/tama_sprites/questionmark.png")));
             slot3NameText.setText("");
             slot3LastConnexionText.setText("");
         }

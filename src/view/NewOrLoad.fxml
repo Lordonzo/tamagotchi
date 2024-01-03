@@ -32,7 +32,7 @@
          <graphic>
             <ImageView fx:id="slot1Btn" fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
                <image>
-                  <Image url="@../resources/tama_sprites/questionmark.jpg" />
+                  <Image url="@../resources/tama_sprites/questionmark.png" />
                </image>
             </ImageView>
          </graphic></Button>
@@ -40,7 +40,7 @@
          <graphic>
             <ImageView fx:id="slot2Btn" fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
                <image>
-                  <Image url="@../resources/tama_sprites/questionmark.jpg" />
+                  <Image url="@../resources/tama_sprites/questionmark.png" />
                </image>
             </ImageView>
          </graphic></Button>
@@ -48,7 +48,7 @@
          <graphic>
             <ImageView fx:id="slot3Btn" fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
                <image>
-                  <Image url="@../resources/tama_sprites/questionmark.jpg" />
+                  <Image url="@../resources/tama_sprites/questionmark.png" />
                </image>
             </ImageView>
          </graphic></Button>
