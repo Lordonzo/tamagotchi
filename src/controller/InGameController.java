@@ -483,11 +483,11 @@ public class InGameController extends AbstractController implements PropertyChan
         tutoIntroText.setText(resourceBundle.getString("tutoIntro1")+'\n'+resourceBundle.getString("tutoIntro2")+'\n'+resourceBundle.getString("tutoIntro3")+'\n');
         String text = "";
         if(tamagotchi.getClass().getSimpleName().equals("Robot")){
-            text =resourceBundle.getString("tutoAction1Robot")+'\n'+resourceBundle.getString("tutoAction2")+resourceBundle.getString("tutoAction3Robot")+'\n'+
-                  resourceBundle.getString("tutoAction4")+'\n'+resourceBundle.getString("tutoAction5")+'\n';
+            text =resourceBundle.getString("tutoAction1Robot")+'\n'+resourceBundle.getString("tutoAction2")+'\n'+resourceBundle.getString("tutoAction3Robot")+'\n'+
+                  resourceBundle.getString("tutoSpecialRobot")+'\n'+resourceBundle.getString("tutoAction4")+'\n'+resourceBundle.getString("tutoAction5")+'\n';
         }
         else{
-            text =resourceBundle.getString("tutoAction1")+'\n'+resourceBundle.getString("tutoAction2")+resourceBundle.getString("tutoAction3")+'\n'+
+            text =resourceBundle.getString("tutoAction1")+'\n'+resourceBundle.getString("tutoAction2")+'\n'+resourceBundle.getString("tutoAction3")+'\n'+
                   resourceBundle.getString("tutoAction4")+'\n'+resourceBundle.getString("tutoAction5")+'\n';
         }
         text+=resourceBundle.getString("tutoHealth")+'\n'+resourceBundle.getString("tutoMental");
