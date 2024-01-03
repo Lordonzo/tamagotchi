@@ -23,20 +23,6 @@ public abstract class AbstractDB {
     }
 
     /**
-     * 
-     */
-    private void dropDatabase() {
-        try {
-            Connection connection = DriverManager.getConnection(dbURL);
-            Statement statement = connection.createStatement();
-            statement.executeQuery("DROP DATABASE IF EXISTS tamagotchi");
-            connection.close();
-        } catch (SQLException e) {
-            System.out.println(e.getMessage());
-        }
-    }
-
-    /**
      * Creates the database if it does not exist
      */
     private void createDatabase() {
@@ -44,19 +30,6 @@ public abstract class AbstractDB {
             Connection connection = DriverManager.getConnection(dbURL);
             Statement statement = connection.createStatement();
             statement.executeQuery("CREATE DATABASE tamagotchi");
-            connection.close();
-        } catch (SQLException e) {
-            System.out.println(e.getMessage());
-        }
-    }
-
-    /**
-     * Creates a table if it does not exist
-     * @param tableString name of table to create
-     */
-    private void createTable(String tableString) {
-        try (Connection connection = this.loadConnection(); Statement statement = connection.createStatement();) {
-            statement.executeUpdate("CREATE TABLE tamagotchi."+tableString+" (id INTEGER NOT NULL, PRIMARY KEY (id));");
             connection.close();
         } catch (SQLException e) {
             System.out.println(e.getMessage());

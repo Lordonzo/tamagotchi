@@ -1,12 +1,7 @@
 package models.tamagotchi;
 
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.time.LocalDateTime;
-import java.util.Random;
-
-import javafx.scene.image.Image;
 import javafx.scene.media.Media;
 import models.Place;
 

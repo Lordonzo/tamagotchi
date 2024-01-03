@@ -1,8 +1,5 @@
 package models;
 
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-
 import javafx.scene.image.Image;
 import models.Status.EPlace;
 import models.Status.Weather;

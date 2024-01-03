@@ -7,7 +7,6 @@ import java.util.Random;
 
 import javafx.scene.media.Media;
 import models.Place;
-import models.Status.MentalState;
 
 public abstract class Animal extends Tamagotchi {
 
@@ -206,7 +205,7 @@ public abstract class Animal extends Tamagotchi {
                             System.out.println("currentEnergy"+currentEnergy);
                             System.out.println("currentHealth :"+currentHealth);
                             System.out.println("currentMental:"+currentMental);
-                            System.out.println("Weather :" + currentPlace.getWeather().toString());
+                            System.out.println("Weather :" + Place.getWeather().toString());
                             System.out.println("Counter : "+cnt);
                         }
                         //______________________________________________________________________

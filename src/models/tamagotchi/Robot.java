@@ -2,17 +2,10 @@ package models.tamagotchi;
 
 import java.beans.PropertyChangeEvent;
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.util.Random;
 import java.time.LocalDateTime;
-
-import javafx.scene.image.Image;
 import javafx.scene.media.Media;
 import models.Place;
-import models.Status.EPlace;
-import models.Status.MentalState;
-import models.Status.Weather;
+
 
 public class Robot extends Tamagotchi {
     protected final int MIN_MEMORY = 100;
@@ -194,7 +187,7 @@ public void setDifficulty(int _difficulty) {
                             System.out.println("currentEnergy"+currentEnergy);
                             System.out.println("currentHealth :"+currentHealth);
                             System.out.println("currentMental:"+currentMental);
-                            System.out.println("Weather :" + currentPlace.getWeather().toString());
+                            System.out.println("Weather :" + Place.getWeather().toString());
                             System.out.println("Counter : "+cnt);
                         }
                         //______________________________________________________________________

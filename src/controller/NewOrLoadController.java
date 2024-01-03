@@ -7,8 +7,6 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.Locale;
 import java.util.ResourceBundle;
-
-import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -20,10 +18,8 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 import javafx.scene.text.Text;
 import models.Options;
-import models.Place;
 import models.database.OptionDB;
 import models.database.TamagotchiDB;
-import models.tamagotchi.Animal;
 import models.tamagotchi.Tamagotchi;
 
 public class NewOrLoadController extends AbstractController {

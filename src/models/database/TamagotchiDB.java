@@ -8,11 +8,8 @@ import java.sql.Statement;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
-
-import controller.InGameController;
 import controller.PlaceController;
 import models.Place;
-import models.Status.EPlace;
 import models.tamagotchi.*;
 
 public class TamagotchiDB extends AbstractDB {
