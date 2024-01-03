@@ -2,30 +2,49 @@ package test.dbTest;
 
 import static org.junit.Assert.*;
 
+import java.sql.Connection;
+import java.sql.DatabaseMetaData;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+
 import org.junit.*;
 
 import models.database.*;
 
-public class DatabaseTest {
-    private AbstractDB myDB;
+public class DatabaseTest extends AbstractDB{
+    private TamagotchiDB tamaDB;
 
     @Before
     public void init() {
-        this.myDB = new TamagotchiDB();
+        this.tamaDB = new TamagotchiDB();
     }
 
     @Test
     public void connection() {
-        //assertNotEquals(null, this.myDB.());
+        assertNotNull(this.loadConnection());
     }
 
     @Test
     public void createTable() {
-        //assertTrue(this.mySQLDB.createTable("player"));
+        tamaDB.createTable();
+        assertTrue(checkIfTableExists("tamagotchi"));
     }
 
-    @Test
-    public void dropTable() {
-        //assertTrue(this.mySQLDB.dropTable("player"));
+    // @Test
+    // public void dropTable() {
+    //     tamaDB.delete(1);
+    //     assertFalse(checkIfTableExists("tamagotchi"));
+    // }
+
+    private boolean checkIfTableExists(String tableName) {
+         try (Connection connection = this.loadConnection()) {
+            DatabaseMetaData metaData = connection.getMetaData();
+            ResultSet resultSet = metaData.getTables(null, null, tableName, null);
+
+            return resultSet.next();
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+            return false;
+        }
     }
 }
