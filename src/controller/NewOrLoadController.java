@@ -204,7 +204,6 @@ public class NewOrLoadController extends AbstractController {
 
     private void onBtnClick(ActionEvent actionEvent,int slot)throws IOException {
         Tamagotchi tamagotchi = tamagotchiDB.selectBySlot(slot);
-        //TODO faire un choix pour reset la partie ou alors un autre bouton en desssous de chaque parties
         if (tamagotchi == null) {
             toNewTama(actionEvent,slot);
         } else {
