@@ -40,7 +40,14 @@ public class Cat extends Animal {
         return meow();
     }
     private Media meow(){
-        return new Media(new File("src/resources/sound/goofy_ahh_meow.mp3").toURI().toString());
+        try {
+            Media sound = new Media(new File("src/resources/sound/goofy_ahh_meow.mp3").toURI().toString());
+            return sound;
+        } catch (NullPointerException e) {
+            // TODO: handle exception
+
+            return null;
+        }
     }
     
 }

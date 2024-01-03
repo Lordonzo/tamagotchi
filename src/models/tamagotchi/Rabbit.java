@@ -42,6 +42,13 @@ public class Rabbit extends Animal {
         return rabbitSound();
     }
     private Media rabbitSound(){
-        return new Media(new File("src/resources/sound/goofy_ahh_rabbit.mp3").toURI().toString());
+        try {
+            Media sound = new Media(new File("src/resources/sound/goofy_ahh_rabbit.mp3").toURI().toString());
+            return sound;
+        } catch (NullPointerException e) {
+            // TODO: handle exception
+
+            return null;
+        }
     }
 }

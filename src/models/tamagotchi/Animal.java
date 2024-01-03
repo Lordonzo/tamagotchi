@@ -344,21 +344,42 @@ public abstract class Animal extends Tamagotchi {
         return animalKitchenSound();
     }
     private Media animalKitchenSound(){
-        return new Media(new File("src/resources/sound/goofy_ahh_eating.mp3").toURI().toString());
+        try {
+            Media sound = new Media(new File("src/resources/sound/goofy_ahh_eating.mp3").toURI().toString());
+            return sound;
+        } catch (NullPointerException e) {
+            // TODO: handle exception
+
+            return null;
+        }
     }
     @Override
     public Media makeLivingroomSound(){
         return animalLivingroomSound();
     }
     private Media animalLivingroomSound(){
-        return new Media(new File("src/resources/sound/goofy_ahh_backflipping.mp3").toURI().toString());
+        try {
+            Media sound = new Media(new File("src/resources/sound/goofy_ahh_backflipping.mp3").toURI().toString());
+            return sound;
+        } catch (NullPointerException e) {
+            // TODO: handle exception
+
+            return null;
+        }
     }
     @Override
     public Media makeStopBedroomSound() {
         return stopBedroomsound();
     }
     private Media stopBedroomsound() {
-        return new Media(new File("src/resources/sound/goofy_ahh_sleeping_stop.mp3").toURI().toString());
+        try {
+            Media sound = new Media(new File("src/resources/sound/goofy_ahh_sleeping_stop.mp3").toURI().toString());
+            return sound;
+        } catch (NullPointerException e) {
+            // TODO: handle exception
+
+            return null;
+        }
     }
 
     /**

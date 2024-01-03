@@ -79,7 +79,7 @@ public abstract class Tamagotchi {
     protected final int maxCnt = 10;
 
     protected PropertyChangeListener observer;
-    protected Image image;
+    protected String image;
 
     protected final boolean DEBUG = false;
 
@@ -186,7 +186,13 @@ public abstract class Tamagotchi {
     }
 
     public Image getImage() {
-        return image;
+        try {
+            return new Image(new FileInputStream(image));
+        } catch (FileNotFoundException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+            return null;
+        }
     }
     /**
      * return a string of the last time changed in the MM/DD/YYYY hh:mm:ss format
@@ -211,12 +217,7 @@ public abstract class Tamagotchi {
     }
     
     public void setImage(String _image) {
-        try {
-            this.image = new Image(new FileInputStream(_image));
-        } catch (FileNotFoundException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        }
+        this.image = _image;
     }
 
     public int getNB_SEC(){
@@ -622,8 +623,14 @@ public abstract class Tamagotchi {
      * @return
      */
     public Media makeGardenSound(){
-        //default
-        return new Media(new File("src/resources/sound/goofy_ahh_what_the_hell.mp3").toURI().toString());
+        try {
+            Media sound = new Media(new File("src/resources/sound/goofy_ahh_sleeping_ahh_what_the_hell.mp3").toURI().toString());
+            return sound;
+        } catch (NullPointerException e) {
+            // TODO: handle exception
+
+            return null;
+        }
     }
 
     /**
@@ -631,32 +638,57 @@ public abstract class Tamagotchi {
      * @return
      */
     public Media makeKitchenSound(){
-        //default
-        return new Media(new File("src/resources/sound/goofy_ahh_what_the_hell.mp3").toURI().toString());
+        try {
+            Media sound = new Media(new File("src/resources/sound/goofy_ahh_sleeping_ahh_what_the_hell.mp3").toURI().toString());
+            return sound;
+        } catch (NullPointerException e) {
+            // TODO: handle exception
+
+            return null;
+        }
     }
     /**
      * return the audio file used for livingroom action
      * @return
      */
     public Media makeLivingroomSound(){
-        //default
-        return new Media(new File("src/resources/sound/goofy_ahh_what_the_hell.mp3").toURI().toString());
+        try {
+            Media sound = new Media(new File("src/resources/sound/goofy_ahh_sleeping_ahh_what_the_hell.mp3").toURI().toString());
+            return sound;
+        } catch (NullPointerException e) {
+            // TODO: handle exception
+
+            return null;
+        }
     }
     /**
      * return the audio file used for livingroom action
      * @return
      */
     public Media makeToiletSound(){
-        //default
-        return new Media(new File("src/resources/sound/goofy_ahh_cleaning.mp3").toURI().toString());
+        try {
+            Media sound = new Media(new File("src/resources/sound/goofy_ahh_sleeping_ahh_cleaning.mp3").toURI().toString());
+            return sound;
+        } catch (NullPointerException e) {
+            // TODO: handle exception
+
+            return null;
+        }
     }
     /**
      * return the audio file used for livingroom action
      * @return
      */
     public Media makeBedroomSound(){
-        //default
-        return new Media(new File("src/resources/sound/goofy_ahh_sleeping.mp3").toURI().toString());
+       try {
+            Media sound = new Media(new File("src/resources/sound/goofy_ahh_sleeping_ahh_what_the_hell.mp3").toURI().toString());
+            return sound;
+        } catch (NullPointerException e) {
+            // TODO: handle exception
+
+            return null;
+        }
+    
     }
     /**
      * return the audio file used for livingroom action
@@ -664,7 +696,14 @@ public abstract class Tamagotchi {
      */
     public Media makeStopBedroomSound(){
         //default
-        return new Media(new File("src/resources/sound/goofy_ahh_sleeping_ahh_what_the_hell.mp3").toURI().toString());
+        try {
+            Media sound = new Media(new File("src/resources/sound/goofy_ahh_sleeping_ahh_what_the_hell.mp3").toURI().toString());
+            return sound;
+        } catch (NullPointerException e) {
+            // TODO: handle exception
+
+            return null;
+        }
     }
 
     

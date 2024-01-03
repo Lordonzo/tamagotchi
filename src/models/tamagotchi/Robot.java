@@ -272,35 +272,69 @@ public void setDifficulty(int _difficulty) {
         return robotGardenSound();
     }
     private Media robotGardenSound(){
-        return new Media(new File("src/resources/sound/goofy_ahh_robot.mp3").toURI().toString());
+        try {
+            Media sound = new Media(new File("src/resources/sound/goofy_ahh_robot.mp3").toURI().toString());
+            return sound;
+        } catch (NullPointerException e) {
+            // TODO: handle exception
+
+            return null;
+        }
     }
     @Override
     public Media makeKitchenSound() {
         return robotKitchenSound();
     }
     private Media robotKitchenSound(){
-        return new Media(new File("src/resources/sound/goofy_ahh_eating_robot.mp3").toURI().toString());
+        try {
+            Media sound = new Media(new File("src/resources/sound/goofy_ahh_eating_robot.mp3").toURI().toString());
+            return sound;
+        } catch (NullPointerException e) {
+            // TODO: handle exception
+            return null;
+        }
     }
     @Override
     public Media makeLivingroomSound(){
         return robotLivingroomSound();
     }
     private Media robotLivingroomSound(){
-        return new Media(new File("src/resources/sound/goofy_ahh_backflipping_robot.mp3").toURI().toString());
+        try {
+            Media sound = new Media(new File("src/resources/sound/goofy_ahh_backflipping_robot.mp3").toURI().toString());
+            return sound;
+        } catch (NullPointerException e) {
+            // TODO: handle exception
+
+            return null;
+        }
     }
     @Override
     public Media makeBedroomSound() {
         return robotBedroomsound();
     }
     private Media robotBedroomsound() {
-        return new Media(new File("src/resources/sound/goofy_ahh_sleeping_robot.mp3").toURI().toString());
+        try {
+            Media sound = new Media(new File("src/resources/sound/goofy_ahh_sleeping_robot.mp3").toURI().toString());
+            return sound;
+        } catch (NullPointerException e) {
+            // TODO: handle exception
+
+            return null;
+        }
     }
     @Override
     public Media makeStopBedroomSound() {
         return robotStopBedroomsound();
     }
     private Media robotStopBedroomsound() {
-        return new Media(new File("src/resources/sound/goofy_ahh_sleeping_stop_robot.mp3").toURI().toString());
+        try {
+            Media sound = new Media(new File("src/resources/sound/goofy_ahh_sleeping_stop_robot.mp3").toURI().toString());
+            return sound;
+        } catch (NullPointerException e) {
+            // TODO: handle exception
+
+            return null;
+        }
     }
 
     /**
