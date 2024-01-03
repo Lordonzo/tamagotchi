@@ -43,7 +43,7 @@ public class Cat extends Animal {
         try {
             Media sound = new Media(new File("src/resources/sound/goofy_ahh_meow.mp3").toURI().toString());
             return sound;
-        } catch (NullPointerException e) {
+        } catch (UnsatisfiedLinkError e) {
             // TODO: handle exception
 
             return null;

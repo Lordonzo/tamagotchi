@@ -275,7 +275,7 @@ public void setDifficulty(int _difficulty) {
         try {
             Media sound = new Media(new File("src/resources/sound/goofy_ahh_robot.mp3").toURI().toString());
             return sound;
-        } catch (NullPointerException e) {
+        } catch (UnsatisfiedLinkError e) {
             // TODO: handle exception
 
             return null;
@@ -289,7 +289,7 @@ public void setDifficulty(int _difficulty) {
         try {
             Media sound = new Media(new File("src/resources/sound/goofy_ahh_eating_robot.mp3").toURI().toString());
             return sound;
-        } catch (NullPointerException e) {
+        } catch (UnsatisfiedLinkError e) {
             // TODO: handle exception
             return null;
         }
@@ -302,9 +302,8 @@ public void setDifficulty(int _difficulty) {
         try {
             Media sound = new Media(new File("src/resources/sound/goofy_ahh_backflipping_robot.mp3").toURI().toString());
             return sound;
-        } catch (NullPointerException e) {
+        } catch (UnsatisfiedLinkError e) {
             // TODO: handle exception
-
             return null;
         }
     }
@@ -316,7 +315,7 @@ public void setDifficulty(int _difficulty) {
         try {
             Media sound = new Media(new File("src/resources/sound/goofy_ahh_sleeping_robot.mp3").toURI().toString());
             return sound;
-        } catch (NullPointerException e) {
+        } catch (UnsatisfiedLinkError e) {
             // TODO: handle exception
 
             return null;
@@ -330,7 +329,7 @@ public void setDifficulty(int _difficulty) {
         try {
             Media sound = new Media(new File("src/resources/sound/goofy_ahh_sleeping_stop_robot.mp3").toURI().toString());
             return sound;
-        } catch (NullPointerException e) {
+        } catch (UnsatisfiedLinkError e) {
             // TODO: handle exception
 
             return null;
