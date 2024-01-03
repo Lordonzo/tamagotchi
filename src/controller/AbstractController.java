@@ -36,7 +36,6 @@ public abstract class AbstractController implements Initializable {
      * 
      */
     protected void setUpDatabase() {
-        PlaceController pController = new PlaceController();
         TamagotchiDB tamagotchiDB = new TamagotchiDB();
         tamagotchiDB.createTable();
         OptionDB optionDB = new OptionDB();

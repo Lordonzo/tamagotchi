@@ -367,13 +367,27 @@ public abstract class Animal extends Tamagotchi {
             return null;
         }
     }
-    @Override
+     @Override
     public Media makeStopBedroomSound() {
         return stopBedroomsound();
     }
     private Media stopBedroomsound() {
         try {
             Media sound = new Media(new File("src/resources/sound/goofy_ahh_sleeping_stop.mp3").toURI().toString());
+            return sound;
+        } catch (NullPointerException e) {
+            // TODO: handle exception
+
+            return null;
+        }
+    }
+    @Override
+    public Media makeBedroomSound() {
+        return Bedroomsound();
+    }
+    private Media Bedroomsound() {
+        try {
+            Media sound = new Media(new File("src/resources/sound/goofy_ahh_sleeping.mp3").toURI().toString());
             return sound;
         } catch (NullPointerException e) {
             // TODO: handle exception
