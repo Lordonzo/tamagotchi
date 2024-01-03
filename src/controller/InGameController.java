@@ -15,6 +15,8 @@ import java.util.Locale;
 import java.util.Random;
 import java.util.ResourceBundle;
 
+import javax.swing.Action;
+
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
@@ -103,7 +105,7 @@ public class InGameController extends AbstractController implements PropertyChan
     @FXML
     private Button quitButton;
     @FXML
-    private Button glossaireButton;
+    private Button tutoButton;
     @FXML
     private Button actionButton;
     @FXML
@@ -128,11 +130,13 @@ public class InGameController extends AbstractController implements PropertyChan
     private Button toMenuButton;
 
     @FXML
-    private Pane glossairePane;
+    private Pane tutoPane;
     @FXML
-    private Text glossaireIntroText;
+    private Text tutoIntroText;
     @FXML
-    private Text glossaireText;
+    private Text tutoText;
+    @FXML
+    private Button returnToGameButton;
 
 
    public void initTamagotchi(Tamagotchi _tamagotchi) {
@@ -418,7 +422,7 @@ public class InGameController extends AbstractController implements PropertyChan
         stat3.setDisable(true);
         stat4.setDisable(true);
         quitButton.setDisable(true);
-        glossaireButton.setDisable(true);
+        tutoButton.setDisable(true);
         actionButton.setDisable(true);
         rightPlaceButton.setDisable(true);
         leftPlaceButton.setDisable(true);
@@ -432,7 +436,7 @@ public class InGameController extends AbstractController implements PropertyChan
             stat3.setDisable(false);
             stat4.setDisable(false);
             quitButton.setDisable(false);
-            glossaireButton.setDisable(false);
+            tutoButton.setDisable(false);
             actionButton.setDisable(false);
             rightPlaceButton.setDisable(false);
             leftPlaceButton.setDisable(false);
@@ -472,7 +476,33 @@ public class InGameController extends AbstractController implements PropertyChan
         mediaPlayer.play();
     }
 
-    private void save(){//TODO cast dans la method save de tamagotchiDB
+    @FXML
+    private void toTuto(ActionEvent event)throws IOException{
+        tamagotchi.stopRoutine();
+        tutoPane.setVisible(true);
+        tutoIntroText.setText(resourceBundle.getString("tutoIntro1")+'\n'+resourceBundle.getString("tutoIntro2")+'\n'+resourceBundle.getString("tutoIntro3")+'\n');
+        String text = "";
+        if(tamagotchi.getClass().getSimpleName().equals("Robot")){
+            text =resourceBundle.getString("tutoAction1Robot")+'\n'+resourceBundle.getString("tutoAction2")+resourceBundle.getString("tutoAction3Robot")+'\n'+
+                  resourceBundle.getString("tutoAction4")+'\n'+resourceBundle.getString("tutoAction5")+'\n';
+        }
+        else{
+            text =resourceBundle.getString("tutoAction1")+'\n'+resourceBundle.getString("tutoAction2")+resourceBundle.getString("tutoAction3")+'\n'+
+                  resourceBundle.getString("tutoAction4")+'\n'+resourceBundle.getString("tutoAction5")+'\n';
+        }
+        text+=resourceBundle.getString("tutoHealth")+'\n'+resourceBundle.getString("tutoMental");
+        tutoText.setText(text);
+        returnToGameButton.setText(resourceBundle.getString("return"));
+    }
+
+    @FXML
+    private void returnToGame(ActionEvent event)throws IOException{
+        tutoPane.setVisible(false);
+        tamagotchi.startRoutine();
+    }
+
+
+    private void save(){
         tamagotchiDB.save(tamagotchi);
     }
 
