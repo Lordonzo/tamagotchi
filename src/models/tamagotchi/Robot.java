@@ -4,6 +4,7 @@ import java.beans.PropertyChangeEvent;
 import java.io.File;
 import java.time.LocalDateTime;
 import javafx.scene.media.Media;
+import javafx.scene.media.MediaException;
 import models.Place;
 
 
@@ -268,7 +269,7 @@ public void setDifficulty(int _difficulty) {
         try {
             Media sound = new Media(new File("src/resources/sound/goofy_ahh_robot.mp3").toURI().toString());
             return sound;
-        } catch (UnsatisfiedLinkError e) {
+        } catch (MediaException e) {
             // TODO: handle exception
 
             return null;
@@ -282,7 +283,7 @@ public void setDifficulty(int _difficulty) {
         try {
             Media sound = new Media(new File("src/resources/sound/goofy_ahh_eating_robot.mp3").toURI().toString());
             return sound;
-        } catch (UnsatisfiedLinkError e) {
+        } catch (MediaException e) {
             // TODO: handle exception
             return null;
         }
@@ -295,7 +296,7 @@ public void setDifficulty(int _difficulty) {
         try {
             Media sound = new Media(new File("src/resources/sound/goofy_ahh_backflipping_robot.mp3").toURI().toString());
             return sound;
-        } catch (UnsatisfiedLinkError e) {
+        } catch (MediaException e) {
             // TODO: handle exception
             return null;
         }
@@ -308,7 +309,7 @@ public void setDifficulty(int _difficulty) {
         try {
             Media sound = new Media(new File("src/resources/sound/goofy_ahh_sleeping_robot.mp3").toURI().toString());
             return sound;
-        } catch (UnsatisfiedLinkError e) {
+        } catch (MediaException e) {
             // TODO: handle exception
 
             return null;
@@ -322,7 +323,7 @@ public void setDifficulty(int _difficulty) {
         try {
             Media sound = new Media(new File("src/resources/sound/goofy_ahh_sleeping_stop_robot.mp3").toURI().toString());
             return sound;
-        } catch (UnsatisfiedLinkError e) {
+        } catch (MediaException e) {
             // TODO: handle exception
 
             return null;

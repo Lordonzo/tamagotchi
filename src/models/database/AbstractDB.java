@@ -2,6 +2,11 @@ package models.database;
 
 import java.sql.*;
 
+import controller.ErrorController;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Scene;
+import javafx.scene.layout.Pane;
+
 public abstract class AbstractDB {
     protected static String dbURL = "jdbc:sqlite:src/resources/data/tamagotchi.db";
 
@@ -34,5 +39,24 @@ public abstract class AbstractDB {
         } catch (SQLException e) {
             System.out.println(e.getMessage());
         }
+    }
+
+    /**
+     * error handle
+     * @param e
+     */
+    public void error(SQLException e){
+        try{
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("view/Error.fxml"));
+            Pane root = (Pane) loader.load();
+            ErrorController errorController = loader.getController();
+            errorController.errorHandle(e);
+            Scene scene = new Scene(root);
+            scene.setRoot(root);
+        }
+        catch(Exception exception){
+            exception.printStackTrace();
+        }
+        
     }
 }

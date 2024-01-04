@@ -6,6 +6,7 @@ import java.time.LocalDateTime;
 import java.util.Random;
 
 import javafx.scene.media.Media;
+import javafx.scene.media.MediaException;
 import models.Place;
 
 public abstract class Animal extends Tamagotchi {
@@ -360,7 +361,7 @@ public abstract class Animal extends Tamagotchi {
         try {
             Media sound = new Media(new File("src/resources/sound/goofy_ahh_backflipping.mp3").toURI().toString());
             return sound;
-        } catch (NullPointerException e) {
+        } catch (MediaException e) {
             // TODO: handle exception
 
             return null;
@@ -374,7 +375,7 @@ public abstract class Animal extends Tamagotchi {
         try {
             Media sound = new Media(new File("src/resources/sound/goofy_ahh_sleeping_stop.mp3").toURI().toString());
             return sound;
-        } catch (NullPointerException e) {
+        } catch (MediaException e) {
             // TODO: handle exception
 
             return null;
@@ -388,9 +389,9 @@ public abstract class Animal extends Tamagotchi {
         try {
             Media sound = new Media(new File("src/resources/sound/goofy_ahh_sleeping.mp3").toURI().toString());
             return sound;
-        } catch (NullPointerException e) {
+        } catch (MediaException e) {
             // TODO: handle exception
-            System.out.println("test");
+            System.out.println(e.toString());
 
             return null;
         }

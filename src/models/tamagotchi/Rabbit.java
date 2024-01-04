@@ -3,6 +3,7 @@ package models.tamagotchi;
 import java.io.File;
 import java.time.LocalDateTime;
 import javafx.scene.media.Media;
+import javafx.scene.media.MediaException;
 import models.Place;
 
 public class Rabbit extends Animal {
@@ -40,7 +41,7 @@ public class Rabbit extends Animal {
         try {
             Media sound = new Media(new File("src/resources/sound/goofy_ahh_rabbit.mp3").toURI().toString());
             return sound;
-        } catch (UnsatisfiedLinkError e) {
+        } catch (MediaException e) {
             // TODO: handle exception
 
             return null;

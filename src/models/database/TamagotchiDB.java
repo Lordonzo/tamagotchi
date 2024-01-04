@@ -1,5 +1,6 @@
 package models.database;
 
+import java.io.IOException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -8,11 +9,17 @@ import java.sql.Statement;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+
+import controller.ErrorController;
 import controller.PlaceController;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Scene;
+import javafx.scene.layout.Pane;
 import models.Place;
 import models.tamagotchi.*;
 
 public class TamagotchiDB extends AbstractDB {
+    private ErrorController errorController;
 
     /**
      * create the tamagotchi table in the database if it doesn't exists
@@ -145,7 +152,6 @@ public class TamagotchiDB extends AbstractDB {
                 tamagotchi = new Dog(_id,_name, _dateBirth,_lastTimeChanged,_stat1, _stat2, stat3 ,stat4,_weightT,_mental,_place,_slotTake,_difficulty);
                 break;
             default:
-                //TODO Error
                 tamagotchi = null;
                 break;
         }
@@ -197,7 +203,7 @@ public class TamagotchiDB extends AbstractDB {
             
         connection.close();
         } catch (SQLException e) {
-            System.out.println(e.getMessage());
+            error(e);
         }
     }
 
@@ -236,7 +242,7 @@ public class TamagotchiDB extends AbstractDB {
             
         connection.close();
         } catch (SQLException e) {
-            System.out.println(e.getMessage());
+            error(e);
         }
     } //fin ajouté par A
 
@@ -245,8 +251,7 @@ public class TamagotchiDB extends AbstractDB {
             statement.executeUpdate("DELETE FROM `tamagotchi` WHERE slotSaved="+_slot+";");
             connection.close();
         } catch (SQLException e) {
-            System.out.println(e.getSQLState());
-            System.out.println(e.getMessage());
+            error(e);
         }
     }
     
@@ -289,8 +294,7 @@ public class TamagotchiDB extends AbstractDB {
             connection.close();
 
         } catch (SQLException e) {
-            System.out.println(e.getSQLState());
-            System.out.println(e.getMessage());
+            error(e);
         }
     }
 
@@ -333,10 +337,10 @@ public class TamagotchiDB extends AbstractDB {
             connection.close();
     
         } catch (SQLException e) {
-            System.out.println(e.getSQLState());
-            System.out.println(e.getMessage());
+            error(e);
         }
     }
+
 
 
     /*public static void main(String[] args) {

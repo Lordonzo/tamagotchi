@@ -6,6 +6,10 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
+import controller.ErrorController;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Scene;
+import javafx.scene.layout.Pane;
 import models.Options;
 
 public class OptionDB extends AbstractDB {
@@ -25,7 +29,7 @@ public class OptionDB extends AbstractDB {
             connection.close();
             this.setUp();
         } catch (SQLException e) {
-            System.out.println(e.getMessage());
+            error(e);
         }
     }
 
@@ -44,7 +48,7 @@ public class OptionDB extends AbstractDB {
             }
             connection.close();
         } catch (SQLException e) {
-            System.out.println(e.getMessage());
+            error(e);
         }
     }
 
@@ -58,7 +62,7 @@ public class OptionDB extends AbstractDB {
             result.next();
             return result.getInt("COUNT(*)") > 0;
         } catch (SQLException e) {
-            System.out.println(e.getMessage());
+            error(e);
             return false;
         }
     }
@@ -73,7 +77,7 @@ public class OptionDB extends AbstractDB {
             connection.close();
             return options;
         } catch (SQLException e) {
-            System.out.println(e.getMessage());
+            error(e);
             return null;
         }
     }
@@ -92,7 +96,8 @@ public class OptionDB extends AbstractDB {
             statement.executeUpdate();
             connection.close();
         } catch (SQLException e) {
-            System.out.println(e.getMessage());
+            error(e);
         }
     }
+    
 }

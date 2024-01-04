@@ -13,6 +13,7 @@ import java.util.concurrent.atomic.AtomicBoolean;
 
 import javafx.scene.image.Image;
 import javafx.scene.media.Media;
+import javafx.scene.media.MediaException;
 import models.Place;
 import models.Status.*;
 
@@ -624,7 +625,7 @@ public abstract class Tamagotchi {
         try {
             Media sound = new Media(new File("src/resources/sound/goofy_ahh_sleeping_ahh_what_the_hell.mp3").toURI().toString());
             return sound;
-        } catch (NullPointerException e) {
+        } catch (MediaException e) {
             // TODO: handle exception
 
             return null;
@@ -639,7 +640,7 @@ public abstract class Tamagotchi {
         try {
             Media sound = new Media(new File("src/resources/sound/goofy_ahh_sleeping_ahh_what_the_hell.mp3").toURI().toString());
             return sound;
-        } catch (NullPointerException e) {
+        } catch (MediaException e) {
             // TODO: handle exception
 
             return null;
@@ -653,7 +654,7 @@ public abstract class Tamagotchi {
         try {
             Media sound = new Media(new File("src/resources/sound/goofy_ahh_what_the_hell.mp3").toURI().toString());
             return sound;
-        } catch (NullPointerException e) {
+        } catch (MediaException e) {
             // TODO: handle exception
 
             return null;
@@ -667,7 +668,7 @@ public abstract class Tamagotchi {
         try {
             Media sound = new Media(new File("src/resources/sound/goofy_ahh_cleaning.mp3").toURI().toString());
             return sound;
-        } catch (NullPointerException e) {
+        } catch (MediaException e) {
             // TODO: handle exception
 
             return null;
@@ -681,7 +682,7 @@ public abstract class Tamagotchi {
        try {
             Media sound = new Media(new File("src/resources/sound/goofy_ahh_what_the_hell.mp3").toURI().toString());
             return sound;
-        } catch (NullPointerException e) {
+        } catch (MediaException e) {
             // TODO: handle exception
 
             return null;
@@ -697,7 +698,7 @@ public abstract class Tamagotchi {
         try {
             Media sound = new Media(new File("src/resources/sound/goofy_ahh_what_the_hell.mp3").toURI().toString());
             return sound;
-        } catch (NullPointerException e) {
+        } catch (MediaException e) {
             // TODO: handle exception
 
             return null;

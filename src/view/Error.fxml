@@ -9,15 +9,14 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-
 <AnchorPane minHeight="600.0" minWidth="800.0" prefHeight="720.0" prefWidth="1080.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.ErrorController">
    <children>
-      <Text fx:id="errorMessage" layoutX="130.0" layoutY="292.0" strokeType="OUTSIDE" strokeWidth="0.0" textAlignment="CENTER" wrappingWidth="800.0" AnchorPane.topAnchor="225.0">
+      <Text fx:id="errorText" layoutX="120.0" layoutY="70.0" strokeType="OUTSIDE" strokeWidth="0.0" textAlignment="CENTER" wrappingWidth="863.0">
          <font>
-            <Font size="60.0" />
+            <Font size="23.0" />
          </font>
       </Text>
-      <Button layoutX="15.0" layoutY="15.0" mnemonicParsing="false" onAction="#toMenu" onMouseEntered="#changeImageEntered" onMouseExited="#changeImageExited" prefHeight="256.0" prefWidth="366.0" stylesheets="@../resources/css/style.css">
+      <Button layoutX="15.0" layoutY="15.0" mnemonicParsing="false" onAction="#quitGame" onMouseEntered="#changeImageEntered" onMouseExited="#changeImageExited" prefHeight="256.0" prefWidth="366.0" stylesheets="@../resources/css/style.css">
          <styleClass>
             <String fx:value="nav-btn" />
             <String fx:value="back-btn" />
