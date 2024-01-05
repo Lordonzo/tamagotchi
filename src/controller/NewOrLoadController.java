@@ -77,7 +77,7 @@ public class NewOrLoadController extends AbstractController {
     private OptionDB optionDB;
     private Options options;
     private ResourceBundle resourceBundle;
-    private static int slotCnt = 0; //utilisé pour la suppression d'une partie
+    private static int slotCnt = 0;
 
 
     @Override
@@ -244,20 +244,6 @@ public class NewOrLoadController extends AbstractController {
     private void slot3Click(ActionEvent actionEvent) throws IOException {
         onBtnClick(actionEvent, 3);
     }
-
-
-    // @FXML
-    // private void slot1Delete(ActionEvent actionEvent) throws IOException {
-    //     onBtnDelete(actionEvent, 1);
-    // }
-    // @FXML
-    // private void slot2Delete(ActionEvent actionEvent) throws IOException {
-    //     onBtnDelete(actionEvent, 2);
-    // }
-    // @FXML
-    // private void slot3Delete(ActionEvent actionEvent) throws IOException {
-    //     onBtnDelete(actionEvent, 3);
-    // }
 
     @FXML
     private void returnToSelection(ActionEvent actionEvent) throws IOException{
