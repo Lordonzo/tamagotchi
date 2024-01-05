@@ -16,6 +16,7 @@ import javafx.scene.control.Button;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
+import javafx.scene.layout.StackPane;
 import javafx.scene.text.Text;
 import models.Options;
 import models.database.OptionDB;
@@ -29,6 +30,14 @@ public class NewOrLoadController extends AbstractController {
     private ImageView slot2Btn;
     @FXML
     private ImageView slot3Btn;
+    @FXML
+    private Button bRetour;
+    @FXML
+    private Button slot1Button;
+    @FXML
+    private Button slot2Button;
+    @FXML
+    private Button slot3Button;
     @FXML
     private Button slot1DeleteButton;
     @FXML
@@ -54,12 +63,21 @@ public class NewOrLoadController extends AbstractController {
     @FXML
     private Text isDeadText;
     @FXML
+    private StackPane confirmDeletePane;
+    @FXML
+    private Text confirmDeleteText;
+    @FXML
+    private Button confirmNonButton;
+    @FXML
+    private Button confirmOuiButton;
+    @FXML
     private Button returnToSelectionButton;
 
     private TamagotchiDB tamagotchiDB;
     private OptionDB optionDB;
     private Options options;
     private ResourceBundle resourceBundle;
+    private static int slotCnt = 0; //utilisé pour la suppression d'une partie
 
 
     @Override
@@ -228,18 +246,18 @@ public class NewOrLoadController extends AbstractController {
     }
 
 
-    @FXML
-    private void slot1Delete(ActionEvent actionEvent) throws IOException {
-        onBtnDelete(actionEvent, 1);
-    }
-    @FXML
-    private void slot2Delete(ActionEvent actionEvent) throws IOException {
-        onBtnDelete(actionEvent, 2);
-    }
-    @FXML
-    private void slot3Delete(ActionEvent actionEvent) throws IOException {
-        onBtnDelete(actionEvent, 3);
-    }
+    // @FXML
+    // private void slot1Delete(ActionEvent actionEvent) throws IOException {
+    //     onBtnDelete(actionEvent, 1);
+    // }
+    // @FXML
+    // private void slot2Delete(ActionEvent actionEvent) throws IOException {
+    //     onBtnDelete(actionEvent, 2);
+    // }
+    // @FXML
+    // private void slot3Delete(ActionEvent actionEvent) throws IOException {
+    //     onBtnDelete(actionEvent, 3);
+    // }
 
     @FXML
     private void returnToSelection(ActionEvent actionEvent) throws IOException{
@@ -250,5 +268,79 @@ public class NewOrLoadController extends AbstractController {
         newOrLoadController.setMusic(music);
         Scene scene = (Scene) ((Node) actionEvent.getSource()).getScene();
         scene.setRoot(root);
+    }
+
+    @FXML
+    private void slot1Delete(ActionEvent actionEvent) throws IOException {
+        slotCnt = 1;
+        confirmDelete(actionEvent);
+    }
+    @FXML
+    private void slot2Delete(ActionEvent actionEvent) throws IOException {
+        slotCnt = 2;
+        confirmDelete(actionEvent);
+    }
+    @FXML
+    private void slot3Delete(ActionEvent actionEvent) throws IOException {
+        slotCnt = 3;
+        confirmDelete(actionEvent);
+    }
+  
+    @FXML
+    private void confirmDelete(ActionEvent actionEvent) throws IOException {
+        String text = "";
+        text =resourceBundle.getString("confirmationDelete");
+        confirmDeleteText.setText(text);
+        text =resourceBundle.getString("no");
+        confirmNonButton.setText(text);
+        text =resourceBundle.getString("yes");
+        confirmOuiButton.setText(text);
+        setDisableAll();
+        confirmDeletePane.setVisible(true);
+    }
+
+    @FXML
+    private void onConfirmNonDelete(ActionEvent actionEvent) throws IOException {
+        setEnableAll();
+        confirmDeletePane.setVisible(false);
+    }
+
+    @FXML
+    private void onConfirmOuiDelete(ActionEvent actionEvent) throws IOException {
+        switch(slotCnt) {
+            case 1:
+                onBtnDelete(actionEvent, 1);
+                break;
+            case 2:
+                onBtnDelete(actionEvent, 2);
+                break;
+            case 3:
+                onBtnDelete(actionEvent, 3);
+                break;
+        }
+        setEnableAll();
+        confirmDeletePane.setVisible(false);
+    }
+
+    @FXML
+    private void setDisableAll() throws IOException {
+        bRetour.setDisable(true);
+        slot1Button.setDisable(true);
+        slot2Button.setDisable(true);
+        slot3Button.setDisable(true);
+        slot1DeleteButton.setDisable(true);
+        slot2DeleteButton.setDisable(true);
+        slot3DeleteButton.setDisable(true);
+    }
+
+    @FXML
+    private void setEnableAll() throws IOException {
+        bRetour.setDisable(false);
+        slot1Button.setDisable(false);
+        slot2Button.setDisable(false);
+        slot3Button.setDisable(false);
+        slot1DeleteButton.setDisable(false);
+        slot2DeleteButton.setDisable(false);
+        slot3DeleteButton.setDisable(false);
     }
 }
