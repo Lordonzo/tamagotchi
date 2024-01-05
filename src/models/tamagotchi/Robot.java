@@ -79,9 +79,17 @@ public void setDifficulty(int _difficulty) {
         return currentMemory;
     }
 
+    public void setCurrentMemory(int currentMemory) {
+        this.currentMemory = currentMemory;
+    }
+
     //ajouté par A
     public int getCurrentBattery() {
         return currentBattery;
+    }
+
+    public void setCurrentBattery(int currentBattery) {
+        this.currentBattery = currentBattery;
     }
 
     /**
