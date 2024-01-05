@@ -125,6 +125,9 @@ public class NewTamaController extends AbstractController {
             showAlert(resourceBundle.getString("error"), resourceBundle.getString("enterType"), AlertType.ERROR);
         } else if (isCbDifficulte) {
             showAlert(resourceBundle.getString("error"), resourceBundle.getString("enterDifficulty"), AlertType.ERROR);
+        }else if(tfName.getText().length() > 25){
+            //affiche message "moins de 25 characters"
+            showAlert(resourceBundle.getString("error"),resourceBundle.getString("lessChar"), AlertType.ERROR);
         } else {
             // Récupérer la valeur du TextField
             String valeurTextField = tfName.getText();
