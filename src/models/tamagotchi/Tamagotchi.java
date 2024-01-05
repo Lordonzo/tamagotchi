@@ -48,6 +48,7 @@ public abstract class Tamagotchi {
 
     protected int currentHealth;
     protected int currentEnergy;
+    protected int currentSatiety;
 
     protected Place currentPlace;
 
@@ -308,6 +309,15 @@ public abstract class Tamagotchi {
     }
     public int getCurrentMental() {
         return this.currentMental;
+    }
+    public void setCurrentMental(int currentMental) {
+        this.currentMental = currentMental;
+    }
+    public int getCurrentSatiety() {
+        return this.currentSatiety;
+    }
+    public void setCurrentSatiety(int currentSatiety) {
+        this.currentSatiety = currentSatiety;
     }
     public Place getCurrentPlace() {
         return this.currentPlace;

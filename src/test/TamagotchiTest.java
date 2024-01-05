@@ -1,18 +1,16 @@
 package test;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertThrows;
+import static org.junit.Assert.assertFalse;
 
-import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.sql.Date;
 
 import org.junit.*;
 
 import javafx.scene.image.Image;
 import models.Place;
 import models.Status.EPlace;
+import models.Status.MentalState;
 import models.tamagotchi.*;
 import controller.*;
 
@@ -130,5 +128,16 @@ public class TamagotchiTest {
         assertEquals(EPlace.BEDROOM, test.getCurrentPlace().getCurrentPlace());
         test.goToRightPlace();
         assertEquals(EPlace.LIVINGROOM, test.getCurrentPlace().getCurrentPlace());
+    }
+
+    @Test
+    public void playTest(){
+        InGameController obs = new InGameController();
+        Tamagotchi test = new Rabbit("Dodo", new Place(EPlace.GARDEN), 1);
+        test.setObserver(obs);
+        test.setMentalState(MentalState.SAD);
+        MentalState happiness = test.getMentalState();
+        test.gardenAction();
+        assertFalse((happiness == test.getMentalState()));
     }
 }
