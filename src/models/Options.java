@@ -12,9 +12,6 @@ public class Options {
         this.language = _language;
     }
 
-   // public Options() {} //TODO useless ?
-
-
     public double getVolume() {
         return this.volume;
     }

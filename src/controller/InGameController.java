@@ -281,12 +281,10 @@ public class InGameController extends AbstractController implements PropertyChan
                     save();
                     break;
                 default:
-                    //TODO error
                     break;
             }
         }
         catch (Exception e) {
-        // TODO: handle exception
         }
     }
 
@@ -309,7 +307,6 @@ public class InGameController extends AbstractController implements PropertyChan
         stat4.setProgress((double)_newValue/100);
     }
     private void bedRoomActionPrep(){
-        //TODO au meme niveau que la musique
             sound = tamagotchi.makeBedroomSound();
             mediaPlayer = new MediaPlayer(sound);
             mediaPlayer.play();
@@ -379,7 +376,6 @@ public class InGameController extends AbstractController implements PropertyChan
                 tamagotchi.kitchenAction();
                 break;
             default:
-                //TODO error handling
                 break;
         }
     }
@@ -431,7 +427,6 @@ public class InGameController extends AbstractController implements PropertyChan
                 deathMessage = resourceBundle.getString("deathMistreatement");
                 break;
             default:
-                //TODO error
                 break;
 
         }

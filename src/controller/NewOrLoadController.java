@@ -223,13 +223,10 @@ public class NewOrLoadController extends AbstractController {
         } else {
             toInGame(actionEvent,tamagotchi);
         }
-        //TODO check slot number
     }
     private void onBtnDelete(ActionEvent actionEvent,int slot)throws IOException {
         tamagotchiDB.delete(slot);
         setTamagotchiTextToNull(slot);
-        //Platform.runLater(() -> init());
-        
     }
 
     @FXML

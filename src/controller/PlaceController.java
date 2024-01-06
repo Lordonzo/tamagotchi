@@ -26,7 +26,7 @@ public class PlaceController {
      * 
      */
     private void setUpPlaces() {
-        allPlaces.clear(); // TODO j'ai rajouté ac pour etre sur
+        allPlaces.clear();
         Place bedroom = new Place(0,EPlace.BEDROOM);
         Place livingroom = new Place(1,EPlace.LIVINGROOM);
         Place garden = new Place(2,EPlace.GARDEN);

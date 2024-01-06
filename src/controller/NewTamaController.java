@@ -199,7 +199,7 @@ public class NewTamaController extends AbstractController {
     
         switch (radioButton.getId()) {
             case "rbChat":
-                typeSelectionne = "Cat"; //Resource Bundle
+                typeSelectionne = "Cat";
                 break;
             case "rbChien":
                 typeSelectionne = "Dog";
@@ -211,7 +211,6 @@ public class NewTamaController extends AbstractController {
                 typeSelectionne = "Robot";
                 break;
             default:
-                // Gestion d'un cas par défaut si nécessaire
         }
     
         return typeSelectionne;
@@ -226,8 +225,7 @@ public class NewTamaController extends AbstractController {
             case "Difficile":
                 return 3;
             default:
-                // Gestion d'un cas par défaut si nécessaire
-                return 0; // Valeur par défaut
+                return 0;
         }
     }
 
@@ -247,7 +245,7 @@ public class NewTamaController extends AbstractController {
                 tamagotchi = new Robot(_name, place,mapDifficulte(_difficulty));
                 break;
             default:
-                tamagotchi = new Cat(_name,place,mapDifficulte(_difficulty)); //TODO trouver une meilleure solution
+                tamagotchi = new Cat(_name,place,mapDifficulte(_difficulty));
                 break;
         }
         tamagotchi.setId(_id);

@@ -12,9 +12,6 @@ import java.util.ArrayList;
 
 import controller.ErrorController;
 import controller.PlaceController;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Scene;
-import javafx.scene.layout.Pane;
 import models.Place;
 import models.tamagotchi.*;
 
@@ -207,7 +204,7 @@ public class TamagotchiDB extends AbstractDB {
         }
     }
 
-    /** //début ajouté par A
+    /**
      * 
      * @param robot
      */
@@ -244,7 +241,7 @@ public class TamagotchiDB extends AbstractDB {
         } catch (SQLException e) {
             error(e);
         }
-    } //fin ajouté par A
+    }
 
     public void delete(int _slot){
          try (Connection connection = this.loadConnection(); Statement statement = connection.createStatement();) {
@@ -298,7 +295,7 @@ public class TamagotchiDB extends AbstractDB {
         }
     }
 
-    /* //début ajouté par A
+    /*
      * 
      * @param robot
      */
@@ -340,27 +337,4 @@ public class TamagotchiDB extends AbstractDB {
             error(e);
         }
     }
-
-
-
-    /*public static void main(String[] args) {
-        PlaceController pc = new PlaceController(false);
-        TamagotchiDB database = new TamagotchiDB();
-        PlaceDB placeDB = new PlaceDB();
-        ArrayList<Place> places = pc.getPlaces();
-        database.createTable();
-        Animal dog = new Rabbit("cat",places.get(1),1);
-        dog.setCurrentHealth(0);
-        database.add(dog,1);
-        dog = new Dog("doberman",places.get(2),2);
-        database.add(dog,2);
-        //database.select();
-        ArrayList<Tamagotchi> tamagotchis = new ArrayList<>();
-        tamagotchis = database.selectSlotSaved();
-        // System.out.println(tamagotchis.size());
-        // System.out.println(tamagotchis.toString());
-        for(Tamagotchi tamagotchi : tamagotchis){
-            System.out.println(tamagotchi.getCurrentWeight());
-        }
-    }*/
 }

@@ -1,6 +1,6 @@
 /**
  * @author Virgile, Emmanuelle, Adrien, Pierre-Louis
- * @version 0.8
+ * @version 1.0
  * 
  */
 import java.io.IOException;
@@ -17,7 +17,6 @@ import javafx.scene.media.MediaView;
 import javafx.stage.*;
 
 public class App extends Application {
-    // TODO Comment methods for doc
 
 
     public static void main(String[] args) {

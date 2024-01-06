@@ -83,7 +83,6 @@ public class OptionController extends AbstractController {
     public void setMusic(MediaView musicView) {
         this.music = musicView;
         this.music.getMediaPlayer().setVolume(this.options.getVolume());
-        //System.out.println(this.music);
     }
 
     public void setOptions(Options options) {

@@ -18,16 +18,6 @@ public class Rabbit extends Animal {
 
     }
 
-    /*//note de A : je teste des trucs
-    public Rabbit(String _nameString, int difficulty, Place place) {
-        super(_nameString, difficulty, place);
-        try {
-            image = new Image(new FileInputStream("resources/tama_sprites/rabbit.png"));
-        } catch (FileNotFoundException e) {}
-    }*/
-    
-    //modif par A : ajout difficulty
-    //int, String, LocalDateTime, int, int, int, float, int, int, Place, int
     public Rabbit(int id, String nameString, LocalDateTime birDateTime,LocalDateTime lastTimeChanged,int currentHealth, int currentEnergy, int currentCleanliness, int currentSatiety, float currentWeight, int mentalState, Place place, int slotSaved, int difficulty) {
         super(id, nameString, birDateTime,lastTimeChanged, currentHealth, currentEnergy, currentCleanliness, currentSatiety, currentWeight, mentalState, place, slotSaved, difficulty);
         setImage("src/resources/tama_sprites/rabbit.png");
@@ -42,8 +32,6 @@ public class Rabbit extends Animal {
             Media sound = new Media(new File("src/resources/sound/goofy_ahh_rabbit.mp3").toURI().toString());
             return sound;
         } catch (MediaException e) {
-            // TODO: handle exception
-
             return null;
         }
     }

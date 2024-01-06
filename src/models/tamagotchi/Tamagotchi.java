@@ -94,12 +94,6 @@ public abstract class Tamagotchi {
     public String toiletActionString;
     public String livingroomActionString;
 
-
-
-    
-
-
-    //TODO commenter les getters setters
     /**
      * First creation constructor
      */
@@ -152,7 +146,6 @@ public abstract class Tamagotchi {
         
         if(timePassed < 0){
             System.out.println("t'es un tricheur");
-            //TODO écran pour dire que c'est un scammer avec le nom du tamagotchi
         }
     }
 
@@ -189,7 +182,6 @@ public abstract class Tamagotchi {
         try {
             return new Image(new FileInputStream(image));
         } catch (FileNotFoundException e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
             return null;
         }
@@ -403,7 +395,7 @@ public abstract class Tamagotchi {
         if(currentCleanliness > 80){
             healthInc();
         }
-    }//TODO
+    }
 
     /**
      * increase currentHealth by HEALTH_GAIN
@@ -524,7 +516,6 @@ public abstract class Tamagotchi {
                         }
                         }
                     catch (Exception e) {
-                                // TODO: handle exception
                                 }    
                 }
 
@@ -567,7 +558,6 @@ public abstract class Tamagotchi {
                         observer.propertyChange(new PropertyChangeEvent(this, "stopBedroomActionPrep", null, null));                       
                         startRoutine();  
                     } catch (InterruptedException e) {
-                        // TODO Auto-generated catch block
                         e.printStackTrace();
                     }
                 }
@@ -576,7 +566,6 @@ public abstract class Tamagotchi {
             bedroomActionRoutine.setDaemon(true);
             bedroomActionRoutine.start();
         } catch (Exception e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
         }
 
@@ -636,8 +625,6 @@ public abstract class Tamagotchi {
             Media sound = new Media(new File("src/resources/sound/goofy_ahh_sleeping_ahh_what_the_hell.mp3").toURI().toString());
             return sound;
         } catch (MediaException e) {
-            // TODO: handle exception
-
             return null;
         }
     }
@@ -651,8 +638,6 @@ public abstract class Tamagotchi {
             Media sound = new Media(new File("src/resources/sound/goofy_ahh_sleeping_ahh_what_the_hell.mp3").toURI().toString());
             return sound;
         } catch (MediaException e) {
-            // TODO: handle exception
-
             return null;
         }
     }
@@ -665,8 +650,6 @@ public abstract class Tamagotchi {
             Media sound = new Media(new File("src/resources/sound/goofy_ahh_what_the_hell.mp3").toURI().toString());
             return sound;
         } catch (MediaException e) {
-            // TODO: handle exception
-
             return null;
         }
     }
@@ -679,8 +662,6 @@ public abstract class Tamagotchi {
             Media sound = new Media(new File("src/resources/sound/goofy_ahh_cleaning.mp3").toURI().toString());
             return sound;
         } catch (MediaException e) {
-            // TODO: handle exception
-
             return null;
         }
     }
@@ -693,8 +674,6 @@ public abstract class Tamagotchi {
             Media sound = new Media(new File("src/resources/sound/goofy_ahh_what_the_hell.mp3").toURI().toString());
             return sound;
         } catch (MediaException e) {
-            // TODO: handle exception
-
             return null;
         }
     
@@ -709,17 +688,9 @@ public abstract class Tamagotchi {
             Media sound = new Media(new File("src/resources/sound/goofy_ahh_what_the_hell.mp3").toURI().toString());
             return sound;
         } catch (MediaException e) {
-            // TODO: handle exception
-
             return null;
         }
     }
-
-    
-
-
-    
-
 
     /**
      * save the game

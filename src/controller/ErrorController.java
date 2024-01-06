@@ -1,21 +1,14 @@
 package controller;
 
-import java.io.IOException;
 import java.net.URL;
-import java.sql.SQLException;
 import java.util.Locale;
 import java.util.ResourceBundle;
 
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Node;
-import javafx.scene.Scene;
-import javafx.scene.layout.Pane;
 import javafx.scene.text.Text;
 import models.database.OptionDB;
-import models.database.TamagotchiDB;
 
 public class ErrorController extends AbstractController{
     @FXML

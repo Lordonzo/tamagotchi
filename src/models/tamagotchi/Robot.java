@@ -16,10 +16,8 @@ public class Robot extends Tamagotchi {
     protected int memoryDifficulty;
 
 
-    //début ajouté par A
     protected final int MIN_BATTERY = 100;
     protected int currentBattery;
-    //fin ajouté par A
 
     /**
      * init the robot and the adequate game routine
@@ -37,15 +35,6 @@ public class Robot extends Tamagotchi {
         
     }
 
-   /* //note de A : je teste des trucs
-    public Robot(String _nameString, int difficulty, Place place) {
-        super(_nameString, difficulty, place);
-        try {
-            image = new Image(new FileInputStream("resources/tama_sprites/robot.png"));
-        } catch (FileNotFoundException e) {}
-    }*/
-
-    //ajouté par A
     public Robot(int id, String nameString, LocalDateTime birDateTime,LocalDateTime lastTimeChanged, int currentHealth, int currentEnergy, int currentCleanliness, int currentMemory, float currentWeight, int mentalState, Place place, int slotSaved, int difficulty) {
         super(id, nameString, birDateTime,lastTimeChanged, currentHealth, currentEnergy, currentCleanliness, currentWeight, mentalState, place, slotSaved, difficulty);
         this.currentMemory = currentMemory;
@@ -55,7 +44,6 @@ public class Robot extends Tamagotchi {
 
 @Override
 public void setDifficulty(int _difficulty) {
-    // TODO Auto-generated method stub
     super.setDifficulty(_difficulty);
     if(_difficulty == 1){
         this.memoryDifficulty = 2;
@@ -278,8 +266,6 @@ public void setDifficulty(int _difficulty) {
             Media sound = new Media(new File("src/resources/sound/goofy_ahh_robot.mp3").toURI().toString());
             return sound;
         } catch (MediaException e) {
-            // TODO: handle exception
-
             return null;
         }
     }
@@ -292,7 +278,6 @@ public void setDifficulty(int _difficulty) {
             Media sound = new Media(new File("src/resources/sound/goofy_ahh_eating_robot.mp3").toURI().toString());
             return sound;
         } catch (MediaException e) {
-            // TODO: handle exception
             return null;
         }
     }
@@ -305,7 +290,6 @@ public void setDifficulty(int _difficulty) {
             Media sound = new Media(new File("src/resources/sound/goofy_ahh_backflipping_robot.mp3").toURI().toString());
             return sound;
         } catch (MediaException e) {
-            // TODO: handle exception
             return null;
         }
     }
@@ -318,8 +302,6 @@ public void setDifficulty(int _difficulty) {
             Media sound = new Media(new File("src/resources/sound/goofy_ahh_sleeping_robot.mp3").toURI().toString());
             return sound;
         } catch (MediaException e) {
-            // TODO: handle exception
-
             return null;
         }
     }
@@ -332,8 +314,6 @@ public void setDifficulty(int _difficulty) {
             Media sound = new Media(new File("src/resources/sound/goofy_ahh_sleeping_stop_robot.mp3").toURI().toString());
             return sound;
         } catch (MediaException e) {
-            // TODO: handle exception
-
             return null;
         }
     }
@@ -351,7 +331,5 @@ public void setDifficulty(int _difficulty) {
         observer.propertyChange(new PropertyChangeEvent(this, "updateWeather", null, getCurrentWeight()));
 
     }
-
-
 
 }

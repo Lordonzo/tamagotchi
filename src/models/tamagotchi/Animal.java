@@ -40,13 +40,6 @@ public abstract class Animal extends Tamagotchi {
         setUIString("health","energy","cleanliness","satiety","sleep","wakeup","eat","play","clean","yipee");
     }
 
-    /*//note de A : je teste des choses
-    public Animal(String _nameString, int difficulty, Place place) {
-        super(_nameString, difficulty, place);
-        this.mentalState = MentalState.HAPPY;
-    }*/
-
-    //modif par A : ajout difficulty
     public Animal(int id, String nameString, LocalDateTime birDateTime,LocalDateTime lastTimeChanged, int currentHealth, int currentEnergy,int currentCleanliness, int currentSatiety, float currentWeight, int mentalState, Place place, int slotSaved, int difficulty) {
         super(id, nameString, birDateTime,lastTimeChanged, currentHealth, currentEnergy, currentCleanliness, currentWeight, mentalState, place, slotSaved, difficulty);
         this.currentSatiety = currentSatiety; // 8
@@ -153,7 +146,6 @@ public abstract class Animal extends Tamagotchi {
      */
     @Override
     public void setDifficulty(int _difficulty) {
-        // TODO Auto-generated method stub
         super.setDifficulty(_difficulty);
         if(_difficulty == 1){
             this.satietyDifficulty = 2;
@@ -262,7 +254,6 @@ public abstract class Animal extends Tamagotchi {
                     
                 }
                 catch(Exception e){
-                    //TODO routine d'erreur
                     System.err.println("Thread error : "+e.getMessage());
                 }
             }
@@ -348,8 +339,6 @@ public abstract class Animal extends Tamagotchi {
             Media sound = new Media(new File("src/resources/sound/goofy_ahh_eating.mp3").toURI().toString());
             return sound;
         } catch (NullPointerException e) {
-            // TODO: handle exception
-
             return null;
         }
     }
@@ -362,8 +351,6 @@ public abstract class Animal extends Tamagotchi {
             Media sound = new Media(new File("src/resources/sound/goofy_ahh_backflipping.mp3").toURI().toString());
             return sound;
         } catch (MediaException e) {
-            // TODO: handle exception
-
             return null;
         }
     }
@@ -376,8 +363,6 @@ public abstract class Animal extends Tamagotchi {
             Media sound = new Media(new File("src/resources/sound/goofy_ahh_sleeping_stop.mp3").toURI().toString());
             return sound;
         } catch (MediaException e) {
-            // TODO: handle exception
-
             return null;
         }
     }
@@ -390,7 +375,6 @@ public abstract class Animal extends Tamagotchi {
             Media sound = new Media(new File("src/resources/sound/goofy_ahh_sleeping.mp3").toURI().toString());
             return sound;
         } catch (MediaException e) {
-            // TODO: handle exception
             System.out.println(e.toString());
 
             return null;
@@ -410,8 +394,6 @@ public abstract class Animal extends Tamagotchi {
         observer.propertyChange(new PropertyChangeEvent(this, "updateWeather", null,null));
 
     }
-
-
 
 }
 
